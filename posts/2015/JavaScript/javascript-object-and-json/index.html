@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " vocab="http://ogp.me/ns" lang="en">
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]--><!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]--><!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]--><!--[if gt IE 8]><!--><!--<![endif]--><head>
+<meta charset="utf-8">
+<meta name="description" content="This post is used to record information about JavaScript Object and JSON for future reference.">
+<!-- http://t.co/dKP3o1e --><meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript Object and JSON | Pengyin's Corner</title>
+<link href="../../../../assets/css/all.css" rel="stylesheet" type="text/css">
+<!-- Webfonts --><link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+<!-- Load Modernizr --><script src="//mmistakes.github.io/hpstr-jekyll-theme/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script><link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../rss.xml">
+<link rel="canonical" href="https://pengyin-shan.com/posts/2015/JavaScript/javascript-object-and-json/">
+<!--[if lt IE 9]><script src="../../../../assets/js/html5.js"></script><![endif]--><meta name="description" content="This post is used to record information about JavaScript Object and JSON for future reference.">
+<meta name="author" content="Pengyin(Wendy) Shan">
+<link rel="prev" href="../../Front%20End/bootstrap3_sticky_footer/" title="Bootstrap 3 Sticky Footer by Martin Bean and Ryan Fait" type="text/html">
+<link rel="next" href="../../Others/rdf-basics/" title="RDF Basics" type="text/html">
+<meta property="og:site_name" content="Pengyin's Corner">
+<meta property="og:title" content="JavaScript Object and JSON">
+<meta property="og:url" content="https://pengyin-shan.com/posts/2015/JavaScript/javascript-object-and-json/">
+<meta property="og:description" content="This post is used to record information about JavaScript Object and JSON for future reference.">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-07-10T00:00:00-04:00">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="jQuery">
+</head>
+<body id="post-index" class="feature">
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    
+
+    <nav id="dl-menu" class="dl-menuwrapper" role="navigation"><button class="dl-trigger">Open Menu</button>
+    <ul class="dl-menu">
+<li><a href="../../../">My Knowledge Base</a></li>
+            <li><a href="https://www.linkedin.com/in/pengyinshan">My LinkedIn</a></li>
+            <li><a href="../../../../categories/">Tags and Categories</a></li>
+            <li><a href="../../../../rss.xml">RSS feed</a></li>
+            <li><a href="../../../../archive.html">Archive</a></li>
+    
+    
+    </ul></nav><div class="entry-header">
+<!-- /.image-credit -->
+    <div class="entry-image">
+      <img src="../../../../bk.JPG" alt="Latest Posts">
+</div>
+<!-- /.entry-image -->
+      
+  <div class="header-title">
+    <div class="header-title-wrap">
+    <h1 id="brand"><a href="https://pengyin-shan.com/" title="Pengyin's Corner" rel="home">
+    Pengyin's Corner</a></h1>
+      <h2>Be Passionate.</h2>
+    </div>
+<!-- /.header-title-wrap -->
+  </div>
+<!-- /.header-title -->
+
+</div>
+<!-- /.entry-header -->
+
+    <div id="main" role="main">
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><div class="entry-meta">
+            <span class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2015-07-10T00:00:00-04:00" itemprop="datePublished" title="2015-07-10">2015-07-10</time></a></span>  ·  
+            <span class="byline author vcard">Pengyin(Wendy) Shan</span>  ·  
+                <span class="commentline">
+        
+    <a href="#disqus_thread" data-disqus-identifier="cache/posts/2015/JavaScript/javascript-object-and-json.html">Comments</a>
+
+</span>  ·  
+            
+        <span class="sourceline"><a href="index.md" id="sourcelink">Source</a></span>  ·  
+
+                <meta name="description" itemprop="description" content="This post is used to record information about JavaScript Object and JSON for future reference.">
+</div>
+        
+
+    
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">JavaScript Object and JSON</a></h1>
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>Full information about following notes is on <a href="http://www.w3schools.com/js/js_objects.asp">www3school</a>.</p>
+<h3 id="javascript-object">JavaScript Object</h3>
+<p>A JavaScript is wrapped by <code>{}</code> or created by <code>new</code>. Components inside are like <em>key:value</em> pairs.</p>
+<blockquote>
+<p>i.e. JavaScript objects are containers for named values.</p>
+</blockquote>
+<p>An example of JavaScript Object:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">car</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nx">type</span><span class="o">:</span> <span class="s2">"Fiat"</span><span class="p">,</span>
+            <span class="nx">model</span><span class="o">:</span> <span class="mi">500</span><span class="p">,</span>
+            <span class="nx">color</span><span class="o">:</span> <span class="s2">"silver"</span><span class="p">,</span>
+            <span class="nx">buycar</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">money</span><span class="p">){</span>
+                <span class="k">return</span> <span class="nx">money</span> <span class="o">*</span> <span class="mi">115</span><span class="o">%</span><span class="p">;</span>
+                <span class="p">}</span>
+           <span class="p">};</span>
+</pre>
+
+
+<p>Each JavaScript has <strong>properties</strong> and <strong>methods</strong>.</p>
+<h4 id="properties">Properties</h4>
+<p>In the example above, <code>type</code>, <code>model</code> and <code>color</code> are properties. You can access properties by using <code>object_name.property_name</code> to get value of certain property.</p>
+<pre class="code literal-block"><span></span><span class="nx">car</span><span class="p">.</span><span class="nx">type</span> <span class="c1">//'Fiat'</span>
+<span class="c1">//Or</span>
+<span class="nx">car</span><span class="p">[</span><span class="nx">type</span><span class="p">]</span><span class="c1">//'Fiat'</span>
+</pre>
+
+
+<p>A JavaScript object has two build-in properties: <code>length</code> and <code>prototype</code></p>
+<h4 id="methods">Methods</h4>
+<p>You can create methods in a JavaScript object. In code above, <code>butcar</code> is a method. A method can be defined by a function.</p>
+<blockquote>
+<p>A method may or may not have parameters
+A method may or may not have return values</p>
+</blockquote>
+<pre class="code literal-block"><span></span><span class="nx">car</span><span class="p">.</span><span class="nx">buycar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="c1">//115</span>
+</pre>
+
+
+<p>A JavaScript object has a list of build-in method. You can view them <a href="http://www.tutorialspoint.com/javascript/javascript_builtin_functions.htm">here</a>.</p>
+<h4 id="tips">Tips</h4>
+<ol>
+<li>
+<p>To change JSON to JavaScript object, you can use <code>JSON.parse(json_object)</code> or jQuery method: <code>$.parseJSON(json_object)</code></p>
+</li>
+<li>
+<p><code>String</code>, <code>Number</code> and <code>Boolean</code> should not be declared as objects, which means code like <code>var x = new String()</code> is not recommended.</p>
+</li>
+</ol>
+<h3 id="json">JSON</h3>
+<p><strong>JSON</strong> means <strong>JavaScript Object Notation</strong>. It has following rules:</p>
+<ul>
+<li>
+<p>Data is in name/value pairs</p>
+</li>
+<li>
+<p>Data is separated by commas <code>,</code></p>
+</li>
+<li>
+<p>Curly braces <code>{}</code> hold <em>objects</em></p>
+</li>
+<li>
+<p>Square brackets <code>[]</code> hold <em>arrays</em></p>
+</li>
+</ul>
+<p>To operate JSON, you can change a JSON to a JavaScript object, then use properties and methods of that JavaScript object.</p>
+<p>Example of JSON:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span>  <span class="s1">'{ "employees" : ['</span> <span class="o">+</span>
+            <span class="s1">'{ "firstName":"John" , "lastName":"Doe" },'</span> <span class="o">+</span>
+            <span class="s1">'{ "firstName":"Anna" , "lastName":"Smith" },'</span> <span class="o">+</span>
+            <span class="s1">'{ "firstName":"Peter" , "lastName":"Jones" } ]}'</span><span class="p">;</span>
+<span class="cm">/*</span>
+<span class="cm">* 1. This JSON has a large JavaScript object, which has a property: 'employees'</span>
+<span class="cm">* 2. The value of the 'employees' property is an JavaScript objects array.</span>
+<span class="cm">* 3. The array has four JavaScript objects, each object has two properties: 'firstName' and 'lastName', with property values.</span>
+<span class="cm">*/</span>
+</pre>
+
+
+<h4 id="tips_1">Tips</h4>
+<ol>
+<li>To change a JavaScript objec to JSON, using <code>JSON.stringify(js_object)</code>
+</li>
+</ol>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../categories/javascript/" rel="tag">JavaScript</a></li>
+            <li><a class="tag p-category" href="../../../../categories/jquery/" rel="tag">jQuery</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../../Front%20End/bootstrap3_sticky_footer/" rel="prev" title="Bootstrap 3 Sticky Footer by Martin Bean and Ryan Fait">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../../Others/rdf-basics/" rel="next" title="RDF Basics">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="pengyinsnotes",
+            disqus_url="https://pengyin-shan.com/posts/2015/JavaScript/javascript-object-and-json/",
+        disqus_title="JavaScript Object and JSON",
+        disqus_identifier="cache/posts/2015/JavaScript/javascript-object-and-json.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="pengyinsnotes";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+    
+    <div class="footer-wrapper">
+        <footer role="contentinfo"><p>Contents © 2018         <a href="mailto:pengyin.shan@outlook.com">Pengyin(Wendy) Shan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+        </footer>
+</div>
+
+    
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script src="../../../../assets/js/scripts.min.js"></script>
+</body>
+</html>

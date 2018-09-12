@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Pengyin's Corner (Posts about Spring MVC)</title><link>https://pengyin-shan.com/</link><description></description><atom:link type="application/rss+xml" href="https://pengyin-shan.com/categories/spring-mvc.xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Tue, 11 Sep 2018 20:57:15 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Possible Ajax Error Code and Reasons</title><link>https://pengyin-shan.com/posts/2015/JavaScript/possible-ajax-error-code-and-reasons/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;h3 id="400-bad-request"&gt;400 (Bad Request)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;In jQuery, no &lt;code&gt;JSON.stringify()&lt;/code&gt; is used to parse JavaScript object to JSON object&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Use &lt;code&gt;$.ajax()&lt;/code&gt; but doesn't include &lt;code&gt;type: "GET/POST/etc"&lt;/code&gt; in AJAX body&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="406-not-acceptable-response"&gt;406 (Not Acceptable Response)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Check your authority setting. One of my Spring MVC project has requirement:  user group 1 can only access sub-URL of &lt;code&gt;/test/user1&lt;/code&gt;. So if I make a URL mapping to &lt;code&gt;/test/&lt;/code&gt;, AJAX call will fail and give me a &lt;code&gt;406&lt;/code&gt; error&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="404-not-found-errors"&gt;404 (Not Found Errors)&lt;/h3&gt;
+&lt;p&gt;Very common error. Can have different reasons:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;dataType&lt;/code&gt;, &lt;code&gt;contentType&lt;/code&gt;, &lt;code&gt;mimeType&lt;/code&gt; may not corresponding to correct type.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;In Spring MVC, no &lt;code&gt;@ResponseBody&lt;/code&gt; or &lt;code&gt;@RequestBody&lt;/code&gt; is added in controller. For example: &lt;code&gt;public @ResponseBody String test(@RequestBody final String id)&lt;/code&gt; is good. But &lt;code&gt;public String test(@RequestBody final String id)&lt;/code&gt; can generate a 404 error in client side.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="no-response-back-end-finsih-processing-but-front-end-give-no-response"&gt;No response (Back-end finsih processing but front-end give no response)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Check your jQuery version and check if you are using &lt;code&gt;$.ajax({done: function(data../){}, fail: function(jqXHR...){}});&lt;/code&gt;. If so, try to check your jQuery to later version, or replace with &lt;code&gt;$.ajax({success: function(data...){}, error: function(jqXHR...) })&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/div&gt;</description><category>Ajax</category><category>Java</category><category>jQuery</category><category>JSON</category><category>Spring MVC</category><guid>https://pengyin-shan.com/posts/2015/JavaScript/possible-ajax-error-code-and-reasons/</guid><pubDate>Thu, 13 Aug 2015 04:00:00 GMT</pubDate></item></channel></rss>

@@ -1,0 +1,108 @@
+.. title: Reading Note - Algorithm Analysis
+.. date: 2016-07-05
+.. category: Algorithm & Data Structure
+.. tags: Algorithm, Big O, draft
+.. slug: reading-note-algorithm-analysis
+.. authors: Pengyin Shan
+
+Although my current work isn't involved in too much algorithms, it's important for me to review and throughly learn the idea in it. This is a reading note of *The Algorithm Design Manual 2nd edition written by Steven S. Skiena - Algorithm Analysis* part.
+
+#Reference List
+
+- <a href="http://www.martinkeefe.com/math/mathjax1">A good reference website of MathJax in markdown</a>, from *Matin's Stuff* blog
+
+- <a href="https://cdn.mathjax.org/mathjax/latest/test/sample-dynamic.html">An online tool to test MathJax</a>
+
+- <a href="http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference">Another very good MathJax Quick Reference</a>
+
+***
+
+>To analyze an algorithm, two important tools are 1) RAM model of computation 2) the asymptotic analysis of worst-case complexity
+
+***
+
+#RAM Model of Computation
+
+`Random Access Machine (RAM)` is a hypothetical computer which has following properties:
+
+- Each *simple* operation(+,\*,-,=,if,call) takes exactly **one time step**.
+
+- Loops are the composition of many single-step operations.
+
+- Each *memory access* takes exactly **one time step**. The RAM model takes no notice of whether an item is in cache or on the disk.
+
+Under RAM model, run time is measured by *counting up the number of steps* an algorithm takes on a given problem instance. If we assume that RAM executes a given number of steps per second, this operation count coverts naturally to the actual running time.
+
+***
+
+#Best, Worst and Average-Case Complexity
+
+The book gave a graph to show three cases:
+
+img-responsive images/articles/2016/algorithms/complexity1.png 
+
+The graph above shows that we can present each *input instance* as a point on a graph, where the $x-axis$ represents the *size* of the input problem and the $y-axis$ denotes the number of *steps* taken by the algorithm in this instance.
+
+Three cases are explained as below:
+
+- `worst-case complexity`: the function defined by the *maximum* number of steps taken in any instance of size $n$. This represents the curve passing through the highest point in each column
+
+- `best-case complexity`: the function defined by the *minimum* number of steps taken in any instance of size $n$. This represents the curve passing through the lowest point of each column.
+
+- `average-case complexity`: the function defined by the *average* number of steps over all instances of size $n$.
+
+> The worst-case complexity proves to be most useful of these three measures in practice.
+
+Each of these time complexities define a numerical function, representing **time versus problem size**.
+
+***
+
+#Big $O$ Notation
+
+the functions generating from the parts above have two problems:
+
+- Have too many bumps: the *exact* time complexity function for any algorithm is liable to be very *complicated*, with little up and down bumps.
+
+- Require too much detail to specify precisely: A function like $T(n) = 12754n^2 + 4353n + 834\log_{2}n + 13546$ would clearly be very difficult to work, but mainly it tells us 'the time grows quadratically with n'.
+
+So Big $O$ Notation is much simpler with enough information.
+
+> The Big Oh notation ignores the difference between multiplicative constants. For example: $f(n) = 2n$ and $g(n) = n$ are identical.
+
+Following definitions are essential in Big $O$ Notation:
+
+- $f(n) = O(g(n))$ means $c \cdot g(n)$ is an **upper bound** on $f(n)$. Thus there **exists** some constant $c$ such that $f(n)$ is always $\leq c \cdot g(n)$, for large enough $n$ (i.e., $n \geq n_{0}$ for some constant $n_{0}$).
+
+- $f(n) = \Omega(g(n))$ means $c \cdot g(n)$ is a **lower bound** on $f(n)$. Thus there **exists** some constant $c$ such taht $f(n)$ is always $\geg c \cdot g(n)$, for all $n \geg n_{0}$.
+
+- $f(n) = \Theta(g(n))$ means $c_{1} \cdot g(n)$ is an **upper bound** on $f(n)$ and $c_{2} \cdot g(n)$ is a **lower bound** on $f(n)$, for all $n \geq n_{0}$. Thus there **exists** constants $c_{1}$ and $c_{c2}$ such that $f(n) \leq c_{1} \cdot g(n)$ and $f(n) \geq c_{2} \cdot g(n)$. This means that $g(n)$ provides a nice, tight boutnd on $f(n)$.
+
+> Make sure you notice `equal` relation between $f(n)$ and $g(n)$ above. For example, $2^(n+1) = \Theta (2^n)$ because if we make $c=2$, both $O$ and $\Omega$ can be satisfied.
+
+See following graphs as example:
+
+img-responsive images/articles/2016/algorithms/complexity2.png 
+
+img-responsive images/articles/2016/algorithms/complexity3.png 
+
+> Each of definitions above assumes a constant $n_{0}$ **beyond which** they are always satisfied. We are not concerned about small values of $n$ (i.e. *anything to the left of $n_{0}$). It is best to read $=$ here as meaning *one of the functions are. For example, $n^2$ is one of the functions that are $O(n^3)$.
+
+We can see following example:
+
+For $3n^2-100n+6$, we can say $O(n^2)$ and $O(n^3)$, but not $O(n)$. These means for the first two cases, there is always $c$ I can pick to make $g(n) \geq f(n)$ ($c < n$). But for last one, $c * n < 3n^2$ is always true. But I can say $\Omega (n)$ is true in case $n > 100c$.
+
+Another example is $(x+y)^2 = O(x^2 + y^2)$. If we assume $x \leq y$, then we get $2xy \leq 2y^2 \leg 2(x^2+y^2)$. If we assume $x \geq y$, then we get $2xy \leg 2x^2 \leg 2(x^2 + y^2)$. So we can get $(x+y)^2 \leq c(x^2 + y^2)$.
+
+>The Big $O$ annotation enables use to ignore details and focus on the big picture.
+
+***
+
+#Growth Rates and Dominance Relations
+
+> A faster-growing function **dominates** a slower-growing function.
+
+i.e., When $f$ and $g$ belongs to *different classes (i.e. $f \ne \Omega (g)$*, we say $g dominates f$ when $f(n) = O(g(n))$, sometimes written $g \gg f$.
+
+Following dominates are true:
+
+$n! (factorial functions) \gg 2^n (exponential functions) \gg n^3 (cubic functions) \gg n^2 (quadratic functions) \gg n\lg n (superlinear functions) \gg n (linear functions) \gg \log n (logarithmic functions)\gg 1 (constant functions)$

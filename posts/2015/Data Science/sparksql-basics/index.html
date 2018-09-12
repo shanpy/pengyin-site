@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " vocab="http://ogp.me/ns" lang="en">
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]--><!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]--><!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]--><!--[if gt IE 8]><!--><!--<![endif]--><head>
+<meta charset="utf-8">
+<meta name="description" content="This post includes basic knowledge about SparkSQL, which will be continuously updated.">
+<!-- http://t.co/dKP3o1e --><meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SparkSQL Basics | Pengyin's Corner</title>
+<link href="../../../../assets/css/all.css" rel="stylesheet" type="text/css">
+<!-- Webfonts --><link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+<!-- Load Modernizr --><script src="//mmistakes.github.io/hpstr-jekyll-theme/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script><link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../rss.xml">
+<link rel="canonical" href="https://pengyin-shan.com/posts/2015/Data%20Science/sparksql-basics/">
+<!--[if lt IE 9]><script src="../../../../assets/js/html5.js"></script><![endif]--><meta name="description" content="This post includes basic knowledge about SparkSQL, which will be continuously updated.">
+<meta name="author" content="Pengyin(Wendy) Shan">
+<link rel="prev" href="../../Others/dive-into-hydra-and-my-thoughts/" title="Dive into Hydra and My Thoughts" type="text/html">
+<link rel="next" href="../../JavaScript/angularjs-basics/" title="AngularJS Basics" type="text/html">
+<meta property="og:site_name" content="Pengyin's Corner">
+<meta property="og:title" content="SparkSQL Basics">
+<meta property="og:url" content="https://pengyin-shan.com/posts/2015/Data%20Science/sparksql-basics/">
+<meta property="og:description" content="This post includes basic knowledge about SparkSQL, which will be continuously updated.">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-08-10T00:00:00-04:00">
+<meta property="article:tag" content="Big Data">
+<meta property="article:tag" content="Data Science">
+<meta property="article:tag" content="Spark">
+</head>
+<body id="post-index" class="feature">
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    
+
+    <nav id="dl-menu" class="dl-menuwrapper" role="navigation"><button class="dl-trigger">Open Menu</button>
+    <ul class="dl-menu">
+<li><a href="../../../">My Knowledge Base</a></li>
+            <li><a href="https://www.linkedin.com/in/pengyinshan">My LinkedIn</a></li>
+            <li><a href="../../../../categories/">Tags and Categories</a></li>
+            <li><a href="../../../../rss.xml">RSS feed</a></li>
+            <li><a href="../../../../archive.html">Archive</a></li>
+    
+    
+    </ul></nav><div class="entry-header">
+<!-- /.image-credit -->
+    <div class="entry-image">
+      <img src="../../../../bk.JPG" alt="Latest Posts">
+</div>
+<!-- /.entry-image -->
+      
+  <div class="header-title">
+    <div class="header-title-wrap">
+    <h1 id="brand"><a href="https://pengyin-shan.com/" title="Pengyin's Corner" rel="home">
+    Pengyin's Corner</a></h1>
+      <h2>Be Passionate.</h2>
+    </div>
+<!-- /.header-title-wrap -->
+  </div>
+<!-- /.header-title -->
+
+</div>
+<!-- /.entry-header -->
+
+    <div id="main" role="main">
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><div class="entry-meta">
+            <span class="dateline"><a href="../../Data%20Science/sparksql-basics/" rel="bookmark"><time class="published dt-published" datetime="2015-08-10T00:00:00-04:00" itemprop="datePublished" title="2015-08-10">2015-08-10</time></a></span>  ·  
+            <span class="byline author vcard">Pengyin(Wendy) Shan</span>  ·  
+                <span class="commentline">
+        
+    <a href="../../Data%20Science/sparksql-basics/#disqus_thread" data-disqus-identifier="cache/posts/2015/Data Science/sparksql-basics.html">Comments</a>
+
+</span>  ·  
+            
+        <span class="sourceline"><a href="../../Data%20Science/sparksql-basics/index.md" id="sourcelink">Source</a></span>  ·  
+
+                <meta name="description" itemprop="description" content="This post includes basic knowledge about SparkSQL, which will be continuously updated.">
+</div>
+        
+
+    
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="../../Data%20Science/sparksql-basics/" class="u-url">SparkSQL Basics</a></h1>
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<h3 id="resource-list">Resource List</h3>
+<ul>
+<li>
+<a href="../../Data%20Science/sparksql-basics/www.sparkinchina.com">SparkSQL(Chinese)</a>, written by Junhui Ma, www.sparkinchina.com (i.e. <code>SparkSQL book</code> in my post)</li>
+</ul>
+<h3 id="traditional-sql-and-rdbms">Traditional SQL and RDBMS</h3>
+<p>This is a graph of how traditional SQL query is processed, from SparkSQL book:</p>
+<p>../images/articles/2015/data_science/regular_query.png </p>
+<p>A traditional SQL query following this sequence: <code>Result</code> -&gt; <code>Data Source</code> -&gt; <code>Operation</code>.</p>
+<p>Step 1: a traditional RDBMS will first <strong>parse</strong> the sql query to get tokens such as <code>select</code>, <code>where</code>, etc.</p>
+<p>Step 2: RDBMS will <strong>bind</strong> sql query to data source in database system, such as <code>table</code> or <code>view</code>. If all corresponding data sources in database exists, this sql query is executable.</p>
+<p>Execute tree graph from SparkSQL book:</p>
+<p>../images/articles/2015/data_science/sql_execute_tree.png </p>
+<p>During step2, RDBMS will also supply a few execution plan. RDBMS will choose the one with the best optimization.</p>
+<p><strong>When RDBMS parse sql, it will transfer the sql to tree structure:</strong></p>
+<p>../images/articles/2015/data_science/sql_tree.png </p>
+<h2 id="sparksql">SparkSQL</h2>
+<p>SparkSQL(1.1) is combined by four modules:</p>
+<ul>
+<li>
+<p><code>core</code>: I/O operation. Get data resources(<code>RDD</code>, <code>JSON</code>, etc) then transfer it to <code>schemaRDD</code>.</p>
+</li>
+<li>
+<p><code>catalyst</code>: Process sql query. The process includes: parsing, binding, optimizing, creating logic plan, etc.</p>
+</li>
+<li>
+<p><code>hive</code>: process hive data.</p>
+</li>
+<li>
+<p><code>hive-Thriftserver</code>: provide <code>CLI</code> and <code>JDBC/ODBC</code> interface.</p>
+</li>
+</ul>
+<h3 id="sparksql-tree-and-rule">SparkSQL: Tree and Rule</h3>
+<p>Similar as traditional RDBMS, SparkSQL also parse SQL query to a <strong>Tree</strong> structure. The operation to tree is <strong>Rule</strong>, which involves in using pattern matching to decide which operation show be taken for a certain tree node.</p>
+<h4 id="tree">Tree</h4>
+<p>Tree can be used to show: <code>Logical Plans</code>, <code>Expressions</code> and <code>Physical Operators</code>.</p>
+<p>The operation to tree is working on <strong>TreeNode</strong>. Just like normal tree data structure, SparkSQL can traverse whole tree or go to a certain tree node to perform operation.</p>
+<h5 id="three-types-of-tree-node">Three Types of Tree Node</h5>
+<ul>
+<li>
+<p><code>UnaryNode</code>: Only one child node. Using for operations like <code>Limit</code>, <code>Filter</code></p>
+</li>
+<li>
+<p><code>BinaryNode</code>: Has left and right child node. Using for operations like <code>Join</code>, <code>Union</code></p>
+</li>
+<li>
+<p><code>LeafNode</code>: No child node. Using for user command, such as <code>SetCommand</code></p>
+</li>
+</ul>
+<h4 id="rule">Rule</h4>
+<p><code>Rule</code> is a abstract class. It is extended by <code>RuleExecutor</code>.</p>
+<p>Rule can perform <code>transform</code> operation by using <code>batch</code>es.</p>
+<p>Rule can perform recursive operations by using <code>Once</code> and <code>FixedPoint</code>.</p>
+<h5 id="example-for-rule-analyzer">Example for Rule: Analyzer</h5>
+<p>Analyzer graph from SparkSQL book:</p>
+<p>../images/articles/2015/data_science/sparksql_analyzer.png </p>
+<p>Face in <code>RuleExcutor</code> class for Analyzer:</p>
+<ul>
+<li>
+<p>There are multiple batches are used.</p>
+</li>
+<li>
+<p>Each batch is combined by different rules. Some rules may be applied multiple times.</p>
+</li>
+<li>
+<p>Each rule has its own functions</p>
+</li>
+</ul>
+<blockquote>
+<p>Tree and Rule are working together to perform: parse operation, binding operation, optimizing operation, create logical plan, etc. Finally a executable plan will be created.</p>
+</blockquote>
+<h3 id="sparksql-sqlcontext">SparkSQL: sqlContext</h3>
+<p>Source Code:</p>
+<pre class="code literal-block"><span></span><span class="k">def</span> <span class="n">sql</span><span class="o">(</span><span class="n">sqlText</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">SchemaRDD</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">dialect</span> <span class="o">==</span> <span class="s">"sql"</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">new</span> <span class="nc">SchemaRDD</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">parseSql</span><span class="o">(</span><span class="n">sqlText</span><span class="o">))</span> <span class="c1">//parse sql query</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">error</span><span class="o">(</span><span class="s">s"Unsupported SQL dialect: </span><span class="si">$dialect</span><span class="s">"</span><span class="o">)</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p><code>sqlContext.sql</code> will return a <code>new SchemaRDD(this, parseSql(sqlText))</code>, which has been parsed by <code>catalyst.SqlParser</code>. Note <code>parseSql()</code> will return a <code>Unresolved LogicalPlan</code>.</p>
+<p>sqlContext Process Graph from SparkSQL book:</p>
+<p>../images/articles/2015/data_science/sqlcontext_process.png </p>
+<h3 id="sparksql-catalyst">SparkSQL: catalyst</h3>
+<p>Design of SparkSQL(1.1) from SparkSQL Book (dash line means future feature):</p>
+<p>../images/articles/2015/data_science/catalyst_design.png </p>
+<p>Main modules for Catalyst:</p>
+<ul>
+<li>
+<p><code>sqlParse</code>: Parser for SQL query.</p>
+<ul>
+<li>First, parse sql query to a tree, then apply rules to tree to perform transformation.</li>
+</ul>
+</li>
+<li>
+<p><code>Analyzer</code>: Bind <code>Unresolved LogicalPlan</code> and meta-data from data resources. Generate <code>Resolved LogicalPlan</code>.</p>
+<ul>
+<li>Use <code>Analysis Rules</code> and meta-data to generate <code>Resolved LogicalPlan</code>.</li>
+</ul>
+</li>
+<li>
+<p><code>Optimizer</code>: Optimize <code>Resolved LogicalPlan</code>. Generate <code>Optimized LogicalPlan</code>.</p>
+<ul>
+<li>Use <code>Optimization Rules</code> to perform a group of optimizing operations.</li>
+</ul>
+</li>
+<li>
+<p><code>Planner</code>: Transfer <code>Logical Plan</code> to <code>Physical Plan</code>.</p>
+<ul>
+<li>Use <code>Planning Strategies</code> to generate <code>Physical Plan</code>.</li>
+</ul>
+</li>
+<li>
+<p><code>CostModel</code>: Choose best execution plan based on previous performance statistics.</p>
+</li>
+</ul>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../categories/big-data/" rel="tag">Big Data</a></li>
+            <li><a class="tag p-category" href="../../../../categories/data-science/" rel="tag">Data Science</a></li>
+            <li><a class="tag p-category" href="../../../../categories/spark/" rel="tag">Spark</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../../Others/dive-into-hydra-and-my-thoughts/" rel="prev" title="Dive into Hydra and My Thoughts">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../../JavaScript/angularjs-basics/" rel="next" title="AngularJS Basics">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="pengyinsnotes",
+            disqus_url="https://pengyin-shan.com/posts/2015/Data%20Science/sparksql-basics/",
+        disqus_title="SparkSQL Basics",
+        disqus_identifier="cache/posts/2015/Data Science/sparksql-basics.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="pengyinsnotes";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+    
+    <div class="footer-wrapper">
+        <footer role="contentinfo"><p>Contents © 2018         <a href="mailto:pengyin.shan@outlook.com">Pengyin(Wendy) Shan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+        </footer>
+</div>
+
+    
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script src="../../../../assets/js/scripts.min.js"></script>
+</body>
+</html>

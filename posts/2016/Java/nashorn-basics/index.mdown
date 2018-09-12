@@ -1,0 +1,12 @@
+.. title: Nashorn Basics
+.. date: 2016-07-01
+.. category: Java
+.. tags: Nashorn, draft
+.. slug: nashorn-basics
+.. authors: Pengyin Shan
+
+In HannonHill cascade server, since folders/files are organized in a virtual structured (based on database setting), it's hard to create reference between files. Nashorn with Rhino engine is useful in this case.
+
+<!-- TEASER_END -->
+
+

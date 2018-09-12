@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Pengyin's Corner (Posts about Spark)</title><link>https://pengyin-shan.com/</link><description></description><atom:link type="application/rss+xml" href="https://pengyin-shan.com/categories/spark.xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Tue, 11 Sep 2018 20:57:16 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>SparkSQL Basics</title><link>https://pengyin-shan.com/posts/2015/Data%20Science/sparksql-basics/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;h3 id="resource-list"&gt;Resource List&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://pengyin-shan.com/posts/2015/Data%20Science/sparksql-basics/www.sparkinchina.com"&gt;SparkSQL(Chinese)&lt;/a&gt;, written by Junhui Ma, www.sparkinchina.com (i.e. &lt;code&gt;SparkSQL book&lt;/code&gt; in my post)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="traditional-sql-and-rdbms"&gt;Traditional SQL and RDBMS&lt;/h3&gt;
+&lt;p&gt;This is a graph of how traditional SQL query is processed, from SparkSQL book:&lt;/p&gt;
+&lt;p&gt;../images/articles/2015/data_science/regular_query.png &lt;/p&gt;
+&lt;p&gt;A traditional SQL query following this sequence: &lt;code&gt;Result&lt;/code&gt; -&amp;gt; &lt;code&gt;Data Source&lt;/code&gt; -&amp;gt; &lt;code&gt;Operation&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Step 1: a traditional RDBMS will first &lt;strong&gt;parse&lt;/strong&gt; the sql query to get tokens such as &lt;code&gt;select&lt;/code&gt;, &lt;code&gt;where&lt;/code&gt;, etc.&lt;/p&gt;
+&lt;p&gt;Step 2: RDBMS will &lt;strong&gt;bind&lt;/strong&gt; sql query to data source in database system, such as &lt;code&gt;table&lt;/code&gt; or &lt;code&gt;view&lt;/code&gt;. If all corresponding data sources in database exists, this sql query is executable.&lt;/p&gt;
+&lt;p&gt;Execute tree graph from SparkSQL book:&lt;/p&gt;
+&lt;p&gt;../images/articles/2015/data_science/sql_execute_tree.png &lt;/p&gt;
+&lt;p&gt;During step2, RDBMS will also supply a few execution plan. RDBMS will choose the one with the best optimization.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;When RDBMS parse sql, it will transfer the sql to tree structure:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;../images/articles/2015/data_science/sql_tree.png &lt;/p&gt;
+&lt;h2 id="sparksql"&gt;SparkSQL&lt;/h2&gt;
+&lt;p&gt;SparkSQL(1.1) is combined by four modules:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;core&lt;/code&gt;: I/O operation. Get data resources(&lt;code&gt;RDD&lt;/code&gt;, &lt;code&gt;JSON&lt;/code&gt;, etc) then transfer it to &lt;code&gt;schemaRDD&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;catalyst&lt;/code&gt;: Process sql query. The process includes: parsing, binding, optimizing, creating logic plan, etc.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;hive&lt;/code&gt;: process hive data.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;hive-Thriftserver&lt;/code&gt;: provide &lt;code&gt;CLI&lt;/code&gt; and &lt;code&gt;JDBC/ODBC&lt;/code&gt; interface.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="sparksql-tree-and-rule"&gt;SparkSQL: Tree and Rule&lt;/h3&gt;
+&lt;p&gt;Similar as traditional RDBMS, SparkSQL also parse SQL query to a &lt;strong&gt;Tree&lt;/strong&gt; structure. The operation to tree is &lt;strong&gt;Rule&lt;/strong&gt;, which involves in using pattern matching to decide which operation show be taken for a certain tree node.&lt;/p&gt;
+&lt;h4 id="tree"&gt;Tree&lt;/h4&gt;
+&lt;p&gt;Tree can be used to show: &lt;code&gt;Logical Plans&lt;/code&gt;, &lt;code&gt;Expressions&lt;/code&gt; and &lt;code&gt;Physical Operators&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The operation to tree is working on &lt;strong&gt;TreeNode&lt;/strong&gt;. Just like normal tree data structure, SparkSQL can traverse whole tree or go to a certain tree node to perform operation.&lt;/p&gt;
+&lt;h5 id="three-types-of-tree-node"&gt;Three Types of Tree Node&lt;/h5&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;UnaryNode&lt;/code&gt;: Only one child node. Using for operations like &lt;code&gt;Limit&lt;/code&gt;, &lt;code&gt;Filter&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;BinaryNode&lt;/code&gt;: Has left and right child node. Using for operations like &lt;code&gt;Join&lt;/code&gt;, &lt;code&gt;Union&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;LeafNode&lt;/code&gt;: No child node. Using for user command, such as &lt;code&gt;SetCommand&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="rule"&gt;Rule&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;Rule&lt;/code&gt; is a abstract class. It is extended by &lt;code&gt;RuleExecutor&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Rule can perform &lt;code&gt;transform&lt;/code&gt; operation by using &lt;code&gt;batch&lt;/code&gt;es.&lt;/p&gt;
+&lt;p&gt;Rule can perform recursive operations by using &lt;code&gt;Once&lt;/code&gt; and &lt;code&gt;FixedPoint&lt;/code&gt;.&lt;/p&gt;
+&lt;h5 id="example-for-rule-analyzer"&gt;Example for Rule: Analyzer&lt;/h5&gt;
+&lt;p&gt;Analyzer graph from SparkSQL book:&lt;/p&gt;
+&lt;p&gt;../images/articles/2015/data_science/sparksql_analyzer.png &lt;/p&gt;
+&lt;p&gt;Face in &lt;code&gt;RuleExcutor&lt;/code&gt; class for Analyzer:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;There are multiple batches are used.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Each batch is combined by different rules. Some rules may be applied multiple times.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Each rule has its own functions&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Tree and Rule are working together to perform: parse operation, binding operation, optimizing operation, create logical plan, etc. Finally a executable plan will be created.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="sparksql-sqlcontext"&gt;SparkSQL: sqlContext&lt;/h3&gt;
+&lt;p&gt;Source Code:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;sql&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sqlText&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;SchemaRDD&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dialect&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;"sql"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;SchemaRDD&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;parseSql&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sqlText&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="c1"&gt;//parse sql query&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;s"Unsupported SQL dialect: &lt;/span&gt;&lt;span class="si"&gt;$dialect&lt;/span&gt;&lt;span class="s"&gt;"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;&lt;code&gt;sqlContext.sql&lt;/code&gt; will return a &lt;code&gt;new SchemaRDD(this, parseSql(sqlText))&lt;/code&gt;, which has been parsed by &lt;code&gt;catalyst.SqlParser&lt;/code&gt;. Note &lt;code&gt;parseSql()&lt;/code&gt; will return a &lt;code&gt;Unresolved LogicalPlan&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;sqlContext Process Graph from SparkSQL book:&lt;/p&gt;
+&lt;p&gt;../images/articles/2015/data_science/sqlcontext_process.png &lt;/p&gt;
+&lt;h3 id="sparksql-catalyst"&gt;SparkSQL: catalyst&lt;/h3&gt;
+&lt;p&gt;Design of SparkSQL(1.1) from SparkSQL Book (dash line means future feature):&lt;/p&gt;
+&lt;p&gt;../images/articles/2015/data_science/catalyst_design.png &lt;/p&gt;
+&lt;p&gt;Main modules for Catalyst:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;sqlParse&lt;/code&gt;: Parser for SQL query.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;First, parse sql query to a tree, then apply rules to tree to perform transformation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Analyzer&lt;/code&gt;: Bind &lt;code&gt;Unresolved LogicalPlan&lt;/code&gt; and meta-data from data resources. Generate &lt;code&gt;Resolved LogicalPlan&lt;/code&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Use &lt;code&gt;Analysis Rules&lt;/code&gt; and meta-data to generate &lt;code&gt;Resolved LogicalPlan&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Optimizer&lt;/code&gt;: Optimize &lt;code&gt;Resolved LogicalPlan&lt;/code&gt;. Generate &lt;code&gt;Optimized LogicalPlan&lt;/code&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Use &lt;code&gt;Optimization Rules&lt;/code&gt; to perform a group of optimizing operations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Planner&lt;/code&gt;: Transfer &lt;code&gt;Logical Plan&lt;/code&gt; to &lt;code&gt;Physical Plan&lt;/code&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Use &lt;code&gt;Planning Strategies&lt;/code&gt; to generate &lt;code&gt;Physical Plan&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;CostModel&lt;/code&gt;: Choose best execution plan based on previous performance statistics.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;&lt;/div&gt;</description><category>Big Data</category><category>Data Science</category><category>Spark</category><guid>https://pengyin-shan.com/posts/2015/Data%20Science/sparksql-basics/</guid><pubDate>Mon, 10 Aug 2015 04:00:00 GMT</pubDate></item><item><title>Install Apache Spark with IPython Notebook Configuration on Ubuntu 15</title><link>https://pengyin-shan.com/posts/2015/Data%20Science/ipython-notebook-pyspark/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;p&gt;After reading a few useful posts and some debugging time, I successfully installed &lt;strong&gt;Apache Spark&lt;/strong&gt; on my Ubuntu 15 machine. I also add &lt;strong&gt;PySpark&lt;/strong&gt; in &lt;strong&gt;IPython Notebook&lt;/strong&gt; for development purpose.&lt;/p&gt;
+&lt;p&gt;Many thanks to author of these articles:&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blog.cloudera.com/blog/2014/08/how-to-use-ipython-notebook-with-apache-spark/"&gt;How-to: Use IPython Notebook with Apache Spark&lt;/a&gt;, written by Uri Laserson.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://ramhiser.com/2015/02/01/configuring-ipython-notebook-support-for-pyspark/"&gt;Configuring IPython Notebook Support for PySpark&lt;/a&gt;, written by John Ramey.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://beingzy.github.io/tutorial/2014/10/13/spark-tutorial-Part-I-setting-up-spark-and-ipython-notebook-within-10-minutes.html"&gt;Spark Tutorial (Part I): Setting Up Spark and IPython Notebook within 10 minutes&lt;/a&gt;, written by Yi Zhang.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://ipython.org/ipython-doc/dev/config/intro.html"&gt;Introduction to IPython Configuration&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="install-python-and-ipython-notebook"&gt;Install Python and IPython Notebook&lt;/h3&gt;
+&lt;p&gt;I highly recommend you using &lt;a href="https://virtualenv.pypa.io/en/latest/"&gt;Virtualenv&lt;/a&gt; or &lt;a href="https://store.continuum.io/cshop/anaconda/"&gt;Anacona&lt;/a&gt; for Python package control.&lt;/p&gt;
+&lt;p&gt;You need to install &lt;strong&gt;Python&lt;/strong&gt; and &lt;strong&gt;pip&lt;/strong&gt; first (You can find installation documents through Google Search). Then in terminal, type following:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt;pip install &lt;span class="s2"&gt;"ipython[notebook]"&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;If you want to install everything for IPython, including Notebook, type following in terminal:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt;pip install &lt;span class="s2"&gt;"ipython[all]"&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;You can test your installation by type following command in terminal (Make sure you are in right environment):&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt;ipython notebook
+&lt;/pre&gt;
+
+
+&lt;p&gt;Your default browser should open a window with IPython Notebook interface.&lt;/p&gt;
+&lt;h3 id="install-spark-and-pyspark"&gt;Install Spark and PySpark&lt;/h3&gt;
+&lt;p&gt;You can download Spark from &lt;a href="https://spark.apache.org/downloads.html"&gt;here&lt;/a&gt;. You can install either source code package, or a pre-build package. All packages can be installed and configured for IPython Notebook.&lt;/p&gt;
+&lt;p&gt;Pre-build package can be extracted and being used directly. If you download source package, you need to do this after extracting:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; your_spark_source_folder
+&lt;span class="gp"&gt;$&lt;/span&gt;sbt/sbt assembly
+&lt;/pre&gt;
+
+
+&lt;blockquote&gt;
+&lt;p&gt;This process may take a while :)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;You may need to install &lt;strong&gt;sbt&lt;/strong&gt; first. For Linux user, please refer to this article: &lt;a href="http://www.scala-sbt.org/0.13/tutorial/Installing-sbt-on-Linux.html"&gt;Installing sbt on Linux&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You can test your installation by doing following:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; your_spark_folder
+&lt;span class="gp"&gt;$&lt;/span&gt;./bin/pyspark
+&lt;/pre&gt;
+
+
+&lt;blockquote&gt;
+&lt;p&gt;You need java jdk installed on your machine and JAVA_HOME has been set, otherwise PySpark will throw error for that, such as:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;../images/articles/2015/python/hadoop2.6_java_home_dir_problem.png &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Make sure your JAVA_HOME pointing to home folder of your desired JDK. For example, I want to use Oracle JDK 8. So I type &lt;code&gt;sudo update-alternatives --config java&lt;/code&gt; in terminal to find preferred JDK path (JDK 8 in my case), then add&lt;code&gt;export JAVA_HOME=/usr/lib/jvm/java-8-oracle&lt;/code&gt; in &lt;code&gt;.bashrc&lt;/code&gt; file.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;You should see following in your terminal. Type &lt;code&gt;sc&lt;/code&gt; and you should see output as &lt;code&gt;SparkContext&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;../images/articles/2015/python/test_pyspark.png &lt;/p&gt;
+&lt;h3 id="configure-pyspark-and-ipython-notebook"&gt;Configure PySpark and IPython Notebook&lt;/h3&gt;
+&lt;p&gt;Based on my experience, PySpark has good support for Python 2.7, but not Python 3. I recommend you use &lt;strong&gt;Python 2.7&lt;/strong&gt; in this step.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://ramhiser.com/2015/02/01/configuring-ipython-notebook-support-for-pyspark/"&gt;Configuring IPython Notebook Support for PySpark&lt;/a&gt;, written by John Ramey, gave a very good description of steps you need to follow. However, you need to remember doing following:&lt;/p&gt;
+&lt;p&gt;In &lt;code&gt;.bashrc&lt;/code&gt; and &lt;code&gt;00-pyspark-setup.py&lt;/code&gt;, make sure you have your own Spark folder name. Check your &lt;code&gt;your_spark_folder/python/lib&lt;/code&gt; for py4j version.&lt;/p&gt;
+&lt;p&gt;After you do &lt;code&gt;ipython notebook --profile=pyspark&lt;/code&gt;, you will open Jupyter web interface in your default browser, using the &lt;code&gt;c.NotebookApp.port&lt;/code&gt; in your &lt;code&gt;.bashrc&lt;/code&gt; file.&lt;/p&gt;
+&lt;p&gt;In Jupyter interface, You can upload one existing IPython Notebook to test your configuration by clicking &lt;code&gt;Upload&lt;/code&gt; button, Or create a new IPython Notebook by clicking &lt;code&gt;new&lt;/code&gt; button, then select &lt;code&gt;Python 2&lt;/code&gt; or &lt;code&gt;Python 3&lt;/code&gt; in drop-down menu.&lt;/p&gt;
+&lt;p&gt;In IPython Notebook interface, create a new cell and type &lt;code&gt;sc&lt;/code&gt;. When you run this cell, you should see &lt;code&gt;SparkContext&lt;/code&gt; object, same as following:&lt;/p&gt;
+&lt;p&gt;../images/articles/2015/python/test_pyspark_notebook.png &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Now, if your IPython Notebook show message: &lt;code&gt;NameError: name 'sc' is not defined&lt;/code&gt;, which means your IPython Notebook doesn't use PySpark profile. You can try typing &lt;code&gt;ipython --profile=pyspark&lt;/code&gt; in terminal to make PySpark as default IPython profile, then try &lt;code&gt;ipython notebook --profile=pyspark&lt;/code&gt; again. PySpark should be available now.&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/div&gt;</description><category>Data Science</category><category>IPython</category><category>Python</category><category>Spark</category><guid>https://pengyin-shan.com/posts/2015/Data%20Science/ipython-notebook-pyspark/</guid><pubDate>Wed, 10 Jun 2015 04:00:00 GMT</pubDate></item></channel></rss>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Pengyin's Corner (Posts about Android)</title><link>https://pengyin-shan.com/</link><description></description><atom:link type="application/rss+xml" href="https://pengyin-shan.com/categories/android.xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Tue, 11 Sep 2018 20:57:17 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Reading Note for Andorid Development Guide Part I</title><link>https://pengyin-shan.com/posts/2014/reading-note-android-I/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;h2 id="android-intents-and-intent-filters-from-developer-guides"&gt;Android Intents and Intent Filters from Developer Guides&lt;/h2&gt;
+&lt;p&gt;http://developer.android.com/guide/components/intents-filters.html&lt;/p&gt;
+&lt;p&gt;An Intent is a messaging object you can use to request an action from another app component.&lt;/p&gt;
+&lt;p&gt;Intent carries information for determining which object to start&lt;/p&gt;
+&lt;p&gt;Information that the recipient component uses in order to properly perform the action&lt;/p&gt;
+&lt;p&gt;Start a new instance of an Activity by passing an Intent to &lt;code&gt;startActivity()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Receieve result from activity by calling &lt;code&gt;startActivityForResult()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Bind a service to another component by passing an Intent to &lt;code&gt;bindService()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Deliver a broadcast by passing an Intent to &lt;code&gt;sendBroadcast()&lt;/code&gt;, &lt;code&gt;sendOrderedBroadcast()&lt;/code&gt; or &lt;code&gt;sendStickyBroadcast()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Two types of intents:&lt;/p&gt;
+&lt;p&gt;Explicit intents: used to start a component inside app. Must know class name or service name before start&lt;/p&gt;
+&lt;p&gt;Always use explicit intent when starting a service and do not declare intent filter for service:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;// Executed in an Activity, so 'this' is the context&lt;/span&gt;
+&lt;span class="c1"&gt;// The fileUrl is a string Url, such as "http://www.example.com/image.png"&lt;/span&gt;
+&lt;span class="n"&gt;Intent&lt;/span&gt; &lt;span class="n"&gt;downloadIntent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Intent&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;DownloadService&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;class&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;downloadIntent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setData&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Uri&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;parse&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fileUrl&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+&lt;span class="n"&gt;startService&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;downloadIntent&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;An explicit intent is always delivered to its target, regardless of any intent filters the componenet declares.&lt;/p&gt;
+&lt;p&gt;Implicit intents: don't specify class name. declare an action and ask other app to perform it.&lt;/p&gt;
+&lt;p&gt;To start implicit intents, the intent defined in &lt;code&gt;intent filter&lt;/code&gt; in &lt;code&gt;manifest file&lt;/code&gt; will be find and match with passed intent. If matching, system start another app/component and deliver the passed intenet:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//Create the text message with a string&lt;/span&gt;
+&lt;span class="n"&gt;Intent&lt;/span&gt; &lt;span class="n"&gt;sendIntent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Intent&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="n"&gt;sendIntent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAction&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Intent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;ACTION_SEND&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;sendIntent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;putExtra&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Intent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;EXTRA_TEXT&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;textMessage&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;sendIntent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setType&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HTTP&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;PLAIN_TEXT_TYPE&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;// "text/plain" MIME Type&lt;/span&gt;
+&lt;span class="c1"&gt;//Verify that the intent will resolve to an activity, in case no app in device can start this activity&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sendIntent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;resolveActivity&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;getPackageManager&lt;/span&gt;&lt;span class="o"&gt;()!=&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;)){&lt;/span&gt;
+    &lt;span class="n"&gt;startActivity&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sendIntent&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Intent filter is an expression in manifest file to search for components that should receive the intent.&lt;/p&gt;
+&lt;p&gt;Intent has following information:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Componenet Name: must have for explict (ex. service) and skipped for implict&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Example Name: &lt;code&gt;com.example.ExActivity&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Set component name: &lt;code&gt;setComponent()&lt;/code&gt;, &lt;code&gt;setClass()&lt;/code&gt;, &lt;code&gt;setClassName()&lt;/code&gt; or &lt;code&gt;Intent constructor&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Action: a string that specifies the generic action to perform (such as view or pick)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Example: &lt;code&gt;ACTION_VIEW&lt;/code&gt;: use for &lt;code&gt;startActivity()&lt;/code&gt;. Activity should show something to user, like picture&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Example: &lt;code&gt;ACTION_SEND&lt;/code&gt;: i.e. "share"intent. use for &lt;code&gt;startActivity()&lt;/code&gt;. Activity should have data to share with other apps, like email.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;ACTION_TIME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"com.example.action.TIME"&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Data: A URI object that references data to be acted and/or the MIME type of data.&lt;/p&gt;
+&lt;p&gt;content: URI will specify MIME type of data&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;setData()&lt;/code&gt;: set data URI. &lt;code&gt;setType()&lt;/code&gt;: set MIME type. &lt;code&gt;setDataAndType()&lt;/code&gt;: set both data and type&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;setDate()&lt;/code&gt; and &lt;code&gt;setType()&lt;/code&gt; can not be used at the same time: null problem&lt;/p&gt;
+&lt;p&gt;Catagory: optional. Describe info about the kind of component that should handle the intent. Andorid will know which app should start based on this&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Example: &lt;code&gt;CATEGORY_BROWSABLE&lt;/code&gt;: target the activity that start a web browser and show data referenced by a link&lt;/p&gt;
+&lt;p&gt;Example: &lt;code&gt;CATAGORY_LAUNCHER&lt;/code&gt;: tartget the activity that initial a task and listed in system's application launcher&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Extras: &lt;em&gt;Key-Value&lt;/em&gt; pair that carry additional information.  using &lt;code&gt;putExtra()&lt;/code&gt; or create Bundle&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Example: define recipts or subjects in am email-send action&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Flags: define metadata for intent. use &lt;code&gt;setFlags()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Forcing an app choose:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;Intent&lt;/span&gt; &lt;span class="n"&gt;intent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Intent&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Intent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;ACTION_SEND&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;//...&lt;/span&gt;
+&lt;span class="c1"&gt;//Always use string resource for UI text&lt;/span&gt;
+&lt;span class="c1"&gt;//This says something like "Share this photo with"&lt;/span&gt;
+&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;title&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getResources&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getString&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;string&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;chooser_title&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;//Create intent to show chooser&lt;/span&gt;
+&lt;span class="n"&gt;Intent&lt;/span&gt; &lt;span class="n"&gt;chooser&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Intent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;createChooser&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;intent&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;//This is used to call app chooser&lt;/span&gt;
+&lt;span class="c1"&gt;//Verify the intent will resolve at least one activity&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;intent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;resolveActivity&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;getPackageManager&lt;/span&gt;&lt;span class="o"&gt;())&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+    &lt;span class="n"&gt;startActivity&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;intent&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Receiving an Implicit Intent:&lt;/p&gt;
+&lt;p&gt;The system will deliver an implicit intent to app only if the intent pass through one of intent filters.&lt;/p&gt;
+&lt;p&gt;Each unique job should have a intent filter&lt;/p&gt;
+&lt;p&gt;Inside &lt;code&gt;&amp;lt;intent-filter&amp;gt;&lt;/code&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;&amp;lt;action&amp;gt;&lt;/code&gt;: declares the intent action accepted, in the name attribute. Value must be a literal string.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;&amp;lt;data&amp;gt;&lt;/code&gt;: declares the type of data accepted, using attributes from data URL (scheme, host, port, path, etc) and MIME type.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;&amp;lt;category&amp;gt;&lt;/code&gt;: declares the intent category accepted, in the name attribute and value must be literal string.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;activity&lt;/span&gt; &lt;span class="na"&gt;android:name=&lt;/span&gt;&lt;span class="s"&gt;"ShareActivity"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;intent-filter&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;action&lt;/span&gt; &lt;span class="na"&gt;android:name=&lt;/span&gt;&lt;span class="s"&gt;"android.intent.action.SEND"&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;catagory&lt;/span&gt; &lt;span class="na"&gt;android:name=&lt;/span&gt;&lt;span class="s"&gt;"android.intent.category.DEFAULT"&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;data&lt;/span&gt; &lt;span class="na"&gt;android:mimeType=&lt;/span&gt;&lt;span class="s"&gt;"text/plain"&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/intent-filter&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/activity&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Pending Intent: a wrapper around an Intent object. Purpose is to get permission to a foreign application to use the contained intent&lt;/p&gt;
+&lt;p&gt;Cases to use it:
+- Declare an intent to be executed when the user performs an action with your &lt;em&gt;notification&lt;/em&gt; /Notification Manager Execution
+-
+- Declare an intent to be executed when the user performs an action with your &lt;em&gt;App Widget&lt;/em&gt; /Home Screen App Execution&lt;/p&gt;&lt;/div&gt;</description><category>Android</category><category>Java</category><guid>https://pengyin-shan.com/posts/2014/reading-note-android-I/</guid><pubDate>Tue, 13 Jan 2015 05:00:00 GMT</pubDate></item></channel></rss>

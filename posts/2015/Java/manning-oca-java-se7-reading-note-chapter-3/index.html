@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " vocab="http://ogp.me/ns" lang="en">
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]--><!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]--><!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]--><!--[if gt IE 8]><!--><!--<![endif]--><head>
+<meta charset="utf-8">
+<meta name="description" content="Manning OCA Java SE 7 Reading Note: Chapter 3">
+<!-- http://t.co/dKP3o1e --><meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manning OCA Java SE 7 Reading Note: Chapter 3 | Pengyin's Corner</title>
+<link href="../../../../assets/css/all.css" rel="stylesheet" type="text/css">
+<!-- Webfonts --><link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+<!-- Load Modernizr --><script src="//mmistakes.github.io/hpstr-jekyll-theme/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script><link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../rss.xml">
+<link rel="canonical" href="https://pengyin-shan.com/posts/2015/Java/manning-oca-java-se7-reading-note-chapter-3/">
+<!--[if lt IE 9]><script src="../../../../assets/js/html5.js"></script><![endif]--><meta name="description" content="Manning OCA Java SE 7 Reading Note: Chapter 3">
+<meta name="author" content="Pengyin(Wendy) Shan">
+<link rel="prev" href="../manning-oca-java-se7-reading-note-chapter-4/" title="Manning OCA Java SE 7 Reading Note: Chapter 4" type="text/html">
+<link rel="next" href="../manning-oca-java-se7-reading-note-chapter-2/" title="Manning OCA Java SE 7 Reading Note: Chapter 2" type="text/html">
+<meta property="og:site_name" content="Pengyin's Corner">
+<meta property="og:title" content="Manning OCA Java SE 7 Reading Note: Chapter 3">
+<meta property="og:url" content="https://pengyin-shan.com/posts/2015/Java/manning-oca-java-se7-reading-note-chapter-3/">
+<meta property="og:description" content="Manning OCA Java SE 7 Reading Note: Chapter 3">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-01-13T00:00:00-05:00">
+<meta property="article:tag" content="Java">
+</head>
+<body id="post-index" class="feature">
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    
+
+    <nav id="dl-menu" class="dl-menuwrapper" role="navigation"><button class="dl-trigger">Open Menu</button>
+    <ul class="dl-menu">
+<li><a href="../../../">My Knowledge Base</a></li>
+            <li><a href="https://www.linkedin.com/in/pengyinshan">My LinkedIn</a></li>
+            <li><a href="../../../../categories/">Tags and Categories</a></li>
+            <li><a href="../../../../rss.xml">RSS feed</a></li>
+            <li><a href="../../../../archive.html">Archive</a></li>
+    
+    
+    </ul></nav><div class="entry-header">
+<!-- /.image-credit -->
+    <div class="entry-image">
+      <img src="../../../../bk.JPG" alt="Latest Posts">
+</div>
+<!-- /.entry-image -->
+      
+  <div class="header-title">
+    <div class="header-title-wrap">
+    <h1 id="brand"><a href="https://pengyin-shan.com/" title="Pengyin's Corner" rel="home">
+    Pengyin's Corner</a></h1>
+      <h2>Be Passionate.</h2>
+    </div>
+<!-- /.header-title-wrap -->
+  </div>
+<!-- /.header-title -->
+
+</div>
+<!-- /.entry-header -->
+
+    <div id="main" role="main">
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><div class="entry-meta">
+            <span class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2015-01-13T00:00:00-05:00" itemprop="datePublished" title="2015-01-13">2015-01-13</time></a></span>  ·  
+            <span class="byline author vcard">Pengyin(Wendy) Shan</span>  ·  
+                <span class="commentline">
+        
+    <a href="#disqus_thread" data-disqus-identifier="cache/posts/2015/Java/manning-oca-java-se7-reading-note-chapter-3.html">Comments</a>
+
+</span>  ·  
+            
+        <span class="sourceline"><a href="index.md" id="sourcelink">Source</a></span>  ·  
+
+                <meta name="description" itemprop="description" content="Manning OCA Java SE 7 Reading Note: Chapter 3">
+</div>
+        
+
+    
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Manning OCA Java SE 7 Reading Note: Chapter 3</a></h1>
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>This is a post that I moved from <a href="blogpengyin.herokuapp.com"> my old blog site</a>. This is the reading note for <strong>OCA Java SE 7 Certification Guide</strong> from <strong>Manning</strong>. <em>Please note that all definations and examples in this post are taken from the book.</em></p>
+<h2 id="chapter-3-methods-and-encapsulation">Chapter 3: Methods and Encapsulation</h2>
+<p>This chapter mainly covers:</p>
+<ul>
+<li>
+<p>Defining the <strong>scope</strong> of variables</p>
+</li>
+<li>
+<p>Explaining an object’s <strong>life cycle</strong></p>
+</li>
+<li>
+<p>Creating methods with primitive and object arguments and return values</p>
+</li>
+<li>
+<p>Creating <strong>overloaded</strong> methods and constructors</p>
+</li>
+<li>
+<p>Reading and writing to object fields</p>
+</li>
+<li>
+<p>Calling methods on objects</p>
+</li>
+<li>
+<p>Applying <strong>encapsulation</strong> principles to a class</p>
+</li>
+</ul>
+<h3 id="31-scope-of-variables">3.1 Scope of Variables</h3>
+<p>Valid scope of variable:</p>
+<ul>
+<li>
+<p><code>Local</code> variable (also known as method-local variables)</p>
+</li>
+<li>
+<p><code>Method parameter</code> (also known as method arguments)</p>
+</li>
+<li>
+<p><code>Instance variable</code> (also known as attributes, fields, and nonstatic variables)</p>
+</li>
+<li>
+<p><code>Class variable</code> (also known as static variables)</p>
+</li>
+</ul>
+<p>The <strong>life span</strong> of a variable is determined by its <strong>scope</strong>.</p>
+<h4 id="local-variable-method-parameter">Local Variable, Method Parameter</h4>
+<p>Local variables are defined <strong>within method</strong>, with the <strong>shortest scope (life span)</strong>.</p>
+<p>The variables that accept values in a method are called <strong>method parameters</strong>. They’re accessible <strong>only in the method</strong> that defines them.</p>
+<p>The scope of methods parameters can never be shorter than scope of local variables.</p>
+<h4 id="instance-variables-class-variables">Instance Variables, Class Variables</h4>
+<p><strong>Instance is another name for an object.</strong></p>
+<blockquote>
+<p>Hence, an <strong>instance variable</strong> is available for the <strong>life of an object</strong>. An instance variable is declared <strong>within a class, outside of all of the methods</strong>. It’s accessible to <strong>all the nonstatic methods</strong> defined in a class.</p>
+</blockquote>
+<p>A <strong>class variable</strong> is defined by using the keyword <code>static</code> . A class variable <strong>belongs to a class</strong>, not to individual objects of the class. A class variable is shared across <strong>all objects</strong>.</p>
+<p>You don’t even need an object to access a class variable. It can be accessed by <strong>using the name of the class</strong> in which it’s defined:</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">Person</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="n">age</span><span class="o">;</span> <span class="c1">//Instance Variable</span>
+    <span class="kd">static</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span> <span class="c1">//Class Variable</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Test</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">...){</span>
+        <span class="n">Person</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="s">"Bob"</span><span class="o">;</span> <span class="c1">//Use of Class Variable</span>
+        <span class="n">Person</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Person</span><span class="o">();</span>
+        <span class="n">p</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="mi">12</span><span class="o">;</span> <span class="c1">//Use of Instance Variable</span>
+
+        <span class="n">Person</span> <span class="n">p2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Person</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">p2</span><span class="o">.</span><span class="na">name</span><span class="o">);</span> <span class="c1">//Still Bob, because class variable is independent of instance</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">our</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">p2</span><span class="o">.</span><span class="na">age</span><span class="o">);</span> <span class="c1">//Null. New instance hasn't define the value of this instance variable</span>
+
+        <span class="c1">//You can change class variable once, then all instances will have the changed class variable</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>The scope of an instance variable is longer than that of a local vari-
+able or a method parameter.</p>
+<h4 id="compare-scopes-overlapping-scopes">Compare Scopes, Overlapping Scopes</h4>
+<p><code>Local variables</code> are defined <strong>within</strong> a method and are normally used to store the intermediate results of a calculation.</p>
+<p><code>Method parameters</code> are used to pass values to a method. These values can be manipulated and may also be stored as the state of an object by assigning them to instance variables.</p>
+<p><code>Instance variables</code> are used to store the <strong>state</strong> of an object. These are the values that need to be accessed by multiple methods.</p>
+<p><code>Class variables</code> are used to store values that should be shared by all the objects of a class.</p>
+<p><strong>Same Name Problem</strong></p>
+<ul>
+<li>
+<p>you can’t define a <code>static variable</code> and an <code>instance variable</code> with the same name in a class</p>
+</li>
+<li>
+<p><code>local variable</code>s and <code>method parameter</code>s can’t be defined with the same name.</p>
+</li>
+<li>
+<p>A class can define <code>local variable</code>s with the same name as the <code>instance or class variable</code>s.</p>
+</li>
+</ul>
+<h3 id="32-objects-life-cycle">3.2 Object's Life Cycle</h3>
+<p>Java doesn’t allow you to allocate or deallocate memory yourself when you create or destroy objects. Java manages memory for <strong>allocating</strong> objects and reclaiming the memory occupied by unused objects, using Java's <strong>garbage collector</strong>.</p>
+<p>Java also provides a method called <code>finalize</code>, which is accessible to all of the classes.</p>
+<p>All Java classes can <strong>override</strong> the method <code>finalize</code>, which executes just before an object is garbage collected;</p>
+<p>An object’s life cycle starts when it’s <strong>created</strong> and lasts until it <strong>goes out of its scope</strong> or is <strong>no longer referenced</strong> by a variable.</p>
+<h4 id="create-object">Create Object</h4>
+<p>An object is <strong>created</strong> when you use the keyword <code>new</code>. You need to <strong>declare</strong> and <strong>initialize</strong> it.</p>
+<p>If you just do <code>ClassName myclass;</code>, no objects of class <code>ClassName</code> are created in the class Object Life Cycle; it <strong>declares</strong> only a <strong>variable</strong> of type <code>ClassName</code>; Only <strong>declaration</strong> step is done.</p>
+<p>Since <strong>String</strong>s can also be initialized using the <code>=</code> operator, you can just do <code>String a = "a";</code> to create a String object.</p>
+<blockquote>
+<p>If you just do <code>new ClassName()</code>, you only finish <strong>initialize</strong> step.</p>
+<p>Creating an object in this manner will execute the relevant <strong>constructor</strong>s of the class.</p>
+</blockquote>
+<h4 id="access-object">Access Object</h4>
+<p>Once an object is created, it can be <strong>accessed </strong>using its <strong>reference variable</strong>.</p>
+<p>It become <strong>inaccessible/eligible to be garbage collected</strong> when it:</p>
+<ul>
+<li>
+<p><strong>goes out of scope</strong></p>
+</li>
+<li>
+<p>its reference variable is explicitly set to <code>null</code></p>
+</li>
+<li>
+<p><strong>reassign</strong> another object to this variable (i.e. <strong>reinitialized</strong>)</p>
+</li>
+</ul>
+<p>You can determine only which objects are <strong>eligible</strong> to be garbage collected.</p>
+<p>You can never determine <strong>when</strong> a particular object will be garbage collected.</p>
+<blockquote>
+<p>i.e. "which objects are sure to be col- lected during the next GC cycle" is <strong>unknown</strong>.</p>
+</blockquote>
+<h3 id="33-create-methods-with-arguments-and-return-values">3.3 Create Methods with Arguments and Return Values</h3>
+<p>Methods are used to define the <strong>behavior</strong> of an object.</p>
+<h4 id="return">Return</h4>
+<p>A method may or may not return a value.</p>
+<blockquote>
+<p>One that doesn’t return a value has a return type of <code>void</code>.</p>
+<p>If you don’t assign the returned value from a method, it’s neither a compilation error nor a runtime exception</p>
+</blockquote>
+<p>A method can return a <strong>primitive value</strong> or an <strong>object</strong> of any class.</p>
+<p>The returned value from a method may or may not be assigned to a variable.</p>
+<blockquote>
+<p>If you do assignment operation with a method that is <code>void</code>, the code will not compile.</p>
+<p>If you just run a method with return type, without any assignment, this line of code will do nothing.</p>
+</blockquote>
+<p>The variable you use to accept the returned value from a method must be compatible with the returned value. For example, you can not return a <code>int</code> when method needs a <code>double</code>.</p>
+<p>For methds that define a return type, the <code>return</code> statement must be immediately followed by a return value;</p>
+<p>You can use the <code>return</code> statement in a method even if it doesn’t return a value.</p>
+<p>Usually this statement is used to define an <strong>early exit</strong> from a method</p>
+<p>However, the return statement must be the <strong>last statement to execute</strong> in a method, if present. Othewise code will failt to compile.</p>
+<p>The return statement need not be the last statement in a method. i.e. You can <code>return</code> in a leaf of if loop.</p>
+<h4 id="method-parameters">Method Parameters</h4>
+<ul>
+<li>
+<p><strong>Method parameter</strong>s are the variables that appear in the definition of a method.</p>
+</li>
+<li>
+<p><strong>Method argument</strong>s are the actual values that are passed to a method while executing it.</p>
+</li>
+</ul>
+<p>The ellipsis (<code>...</code>) that follows the data type indicates that the method parameter may be passed an <strong>array</strong> or <strong>multiple comma-separated values</strong></p>
+<p>You can define only <strong>one</strong> ellipsis variable argument in a parameter list</p>
+<p>And it should be the <strong>last variable</strong> in the parameter list</p>
+<blockquote>
+<p>For example, <code>public void test(String... a, String... b)</code> and <code>public void test(String... a, int b)</code> will not compile.</p>
+</blockquote>
+<p><strong>Rules to Remember</strong></p>
+<ul>
+<li>
+<p>You can define <strong>multiple parameters</strong> for a method.</p>
+</li>
+<li>
+<p>The method parameter can be a primitive type or objects referenced by a class or referenced by an interface.</p>
+</li>
+<li>
+<p>The method’s parameters are separated by <strong>commas</strong>.</p>
+</li>
+<li>
+<p>Each method parameter is preceded by the name of its type. Each method
+parameter must have an <strong>explicit type declared with its name</strong>.</p>
+</li>
+<li>
+<p>You can’t declare the type once and then list them separated by commas, as you can for variables.</p>
+</li>
+<li>
+<p>A method can be an <strong>instance method</strong> (<code>nonstatic</code>) or a <strong>class method</strong> (<code>static</code>).</p>
+</li>
+<li>
+<p>A method can take zero or more parameters but can <strong>return only zero or one values</strong>.</p>
+</li>
+</ul>
+<h3 id="34-create-an-overloaded-method">3.4 Create an Overloaded Method</h3>
+<p><strong>Overloaded methods</strong> are methods with the <strong>same name</strong> but <strong>different method parameter lists</strong>.</p>
+<p><strong>Rules to Remember</strong></p>
+<ul>
+<li>
+<p>Overloaded methods must have <strong>different method parameters</strong> from one another.</p>
+</li>
+<li>
+<p>Overloaded methods may or may not define a different return type.</p>
+</li>
+<li>
+<p>Overloaded methods may or may not define different access modifiers.</p>
+</li>
+<li>
+<p>Overloaded methods <strong>can’t be defined by only changing their return type or access modifiers</strong>.</p>
+</li>
+</ul>
+<h4 id="argument-list">Argument List</h4>
+<p>The argument lists can differ in terms of any of the following:</p>
+<ul>
+<li>
+<p>Change in the <strong>number of parameters</strong> that are accepted</p>
+</li>
+<li>
+<p>Change in the <strong>types of parameters</strong> that are accepted</p>
+</li>
+<li>
+<p>Change in the <strong>positions of the parameters</strong> that are accepted (based on <strong>parameter type</strong>, not variable names)</p>
+</li>
+</ul>
+<p>when you try to execute this method using values that can be passed to both versions of the overloaded methods. In this case, the code will fail to compile:</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">MyClass</span> <span class="o">{</span>
+    <span class="kt">double</span> <span class="nf">calcAverage</span><span class="o">(</span><span class="kt">double</span> <span class="n">marks1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">marks2</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="o">(</span><span class="n">marks1</span> <span class="o">+</span> <span class="n">marks2</span><span class="o">)/</span><span class="mf">2.0</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kt">double</span> <span class="nf">calcAverage</span><span class="o">(</span><span class="kt">int</span> <span class="n">marks1</span><span class="o">,</span> <span class="kt">double</span> <span class="n">marks2</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="o">(</span><span class="n">marks1</span> <span class="o">+</span> <span class="n">marks2</span><span class="o">)/</span><span class="mf">2.0</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+            <span class="n">MyClass</span> <span class="n">myClass</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyClass</span><span class="o">();</span>
+            <span class="n">myClass</span><span class="o">.</span><span class="na">calcAverage</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span> <span class="c1">//Two method are same here</span>
+<span class="o">}</span> <span class="o">}</span>
+</pre>
+
+
+<h3 id="35-contructor-of-a-class">3.5 Contructor of a Class</h3>
+<p>Constructors are special methods that create and return an object of the class in which they’redefined.</p>
+<p>Constructors have the <strong>same name as the name of the class</strong> in which they’re defined, and they <strong>don’t specify a return type—not even <code>void</code></strong> .</p>
+<blockquote>
+<p>i.e. A constructor <strong>must not</strong> define any return type.</p>
+</blockquote>
+<p>Constructor is called when a object is <strong>initialized</strong>, for example <code>new ClassName();</code></p>
+<p>A constructor can accomplish the following tasks:</p>
+<ul>
+<li>
+<p>Call the <strong>base class</strong>’s constructor; this can be an <strong>implicit</strong> or <strong>explicit</strong> call.</p>
+</li>
+<li>
+<p><strong>Initialize</strong> all of the <strong>instance variables</strong> of a class with their default values.</p>
+</li>
+</ul>
+<h4 id="user-defined-constructors">User-Defined Constructors</h4>
+<p>An author may or may not define a constructor in a class. If the author does define a constructor in a class, it’s known as a <strong>user-defined constructor</strong>.</p>
+<p>Because a constructor is called as soon as an object is created, you can use it to <strong>assign default values</strong> to the instance variable of your class:</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">Employee</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
+
+    <span class="n">Employee</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="mi">20</span><span class="o">;</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Constructor"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>Because a constructor is a method, you can also <strong>pass method parameters</strong> to it:</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">Employee</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
+
+    <span class="n">Employee</span><span class="o">(</span><span class="kt">int</span> <span class="n">newAge</span><span class="o">,</span> <span class="n">String</span> <span class="n">newName</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">newName</span><span class="o">;</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="n">newAge</span><span class="o">;</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Constructor"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="c1">//You can use it via new Employee(12,"Lisa");</span>
+</pre>
+
+
+<p>A constructor does have an <strong>implicit return type</strong>, which is the class in which it’s defined.</p>
+<p>It creates and returns an object of its class, which is <strong>why you can’t define a return type for a constructor</strong>.</p>
+<p>You can define constructors using <strong>any of the four access modifiers</strong>.</p>
+<p>If you define a return tyoe for a contructor, Java will treat it as <strong>another method</strong>, not a <strong>constructor</strong>, which also implies that it won’t be called implicitly when you create an object of its class.</p>
+<p><strong>Initialize Block</strong></p>
+<p>An <strong>initializer block</strong> is defined <strong>within a class</strong>, not as a part of a method. It executes for every object that’s created for a class.</p>
+<p>If you define both an <strong>initializer</strong> and a <strong>constructor</strong> for a class, <strong>both of these will execute</strong>. The initializer block will execute <strong>prior</strong> to the constructor:</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">Employee</span> <span class="o">{</span>
+    <span class="n">Employee</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Employee:constructor"</span><span class="o">);</span> <span class="c1">//Constructor</span>
+    <span class="o">}</span>
+    <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Employee:initializer"</span><span class="o">);</span> <span class="c1">//Initialize Block</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">TestEmp</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+    <span class="n">Employee</span> <span class="n">e</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Employee</span><span class="o">();</span>
+    <span class="c1">//Employee: initializer</span>
+    <span class="c1">//Employee:constructor</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>Initializer blocks are used to initialize the variables of <strong>anonymous classes</strong>.</p>
+<p>An anonymous class is a type of <strong>inner class</strong>. In the absence of a name, anonymous classes can’t define a constructor and rely on an initializer block to initialize their variables upon the creation of an object of their class.</p>
+<h4 id="default-constructor">Default Constructor</h4>
+<p>In the absence of a user-defined constructor, Java inserts a <strong>default constructor</strong>.</p>
+<p>This constructor <strong>doesn’t accept any method arguments</strong>.</p>
+<blockquote>
+<p>It calls the constructor of the <strong>super (parent)</strong> class and assigns default values to all the instance variables.</p>
+<p>Code Example of a default constructor:</p>
+</blockquote>
+<pre class="code literal-block"><span></span><span class="n">Employee</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">();</span> <span class="c1">//Use super to call parent class constructor</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span> <span class="c1">//Assign defalt value to instance variables</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="o">}</span>
+</pre>
+
+
+<p>if you modify the class later by adding a constructor to it, the Java compiler will <strong>remove the default, no-argument constructor</strong> that it initially added to the class.</p>
+<blockquote>
+<p>i.e. <strong>Java defines a default constructor if and only if you don’t define a constructor.</strong></p>
+</blockquote>
+<p>So if you defined a constructor which takes parameters, but when you create instance you just do <code>new ClassName()</code>, the code will fail to compile.</p>
+<h4 id="overloaded-constructors">Overloaded Constructors</h4>
+<p>Similar as overloaded methods, overloaded constructor must:</p>
+<ul>
+<li>
+<p>be defined using <strong>different argument lists</strong>.</p>
+</li>
+<li>
+<p>can’t be defined by just a change in the access <strong>modifiers</strong>.</p>
+</li>
+<li>
+<p>Because constructors don’t define a return type, there’s no point to defining invalid overloaded constructors with different return types.</p>
+</li>
+</ul>
+<p>Overloaded constructors are invoked by using the keyword <code>this</code> —
+an implicit reference that’s accessible to all objects that <strong>refer to an object itself</strong>:</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">Employee</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
+    <span class="n">Employee</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+    <span class="c1">//this is used to call anther constructor which takes two parameters</span>
+    <span class="o">}</span>
+    <span class="n">Employee</span><span class="o">(</span><span class="n">String</span> <span class="n">newName</span><span class="o">,</span> <span class="kt">int</span> <span class="n">newAge</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">newName</span><span class="o">;</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="n">newAge</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>However, when you invoke an overloaded constructor using the keyword <code>this</code> , it must be the <strong>first statement</strong> in your constructor. i.e. <code>Employee(){ int a = 0; this(null,0); }</code> cannot compile.
+- Also, you can’t invoke a constructor within a class by <strong>using the class’s name</strong>. i.e. <code>Employee(){ Employee(null,0); }</code> will not compile.
+- <code>Employee(){ this() }</code> will create infinate loop. Code will not compile.</p>
+<p><strong>Rules to Remember</strong></p>
+<ul>
+<li>
+<p>Overloaded constructors must be defined using different argument lists.</p>
+</li>
+<li>
+<p>Overloaded constructors can’t be defined by just a change in the access modifiers.</p>
+</li>
+<li>
+<p>Overloaded constructors may be defined using different access modifiers.</p>
+</li>
+<li>
+<p>A constructor can call another overloaded constructor by using the keyword <code>this</code> .</p>
+</li>
+<li>
+<p>A constructor can’t invoke a constructor by using its class’s name.</p>
+</li>
+</ul>
+<h3 id="36-accessing-object-fields">3.6 Accessing Object Fields</h3>
+<p>An <strong>object field</strong> is another name for an <strong>instance variable</strong> defined in a class.</p>
+<p>A <strong>setter method</strong> is used to set the value of a variable.</p>
+<p>A <strong>getter method</strong> is used to retrieve the value of a variable.</p>
+<p><strong>The name of an object field is not determined by the name of its getter or setter methods.</strong> i.e. Setter and Getter can have different name comparing to variable name.</p>
+<p><strong>The default value of an object is <code>null</code></strong></p>
+<p><strong>The default value of an int is <code>0</code></strong></p>
+<p>If you set an instance variable <code>private</code>, then you cannot use <code>object.instanceName</code> to assign value. Will not compile.</p>
+<p>Java uses the dot notation ( <code>.</code> ) to execute a method on a reference variable. For example: <code>person.setName()</code>;</p>
+<p>When you call a method, you must pass to it the <strong>exact number of method parameters</strong> that are defined by it.</p>
+<p>If a method has parameter as <code>...</code>, you can pass multiple parameters to it, with same type:</p>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="kt">int</span> <span class="nf">daysOffWork</span><span class="o">(</span><span class="kt">int</span><span class="o">...</span> <span class="n">days</span><span class="o">){</span>
+    <span class="c1">//...</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">...</span> <span class="n">args</span><span class="o">){</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">daysOffWork</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">));</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">daysOffWork</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">));</span>
+    <span class="c1">//All code above work fine</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3 id="37-apply-encapsulation-principles-to-a-class">3.7 Apply Encapsulation Principles to a Class</h3>
+<p><strong>A well-encapsulated object doesn’t expose its internal parts to the outside world.</strong></p>
+<p>the object fields of a class that <strong>isn’t well encapsulated are exposed outside of the class</strong>. This approach enables the users of the class to <strong>assign arbitrary values</strong> to the object fields.</p>
+<p><strong>Information Hiding</strong></p>
+<p><strong>Encapsulation</strong> is the concept of defining variables and the methods
+together in a class. Information hiding originated from the application and purpose of the concept of encapsulation.</p>
+<p>The terms encapsulation and information hiding are used inter-
+changeably.</p>
+<p>By exposing object functionality only through methods, you can
+<strong>prevent your private variables from being assigned any values</strong> that don’t fit your requirements.</p>
+<p>One of the best ways to <strong>create a well-encapsulated class</strong> is
+to <strong>define its instance variables as private variables</strong> and <strong>allow access to these variables using public methods</strong>.</p>
+<h3 id="38-passing-objects-and-primitives-to-methods">3.8 Passing Objects and Primitives to Methods</h3>
+<h4 id="passing-primitives-to-methods">Passing Primitives to Methods</h4>
+<p>The value of a primitive data type is <strong>copied</strong> and <strong>passed</strong> on to a method. Hence, <strong>the variable whose value was copied doesn’t change</strong>.</p>
+<blockquote>
+<p>i.e. When you pass a primitive variable to a method, its value remains the same after the execution of the method.</p>
+</blockquote>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">Employee</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
+    <span class="kt">void</span> <span class="nf">modifyVal</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Office</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+    <span class="n">Employee</span> <span class="n">e</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Employee</span><span class="o">();</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">age</span><span class="o">);</span> <span class="c1">//Prints 0</span>
+    <span class="n">e</span><span class="o">.</span><span class="na">modifyVal</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">age</span><span class="o">);</span> <span class="c1">//Prints 1. This method never access the object field age</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">age</span><span class="o">);</span> <span class="c1">//Prints 0</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>It’s okay to define a method parameter with <strong>the same name as an instance variable</strong> (or object field).</p>
+<p>Within a method, <strong>a method parameter takes precedence over an object field</strong>.</p>
+<p>On the code above, when the method <code>modifyVal</code> refers to the variable <code>age</code> , it refers to the <strong>method parameter</strong> <code>age</code> , not the <strong>instance variable</strong> <code>age</code> .</p>
+<p>To access the instance variable <code>age</code> within the method <code>modifyVal</code> , the variable name <code>age</code> needs to be <strong>prefixed with the keyword <code>this</code></strong> ( <code>this</code> is a keyword that refers to the object itself).</p>
+<h4 id="passing-object-references-to-methods">Passing Object References to Methods</h4>
+<p>When you pass an <strong>object reference</strong> to a method, <strong>the method can assign it to another variable</strong>.</p>
+<p>In this case, the <strong>state</strong> of the object, which was passed on to the method, remains intact/complete.</p>
+<p>Code Example:</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">Person</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="n">Person</span><span class="o">(</span><span class="n">String</span> <span class="n">newName</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">newName</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="n">String</span> <span class="n">val</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">val</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">swap</span><span class="o">(</span><span class="n">Person</span> <span class="n">p1</span><span class="o">,</span> <span class="n">Person</span> <span class="n">p2</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">//Method to swap two</span>
+    <span class="n">Person</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">p1</span><span class="o">;</span>
+    <span class="n">object</span> <span class="n">references</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">p2</span><span class="o">;</span>
+    <span class="n">p2</span> <span class="o">=</span> <span class="n">temp</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+    <span class="n">Person</span> <span class="n">person1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Person</span><span class="o">(</span><span class="s">"John"</span><span class="o">);</span>
+    <span class="n">Person</span> <span class="n">person2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Person</span><span class="o">(</span><span class="s">"Paul"</span><span class="o">);</span>
+
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">person1</span><span class="o">.</span><span class="na">getName</span><span class="o">()</span> <span class="o">+</span> <span class="s">":"</span> <span class="o">+</span> <span class="n">person2</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+    <span class="c1">//Prints John:Paul</span>
+    <span class="n">swap</span><span class="o">(</span><span class="n">person1</span><span class="o">,</span> <span class="n">person2</span><span class="o">);</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">person1</span><span class="o">.</span><span class="na">getName</span><span class="o">()+</span> <span class="s">":"</span> <span class="o">+</span> <span class="n">person2</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+    <span class="c1">//Prints John:Paul</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>Explaination of <code>swap</code> method (Make sure you won't mix order!):</p>
+<ul>
+<li>
+<p><code>Person temp = p1</code>: make <code>temp</code> refer to the object referred to by <code>p1</code>.</p>
+</li>
+<li>
+<p><code>p1 = p2</code>: makes <code>p1</code> refer to the object referred to by <code>p2</code> .</p>
+</li>
+<li>
+<p><code>p2 = temp;</code> makes <code>p2</code> refer to the object referred to by <code>temp</code>.</p>
+</li>
+</ul>
+<blockquote>
+<p>On the code above, however, <strong>the reference variables <code>person1</code> and <code>person2</code> are still referring to the objects that they passed to the method <code>swap</code></strong>.</p>
+<p>We can change the value by using <code>setter</code> for person_name.</p>
+</blockquote>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../categories/java/" rel="tag">Java</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../manning-oca-java-se7-reading-note-chapter-4/" rel="prev" title="Manning OCA Java SE 7 Reading Note: Chapter 4">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../manning-oca-java-se7-reading-note-chapter-2/" rel="next" title="Manning OCA Java SE 7 Reading Note: Chapter 2">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="pengyinsnotes",
+            disqus_url="https://pengyin-shan.com/posts/2015/Java/manning-oca-java-se7-reading-note-chapter-3/",
+        disqus_title="Manning OCA Java SE 7 Reading Note: Chapter 3",
+        disqus_identifier="cache/posts/2015/Java/manning-oca-java-se7-reading-note-chapter-3.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="pengyinsnotes";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+    
+    <div class="footer-wrapper">
+        <footer role="contentinfo"><p>Contents © 2018         <a href="mailto:pengyin.shan@outlook.com">Pengyin(Wendy) Shan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+        </footer>
+</div>
+
+    
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script src="../../../../assets/js/scripts.min.js"></script>
+</body>
+</html>

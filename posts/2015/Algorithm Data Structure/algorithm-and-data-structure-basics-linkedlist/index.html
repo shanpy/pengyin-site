@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " vocab="http://ogp.me/ns" lang="en">
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]--><!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]--><!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]--><!--[if gt IE 8]><!--><!--<![endif]--><head>
+<meta charset="utf-8">
+<meta name="description" content="I wrote this post to record some basic knowledge about using Linked List for future reference. Code is written mainly in Java.">
+<!-- http://t.co/dKP3o1e --><meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algorithm and Data Structure Basics - Linked List | Pengyin's Corner</title>
+<link href="../../../../assets/css/all.css" rel="stylesheet" type="text/css">
+<!-- Webfonts --><link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+<!-- Load Modernizr --><script src="//mmistakes.github.io/hpstr-jekyll-theme/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script><link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../rss.xml">
+<link rel="canonical" href="https://pengyin-shan.com/posts/2015/Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-linkedlist/">
+<!--[if lt IE 9]><script src="../../../../assets/js/html5.js"></script><![endif]--><meta name="description" content="I wrote this post to record some basic knowledge about using Linked List for future reference. Code is written mainly in Java.">
+<meta name="author" content="Pengyin(Wendy) Shan">
+<link rel="prev" href="../../Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-recursion/" title="Algorithm and Data Structure Basics - Recursion" type="text/html">
+<link rel="next" href="../../Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-heap/" title="Algorithm and Data Structure Basics - Heap" type="text/html">
+<meta property="og:site_name" content="Pengyin's Corner">
+<meta property="og:title" content="Algorithm and Data Structure Basics - Linked List">
+<meta property="og:url" content="https://pengyin-shan.com/posts/2015/Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-linkedlist/">
+<meta property="og:description" content="I wrote this post to record some basic knowledge about using Linked List for future reference. Code is written mainly in Java.">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-09-02T00:00:00-04:00">
+<meta property="article:tag" content="Algorithm">
+<meta property="article:tag" content="Data Structure">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Linked List">
+</head>
+<body id="post-index" class="feature">
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    
+
+    <nav id="dl-menu" class="dl-menuwrapper" role="navigation"><button class="dl-trigger">Open Menu</button>
+    <ul class="dl-menu">
+<li><a href="../../../">My Knowledge Base</a></li>
+            <li><a href="https://www.linkedin.com/in/pengyinshan">My LinkedIn</a></li>
+            <li><a href="../../../../categories/">Tags and Categories</a></li>
+            <li><a href="../../../../rss.xml">RSS feed</a></li>
+            <li><a href="../../../../archive.html">Archive</a></li>
+    
+    
+    </ul></nav><div class="entry-header">
+<!-- /.image-credit -->
+    <div class="entry-image">
+      <img src="../../../../bk.JPG" alt="Latest Posts">
+</div>
+<!-- /.entry-image -->
+      
+  <div class="header-title">
+    <div class="header-title-wrap">
+    <h1 id="brand"><a href="https://pengyin-shan.com/" title="Pengyin's Corner" rel="home">
+    Pengyin's Corner</a></h1>
+      <h2>Be Passionate.</h2>
+    </div>
+<!-- /.header-title-wrap -->
+  </div>
+<!-- /.header-title -->
+
+</div>
+<!-- /.entry-header -->
+
+    <div id="main" role="main">
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><div class="entry-meta">
+            <span class="dateline"><a href="../../Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-linkedlist/" rel="bookmark"><time class="published dt-published" datetime="2015-09-02T00:00:00-04:00" itemprop="datePublished" title="2015-09-02">2015-09-02</time></a></span>  ·  
+            <span class="byline author vcard">Pengyin(Wendy) Shan</span>  ·  
+                <span class="commentline">
+        
+    <a href="../../Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-linkedlist/#disqus_thread" data-disqus-identifier="cache/posts/2015/Algorithm Data Structure/algorithm-and-data-structure-basics-linkedlist.html">Comments</a>
+
+</span>  ·  
+            
+        <span class="sourceline"><a href="../../Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-linkedlist/index.md" id="sourcelink">Source</a></span>  ·  
+
+                <meta name="description" itemprop="description" content="I wrote this post to record some basic knowledge about using Linked List for future reference. Code is written mainly in Java.">
+</div>
+        
+
+    
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="../../Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-linkedlist/" class="u-url">Algorithm and Data Structure Basics - Linked List</a></h1>
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<h4 id="reference-list">Reference List</h4>
+<ul>
+<li>
+<p><a href="http://www.linuxidc.com/Linux/2014-04/99926.htm">Merge Sort for Single Linked List Java (Chinese)</a></p>
+</li>
+<li>
+<p><em>Data Structures and Algorithms in Java (Second Edition)</em>, written by <em>Robert Lafore</em>, Chinese Version</p>
+</li>
+</ul>
+<h4 id="efficiency-of-linked-list">Efficiency of Linked List</h4>
+<p>Insertion and Deletion <strong>at the head of linked list</strong> is really quick. It need <code>O(1)</code> time complexity.</p>
+<h5 id="compare-with-array">Compare with Array</h5>
+<p>Both array and linked list need <code>O(N)</code> time complexity for searching and insertion/deletion to certain node. However, linked list may still be a better option, because it <strong>does not need to move</strong> anything when it does these operations. Linked list can save lots of time expecially if there exists a large amount of elements.</p>
+<p>Linked list is also better at saving space. Linked list also gives flexibility of expanding size.</p>
+<p>So if we don't know exact size of data, linked list can be a better option comparing to array.</p>
+<h4 id="adt">ADT</h4>
+<p>You can create <code>stack</code> using linked list. When you create <code>push</code> and <code>pop</code> method, just insert/remove first element from head of linked list.</p>
+<h4 id="insertion-sort-for-sorted-linked-list">Insertion Sort for Sorted Linked List</h4>
+<p>If you have a un-sorted array, you can take all elements out, and insert them to a sorted linked list. Then after you deleting all elements and re-put them to array, this array will become a sorted one.</p>
+<pre class="code literal-block"><span></span><span class="cm">/*</span>
+<span class="cm">  Insert Node at the end of a linked list</span>
+<span class="cm">  head pointer input could be NULL as well for empty list</span>
+<span class="cm">  Node is defined as</span>
+<span class="cm">  class Node {</span>
+<span class="cm">     int data;</span>
+<span class="cm">     Node next;</span>
+<span class="cm">  }</span>
+<span class="cm">*/</span>
+<span class="kd">class</span> <span class="nc">SortedList</span><span class="o">{</span>
+  <span class="kd">private</span> <span class="n">Node</span> <span class="n">head</span><span class="o">;</span> <span class="c1">//head of linked list</span>
+
+  <span class="kd">public</span> <span class="nf">SortedList</span><span class="o">(){</span>
+    <span class="n">head</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="c1">//constructor for empty list</span>
+  <span class="o">}</span>
+
+  <span class="c1">//Constructor for taking a array of nodes as parameter</span>
+  <span class="kd">public</span> <span class="nf">SortedList</span><span class="o">(</span><span class="n">Node</span><span class="o">[]</span> <span class="n">nodearray</span><span class="o">){</span>
+    <span class="n">head</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">nodearray</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">j</span><span class="o">++){</span>
+      <span class="n">insert</span><span class="o">(</span><span class="n">nodearray</span><span class="o">[</span><span class="n">j</span><span class="o">]);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">insert</span><span class="o">(</span><span class="n">Node</span> <span class="n">insertNode</span><span class="o">){</span>
+    <span class="n">Node</span> <span class="n">currentNode</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">();</span>
+    <span class="n">currentNode</span> <span class="o">=</span> <span class="n">head</span><span class="o">;</span>
+
+    <span class="k">if</span><span class="o">(</span><span class="n">currentNode</span><span class="o">.</span><span class="na">next</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+      <span class="c1">//Skip this process. Insert insertNode if there is only one node in linked list</span>
+    <span class="o">}</span>
+
+    <span class="c1">//Do insertion sort. Left most is always the largest one</span>
+    <span class="k">while</span><span class="o">(</span><span class="n">currentNode</span><span class="o">.</span><span class="na">next</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">insertNode</span><span class="o">.</span><span class="na">data</span> <span class="o">&gt;</span> <span class="n">currentNode</span><span class="o">.</span><span class="na">next</span><span class="o">.</span><span class="na">data</span><span class="o">){</span>
+      <span class="n">Node</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">currentNode</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+      <span class="n">currentNode</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">insertNode</span><span class="o">;</span>
+      <span class="n">insertNode</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">temp</span><span class="o">;</span>
+      <span class="n">currentNode</span> <span class="o">=</span> <span class="n">currentNode</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h4 id="iterator">Iterator</h4>
+<p>Iterator is used as a reference so that it can point to any node in linked list, in order to find and change certain node.</p>
+<h5 id="class-of-iterator">Class of Iterator</h5>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nf">ListIterator</span><span class="o">(){</span>
+  <span class="kd">private</span> <span class="n">Node</span> <span class="n">current</span><span class="o">;</span> <span class="c1">//current node in linked list that iterator is pointing to</span>
+  <span class="c1">//private Node previous;  for doubly linked list</span>
+  <span class="kd">private</span> <span class="n">LinkedList</span> <span class="n">currentList</span><span class="o">;</span> <span class="c1">//current linked list</span>
+<span class="o">}</span>
+</pre>
+
+
+<h5 id="main-class">Main Class</h5>
+<p>You may have different iterators for one linked list. Each iterator points to a certain node.</p>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(...){</span>
+  <span class="n">LinkedList</span> <span class="n">l</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedList</span><span class="o">();</span>
+  <span class="n">ListIterator</span> <span class="n">iter</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="na">getIterator</span><span class="o">();</span>
+  <span class="n">Node</span> <span class="n">point</span> <span class="o">=</span> <span class="n">iter</span><span class="o">.</span><span class="na">getCurrent</span><span class="o">();</span> <span class="c1">//get current node in iterator</span>
+  <span class="c1">//point.next...</span>
+<span class="o">}</span>
+</pre>
+
+
+<h5 id="possible-methods">Possible Methods</h5>
+<p>You can add following possible methods to your iterator:</p>
+<ul>
+<li>
+<p>reset(): Make iterator point to head of linked list</p>
+</li>
+<li>
+<p>nextLink(): Make iterator point to next node</p>
+</li>
+<li>
+<p>getCurrent(): return current node</p>
+</li>
+<li>
+<p>atEnd(): return <code>true</code> if iterator is pointing to end of linked list</p>
+</li>
+<li>
+<p>insertAfter()/insertBefore()/deletCurretn(): operation for insertion/deletion</p>
+</li>
+</ul>
+<h4 id="merge-two-sorted-linked-listsmerge-sort-single-linked-list">Merge Two Sorted Linked Lists/Merge Sort Single Linked List</h4>
+<p>You can check <strong>Merge Two Sorted Linked Lists</strong> on <a href="https://www.hackerrank.com/challenges/merge-two-sorted-linked-lists/submissions/code/13529242">hackerrank.com</a>.</p>
+<h5 id="idea">Idea</h5>
+<p>To merge two sorted linked lists, you just need to create a new node and always get the smaller node from two source linked lists. Every time a node is passed, move <code>header</code> to next node.</p>
+<p>To merge sort a single linked list, you need to have two pointer: <code>p</code> and <code>f</code>. Every time if <code>p</code> points to next node, <code>f</code> should point to the node after the next one. In this case, when <code>f</code> finish walking through <strong>a certain part of linked list</strong>, <code>p</code> is <strong>on the half</strong> of that linked list.</p>
+<p>Recursively call the method above for first part(start from origin head) of linked list and second part(start from <code>p</code>) for division process. Then merge result using same method as merging two sorted linked lists</p>
+<h5 id="code">Code</h5>
+<h6 id="code-for-merging-two-sorted-linked-list-on-hackerrankcom">Code for merging two sorted linked list, on hackerrank.com:</h6>
+<pre class="code literal-block"><span></span><span class="cm">/*</span>
+<span class="cm">  Insert Node at the end of a linked list</span>
+<span class="cm">  head pointer input could be NULL as well for empty list</span>
+<span class="cm">  Node is defined as</span>
+<span class="cm">  class Node {</span>
+<span class="cm">     int data;</span>
+<span class="cm">     Node next;</span>
+<span class="cm">  }</span>
+<span class="cm">*/</span>
+
+<span class="n">Node</span> <span class="nf">MergeLists</span><span class="o">(</span><span class="n">Node</span> <span class="n">headA</span><span class="o">,</span> <span class="n">Node</span> <span class="n">headB</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Node</span> <span class="n">c</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">();</span>
+        <span class="n">Node</span> <span class="n">result</span> <span class="o">=</span> <span class="n">c</span><span class="o">;</span>
+
+        <span class="k">while</span> <span class="o">(</span><span class="n">headA</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">headB</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">){</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">headA</span><span class="o">.</span><span class="na">data</span> <span class="o">&lt;=</span> <span class="n">headB</span><span class="o">.</span><span class="na">data</span><span class="o">){</span>
+                <span class="n">c</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">headA</span><span class="o">;</span>
+                <span class="n">headA</span> <span class="o">=</span> <span class="n">headA</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+            <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+                <span class="n">c</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">headB</span><span class="o">;</span>
+                <span class="n">headB</span> <span class="o">=</span> <span class="n">headB</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="k">if</span><span class="o">(</span><span class="n">headA</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="n">c</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">headB</span><span class="o">;</span>
+        <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+            <span class="n">c</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">headA</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+        <span class="c1">//result is a empty node. result.next (i.e. c.next) is the start of new linked list</span>
+    <span class="o">}</span>
+</pre>
+
+
+<h6 id="code-for-merging-single-linked-list-divide-part">Code for merging single linked list, divide part:</h6>
+<pre class="code literal-block"><span></span><span class="cm">/*</span>
+<span class="cm">  Insert Node at the end of a linked list</span>
+<span class="cm">  head pointer input could be NULL as well for empty list</span>
+<span class="cm">  Node is defined as</span>
+<span class="cm">  class Node {</span>
+<span class="cm">     int data;</span>
+<span class="cm">     Node next;</span>
+<span class="cm">  }</span>
+<span class="cm">*/</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="n">Node</span> <span class="nf">sortList</span><span class="o">(</span><span class="n">Node</span> <span class="n">head</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">head</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">head</span><span class="o">.</span><span class="na">next</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+        <span class="k">return</span> <span class="n">head</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="n">ListNode</span> <span class="n">p</span> <span class="o">=</span> <span class="n">head</span><span class="o">;</span>
+    <span class="n">ListNode</span> <span class="n">f</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+
+    <span class="k">while</span> <span class="o">(</span> <span class="n">f</span><span class="o">.</span><span class="na">next</span> <span class="o">!=</span><span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">f</span><span class="o">.</span><span class="na">next</span><span class="o">.</span><span class="na">next</span> <span class="o">!=</span><span class="kc">null</span> <span class="o">){</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="na">next</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">//Perform division to second half of linked list</span>
+    <span class="n">ListNode</span> <span class="n">h2</span> <span class="o">=</span> <span class="n">sortList</span><span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">next</span><span class="o">);</span>
+    <span class="n">p</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+    <span class="cm">/*</span>
+<span class="cm">    Perform divide to first half of linked list (starting from head),then merge division result.</span>
+<span class="cm">    'MergeLists' method is the code in first part</span>
+<span class="cm">    */</span>
+    <span class="k">return</span> <span class="n">MergeLists</span><span class="o">(</span><span class="n">sortList</span><span class="o">(</span><span class="n">head</span><span class="o">),</span><span class="n">h2</span><span class="o">);</span>
+<span class="o">}</span>
+</pre>
+
+
+<h4 id="flatten-a-doubly-linked-list">Flatten a Doubly Linked List</h4>
+<p>This is a question from the book <em>Programming Interview Exposed</em>. Following graph is a example of a doubly linked list, from <a href="http://www.geeksforgeeks.org/flatten-a-linked-list-with-next-and-child-pointers/">this post</a>:</p>
+<p>../images/articles/2015/algorithm/double_linkedlist.png </p>
+<h5 id="idea_1">Idea</h5>
+<p>Generally, each child linked list can be flattened as a single linked list, which can be appended to the end of result linked list. Each time you encounter a node with a child, append the child (and thus the child list) to the <strong>end of the first level</strong> and update the <strong>tail pointer</strong>.</p>
+<p>This is a description of algorithm:</p>
+<pre class="code literal-block"><span></span>Start at the beginning of the first level
+While you are not at the end of the first level
+    If the current node has a child
+        Append the child to the end of the first level
+        Update the tail pointer
+    Advance to next node
+</pre>
+
+
+<h5 id="code_1">Code</h5>
+<pre class="code literal-block"><span></span><span class="cm">/*</span>
+<span class="cm">  Insert Node at the end of a linked list</span>
+<span class="cm">  head pointer input could be NULL as well for empty list</span>
+<span class="cm">  Node is defined as</span>
+<span class="cm">  class Node {</span>
+<span class="cm">     int data;</span>
+<span class="cm">     Node next;</span>
+<span class="cm">     Node prev;</span>
+<span class="cm">     Node child;</span>
+<span class="cm">  }</span>
+<span class="cm">*/</span>
+<span class="kt">void</span> <span class="nf">flattenList</span><span class="o">(</span><span class="n">Node</span> <span class="n">head</span><span class="o">,</span> <span class="n">Node</span> <span class="n">tail</span><span class="o">){</span>
+    <span class="n">Node</span> <span class="n">currentNode</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">();</span>
+    <span class="n">currentNode</span> <span class="o">=</span> <span class="n">head</span><span class="o">;</span>
+
+    <span class="k">while</span><span class="o">(</span><span class="n">currentNode</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">currentNode</span><span class="o">.</span><span class="na">child</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+            <span class="n">append</span><span class="o">(</span><span class="n">currentNode</span><span class="o">.</span><span class="na">child</span><span class="o">,</span> <span class="n">tail</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="n">currentNode</span> <span class="o">=</span> <span class="n">currentNode</span><span class="o">.</span><span class="na">next</span>
+<span class="o">}</span>
+
+<span class="cm">/*</span>
+<span class="cm">Append the child list to the end of the tail and update the tail;</span>
+<span class="cm">*/</span>
+<span class="kt">void</span> <span class="nf">append</span><span class="o">(</span><span class="n">Node</span> <span class="n">child</span><span class="o">,</span> <span class="n">Node</span> <span class="n">tail</span><span class="o">){</span>
+    <span class="n">Node</span> <span class="n">currentNode</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">();</span>
+
+    <span class="c1">//Append child list to tail</span>
+    <span class="n">tail</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">child</span><span class="o">;</span>
+    <span class="n">child</span><span class="o">.</span><span class="na">prev</span> <span class="o">=</span> <span class="n">tail</span><span class="o">;</span>
+
+    <span class="c1">//Find the new tail, which should be the end of the child list</span>
+    <span class="n">currentNode</span> <span class="o">=</span> <span class="n">child</span><span class="o">;</span>
+    <span class="k">while</span><span class="o">(</span><span class="n">currentNode</span><span class="o">.</span><span class="na">next</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+        <span class="n">currentNode</span> <span class="o">=</span> <span class="n">currentNode</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">//Update the tail pointer now that currentNode is the new tail</span>
+    <span class="n">tail</span> <span class="o">=</span> <span class="n">currentNode</span><span class="o">;</span>
+<span class="o">}</span>
+</pre>
+
+
+<h4 id="unflatten-previous-linked-list">Unflatten Previous Linked List</h4>
+<h5 id="idea_2">Idea</h5>
+<p>To unflatten previous linked list, you can do following:</p>
+<pre class="code literal-block"><span></span>Explore Path:
+    While not at the end
+        If current node has a child
+            Separate the child from its previous node
+            Explore path beginning with the child
+        Go onto the next node
+</pre>
+
+
+<h5 id="code_2">Code</h5>
+<pre class="code literal-block"><span></span><span class="cm">/*</span>
+<span class="cm">  Insert Node at the end of a linked list</span>
+<span class="cm">  head pointer input could be NULL as well for empty list</span>
+<span class="cm">  Node is defined as</span>
+<span class="cm">  class Node {</span>
+<span class="cm">     int data;</span>
+<span class="cm">     Node next;</span>
+<span class="cm">     Node prev;</span>
+<span class="cm">     Node child;</span>
+<span class="cm">  }</span>
+<span class="cm">*/</span>
+<span class="kt">void</span> <span class="nf">unflattenList</span><span class="o">(</span><span class="n">Node</span> <span class="n">start</span><span class="o">,</span> <span class="n">Node</span> <span class="n">tail</span><span class="o">){</span>
+    <span class="n">Node</span> <span class="n">currentNode</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">();</span>
+
+    <span class="n">exploreAndSeparate</span><span class="o">(</span><span class="n">start</span><span class="o">);</span>
+
+    <span class="c1">//Update the tail pointer</span>
+    <span class="n">currentNode</span> <span class="o">=</span> <span class="n">start</span><span class="o">;</span>
+    <span class="k">while</span><span class="o">(</span><span class="n">currentNode</span><span class="o">.</span><span class="na">next</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">next</span>
+    <span class="n">tail</span> <span class="o">=</span> <span class="n">currentNode</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">//exploreAndSeparate actually does the recursion and separation</span>
+<span class="kt">void</span> <span class="nf">exploreAndSeparate</span><span class="o">(</span><span class="n">Node</span> <span class="n">childListStart</span><span class="o">){</span>
+    <span class="n">Node</span> <span class="n">currentNode</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">();</span>
+    <span class="n">currentNode</span> <span class="o">=</span> <span class="n">childListStart</span><span class="o">;</span>
+
+    <span class="k">while</span><span class="o">(</span><span class="n">currentNode</span><span class="o">.</span><span class="na">next</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+        <span class="c1">//Check if currentNode is a start of a child list</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">currentNode</span><span class="o">.</span><span class="na">child</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="c1">//Broken child list from origin list. i.e. original prev node should point to null now</span>
+            <span class="n">currentNode</span><span class="o">.</span><span class="na">child</span><span class="o">.</span><span class="na">prev</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="c1">//Split new child list out. Remember original parent can still do node.child to get this child list</span>
+            <span class="n">currentNode</span><span class="o">.</span><span class="na">child</span><span class="o">.</span><span class="na">prev</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+            <span class="c1">//Run recursion so that all childs from child node can be split</span>
+            <span class="n">exploreAndSeparate</span><span class="o">(</span><span class="n">currentNode</span><span class="o">.</span><span class="na">child</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">currentNode</span> <span class="o">=</span> <span class="n">currentNode</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../categories/algorithm/" rel="tag">Algorithm</a></li>
+            <li><a class="tag p-category" href="../../../../categories/data-structure/" rel="tag">Data Structure</a></li>
+            <li><a class="tag p-category" href="../../../../categories/java/" rel="tag">Java</a></li>
+            <li><a class="tag p-category" href="../../../../categories/linked-list/" rel="tag">Linked List</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../../Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-recursion/" rel="prev" title="Algorithm and Data Structure Basics - Recursion">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../../Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-heap/" rel="next" title="Algorithm and Data Structure Basics - Heap">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="pengyinsnotes",
+            disqus_url="https://pengyin-shan.com/posts/2015/Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-linkedlist/",
+        disqus_title="Algorithm and Data Structure Basics - Linked List",
+        disqus_identifier="cache/posts/2015/Algorithm Data Structure/algorithm-and-data-structure-basics-linkedlist.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="pengyinsnotes";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+    
+    <div class="footer-wrapper">
+        <footer role="contentinfo"><p>Contents © 2018         <a href="mailto:pengyin.shan@outlook.com">Pengyin(Wendy) Shan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+        </footer>
+</div>
+
+    
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script src="../../../../assets/js/scripts.min.js"></script>
+</body>
+</html>

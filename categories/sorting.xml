@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Pengyin's Corner (Posts about Sorting)</title><link>https://pengyin-shan.com/</link><description></description><atom:link type="application/rss+xml" href="https://pengyin-shan.com/categories/sorting.xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Tue, 11 Sep 2018 20:57:17 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Algorithm and Data Structure Basics - Sorting</title><link>https://pengyin-shan.com/posts/2015/Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-sorting/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;h4 id="reference-list"&gt;Reference List&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Introduction to Algorithms (Third Edition/Chinese Version)&lt;/strong&gt;, written by &lt;em&gt;Thomas H.Cormen&lt;/em&gt;, &lt;em&gt;Charles E.Leiserson&lt;/em&gt;, &lt;em&gt;Ronald L.Rivest&lt;/em&gt; and &lt;em&gt;Clifford Stein&lt;/em&gt;, and translated by &lt;em&gt;Jianping Yin&lt;/em&gt;, &lt;em&gt;Yun Xu&lt;/em&gt;, &lt;em&gt;Gang Wang&lt;/em&gt;, &lt;em&gt;Xiaoguang Liu&lt;/em&gt;, &lt;em&gt;Ming Su&lt;/em&gt;, &lt;em&gt;Hengming Zou&lt;/em&gt; and &lt;em&gt;HongZhi Wang&lt;/em&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Data Structures and Algorithms in Java (Second Edition/Chinese Version)&lt;/strong&gt;, written by &lt;em&gt;Robert Lafore&lt;/em&gt;, and translated by &lt;em&gt;Xiaoyun Ji&lt;/em&gt;, &lt;em&gt;Yan Zhao&lt;/em&gt;, &lt;em&gt;Xi Zeng&lt;/em&gt; and &lt;em&gt;Xiaohan Di&lt;/em&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="terminology-runtime-analysis"&gt;Terminology &amp;amp; Runtime Analysis&lt;/h4&gt;
+&lt;p&gt;&lt;em&gt;This part serves as a reading note for Introduction to Algorithms (Third Edition), Chapter 1 and Chapter 2, to clarify some basic terms of Algorithms&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Algorithm&lt;/code&gt; is the process of reading a value or a collection of value as &lt;strong&gt;input&lt;/strong&gt;, and product a value or a collection of value as &lt;strong&gt;output&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;A sequence of input (with constrains) from a algorithm question is called a &lt;code&gt;instance&lt;/code&gt; of that question.&lt;/p&gt;
+&lt;h5 id="runtime-analysis"&gt;Runtime Analysis&lt;/h5&gt;
+&lt;p&gt;From the book &lt;em&gt;Introduction to Algorithms&lt;/em&gt;, the reason we are focusing on &lt;strong&gt;worst case running time&lt;/strong&gt; is:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;The worst running time gives a upper limitation running time for any input.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;For some special algorithms, users can easily get worst case, such as searching for record which may not exist in database.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;There is lots of times that the &lt;em&gt;average running time&lt;/em&gt; is the same as the &lt;em&gt;worst running time&lt;/em&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id="basic-insertion-sort-with-analysis-for-algorithm-questions"&gt;Basic Insertion Sort, with Analysis for Algorithm Questions&lt;/h4&gt;
+&lt;p&gt;Insertion sort is very useful for a &lt;strong&gt;small&lt;/strong&gt; amount of input.&lt;/p&gt;
+&lt;p&gt;In book &lt;em&gt;Introduction to Algorithms&lt;/em&gt;, insertion sort is described as the same process of someone sorting a group of pokers in a poker game. All elements on one side of your current item (i.e. the item that is supposed to be sorted) is in order.&lt;/p&gt;
+&lt;p&gt;Pseudo-code for Insertion Sort:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;/*
+* In following code&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;left&lt;/span&gt; side of &lt;span class="nb"&gt;key&lt;/span&gt; &lt;span class="k"&gt;is&lt;/span&gt; always being sorted&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; acceding order.
+* In comparing process&lt;span class="p"&gt;,&lt;/span&gt; starting from the element &lt;span class="k"&gt;on&lt;/span&gt; the &lt;span class="k"&gt;left&lt;/span&gt; of &lt;span class="nb"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; then moving towards &lt;span class="k"&gt;start&lt;/span&gt; of array.
+*/
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="k"&gt;j&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt; &lt;span class="k"&gt;to&lt;/span&gt; A.length
+    &lt;span class="nb"&gt;key&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; A[&lt;span class="k"&gt;j&lt;/span&gt;]
+    &lt;span class="k"&gt;i&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;j&lt;/span&gt;&lt;span class="m"&gt;-1&lt;/span&gt;
+
+    &lt;span class="sr"&gt;//&lt;/span&gt;This loops means &lt;span class="k"&gt;all&lt;/span&gt; sorted elements begin &lt;span class="k"&gt;to&lt;/span&gt; move one space &lt;span class="k"&gt;to&lt;/span&gt; &lt;span class="k"&gt;end&lt;/span&gt; of array&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;so&lt;/span&gt; that &lt;span class="nb"&gt;key&lt;/span&gt; can be inserted &lt;span class="k"&gt;to&lt;/span&gt; gap
+    &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="k"&gt;i&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; and A[&lt;span class="k"&gt;i&lt;/span&gt;] &lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;key&lt;/span&gt;
+        A[&lt;span class="k"&gt;i&lt;/span&gt;&lt;span class="p"&gt;+&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;] &lt;span class="p"&gt;=&lt;/span&gt; A[&lt;span class="k"&gt;i&lt;/span&gt;]
+        &lt;span class="k"&gt;i&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;i&lt;/span&gt;&lt;span class="m"&gt;-1&lt;/span&gt;
+    A[&lt;span class="k"&gt;i&lt;/span&gt;&lt;span class="p"&gt;+&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;] &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;key&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="basic-selection-sort"&gt;Basic Selection Sort&lt;/h4&gt;
+&lt;p&gt;To perform selection sort, you are given a array of numbers: &lt;code&gt;A&lt;/code&gt;.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;You find the smallest element in A, then exchange this element with the element in A[0]&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Starting from A[1], find the smallest element then changing with A[1]&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Continue this process until you reach A[A.length-1]&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Code in Java:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;selectionSort&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+    &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;min&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+    &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;length&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;++){&lt;/span&gt;
+        &lt;span class="n"&gt;min&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;];&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;length&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="o"&gt;++){&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="o"&gt;]&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;min&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+                &lt;span class="n"&gt;min&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="o"&gt;];&lt;/span&gt;
+            &lt;span class="n"&gt;swap&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;],&lt;/span&gt; &lt;span class="n"&gt;min&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="basic-merge-sort"&gt;Basic Merge Sort&lt;/h4&gt;
+&lt;p&gt;Merge sort uses &lt;code&gt;divide-and-concur&lt;/code&gt; mode:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Divide original question to smaller questions. For each sub-question, it is a instance of original question.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Solution these sub-questions by using &lt;code&gt;recursion&lt;/code&gt;. When the sub-question is small enough, solve this sub-question.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Concur/Merge these sub-solutions to the solution of original question.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The process of merge sort is:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Divide the array of &lt;code&gt;n&lt;/code&gt; elements to two sub-array. Each sub-array should have &lt;code&gt;n/2&lt;/code&gt; elements.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Recursively repeating the first step to sub-arrays until each sub-array only have one element (i.e. Being sorted already).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Merge all sorted arrays to one sorted array.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The merge process is the key part of merge sort. From &lt;em&gt;Introduction to Algorithms&lt;/em&gt;, A function &lt;code&gt;merge(A, p, q, r)&lt;/code&gt; can be used to perform merge process, where &lt;code&gt;A&lt;/code&gt; is the array, and &lt;code&gt;p &amp;lt;= q &amp;lt;= r&lt;/code&gt;. This process assumes that &lt;code&gt;A[p:q]&lt;/code&gt; and &lt;code&gt;A[q+1:r]&lt;/code&gt; has been sorted. At the end of merge process, &lt;code&gt;A[p:r]&lt;/code&gt; should be sorted.&lt;/p&gt;
+&lt;p&gt;In &lt;em&gt;Introduction to Algorithms&lt;/em&gt;, a &lt;strong&gt;poker example&lt;/strong&gt; is used to describe the merge process. The merge process is to chose a smaller one from the top of two piled poker, and put that poker to a new pile. Repeat this process until one pile is empty.&lt;/p&gt;
+&lt;p&gt;Since we most perform &lt;code&gt;n&lt;/code&gt; steps to merge, the running time of merge is $theta (n)$.&lt;/p&gt;
+&lt;p&gt;For Merge Sort in Java, please refer to &lt;a href="https://pengyin-shan.com/posts/2015/Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-sorting/blog/algorithm-and-data-structure-basics-recursion"&gt;this post&lt;/a&gt;.&lt;/p&gt;
+&lt;h4 id="tips-and-comments"&gt;Tips and Comments&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;From &lt;em&gt;Introduction to Algorithms&lt;/em&gt;, if you have a binary number, moving all digits one position to left means multiplying it by two. if you move all digits &lt;em&gt;k&lt;/em&gt; position to left, you multiply origin number by $2^k$.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Other parts are working in process :)&lt;/p&gt;&lt;/div&gt;</description><category>Algorithm</category><category>Data Structure</category><category>Java</category><category>Sorting</category><guid>https://pengyin-shan.com/posts/2015/Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-sorting/</guid><pubDate>Fri, 11 Sep 2015 04:00:00 GMT</pubDate></item></channel></rss>

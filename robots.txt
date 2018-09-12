@@ -1,0 +1,4 @@
+Sitemap: https://pengyin-shan.com/sitemapindex.xml
+
+User-Agent: *
+Host: pengyin-shan.com

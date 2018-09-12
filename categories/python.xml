@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Pengyin's Corner (Posts about Python)</title><link>https://pengyin-shan.com/</link><description></description><atom:link type="application/rss+xml" href="https://pengyin-shan.com/categories/python.xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Tue, 11 Sep 2018 20:57:17 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Install Apache Spark with IPython Notebook Configuration on Ubuntu 15</title><link>https://pengyin-shan.com/posts/2015/Data%20Science/ipython-notebook-pyspark/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;p&gt;After reading a few useful posts and some debugging time, I successfully installed &lt;strong&gt;Apache Spark&lt;/strong&gt; on my Ubuntu 15 machine. I also add &lt;strong&gt;PySpark&lt;/strong&gt; in &lt;strong&gt;IPython Notebook&lt;/strong&gt; for development purpose.&lt;/p&gt;
+&lt;p&gt;Many thanks to author of these articles:&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blog.cloudera.com/blog/2014/08/how-to-use-ipython-notebook-with-apache-spark/"&gt;How-to: Use IPython Notebook with Apache Spark&lt;/a&gt;, written by Uri Laserson.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://ramhiser.com/2015/02/01/configuring-ipython-notebook-support-for-pyspark/"&gt;Configuring IPython Notebook Support for PySpark&lt;/a&gt;, written by John Ramey.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://beingzy.github.io/tutorial/2014/10/13/spark-tutorial-Part-I-setting-up-spark-and-ipython-notebook-within-10-minutes.html"&gt;Spark Tutorial (Part I): Setting Up Spark and IPython Notebook within 10 minutes&lt;/a&gt;, written by Yi Zhang.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://ipython.org/ipython-doc/dev/config/intro.html"&gt;Introduction to IPython Configuration&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="install-python-and-ipython-notebook"&gt;Install Python and IPython Notebook&lt;/h3&gt;
+&lt;p&gt;I highly recommend you using &lt;a href="https://virtualenv.pypa.io/en/latest/"&gt;Virtualenv&lt;/a&gt; or &lt;a href="https://store.continuum.io/cshop/anaconda/"&gt;Anacona&lt;/a&gt; for Python package control.&lt;/p&gt;
+&lt;p&gt;You need to install &lt;strong&gt;Python&lt;/strong&gt; and &lt;strong&gt;pip&lt;/strong&gt; first (You can find installation documents through Google Search). Then in terminal, type following:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt;pip install &lt;span class="s2"&gt;"ipython[notebook]"&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;If you want to install everything for IPython, including Notebook, type following in terminal:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt;pip install &lt;span class="s2"&gt;"ipython[all]"&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;You can test your installation by type following command in terminal (Make sure you are in right environment):&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt;ipython notebook
+&lt;/pre&gt;
+
+
+&lt;p&gt;Your default browser should open a window with IPython Notebook interface.&lt;/p&gt;
+&lt;h3 id="install-spark-and-pyspark"&gt;Install Spark and PySpark&lt;/h3&gt;
+&lt;p&gt;You can download Spark from &lt;a href="https://spark.apache.org/downloads.html"&gt;here&lt;/a&gt;. You can install either source code package, or a pre-build package. All packages can be installed and configured for IPython Notebook.&lt;/p&gt;
+&lt;p&gt;Pre-build package can be extracted and being used directly. If you download source package, you need to do this after extracting:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; your_spark_source_folder
+&lt;span class="gp"&gt;$&lt;/span&gt;sbt/sbt assembly
+&lt;/pre&gt;
+
+
+&lt;blockquote&gt;
+&lt;p&gt;This process may take a while :)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;You may need to install &lt;strong&gt;sbt&lt;/strong&gt; first. For Linux user, please refer to this article: &lt;a href="http://www.scala-sbt.org/0.13/tutorial/Installing-sbt-on-Linux.html"&gt;Installing sbt on Linux&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You can test your installation by doing following:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; your_spark_folder
+&lt;span class="gp"&gt;$&lt;/span&gt;./bin/pyspark
+&lt;/pre&gt;
+
+
+&lt;blockquote&gt;
+&lt;p&gt;You need java jdk installed on your machine and JAVA_HOME has been set, otherwise PySpark will throw error for that, such as:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;../images/articles/2015/python/hadoop2.6_java_home_dir_problem.png &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Make sure your JAVA_HOME pointing to home folder of your desired JDK. For example, I want to use Oracle JDK 8. So I type &lt;code&gt;sudo update-alternatives --config java&lt;/code&gt; in terminal to find preferred JDK path (JDK 8 in my case), then add&lt;code&gt;export JAVA_HOME=/usr/lib/jvm/java-8-oracle&lt;/code&gt; in &lt;code&gt;.bashrc&lt;/code&gt; file.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;You should see following in your terminal. Type &lt;code&gt;sc&lt;/code&gt; and you should see output as &lt;code&gt;SparkContext&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;../images/articles/2015/python/test_pyspark.png &lt;/p&gt;
+&lt;h3 id="configure-pyspark-and-ipython-notebook"&gt;Configure PySpark and IPython Notebook&lt;/h3&gt;
+&lt;p&gt;Based on my experience, PySpark has good support for Python 2.7, but not Python 3. I recommend you use &lt;strong&gt;Python 2.7&lt;/strong&gt; in this step.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://ramhiser.com/2015/02/01/configuring-ipython-notebook-support-for-pyspark/"&gt;Configuring IPython Notebook Support for PySpark&lt;/a&gt;, written by John Ramey, gave a very good description of steps you need to follow. However, you need to remember doing following:&lt;/p&gt;
+&lt;p&gt;In &lt;code&gt;.bashrc&lt;/code&gt; and &lt;code&gt;00-pyspark-setup.py&lt;/code&gt;, make sure you have your own Spark folder name. Check your &lt;code&gt;your_spark_folder/python/lib&lt;/code&gt; for py4j version.&lt;/p&gt;
+&lt;p&gt;After you do &lt;code&gt;ipython notebook --profile=pyspark&lt;/code&gt;, you will open Jupyter web interface in your default browser, using the &lt;code&gt;c.NotebookApp.port&lt;/code&gt; in your &lt;code&gt;.bashrc&lt;/code&gt; file.&lt;/p&gt;
+&lt;p&gt;In Jupyter interface, You can upload one existing IPython Notebook to test your configuration by clicking &lt;code&gt;Upload&lt;/code&gt; button, Or create a new IPython Notebook by clicking &lt;code&gt;new&lt;/code&gt; button, then select &lt;code&gt;Python 2&lt;/code&gt; or &lt;code&gt;Python 3&lt;/code&gt; in drop-down menu.&lt;/p&gt;
+&lt;p&gt;In IPython Notebook interface, create a new cell and type &lt;code&gt;sc&lt;/code&gt;. When you run this cell, you should see &lt;code&gt;SparkContext&lt;/code&gt; object, same as following:&lt;/p&gt;
+&lt;p&gt;../images/articles/2015/python/test_pyspark_notebook.png &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Now, if your IPython Notebook show message: &lt;code&gt;NameError: name 'sc' is not defined&lt;/code&gt;, which means your IPython Notebook doesn't use PySpark profile. You can try typing &lt;code&gt;ipython --profile=pyspark&lt;/code&gt; in terminal to make PySpark as default IPython profile, then try &lt;code&gt;ipython notebook --profile=pyspark&lt;/code&gt; again. PySpark should be available now.&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/div&gt;</description><category>Data Science</category><category>IPython</category><category>Python</category><category>Spark</category><guid>https://pengyin-shan.com/posts/2015/Data%20Science/ipython-notebook-pyspark/</guid><pubDate>Wed, 10 Jun 2015 04:00:00 GMT</pubDate></item><item><title>How to Build A Basic Nikola Blog and Deploy to Github Page</title><link>https://pengyin-shan.com/posts/2015/Data%20Science/how-to-build-a-basic-nikola-blog-and-deloy-to-github-page/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;p&gt;One of my goal for 2015 is to learn Python. To prepare for this, I decided to create a new blog site, based on Python.&lt;/p&gt;
+&lt;p&gt;After doing some research, I decide to use &lt;a href="http://getnikola.com/"&gt;&lt;strong&gt;Nikola&lt;/strong&gt;&lt;/a&gt; to build my blog. One of the reason I choose Nikola is that it has great support to &lt;strong&gt;IPython Notebook&lt;/strong&gt;.&lt;/p&gt;
+&lt;h5 id="lots-of-thanks-to-damian-avila-your-blog-is-so-useful-and-great-for-nikola-beginners-like-me"&gt;Lots of Thanks to &lt;a href="http://www.damian.oquanta.info/"&gt;Damian Avila&lt;/a&gt;! Your blog is so useful and great for Nikola beginners like me!&lt;/h5&gt;
+&lt;p&gt;&lt;strong&gt;1. Create Virtual Environment&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Before you install Nikola, a good practice is to build a virual environment. You can install &lt;strong&gt;Virtualenv&lt;/strong&gt; and use it. Since I had &lt;strong&gt;Anaconda&lt;/strong&gt; installed, I just type &lt;code&gt;conda create -n techblog python=3.4 anaconda&lt;/code&gt; to create a virtual environment called "techblog" with python 3.4. You can define your own name and python version.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. Install Nikola and Necessary Component&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;First, make sure you use your virtual enviorment. command is:&lt;/em&gt; &lt;code&gt;source activate name_of_environment&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;I suggest you to use &lt;strong&gt;pip&lt;/strong&gt; to install followiing components:
+- nikola
+- requests
+- sphinx
+- pyzmq
+- tornado(?)
+- jinja2
+- webassets (if you want to use USE_BUNDLES)
+- markdown (if you want to use markdown)
+- ipython (if you want to use ipython notebook)&lt;/p&gt;
+&lt;p&gt;For example, you type follwing command in your terminal: &lt;code&gt;pip install nikola requests sphinx markdown ipython pyzmq tornado jinja2 webasset&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;In the next following steps, make sure you are under your virtual environment.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3. Initialize Nikola&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Type &lt;code&gt;nikola init&lt;/code&gt; in your terminal, where you want to build your site in a &lt;em&gt;subfolder&lt;/em&gt; of current location.&lt;/p&gt;
+&lt;p&gt;You will be asked following questions:
+- Destination: Name of the folder your site will be
+- Site Title
+- Site Author
+- Author's Email
+- Site Description
+- Site URL: This is the url that when you click header of your site, the page will jump to. You can set this later in &lt;strong&gt;conf.py&lt;/strong&gt; file. If you type one, make sure it ends with a &lt;em&gt;/&lt;/em&gt;.
+- Default Language: I use &lt;strong&gt;en&lt;/strong&gt; but you can refer Nikola website for more option.
+- Time Zone: Short name for your time zone. I use &lt;strong&gt;EST&lt;/strong&gt;. For example.
+- Comment System: Nikola support popular comment system such as &lt;em&gt;Disqus&lt;/em&gt;, &lt;em&gt;Google+&lt;/em&gt; and &lt;em&gt;Facebook&lt;/em&gt;. You will be asked to enter &lt;em&gt;comment system site identifier&lt;/em&gt; if required.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. Change Theme (Optional)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;If you want to change theme of your website, You can find a list of themes from &lt;a href="http://themes.getnikola.com/"&gt;Nikiola Website&lt;/a&gt;. Note any theme that has &lt;em&gt;ipython&lt;/em&gt; in its name supports IPython Notebook.&lt;/p&gt;
+&lt;p&gt;Then, do &lt;code&gt;cd your_folder&lt;/code&gt; to get to the folder that Nikola just created for you.&lt;/p&gt;
+&lt;p&gt;Type &lt;code&gt;nikola install_theme name_of_theme&lt;/code&gt; to install theme.&lt;/p&gt;
+&lt;p&gt;You may need to change some setting in &lt;strong&gt;conf.py&lt;/strong&gt; file, so read instructions in your terminal carefully.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;5. Configure and Build Site&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;First, open &lt;strong&gt;conf.py&lt;/strong&gt; file and configure it as your requests:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;If you didn't do some setup in step 3 in terminal, you can found them here. For example, you can re-edit &lt;strong&gt;SITE_URL&lt;/strong&gt; if you haven't done so.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If you have installed new theme and want to change to it, change &lt;strong&gt;THEME=&lt;/strong&gt; option to your installed theme. Some theme may also want you to change &lt;strong&gt;NAVIGATION_LINKS&lt;/strong&gt; or other settings.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If you want to use IPython Notebook or Markdown, find &lt;strong&gt;POSTS =&lt;/strong&gt; option and add &lt;code&gt;("posts/*.md", "posts", "post.tmpl"),("posts/*.ipynb", "posts", "post.tmpl"),&lt;/code&gt;. &lt;em&gt;If you don't need lots of new pages, I suggest you not change PAGES setting.&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Set &lt;strong&gt;INDEX_TEASERS = &lt;/strong&gt; to &lt;strong&gt;True&lt;/strong&gt; to enable teaser. Now you can just put &lt;code&gt;.. TEASER_END&lt;/code&gt; or &lt;code&gt;&amp;lt;!--TEASER_END--&amp;gt;&lt;/code&gt; in your post to make index page only show first part of your post&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If you have installed &lt;strong&gt;webassets&lt;/strong&gt;, you can set &lt;strong&gt;USE_BUNDLES=&lt;/strong&gt; to &lt;strong&gt;True&lt;/strong&gt; to speed up your site.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;I skip the process of creating new post. Note if you create a IPython Notebook post, you can edit information such as slugs, dates, tags in &lt;strong&gt;.meta&lt;/strong&gt; file, which is automatically generated with &lt;strong&gt;.ipynb&lt;/strong&gt; file.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Now you can type &lt;code&gt;nikola build&lt;/code&gt; to build your site. A list of rendered file will appear.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;What user can see from your website is in &lt;strong&gt;output&lt;/strong&gt; folder.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If you have any external file, such as &lt;strong&gt;PDF&lt;/strong&gt; or &lt;strong&gt;IMAGE&lt;/strong&gt;, you can put it in &lt;strong&gt;files&lt;/strong&gt; folder.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;After building, you can type &lt;code&gt;nikola serve&lt;/code&gt; to host your site locally. By default, you site can be open from &lt;code&gt;http://localhost:8000/&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;6. Deploy Site to Github Pages&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I find great help from &lt;a href="http://www.damian.oquanta.info/posts/one-line-deployment-of-your-site-to-gh-pages.html"&gt;solution of Damian's blog&lt;/a&gt;. I used his method to deploy this site to one of my Github page.&lt;/p&gt;
+&lt;p&gt;Please make sure you do follwing steps except git initiate every time you want to make change:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;First, create a repository. You can use default "user.github.io" repo, but since I prefer a &lt;strong&gt;project Github Page&lt;/strong&gt;, so I create a repo called "techblog".&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;After installed &lt;strong&gt;Git&lt;/strong&gt; to your machine, &lt;code&gt;cd&lt;/code&gt; to your site folder, then type &lt;code&gt;git init&lt;/code&gt; to initiate.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Do &lt;code&gt;git remote add origin https://github.com/your_user_name/your_repo.git&lt;/code&gt; to add repo, with a name &lt;em&gt;origin&lt;/em&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Push all of your content to &lt;strong&gt;master&lt;/strong&gt; branch first&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Do &lt;code&gt;git checkout -b gh-pages&lt;/code&gt; to create and swich to gh-pages. You can skip &lt;code&gt;-b&lt;/code&gt; after you do this once.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Do &lt;code&gt;git rm -rf .&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Do &lt;code&gt;git commit -am "Your Commit"&lt;/code&gt; to commit for gh-pages&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Do &lt;code&gt;git push origin gh-pages&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Do &lt;code&gt;git checkout master&lt;/code&gt; to switch back to master branch&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Do &lt;code&gt;git branch -D gh-pages&lt;/code&gt; first to avoid commit error. (I tried to skip this step before but I got a git commit error, so I suggest you do this step first)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Do &lt;code&gt;git subtree split --prefix output -b gh-pages&lt;/code&gt; to only transfer content in &lt;strong&gt;output&lt;/strong&gt; folder from master to gh-pages&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Do &lt;code&gt;git push -f origin gh-pages:gh-pages&lt;/code&gt; to force push&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Do &lt;code&gt;git branch -D gh-pages&lt;/code&gt; again to delete local gh-pages branch&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;7. Add Custom Domain to Your Github Page (Optional)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;You may want to add custom domain to your Github page. Github has a tutorial &lt;a href="https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages/"&gt;here&lt;/a&gt;. Since I'm hosting my domain (pengyin-shan.com) on GoDaddy, I followed instructions &lt;a href="http://captainwhippet.com/blog/2014/05/11/blog-setup-details.html"&gt;in this blog&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;A few things I want to mention:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;CNAME&lt;/strong&gt; file should be put to your &lt;strong&gt;files&lt;/strong&gt; folder so that when you following steps above to push to Github, this file will show in gh-pages branch.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The content of &lt;strong&gt;CNAME&lt;/strong&gt; file should be bare subdomain of your custom domain, which means you &lt;em&gt;can not&lt;/em&gt; use &lt;code&gt;http://test.com&lt;/code&gt; or &lt;code&gt;http:test.com/blog&lt;/code&gt;. You can only have one custdom domain.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;I think based on Github's role, even though you are hosting project Github pages, your custom domain has to be "test.com" instead of "test.com/name_of_repo"&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;On Jan 1st, 2015, the IP address of &lt;strong&gt;Github Project Page&lt;/strong&gt; are &lt;code&gt;192.30.252.153&lt;/code&gt; and &lt;code&gt;192.30.152.154&lt;/code&gt;. If you have A (Host), make sure your &lt;code&gt;@&lt;/code&gt; is pointing to these two IPs.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you finish these settings, you should be able to host your Nikola blog on Github Page. Please feel free to let me know if you have any comments.&lt;/p&gt;&lt;/div&gt;</description><category>Github</category><category>Nikola</category><category>Python</category><guid>https://pengyin-shan.com/posts/2015/Data%20Science/how-to-build-a-basic-nikola-blog-and-deloy-to-github-page/</guid><pubDate>Tue, 13 Jan 2015 05:00:00 GMT</pubDate></item><item><title>Use Amazon EC2 to Host IPython Notebook</title><link>https://pengyin-shan.com/posts/2015/Data%20Science/use-amazon-ec2-to-host-ipython-notebook/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;p&gt;Recentely I read a great article about &lt;a href="https://gist.github.com/iamatypeofwalrus/5183133"&gt;Hosting IPython Notebook on Amazon AWS Free Tier from Scratch&lt;/a&gt;. This tutorial explains the way to host IPython Notebook using a Amazon EC2 Micro Instance.&lt;/p&gt;
+&lt;p&gt;I followed this tutorial and successfully hosted an IPython notebook on a Ubuntu 14 Guest AMI. I want to record some of important steps I took while following this tutorial:&lt;/p&gt;
+&lt;p&gt;Note: You can use &lt;strong&gt;nano&lt;/strong&gt; to edit &lt;code&gt;ipython_notebook_config.py&lt;/code&gt; file. It is located at &lt;code&gt;~/.ipython/profile_nbserver/&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id="security-group"&gt;Security Group&lt;/h3&gt;
+&lt;p&gt;When you set up rules for &lt;em&gt;Security Groups&lt;/em&gt;, make sure you include &lt;code&gt;SSH&lt;/code&gt;, &lt;code&gt;HTTPS&lt;/code&gt; and &lt;code&gt;8888&lt;/code&gt; all of these. Lack of one can make your IPython Notebook fail. If you forget to do so when you set up the machine, you can set up later in your EC2 management console.&lt;/p&gt;
+&lt;h3 id="elastic-ip"&gt;Elastic Ip&lt;/h3&gt;
+&lt;p&gt;The tutorial suggest you link an &lt;strong&gt;Elastic IP&lt;/strong&gt; to your instance so that everytime you try to access your instance in browser, you can type new ip address instead of long public DNS.&lt;/p&gt;
+&lt;p&gt;To do this, click &lt;strong&gt;Elastic IPs&lt;/strong&gt; option in you EC2 Dashboard menu, which is in &lt;strong&gt;NETWORK &amp;amp; SECURITY&lt;/strong&gt; section. On right panel, click &lt;strong&gt;Allocate New Address&lt;/strong&gt; button. Then click &lt;strong&gt;Yes&lt;/strong&gt; in the pop-up window.&lt;/p&gt;
+&lt;p&gt;Now a IP address should be generated. Rememeber to &lt;em&gt;associate&lt;/em&gt; your instance with this IP address. Select this IP address, then click &lt;strong&gt;Associate Address&lt;/strong&gt; button. A pop-up window will appear. Click &lt;strong&gt;Instance&lt;/strong&gt; then select your instance in drop-dowm menu. You can also do other setting here. Click &lt;strong&gt;Associate&lt;/strong&gt; to associate your instance to this IP.&lt;/p&gt;
+&lt;p&gt;Now you just need to type: &lt;code&gt;https://your_elastic_ip:port_number&lt;/code&gt; to your IPython Notebook.&lt;/p&gt;
+&lt;h3 id="make-ipython-run-as-service"&gt;Make IPython Run as Service&lt;/h3&gt;
+&lt;p&gt;You may want you IPython notebook still works after you shutdown your terminal/SSH. I got solution from this &lt;a href="http://stackoverflow.com/questions/16418477/how-to-keep-server-running-on-ec2-after-ssh-is-terminated"&gt;StackOverflow post&lt;/a&gt;. I got &lt;strong&gt;screen&lt;/strong&gt; by typing &lt;code&gt;sudo apt-get install screen&lt;/code&gt;, then do &lt;code&gt;ipython server &amp;amp;&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;If this not work for you, try &lt;code&gt;screen ipython s&lt;/code&gt; instead&lt;/p&gt;&lt;/div&gt;</description><category>Amazon EC2</category><category>Python</category><guid>https://pengyin-shan.com/posts/2015/Data%20Science/use-amazon-ec2-to-host-ipython-notebook/</guid><pubDate>Tue, 13 Jan 2015 05:00:00 GMT</pubDate></item></channel></rss>

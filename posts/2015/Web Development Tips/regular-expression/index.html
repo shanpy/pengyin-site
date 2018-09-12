@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " vocab="http://ogp.me/ns" lang="en">
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]--><!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]--><!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]--><!--[if gt IE 8]><!--><!--<![endif]--><head>
+<meta charset="utf-8">
+<meta name="description" content="This post includes information about regular expression. This post will be update when I learn anything new about it.">
+<!-- http://t.co/dKP3o1e --><meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regular Expression | Pengyin's Corner</title>
+<link href="../../../../assets/css/all.css" rel="stylesheet" type="text/css">
+<!-- Webfonts --><link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+<!-- Load Modernizr --><script src="//mmistakes.github.io/hpstr-jekyll-theme/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script><link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../rss.xml">
+<link rel="canonical" href="https://pengyin-shan.com/posts/2015/Web%20Development%20Tips/regular-expression/">
+<!--[if lt IE 9]><script src="../../../../assets/js/html5.js"></script><![endif]--><meta name="description" content="This post includes information about regular expression. This post will be update when I learn anything new about it.">
+<meta name="author" content="Pengyin(Wendy) Shan">
+<link rel="prev" href="../../JavaScript/javascript-tips/" title="JavaScript Tips" type="text/html">
+<link rel="next" href="../../JavaScript/jasmine-basics/" title="Jasmine Basics" type="text/html">
+<meta property="og:site_name" content="Pengyin's Corner">
+<meta property="og:title" content="Regular Expression">
+<meta property="og:url" content="https://pengyin-shan.com/posts/2015/Web%20Development%20Tips/regular-expression/">
+<meta property="og:description" content="This post includes information about regular expression. This post will be update when I learn anything new about it.">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-08-20T00:00:00-04:00">
+<meta property="article:tag" content="JavaScript">
+</head>
+<body id="post-index" class="feature">
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    
+
+    <nav id="dl-menu" class="dl-menuwrapper" role="navigation"><button class="dl-trigger">Open Menu</button>
+    <ul class="dl-menu">
+<li><a href="../../../">My Knowledge Base</a></li>
+            <li><a href="https://www.linkedin.com/in/pengyinshan">My LinkedIn</a></li>
+            <li><a href="../../../../categories/">Tags and Categories</a></li>
+            <li><a href="../../../../rss.xml">RSS feed</a></li>
+            <li><a href="../../../../archive.html">Archive</a></li>
+    
+    
+    </ul></nav><div class="entry-header">
+<!-- /.image-credit -->
+    <div class="entry-image">
+      <img src="../../../../bk.JPG" alt="Latest Posts">
+</div>
+<!-- /.entry-image -->
+      
+  <div class="header-title">
+    <div class="header-title-wrap">
+    <h1 id="brand"><a href="https://pengyin-shan.com/" title="Pengyin's Corner" rel="home">
+    Pengyin's Corner</a></h1>
+      <h2>Be Passionate.</h2>
+    </div>
+<!-- /.header-title-wrap -->
+  </div>
+<!-- /.header-title -->
+
+</div>
+<!-- /.entry-header -->
+
+    <div id="main" role="main">
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><div class="entry-meta">
+            <span class="dateline"><a href="../../Web%20Development%20Tips/regular-expression/" rel="bookmark"><time class="published dt-published" datetime="2015-08-20T00:00:00-04:00" itemprop="datePublished" title="2015-08-20">2015-08-20</time></a></span>  ·  
+            <span class="byline author vcard">Pengyin(Wendy) Shan</span>  ·  
+                <span class="commentline">
+        
+    <a href="../../Web%20Development%20Tips/regular-expression/#disqus_thread" data-disqus-identifier="cache/posts/2015/Web Development Tips/regular-expression.html">Comments</a>
+
+</span>  ·  
+            
+        <span class="sourceline"><a href="../../Web%20Development%20Tips/regular-expression/index.md" id="sourcelink">Source</a></span>  ·  
+
+                <meta name="description" itemprop="description" content="This post includes information about regular expression. This post will be update when I learn anything new about it.">
+</div>
+        
+
+    
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="../../Web%20Development%20Tips/regular-expression/" class="u-url">Regular Expression</a></h1>
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>A JavaScript Regex Cheatsheet <a href="https://www.debuggex.com/cheatsheet/regex/javascript">online</a>.</p>
+<h3 id="javascript-regular-expression">JavaScript Regular Expression</h3>
+<h4 id="method">Method</h4>
+<h5 id="search">search</h5>
+<p><code>search()</code> uses an expression to search for a match, and returns the position of the match. Return <code>-1</code> if regular expression not match:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="s2">"test"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">n</span> <span class="o">=</span> <span class="nx">str</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="sr">/^(test)+$/i</span><span class="p">);</span> <span class="c1">//n=0</span>
+</pre>
+
+
+<h5 id="replace">replace</h5>
+<p><code>replace</code>: search pattern and replace it</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="s2">"test"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">str</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/test/i</span><span class="p">,</span> <span class="s2">"new-test"</span><span class="p">);</span>
+</pre>
+
+
+<h5 id="test">test</h5>
+<p><code>test()</code> searches a string for a pattern, and returns <code>true</code> or <code>false</code>, depending on the result.</p>
+<p>Example code from w3cschool:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">patt</span> <span class="o">=</span> <span class="sr">/e/</span><span class="p">;</span>
+<span class="nx">patt</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s2">"The best things in life are free!"</span><span class="p">);</span> <span class="c1">//true</span>
+</pre>
+
+
+<h5 id="exec">exec</h5>
+<p><code>exec()</code> searches a string for a specified pattern, and returns <strong>the found text</strong>. If nothing is founded, return <code>null</code>.</p>
+<p>Example code from w3cschool:</p>
+<pre class="code literal-block"><span></span><span class="sr">/e/</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="s2">"The best things in life are free!"</span><span class="p">);</span> <span class="c1">//e</span>
+</pre>
+
+
+<h4 id="modifiers">Modifiers</h4>
+<ul>
+<li>
+<p><code>i</code>: Perform case-insensitive matching</p>
+</li>
+<li>
+<p><code>g</code>: Perform a global match (find all matches rather than stopping after the first match)</p>
+</li>
+<li>
+<p><code>m</code>: Perform a mutiline matching</p>
+</li>
+</ul>
+<h4 id="escape">Escape</h4>
+<p>Use <code>\</code> to <strong>escape</strong> to following items in regular expression: <code>^</code>, <code>$</code>, <code>.</code>, <code>*</code>, <code>+</code>, <code>?</code>, <code>=</code>, <code>!</code>, <code>:</code>, <code>|</code>, <code>\</code>, <code>/</code>, <code>(</code>, <code>)</code>, <code>[</code>, <code>]</code>, <code>{</code>, <code>}</code></p>
+<h4 id="or">OR</h4>
+<p><code>[]</code>: <code>/[abc]/</code> means <code>a</code> or <code>b</code> or <code>c</code></p>
+<h4 id="except">Except</h4>
+<p><code>[^]</code>: <code>/[^abc]/</code> anything except <code>a</code> or <code>b</code> or <code>c</code></p>
+<h4 id="character">Character</h4>
+<p><code>.</code>: any single character <em>except next-line and white-space</em>. i.e. <code>[^\n\r]</code></p>
+<p><code>\w</code>: any ASCII single character. i.e. <code>[a-zA-Z0-9]</code></p>
+<p><code>\W</code>: any non-ASCII single character. i.e. <code>[^a-zA-Z0-9]</code></p>
+<p><code>\d</code>: any digital singe character. i.e. <code>[0-9]</code></p>
+<p><code>\D</code>: any non-digital single character. i.e.e <code>[^0-9]</code></p>
+<p><code>\s</code>: white-space</p>
+<p><code>\S</code>: non-white-space</p>
+<h4 id="meta-character">Meta Character</h4>
+<p><code>\r</code>: Assume you hit <code>Enter</code> key</p>
+<p><code>\t</code>: Tab</p>
+<p><code>\n</code>: change new line</p>
+<p><code>\f</code>: change page</p>
+<p><code>\0</code>: empty character</p>
+<h4 id="repeat">Repeat</h4>
+<p><code>{min, max}</code>: Repeat from min times to max times. Example: <code>/[test]{4,6}/</code> means 't' or <code>e</code> or <code>s</code> or <code>t</code> should be repeated at least 4 times and as most 6 times.</p>
+<p><code>{min,}</code> or <code>{,max}</code>: Repeat at least <code>min</code> or at most <code>max</code> times. Example: <code>/[test]{4,}</code> means 't' or <code>e</code> or <code>s</code> or <code>t</code> should be repeated at least 4 times. No maximum times.</p>
+<p><code>{n}</code>: Repeat exactly n times.</p>
+<p><code>?</code>: Repeat 0 or 1 times</p>
+<p><code>+</code>: Repeat 1 or more times</p>
+<p><code>*</code>: Repeat 0 or more times</p>
+<blockquote>
+<p>when we use <code>{min,max}</code>, we may fine more than one corresponding pattern in string. By default result string should be as long as possible. If you want result to be shortest case, add <code>?</code> after <code>{min,max}</code></p>
+</blockquote>
+<p>Example from: http://www.cnblogs.com/dolphinX/p/3486214.html:</p>
+<pre class="code literal-block"><span></span><span class="s1">'123456789'</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/\d{3,5}/g</span><span class="p">);</span> <span class="c1">//["12345", "6789"]</span>
+<span class="s1">'123456789'</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/\d{3,5}?/g</span><span class="p">);</span> <span class="c1">//["123", "456", "789"]</span>
+</pre>
+
+
+<h4 id="group-and-border">Group and Border</h4>
+<p><code>^</code>: Mark start point</p>
+<p><code>$</code>: Mark end point</p>
+<p><code>\b</code>: all characters except <code>[a-zA-Z0-9]</code></p>
+<p>Example from http://www.cnblogs.com/dolphinX/p/3486214.html:</p>
+<pre class="code literal-block"><span></span><span class="p">(</span><span class="sr">/\w+\b Byron/</span><span class="p">).</span><span class="nx">test</span><span class="p">(</span><span class="s1">'Hi Byron'</span><span class="p">);</span> <span class="c1">//true</span>
+<span class="p">(</span><span class="sr">/\w+\b Byron/</span><span class="p">).</span><span class="nx">test</span><span class="p">(</span><span class="s1">'Welcome Byron'</span><span class="p">);</span> <span class="c1">//true</span>
+<span class="p">(</span><span class="sr">/\w+\b Byron/</span><span class="p">).</span><span class="nx">test</span><span class="p">(</span><span class="s1">'HiByron'</span><span class="p">);</span> <span class="c1">//false</span>
+</pre>
+
+
+<p><code>\B</code>: opposite from above</p>
+<p><code>()</code>: AND. Example: <code>/(abc)+/</code> means <code>abc</code> or <code>abcabc</code> or more.</p>
+<p><code>|</code>: OR. Example: <code>/a|b/</code> means <code>a</code> or <code>b</code></p>
+<h4 id="frequently-used-regular-expressions">Frequently Used Regular Expressions</h4>
+<p>Examples below are taken from <a href="http://kb.cnblogs.com/page/80965/">this post</a>:</p>
+<ul>
+<li>
+<p>Non-negative Integer: <code>^\d+$</code></p>
+</li>
+<li>
+<p>Positive Integer: <code>^[0-9]*[1-9][0-9]*$</code></p>
+</li>
+<li>
+<p>Non-positive Integer: <code>^((-\d+)|(0+))$</code></p>
+</li>
+<li>
+<p>Negative Integer: <code>^-[0-9]*[1-9][0-9]*$</code></p>
+</li>
+<li>
+<p>Integer: <code>^-?\d+$</code></p>
+</li>
+<li>
+<p>Non-negative Float: <code>^\d+(\.\d+)?$</code></p>
+</li>
+<li>
+<p>Positive Float: <code>^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$</code></p>
+</li>
+<li>
+<p>Non-positive Float: <code>^((-\d+(\.\d+)?)|(0+(\.0+)?))$</code></p>
+</li>
+<li>
+<p>Negative Float: <code>^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$</code></p>
+</li>
+<li>
+<p>Float: <code>^(-?\d+)(\.\d+)?$</code></p>
+</li>
+<li>
+<p>String with all letters: <code>^[A-Za-z]+$</code></p>
+</li>
+<li>
+<p>String with all upper case letters: <code>^[A-Z]+$</code></p>
+</li>
+<li>
+<p>String with all lower case letters: <code>^[a-z]+$</code></p>
+</li>
+<li>
+<p>String with number and letters: <code>^[A-Za-z0-9]+$</code></p>
+</li>
+<li>
+<p>String with number, letters and underline: <code>^\w+$</code></p>
+</li>
+<li>
+<p><strong>Email Address</strong> validation: <code>^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$</code></p>
+</li>
+<li>
+<p><strong>URL</strong> Validation: <code>^[a-zA-z]+://</code> <code>(\w+(-\w+)*)(\.(\w+(-\w+)*))*(\?\S*)?$</code></p>
+</li>
+<li>
+<p><strong>HTML Tag</strong>: <code>&lt;\s*(\S+)(\s[^&gt;]*)?&gt;(.*?)&lt;\s*\/\1\s*&gt;</code></p>
+</li>
+</ul>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../categories/javascript/" rel="tag">JavaScript</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../../JavaScript/javascript-tips/" rel="prev" title="JavaScript Tips">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../../JavaScript/jasmine-basics/" rel="next" title="Jasmine Basics">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="pengyinsnotes",
+            disqus_url="https://pengyin-shan.com/posts/2015/Web%20Development%20Tips/regular-expression/",
+        disqus_title="Regular Expression",
+        disqus_identifier="cache/posts/2015/Web Development Tips/regular-expression.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="pengyinsnotes";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+    
+    <div class="footer-wrapper">
+        <footer role="contentinfo"><p>Contents © 2018         <a href="mailto:pengyin.shan@outlook.com">Pengyin(Wendy) Shan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+        </footer>
+</div>
+
+    
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script src="../../../../assets/js/scripts.min.js"></script>
+</body>
+</html>

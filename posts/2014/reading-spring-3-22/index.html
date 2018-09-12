@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " vocab="http://ogp.me/ns" lang="en">
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]--><!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]--><!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]--><!--[if gt IE 8]><!--><!--<![endif]--><head>
+<meta charset="utf-8">
+<meta name="description" content="Reading Notes for Spring 3 Core Components Tutorial Part VI (Chapter 22)">
+<!-- http://t.co/dKP3o1e --><meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading Notes for Spring 3 Core Components Tutorial Part VI (Chapter 22) | Pengyin's Corner</title>
+<link href="../../../assets/css/all.css" rel="stylesheet" type="text/css">
+<!-- Webfonts --><link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+<!-- Load Modernizr --><script src="//mmistakes.github.io/hpstr-jekyll-theme/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script><link rel="alternate" type="application/rss+xml" title="RSS" href="../../../rss.xml">
+<link rel="canonical" href="https://pengyin-shan.com/posts/2014/reading-spring-3-22/">
+<!--[if lt IE 9]><script src="../../../assets/js/html5.js"></script><![endif]--><meta name="description" content="Reading Notes for Spring 3 Core Components Tutorial Part VI (Chapter 22)">
+<meta name="author" content="Pengyin(Wendy) Shan">
+<link rel="prev" href="../use-google-custom-search-in-your-website/" title="Use Google Custom Search In Your Website" type="text/html">
+<link rel="next" href="../reading-spring-3-21/" title="Reading Notes for Spring 3 Core Components Tutorial Part VII (Chapter 21)" type="text/html">
+<meta property="og:site_name" content="Pengyin's Corner">
+<meta property="og:title" content="Reading Notes for Spring 3 Core Components Tutorial Part VI (Chapter 2">
+<meta property="og:url" content="https://pengyin-shan.com/posts/2014/reading-spring-3-22/">
+<meta property="og:description" content="Reading Notes for Spring 3 Core Components Tutorial Part VI (Chapter 22)">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2014-12-10T00:00:00-05:00">
+<meta property="article:tag" content="Java">
+</head>
+<body id="post-index" class="feature">
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    
+
+    <nav id="dl-menu" class="dl-menuwrapper" role="navigation"><button class="dl-trigger">Open Menu</button>
+    <ul class="dl-menu">
+<li><a href="../../">My Knowledge Base</a></li>
+            <li><a href="https://www.linkedin.com/in/pengyinshan">My LinkedIn</a></li>
+            <li><a href="../../../categories/">Tags and Categories</a></li>
+            <li><a href="../../../rss.xml">RSS feed</a></li>
+            <li><a href="../../../archive.html">Archive</a></li>
+    
+    
+    </ul></nav><div class="entry-header">
+<!-- /.image-credit -->
+    <div class="entry-image">
+      <img src="../../../bk.JPG" alt="Latest Posts">
+</div>
+<!-- /.entry-image -->
+      
+  <div class="header-title">
+    <div class="header-title-wrap">
+    <h1 id="brand"><a href="https://pengyin-shan.com/" title="Pengyin's Corner" rel="home">
+    Pengyin's Corner</a></h1>
+      <h2>Be Passionate.</h2>
+    </div>
+<!-- /.header-title-wrap -->
+  </div>
+<!-- /.header-title -->
+
+</div>
+<!-- /.entry-header -->
+
+    <div id="main" role="main">
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><div class="entry-meta">
+            <span class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2014-12-10T00:00:00-05:00" itemprop="datePublished" title="2014-12-10">2014-12-10</time></a></span>  ·  
+            <span class="byline author vcard">Pengyin(Wendy) Shan</span>  ·  
+                <span class="commentline">
+        
+    <a href="#disqus_thread" data-disqus-identifier="cache/posts/2014/reading-spring-3-22.html">Comments</a>
+
+</span>  ·  
+            
+        <span class="sourceline"><a href="index.md" id="sourcelink">Source</a></span>  ·  
+
+                <meta name="description" itemprop="description" content="Reading Notes for Spring 3 Core Components Tutorial Part VI (Chapter 22)">
+</div>
+        
+
+    
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Reading Notes for Spring 3 Core Components Tutorial Part VI (Chapter 22)</a></h1>
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>This post is transferred from my <a href="http://blogpengyin.herokuapp.com/">old Hexo blog site</a>, created on 2014.</p>
+<p>This is a reading note from Spring Framework 3.1 Tutorial pdf, created by <a href="http://www.tutorialspoint.com/spring"><strong>tutorialspoint</strong></a>. This pdf contains information for Spring 3 Core Basics, which is very useful for understanding defination and practive in Spring programming.</p>
+<p>This note includes Chapter 22 in tutorial.</p>
+<h2 id="spring-web-mvc-framework">Spring Web MVC Framework</h2>
+<h3 id="the-dispacher-servlet">The Dispacher Servlet</h3>
+<p>images/posts/dispatcher_servlet.png </p>
+<h3 id="required-configuration">Required Configuration</h3>
+<p>XML:</p>
+<pre class="code literal-block"><span></span><span class="c">&lt;!--First: You set up dispacher servlet in web.xml--&gt;</span>
+<span class="nt">&lt;web-app</span> <span class="na">id=</span><span class="s">"testWebApp"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;display-name&gt;</span>Test Web App<span class="nt">&lt;/display-name&gt;</span>
+    <span class="nt">&lt;servlet&gt;</span>
+        <span class="nt">&lt;servlet-name&gt;</span>TestServlet<span class="nt">&lt;/servlet-name&gt;</span>
+        <span class="c">&lt;!--Since we define TestServelt as dispacther servlet here, Spring will now try to find a servlet called TestServlet-servlet.xml in WebContent/WEB-INF directory--&gt;</span>
+        <span class="nt">&lt;servlet-class&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="nt">&lt;/servlet-class&gt;</span>
+        <span class="nt">&lt;load-on-startup&gt;</span>1<span class="nt">&lt;/load-on-startup&gt;</span>
+    <span class="nt">&lt;/servlet&gt;</span>
+
+    <span class="c">&lt;!--servlet-mapping here means all jsp files should be handled by TestServlet--&gt;</span>
+    <span class="nt">&lt;servlet-mapping&gt;</span>
+        <span class="nt">&lt;servlet-name&gt;</span>TestServlet<span class="nt">&lt;/servlet-name&gt;</span>
+        <span class="nt">&lt;url-pattern&gt;</span>*.jsp<span class="nt">&lt;/url-patterm&gt;</span>
+    <span class="nt">&lt;/servlet-mapping&gt;</span>
+
+    <span class="c">&lt;!--You can also define your own servlet name instead of [servlet-name]-servelet.xml--&gt;</span>
+    <span class="nt">&lt;context-param&gt;</span>
+        <span class="nt">&lt;param-name&gt;</span>contextConfigLocation<span class="nt">&lt;/param-name&gt;</span>
+        <span class="nt">&lt;param-value&gt;</span>/WEB-INF/test-servlet<span class="nt">&lt;/param-value&gt;</span>
+    <span class="nt">&lt;/context-param&gt;</span>
+    <span class="c">&lt;!--make sure you add this listener if you want to define your own--&gt;</span>
+    <span class="nt">&lt;listener&gt;</span>
+        <span class="nt">&lt;listener-class&gt;</span>org.springframework.web.context.ContextLoadListener<span class="nt">&lt;/listener-class&gt;</span>
+    <span class="nt">&lt;/listener&gt;</span>
+<span class="nt">&lt;/web-app&gt;</span>
+
+<span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">"..."</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!--Now we create beans and set up ViewResolver, using [servlet-name]-servlet.xml--&gt;</span>
+    <span class="nt">&lt;context:compont-scan</span> <span class="na">base-package=</span><span class="s">"com.sample"</span><span class="nt">/&gt;</span>
+    <span class="c">&lt;!--The line above means we want search Spring MVC Annotation such as @Controller or @RequestMapping in com.sample package--&gt;</span>
+
+    <span class="c">&lt;!--We want to search for /WEB-INF/jsp folder to get .jsp files to resolve view names. For example, a logical view named hello should be a /WEB-INF/jsp/hellp.jsp--&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">"org.springframework.web.servlet.view.InternalResourceViewResolover"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"prefix"</span> <span class="na">value=</span><span class="s">"/WEB-INF/jsp"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"suffix"</span> <span class="na">value=</span><span class="s">".jsp"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+<span class="nt">&lt;/beans&gt;</span>
+</pre>
+
+
+<h3 id="controller">Controller</h3>
+<p>You need <code>@Controller</code> annotation to make a controller class, and use <code>@RequestMapping</code> to get path and define type of request.</p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="nd">@Controller</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">testController</span><span class="o">{</span>
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">"/test"</span><span class="o">,</span> <span class="n">method</span><span class="o">=</span><span class="n">RequestMethod</span><span class="o">.</span><span class="na">GET</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">printHello</span><span class="o">(</span><span class="n">ModelMap</span> <span class="n">model</span><span class="o">){</span>
+        <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="err">'</span><span class="n">message</span><span class="sc">','</span><span class="n">Hello</span> <span class="n">World</span><span class="o">!</span><span class="err">'</span><span class="o">);</span> <span class="c1">//Use ${message} in jsp file to get model attribute</span>
+        <span class="k">return</span> <span class="s">"index"</span><span class="o">;</span> <span class="c1">//Return a view and string is the logical view name, which is defined in ViewResolver above</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3 id="form-submmision-example">Form Submmision Example</h3>
+<p>HTML:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">form:form</span> <span class="na">method</span><span class="o">=</span><span class="s">"POST"</span> <span class="na">action</span><span class="o">=</span><span class="s">"/HelloWorld/Student"</span> <span class="na">modelAttribute</span><span class="o">=</span><span class="s">"Person"</span><span class="p">&gt;</span>
+<span class="c">&lt;!--You can also do action="addStudent", which is corresponding controller--&gt;</span>
+    <span class="p">&lt;</span><span class="nt">table</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">form:label</span> <span class="na">path</span><span class="o">=</span><span class="s">"name"</span><span class="p">&gt;</span>Name<span class="p">&lt;/</span><span class="nt">form:label</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">form:input</span> <span class="na">path</span><span class="o">=</span><span class="s">"name"</span><span class="p">/&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">form:label</span> <span class="na">path</span><span class="o">=</span><span class="s">"age"</span><span class="p">&gt;</span>Age<span class="p">&lt;/</span><span class="nt">form:label</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">form:input</span> <span class="na">path</span><span class="o">=</span><span class="s">"age"</span><span class="p">/&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">form:label</span> <span class="na">path</span><span class="o">=</span><span class="s">"id"</span><span class="p">&gt;</span>Id<span class="p">&lt;/</span><span class="nt">form:label</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">form:input</span> <span class="na">path</span><span class="o">=</span><span class="s">"id"</span><span class="p">/&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span> <span class="na">colspan</span><span class="o">=</span><span class="s">"2"</span><span class="p">&gt;&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"commit"</span> <span class="na">value</span><span class="o">=</span><span class="s">"Submit"</span><span class="p">/&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form:form</span><span class="p">&gt;</span>
+</pre>
+
+
+<p>JAVA:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Assume we hava web.xml, testServlet-servlet.xml, Student.java as example above</span>
+
+<span class="nd">@Controller</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">testController</span><span class="o">{</span>
+
+    <span class="c1">//This step has other ways to implement it</span>
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">"/student"</span><span class="o">,</span> <span class="n">method</span><span class="o">=</span><span class="n">RequestMethod</span><span class="o">.</span><span class="na">GET</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">ModelAndView</span> <span class="nf">student</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">ModelAndView</span><span class="o">(</span><span class="s">"student"</span><span class="o">,</span><span class="s">"studentModel"</span><span class="o">,</span><span class="k">new</span> <span class="n">Student</span><span class="o">());</span>
+        <span class="c1">//Here we first create a Student object and go to student view(i.e student.jsp).</span>
+        <span class="c1">//Note "studentModel" is a model idetifier. Spring use it to recognize "&lt;form:form&gt;" value"</span>
+    <span class="o">}</span>
+
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">"/Student"</span><span class="o">,</span><span class="n">method</span><span class="o">=</span><span class="n">RequestMethod</span><span class="o">.</span><span class="na">POST</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">addStudent</span><span class="o">(</span><span class="nd">@ModelAttribute</span><span class="o">(</span><span class="s">"studentModel"</span><span class="o">)</span><span class="n">Student</span> <span class="n">student</span><span class="o">,</span> <span class="n">ModalMap</span> <span class="n">model</span><span class="o">){</span>
+        <span class="c1">//Since we have set studentModel is a Student object, Spring get attributes from form, and set it to a Student object.</span>
+        <span class="c1">//So now you can directly use student.getname();</span>
+        <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"name"</span><span class="o">,</span> <span class="n">student</span><span class="o">.</span><span class="na">getname</span><span class="o">());</span>
+        <span class="c1">//age, id is the same</span>
+
+        <span class="k">return</span> <span class="s">"result"</span><span class="o">;</span> <span class="c1">//Now you can use ${name}, ${age} and ${id} in result.jsp</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../categories/java/" rel="tag">Java</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../use-google-custom-search-in-your-website/" rel="prev" title="Use Google Custom Search In Your Website">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../reading-spring-3-21/" rel="next" title="Reading Notes for Spring 3 Core Components Tutorial Part VII (Chapter 21)">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="pengyinsnotes",
+            disqus_url="https://pengyin-shan.com/posts/2014/reading-spring-3-22/",
+        disqus_title="Reading Notes for Spring 3 Core Components Tutorial Part VI (Chapter 22)",
+        disqus_identifier="cache/posts/2014/reading-spring-3-22.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="pengyinsnotes";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+    
+    <div class="footer-wrapper">
+        <footer role="contentinfo"><p>Contents © 2018         <a href="mailto:pengyin.shan@outlook.com">Pengyin(Wendy) Shan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+        </footer>
+</div>
+
+    
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script src="../../../assets/js/scripts.min.js"></script>
+</body>
+</html>

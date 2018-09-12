@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " vocab="http://ogp.me/ns" lang="en">
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]--><!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]--><!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]--><!--[if gt IE 8]><!--><!--<![endif]--><head>
+<meta charset="utf-8">
+<meta name="description" content="This is an old blog I created when I started to learn Bootstrap3, recording useful tips during my development process. This post will be UPDATING CONTINUALLY, since I'm still digging more into Bootstrap3.">
+<!-- http://t.co/dKP3o1e --><meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bootstrap3 Tips CONTINUALLY UPDATE | Pengyin's Corner</title>
+<link href="../../../../assets/css/all.css" rel="stylesheet" type="text/css">
+<!-- Webfonts --><link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+<!-- Load Modernizr --><script src="//mmistakes.github.io/hpstr-jekyll-theme/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script><link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../rss.xml">
+<link rel="canonical" href="https://pengyin-shan.com/posts/2015/Front%20End/bootstrap3-tricks/">
+<!--[if lt IE 9]><script src="../../../../assets/js/html5.js"></script><![endif]--><meta name="description" content="This is an old blog I created when I started to learn Bootstrap3, recording useful tips during my development process. This post will be UPDATING CONTINUALLY, since I'm still digging more into Bootstrap3.">
+<meta name="author" content="Pengyin(Wendy) Shan">
+<link rel="next" href="../../../2014/use-java-to-get-clients-ip-address/" title="Use Java to Get Client's IP Address" type="text/html">
+<meta property="og:site_name" content="Pengyin's Corner">
+<meta property="og:title" content="Bootstrap3 Tips CONTINUALLY UPDATE">
+<meta property="og:url" content="https://pengyin-shan.com/posts/2015/Front%20End/bootstrap3-tricks/">
+<meta property="og:description" content="This is an old blog I created when I started to learn Bootstrap3, recording useful tips during my development process. This post will be UPDATING CONTINUALLY, since I'm still digging more into Bootstr">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2014-12-10T00:00:00-05:00">
+<meta property="article:tag" content="Bootstrap3">
+<meta property="article:tag" content="CSS">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="jQuery">
+</head>
+<body id="post-index" class="feature">
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    
+
+    <nav id="dl-menu" class="dl-menuwrapper" role="navigation"><button class="dl-trigger">Open Menu</button>
+    <ul class="dl-menu">
+<li><a href="../../../">My Knowledge Base</a></li>
+            <li><a href="https://www.linkedin.com/in/pengyinshan">My LinkedIn</a></li>
+            <li><a href="../../../../categories/">Tags and Categories</a></li>
+            <li><a href="../../../../rss.xml">RSS feed</a></li>
+            <li><a href="../../../../archive.html">Archive</a></li>
+    
+    
+    </ul></nav><div class="entry-header">
+<!-- /.image-credit -->
+    <div class="entry-image">
+      <img src="../../../../bk.JPG" alt="Latest Posts">
+</div>
+<!-- /.entry-image -->
+      
+  <div class="header-title">
+    <div class="header-title-wrap">
+    <h1 id="brand"><a href="https://pengyin-shan.com/" title="Pengyin's Corner" rel="home">
+    Pengyin's Corner</a></h1>
+      <h2>Be Passionate.</h2>
+    </div>
+<!-- /.header-title-wrap -->
+  </div>
+<!-- /.header-title -->
+
+</div>
+<!-- /.entry-header -->
+
+    <div id="main" role="main">
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><div class="entry-meta">
+            <span class="dateline"><a href="../../Front%20End/bootstrap3-tricks/" rel="bookmark"><time class="published dt-published" datetime="2014-12-10T00:00:00-05:00" itemprop="datePublished" title="2014-12-10">2014-12-10</time></a></span>  ·  
+            <span class="byline author vcard">Pengyin(Wendy) Shan</span>  ·  
+                <span class="commentline">
+        
+    <a href="../../Front%20End/bootstrap3-tricks/#disqus_thread" data-disqus-identifier="cache/posts/2015/Front End/bootstrap3-tricks.html">Comments</a>
+
+</span>  ·  
+            
+        <span class="sourceline"><a href="../../Front%20End/bootstrap3-tricks/index.md" id="sourcelink">Source</a></span>  ·  
+
+                <meta name="description" itemprop="description" content="This is an old blog I created when I started to learn Bootstrap3, recording useful tips during my development process. This post will be UPDATING CONTINUALLY, since I'm still digging more into Bootstrap3.">
+</div>
+        
+
+    
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="../../Front%20End/bootstrap3-tricks/" class="u-url">Bootstrap3 Tips CONTINUALLY UPDATE</a></h1>
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>This post is transferred from my <a href="http://blogpengyin.herokuapp.com/">old Hexo blog site</a>, created on 2014. This blog will be <strong>updating continually</strong>.</p>
+<p>If you want to find specific topic, feel free to use <code>ctrl + F</code> to search for keyword.</p>
+<h2 id="change-glyphicon-when-bootstrap-collapse-show-or-hide">Change Glyphicon when Bootstrap Collapse Show or Hide</h2>
+<p>This is what I learned from: http://stackoverflow.com/questions/18325779/bootstrap-3-collapse-show-state-with-chevron-icon . The answer is from <code>zessx</code>.</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel-heading"</span> <span class="na">role</span><span class="o">=</span><span class="s">"tab"</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"collapsed"</span> <span class="na">data-toggle</span><span class="o">=</span><span class="s">"collapse"</span> <span class="na">data-parent</span><span class="o">=</span><span class="s">"#accordion"</span> <span class="na">href</span><span class="o">=</span><span class="s">"#test"</span> <span class="na">aria-expanede</span><span class="o">=</span><span class="s">"true"</span> <span class="na">aria-controls</span><span class="o">=</span><span class="s">"test"</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-plus"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+        Here, when a panel is collapsed, a glyphicon-plus will appear.
+        When it is toggled (i.e, change to a different state, which is not collapsed), a glyphicon-minus will appear.
+    <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/javascript"</span><span class="p">&gt;</span>
+    <span class="kd">function</span> <span class="nx">toggleChevron</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">prev</span><span class="p">(</span><span class="s1">'.panel-heading'</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">'span'</span><span class="p">)</span> <span class="c1">//find elements that has tage 'span'</span>
+        <span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s1">'glyphicon glyphicon-minus glyphicon-plus'</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">'#accordion'</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'hidden.bs.collapse'</span><span class="p">,</span> <span class="nx">toggleChevron</span><span class="p">);</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">'#accordion'</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'shown.bs.collapse'</span><span class="p">,</span> <span class="nx">toggleChevron</span><span class="p">);</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre>
+
+
+<h2 id="collapse-panel-hide-or-show">Collapse Panel Hide or Show</h2>
+<p><code>hide</code>: will hide panel</p>
+<p><code>show</code>: will show panel</p>
+<p><code>toggle</code>: will change to opposite status</p>
+<p>To use this, try <code>$('.class_name').collapse('toggle');</code> or <code>$('#id_name').collapse('hide')</code>.</p>
+<h2 id="sticky-headerfooter">Sticky Header/Footer</h2>
+<p>Bootstrap has two classes: <code>navbar-fixed-top</code> and <code>navbar-fixed-bottom</code> that can be served as sticky header and footer. Make sure add <code>body{ padding-top: 50px;}</code> or <code>body{ padding-bottom: 50px;}</code> when you use them.</p>
+<blockquote>
+<p>Note: the default height for navbar in Bootstrap3 is 50px high.</p>
+</blockquote>
+<h2 id="dynamically-edit-checkbox">Dynamically Edit Checkbox</h2>
+<h3 id="default-status">Default Status</h3>
+<p>In Bootstrap3, when you add a simple check box, the default code is <code>&lt;input type="checkbox" /&gt;</code>.</p>
+<p>This checkbox will keep un-checked. When you check it, this default code will keep the same.</p>
+<p>If you use <code>this.getAttribute('checked')</code> to check if checkbox is checked or not, you always get <code>undefined</code>.</p>
+<h3 id="default-checked-status">Default Checked Status</h3>
+<p>In Bootstrap3, you can set a default <code>checked</code> attribute to checkbox to make it default checked: <code>&lt;input type='checkbox' checked/&gt;</code>.</p>
+<p>If you use <code>$(this).attr('checked')</code> to check status, it will return <code>checked</code> or <code>undefined</code>. But if you use <code>this.getAttribute("checked")</code>, you will always get <code>empty</code> value returned.</p>
+<p>If you use <code>&lt;input type='checkbox' checked = "checked"/&gt;</code>, <code>$(this).attr('checked')</code> will return same result as above, but <code>this.getAttribute("checked")</code> will always get <code>checked</code> no matter if you check it or not.</p>
+<p>You can also set <code>&lt;input type='checkbox' checked="checked"/&gt;</code> to make it default checked.</p>
+<h3 id="change-status">Change Status</h3>
+<p>Following JQuery Code can divide status of checkbox if someone check or uncheck it:</p>
+<pre class="code literal-block"><span></span><span class="nx">$document</span><span class="p">.</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="c1">//You should change 'type=checkbox' based on your code. 'name' can be skipped</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">'[type=checkbox][name='</span><span class="nx">checkbox_name</span><span class="s1">']'</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'click'</span><span class="p">,</span><span class="kd">function</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'checked'</span><span class="p">)</span> <span class="o">==</span> <span class="kc">undefined</span><span class="p">){</span>
+            <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"checked"</span><span class="p">,</span> <span class="s2">"checked"</span><span class="p">);</span>
+            <span class="c1">//steps for a checked checkbox...</span>
+        <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+            <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"checked"</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span>
+            <span class="c1">//steps for an un-checked checkbox...</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre>
+
+
+<p>The usage of code above: when you check the checkbox, this default code will become <code>&lt;input type='checkbox' checked='checked'&gt;</code>. If you un-check it, code will change back to <code>&lt;input type="checkbox" /&gt;</code>.</p>
+<p>In this case, if you use <code>$(this).attr(checked)</code> or <code>this.getAttribute(</code>checked<code>)</code> to check the status of checkbox, the <em>un-checked</em> checkbox will return <code>undefined</code>. the <em>checked</em> checkbox will return <code>checked</code>.</p>
+<h3 id="checkuncheck-checkbox-using-javascirpt">Check/UnCheck Checkbox Using JavaScirpt</h3>
+<p>In Bootstrap3, you can also set the <code>checked</code> attribute of checkbox to <code>true</code> or <code>false</code>.</p>
+<p>If you use JQuery, <code>$(this).attr("checked",false)</code> will remove <code>checked</code> attribute in code.</p>
+<p>If you use pure JavaScript, You have two steps to do this:</p>
+<ul>
+<li>
+<p><code>this.setAttribute("checked", true)</code> or <code>this.setAttribute("checked", "checked")</code> can change the <em>code</em> but not <em>behavior</em>. i.e. code will become <code>&lt;input type='checkbox' checked='checked'&gt;</code> or <code>&lt;input type='checkbox' checked='true'&gt;</code>, but on user interface, checkbox is not checked</p>
+</li>
+<li>
+<p><code>this.checked="checked"</code> or <code>this.checked = true</code> will only change use interface. Your checkbox will be checked buy there is nothing changed in code.</p>
+</li>
+</ul>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../categories/bootstrap3/" rel="tag">Bootstrap3</a></li>
+            <li><a class="tag p-category" href="../../../../categories/css/" rel="tag">CSS</a></li>
+            <li><a class="tag p-category" href="../../../../categories/javascript/" rel="tag">JavaScript</a></li>
+            <li><a class="tag p-category" href="../../../../categories/jquery/" rel="tag">jQuery</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="next">
+                <a href="../../../2014/use-java-to-get-clients-ip-address/" rel="next" title="Use Java to Get Client's IP Address">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="pengyinsnotes",
+            disqus_url="https://pengyin-shan.com/posts/2015/Front%20End/bootstrap3-tricks/",
+        disqus_title="Bootstrap3 Tips CONTINUALLY UPDATE",
+        disqus_identifier="cache/posts/2015/Front End/bootstrap3-tricks.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="pengyinsnotes";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+    
+    <div class="footer-wrapper">
+        <footer role="contentinfo"><p>Contents © 2018         <a href="mailto:pengyin.shan@outlook.com">Pengyin(Wendy) Shan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+        </footer>
+</div>
+
+    
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script src="../../../../assets/js/scripts.min.js"></script>
+</body>
+</html>

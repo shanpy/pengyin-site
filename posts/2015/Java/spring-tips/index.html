@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " vocab="http://ogp.me/ns" lang="en">
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]--><!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]--><!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]--><!--[if gt IE 8]><!--><!--<![endif]--><head>
+<meta charset="utf-8">
+<meta name="description" content="This post serves as a sticky note for me to record Spring Core/MVC tips I got in job. I will update this post when I learn more.">
+<!-- http://t.co/dKP3o1e --><meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spring Tips | Pengyin's Corner</title>
+<link href="../../../../assets/css/all.css" rel="stylesheet" type="text/css">
+<!-- Webfonts --><link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+<!-- Load Modernizr --><script src="//mmistakes.github.io/hpstr-jekyll-theme/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script><link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../rss.xml">
+<link rel="canonical" href="https://pengyin-shan.com/posts/2015/Java/spring-tips/">
+<!--[if lt IE 9]><script src="../../../../assets/js/html5.js"></script><![endif]--><meta name="description" content="This post serves as a sticky note for me to record Spring Core/MVC tips I got in job. I will update this post when I learn more.">
+<meta name="author" content="Pengyin(Wendy) Shan">
+<link rel="prev" href="../../Data%20Science/ipython-notebook-pyspark/" title="Install Apache Spark with IPython Notebook Configuration on Ubuntu 15" type="text/html">
+<link rel="next" href="../../Data%20Science/sql-basics/" title="SQL Basics" type="text/html">
+<meta property="og:site_name" content="Pengyin's Corner">
+<meta property="og:title" content="Spring Tips">
+<meta property="og:url" content="https://pengyin-shan.com/posts/2015/Java/spring-tips/">
+<meta property="og:description" content="This post serves as a sticky note for me to record Spring Core/MVC tips I got in job. I will update this post when I learn more.">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-06-16T00:00:00-04:00">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Spring">
+</head>
+<body id="post-index" class="feature">
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    
+
+    <nav id="dl-menu" class="dl-menuwrapper" role="navigation"><button class="dl-trigger">Open Menu</button>
+    <ul class="dl-menu">
+<li><a href="../../../">My Knowledge Base</a></li>
+            <li><a href="https://www.linkedin.com/in/pengyinshan">My LinkedIn</a></li>
+            <li><a href="../../../../categories/">Tags and Categories</a></li>
+            <li><a href="../../../../rss.xml">RSS feed</a></li>
+            <li><a href="../../../../archive.html">Archive</a></li>
+    
+    
+    </ul></nav><div class="entry-header">
+<!-- /.image-credit -->
+    <div class="entry-image">
+      <img src="../../../../bk.JPG" alt="Latest Posts">
+</div>
+<!-- /.entry-image -->
+      
+  <div class="header-title">
+    <div class="header-title-wrap">
+    <h1 id="brand"><a href="https://pengyin-shan.com/" title="Pengyin's Corner" rel="home">
+    Pengyin's Corner</a></h1>
+      <h2>Be Passionate.</h2>
+    </div>
+<!-- /.header-title-wrap -->
+  </div>
+<!-- /.header-title -->
+
+</div>
+<!-- /.entry-header -->
+
+    <div id="main" role="main">
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><div class="entry-meta">
+            <span class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2015-06-16T00:00:00-04:00" itemprop="datePublished" title="2015-06-16">2015-06-16</time></a></span>  ·  
+            <span class="byline author vcard">Pengyin(Wendy) Shan</span>  ·  
+                <span class="commentline">
+        
+    <a href="#disqus_thread" data-disqus-identifier="cache/posts/2015/Java/spring-tips.html">Comments</a>
+
+</span>  ·  
+            
+        <span class="sourceline"><a href="index.md" id="sourcelink">Source</a></span>  ·  
+
+                <meta name="description" itemprop="description" content="This post serves as a sticky note for me to record Spring Core/MVC tips I got in job. I will update this post when I learn more.">
+</div>
+        
+
+    
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Spring Tips</a></h1>
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<hr>
+<p>In Spring MVC, if AJAX pass back a <code>String</code>, use <code>JSON.parse()</code> to transfer it to JSON object first.</p>
+<hr>
+<h4 id="use-session-object-in-controller">Use Session Object in Controller</h4>
+<p>Way1:</p>
+<pre class="code literal-block"><span></span><span class="err">\\</span><span class="o">...(...</span><span class="na">HttpSession</span> <span class="n">sessionObj</span><span class="o">){</span>
+    <span class="n">sessionobj</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="err">'</span><span class="n">name_of_attribute</span><span class="err">'</span><span class="o">,</span> <span class="n">attribute_object</span><span class="o">);</span>
+    <span class="k">return</span> <span class="s">"redirect:/..."</span><span class="o">;</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>Way2:</p>
+<pre class="code literal-block"><span></span><span class="err">\\</span><span class="o">...(...</span><span class="na">HttpSevletRequest</span> <span class="n">req</span><span class="o">){</span>
+    <span class="n">HttpSession</span> <span class="n">session</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getSession</span><span class="o">();</span>
+    <span class="n">Object_Type</span> <span class="n">obj</span> <span class="o">=</span> <span class="o">(</span><span class="n">Object_Type</span><span class="o">)</span><span class="n">session</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"name_of_attribute"</span><span class="o">);</span>
+    <span class="c1">//Object_Type: int, String, float, etc</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>Different from <code>flash attribute</code>, if we use session, attribute in front-end will not be erased after reloading.</p>
+<hr>
+<h3 id="spring-mvc-form-tips">Spring MVC Form Tips</h3>
+<h4 id="spring-form-validation">Spring Form Validation:</h4>
+<p>Way 1:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">form:form</span> <span class="err">...</span> <span class="na">onsubmit</span><span class="o">=</span><span class="s">'return valid()'</span><span class="p">&gt;</span>
+    <span class="c">&lt;!--. Code... --&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form:form</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="kd">function</span> <span class="nx">valid</span><span class="p">(){</span>
+    <span class="c1">//...return true;</span>
+    <span class="c1">//...return false;</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre>
+
+
+<p>Way 2:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">form:form</span> <span class="err">...</span><span class="p">&gt;</span>
+    <span class="c">&lt;!--. Code... --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onclick</span><span class="o">=</span><span class="s">"valid(event)"</span><span class="p">&gt;</span>Submit<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="kd">function</span> <span class="nx">valid</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+    <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();;</span>
+
+    <span class="c1">//...Add Validation JavaScript</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">'#form_id'</span><span class="p">).</span><span class="nx">submit</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre>
+
+
+<h4 id="submit-spring-form-in-jquery">Submit Spring Form in jQuery:</h4>
+<pre class="code literal-block"><span></span><span class="nx">$</span><span class="p">(</span><span class="s1">'#Form_ID'</span><span class="p">).</span><span class="nx">submit</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+        <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+        <span class="c1">//...</span>
+        <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span><span class="nx">v</span><span class="p">){</span>
+                <span class="kd">var</span> <span class="nx">all_inputs</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">v</span><span class="p">);</span> <span class="c1">//value of &lt;form:input&gt;</span>
+                <span class="c1">//The is a way of get Spring form input value in JavaScript</span>
+                <span class="c1">//i is index, v is value. You can use this method to iterate JSON object</span>
+            <span class="p">})</span>
+    <span class="p">});</span>
+</pre>
+
+
+<blockquote>
+<p>If you add <code>value</code> attribute for <code>&lt;form:input&gt;</code>, you may got <code>No Such Element</code> error</p>
+<p>If you are using Eclipse, comment your unwanted Spring code will not work! You should remove unwanted Spring code instead of commenting them, because Eclipse will compile Spring code anyway, and you may get error because of that.</p>
+</blockquote>
+<hr>
+<h3 id="spring-and-ajax">Spring and AJAX</h3>
+<p>I wrote any post about Spring and AJAX <a href="http://pengyin-shan.com/ajax-and-spring-mvc-controller.html">here</a>.
+Post Method in jQuery:</p>
+<pre class="code literal-block"><span></span><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+        <span class="nx">contentType</span><span class="o">:</span> <span class="s2">"application/json; charset = urf-8;"</span>
+        <span class="nx">url</span><span class="o">:</span> <span class="s1">'...'</span><span class="p">,</span>
+        <span class="nx">type</span><span class="o">:</span> <span class="s1">'POST'</span><span class="p">,</span>
+        <span class="nx">data</span><span class="o">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">json_obj</span><span class="p">),</span>
+        <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nx">textStatus</span><span class="p">,</span> <span class="nx">jqXHR</span><span class="p">){</span>
+            <span class="c1">//...;</span>
+        <span class="p">},</span>
+        <span class="nx">error</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">jqXHR</span><span class="p">,</span> <span class="nx">textStatus</span><span class="p">,</span> <span class="nb">Error</span><span class="p">){</span>
+            <span class="c1">//...;</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+</pre>
+
+
+<p>Post Method in Spring Controller:</p>
+<pre class="code literal-block"><span></span><span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">"/your_mapping_url"</span><span class="o">,</span> <span class="n">method</span><span class="o">={</span><span class="n">RequestMethod</span><span class="o">:</span> <span class="n">POST</span><span class="o">})</span>
+<span class="kd">public</span> <span class="nd">@ResponseBody</span> <span class="n">String</span><span class="o">/</span><span class="n">ModelAndView</span> <span class="o">(</span><span class="nd">@RequestBoday</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">json_obj</span><span class="o">){</span>
+    <span class="c1">//...You may want to parse json_obj to JSONObject</span>
+<span class="o">}</span>
+</pre>
+
+
+<blockquote>
+<p>In Java, a <code>Gson</code> library from <a href="https://code.google.com/p/google-gson/">Google</a> can transfer Java <code>Object</code> to <code>JSONObject</code> directly.</p>
+<p>Example:</p>
+</blockquote>
+<pre class="code literal-block"><span></span><span class="n">Gson</span> <span class="n">gson</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Gson</span><span class="o">();</span>
+<span class="n">String</span> <span class="n">json_str</span> <span class="o">=</span> <span class="n">gson</span><span class="o">.</span><span class="na">toJson</span><span class="o">(</span><span class="n">Object_Instance</span><span class="o">);</span>
+</pre>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../categories/java/" rel="tag">Java</a></li>
+            <li><a class="tag p-category" href="../../../../categories/spring/" rel="tag">Spring</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../../Data%20Science/ipython-notebook-pyspark/" rel="prev" title="Install Apache Spark with IPython Notebook Configuration on Ubuntu 15">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../../Data%20Science/sql-basics/" rel="next" title="SQL Basics">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="pengyinsnotes",
+            disqus_url="https://pengyin-shan.com/posts/2015/Java/spring-tips/",
+        disqus_title="Spring Tips",
+        disqus_identifier="cache/posts/2015/Java/spring-tips.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="pengyinsnotes";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+    
+    <div class="footer-wrapper">
+        <footer role="contentinfo"><p>Contents © 2018         <a href="mailto:pengyin.shan@outlook.com">Pengyin(Wendy) Shan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+        </footer>
+</div>
+
+    
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script src="../../../../assets/js/scripts.min.js"></script>
+</body>
+</html>

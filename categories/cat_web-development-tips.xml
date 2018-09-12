@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Pengyin's Corner (Posts about Web Development Tips)</title><link>https://pengyin-shan.com/</link><description></description><atom:link type="application/rss+xml" href="https://pengyin-shan.com/categories/cat_web-development-tips.xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Tue, 11 Sep 2018 20:57:10 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Regular Expression</title><link>https://pengyin-shan.com/posts/2015/Web%20Development%20Tips/regular-expression/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;p&gt;A JavaScript Regex Cheatsheet &lt;a href="https://www.debuggex.com/cheatsheet/regex/javascript"&gt;online&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id="javascript-regular-expression"&gt;JavaScript Regular Expression&lt;/h3&gt;
+&lt;h4 id="method"&gt;Method&lt;/h4&gt;
+&lt;h5 id="search"&gt;search&lt;/h5&gt;
+&lt;p&gt;&lt;code&gt;search()&lt;/code&gt; uses an expression to search for a match, and returns the position of the match. Return &lt;code&gt;-1&lt;/code&gt; if regular expression not match:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;str&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"test"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;str&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;search&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sr"&gt;/^(test)+$/i&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;//n=0&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h5 id="replace"&gt;replace&lt;/h5&gt;
+&lt;p&gt;&lt;code&gt;replace&lt;/code&gt;: search pattern and replace it&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;str&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"test"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;res&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;str&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sr"&gt;/test/i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"new-test"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h5 id="test"&gt;test&lt;/h5&gt;
+&lt;p&gt;&lt;code&gt;test()&lt;/code&gt; searches a string for a pattern, and returns &lt;code&gt;true&lt;/code&gt; or &lt;code&gt;false&lt;/code&gt;, depending on the result.&lt;/p&gt;
+&lt;p&gt;Example code from w3cschool:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;patt&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="sr"&gt;/e/&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nx"&gt;patt&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;test&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"The best things in life are free!"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;//true&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h5 id="exec"&gt;exec&lt;/h5&gt;
+&lt;p&gt;&lt;code&gt;exec()&lt;/code&gt; searches a string for a specified pattern, and returns &lt;strong&gt;the found text&lt;/strong&gt;. If nothing is founded, return &lt;code&gt;null&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Example code from w3cschool:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="sr"&gt;/e/&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;exec&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"The best things in life are free!"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;//e&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="modifiers"&gt;Modifiers&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;i&lt;/code&gt;: Perform case-insensitive matching&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;g&lt;/code&gt;: Perform a global match (find all matches rather than stopping after the first match)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;m&lt;/code&gt;: Perform a mutiline matching&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="escape"&gt;Escape&lt;/h4&gt;
+&lt;p&gt;Use &lt;code&gt;\&lt;/code&gt; to &lt;strong&gt;escape&lt;/strong&gt; to following items in regular expression: &lt;code&gt;^&lt;/code&gt;, &lt;code&gt;$&lt;/code&gt;, &lt;code&gt;.&lt;/code&gt;, &lt;code&gt;*&lt;/code&gt;, &lt;code&gt;+&lt;/code&gt;, &lt;code&gt;?&lt;/code&gt;, &lt;code&gt;=&lt;/code&gt;, &lt;code&gt;!&lt;/code&gt;, &lt;code&gt;:&lt;/code&gt;, &lt;code&gt;|&lt;/code&gt;, &lt;code&gt;\&lt;/code&gt;, &lt;code&gt;/&lt;/code&gt;, &lt;code&gt;(&lt;/code&gt;, &lt;code&gt;)&lt;/code&gt;, &lt;code&gt;[&lt;/code&gt;, &lt;code&gt;]&lt;/code&gt;, &lt;code&gt;{&lt;/code&gt;, &lt;code&gt;}&lt;/code&gt;&lt;/p&gt;
+&lt;h4 id="or"&gt;OR&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;[]&lt;/code&gt;: &lt;code&gt;/[abc]/&lt;/code&gt; means &lt;code&gt;a&lt;/code&gt; or &lt;code&gt;b&lt;/code&gt; or &lt;code&gt;c&lt;/code&gt;&lt;/p&gt;
+&lt;h4 id="except"&gt;Except&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;[^]&lt;/code&gt;: &lt;code&gt;/[^abc]/&lt;/code&gt; anything except &lt;code&gt;a&lt;/code&gt; or &lt;code&gt;b&lt;/code&gt; or &lt;code&gt;c&lt;/code&gt;&lt;/p&gt;
+&lt;h4 id="character"&gt;Character&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;.&lt;/code&gt;: any single character &lt;em&gt;except next-line and white-space&lt;/em&gt;. i.e. &lt;code&gt;[^\n\r]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;\w&lt;/code&gt;: any ASCII single character. i.e. &lt;code&gt;[a-zA-Z0-9]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;\W&lt;/code&gt;: any non-ASCII single character. i.e. &lt;code&gt;[^a-zA-Z0-9]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;\d&lt;/code&gt;: any digital singe character. i.e. &lt;code&gt;[0-9]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;\D&lt;/code&gt;: any non-digital single character. i.e.e &lt;code&gt;[^0-9]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;\s&lt;/code&gt;: white-space&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;\S&lt;/code&gt;: non-white-space&lt;/p&gt;
+&lt;h4 id="meta-character"&gt;Meta Character&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;\r&lt;/code&gt;: Assume you hit &lt;code&gt;Enter&lt;/code&gt; key&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;\t&lt;/code&gt;: Tab&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;\n&lt;/code&gt;: change new line&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;\f&lt;/code&gt;: change page&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;\0&lt;/code&gt;: empty character&lt;/p&gt;
+&lt;h4 id="repeat"&gt;Repeat&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;{min, max}&lt;/code&gt;: Repeat from min times to max times. Example: &lt;code&gt;/[test]{4,6}/&lt;/code&gt; means 't' or &lt;code&gt;e&lt;/code&gt; or &lt;code&gt;s&lt;/code&gt; or &lt;code&gt;t&lt;/code&gt; should be repeated at least 4 times and as most 6 times.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;{min,}&lt;/code&gt; or &lt;code&gt;{,max}&lt;/code&gt;: Repeat at least &lt;code&gt;min&lt;/code&gt; or at most &lt;code&gt;max&lt;/code&gt; times. Example: &lt;code&gt;/[test]{4,}&lt;/code&gt; means 't' or &lt;code&gt;e&lt;/code&gt; or &lt;code&gt;s&lt;/code&gt; or &lt;code&gt;t&lt;/code&gt; should be repeated at least 4 times. No maximum times.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;{n}&lt;/code&gt;: Repeat exactly n times.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;?&lt;/code&gt;: Repeat 0 or 1 times&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;+&lt;/code&gt;: Repeat 1 or more times&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;*&lt;/code&gt;: Repeat 0 or more times&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;when we use &lt;code&gt;{min,max}&lt;/code&gt;, we may fine more than one corresponding pattern in string. By default result string should be as long as possible. If you want result to be shortest case, add &lt;code&gt;?&lt;/code&gt; after &lt;code&gt;{min,max}&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Example from: http://www.cnblogs.com/dolphinX/p/3486214.html:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="s1"&gt;'123456789'&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;match&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sr"&gt;/\d{3,5}/g&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;//["12345", "6789"]&lt;/span&gt;
+&lt;span class="s1"&gt;'123456789'&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;match&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sr"&gt;/\d{3,5}?/g&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;//["123", "456", "789"]&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="group-and-border"&gt;Group and Border&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;^&lt;/code&gt;: Mark start point&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;$&lt;/code&gt;: Mark end point&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;\b&lt;/code&gt;: all characters except &lt;code&gt;[a-zA-Z0-9]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Example from http://www.cnblogs.com/dolphinX/p/3486214.html:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sr"&gt;/\w+\b Byron/&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;test&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Hi Byron'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;//true&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sr"&gt;/\w+\b Byron/&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;test&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Welcome Byron'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;//true&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sr"&gt;/\w+\b Byron/&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;test&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'HiByron'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;//false&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;&lt;code&gt;\B&lt;/code&gt;: opposite from above&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;()&lt;/code&gt;: AND. Example: &lt;code&gt;/(abc)+/&lt;/code&gt; means &lt;code&gt;abc&lt;/code&gt; or &lt;code&gt;abcabc&lt;/code&gt; or more.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;|&lt;/code&gt;: OR. Example: &lt;code&gt;/a|b/&lt;/code&gt; means &lt;code&gt;a&lt;/code&gt; or &lt;code&gt;b&lt;/code&gt;&lt;/p&gt;
+&lt;h4 id="frequently-used-regular-expressions"&gt;Frequently Used Regular Expressions&lt;/h4&gt;
+&lt;p&gt;Examples below are taken from &lt;a href="http://kb.cnblogs.com/page/80965/"&gt;this post&lt;/a&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Non-negative Integer: &lt;code&gt;^\d+$&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Positive Integer: &lt;code&gt;^[0-9]*[1-9][0-9]*$&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Non-positive Integer: &lt;code&gt;^((-\d+)|(0+))$&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Negative Integer: &lt;code&gt;^-[0-9]*[1-9][0-9]*$&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Integer: &lt;code&gt;^-?\d+$&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Non-negative Float: &lt;code&gt;^\d+(\.\d+)?$&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Positive Float: &lt;code&gt;^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Non-positive Float: &lt;code&gt;^((-\d+(\.\d+)?)|(0+(\.0+)?))$&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Negative Float: &lt;code&gt;^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Float: &lt;code&gt;^(-?\d+)(\.\d+)?$&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;String with all letters: &lt;code&gt;^[A-Za-z]+$&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;String with all upper case letters: &lt;code&gt;^[A-Z]+$&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;String with all lower case letters: &lt;code&gt;^[a-z]+$&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;String with number and letters: &lt;code&gt;^[A-Za-z0-9]+$&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;String with number, letters and underline: &lt;code&gt;^\w+$&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Email Address&lt;/strong&gt; validation: &lt;code&gt;^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;URL&lt;/strong&gt; Validation: &lt;code&gt;^[a-zA-z]+://&lt;/code&gt; &lt;code&gt;(\w+(-\w+)*)(\.(\w+(-\w+)*))*(\?\S*)?$&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;HTML Tag&lt;/strong&gt;: &lt;code&gt;&amp;lt;\s*(\S+)(\s[^&amp;gt;]*)?&amp;gt;(.*?)&amp;lt;\s*\/\1\s*&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;&lt;/div&gt;</description><category>JavaScript</category><guid>https://pengyin-shan.com/posts/2015/Web%20Development%20Tips/regular-expression/</guid><pubDate>Thu, 20 Aug 2015 04:00:00 GMT</pubDate></item><item><title>Setting up RoR/Hydra Environment - Problems and Solutions</title><link>https://pengyin-shan.com/posts/2015/Web%20Development%20Tips/setting-up-ror-hydra-environment-problems-and-solutions/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;h3 id="ubuntu-1510"&gt;Ubuntu 15.10&lt;/h3&gt;
+&lt;p&gt;If you want to setup your RoR environment on Ubuntu 14/15, &lt;a href="https://gorails.com/setup/ubuntu/15.04"&gt;this post&lt;/a&gt; is the best choice for you. I used &lt;code&gt;rvm&lt;/code&gt; to install Ruby on my two Ubuntu 15.10 machine, and it worked like a charm.&lt;/p&gt;
+&lt;h4 id="problem"&gt;Problem&lt;/h4&gt;
+&lt;p&gt;When I tried to run &lt;code&gt;\curl -L https://get.rvm.io | bash -s stable --ruby&lt;/code&gt; in terminal to install both RVM and Ruby, I got following error message:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;Error&lt;/span&gt; &lt;span class="s s-Atom"&gt;running&lt;/span&gt; &lt;span class="s s-Atom"&gt;'requirements_debian_update_system ruby-2.2.1'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="s s-Atom"&gt;showing&lt;/span&gt; &lt;span class="s s-Atom"&gt;last&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt; &lt;span class="s s-Atom"&gt;lines&lt;/span&gt; &lt;span class="s s-Atom"&gt;of&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;rvm&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;log&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;1439385591&lt;/span&gt;&lt;span class="k"&gt;_&lt;/span&gt;&lt;span class="s s-Atom"&gt;ruby&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;2.2.1&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;update_system&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="s s-Atom"&gt;log&lt;/span&gt;
+&lt;span class="s s-Atom"&gt;++&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;scripts&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;functions&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;logging&lt;/span&gt; &lt;span class="s s-Atom"&gt;:&lt;/span&gt; &lt;span class="nf"&gt;rvm_pretty_print&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="mi"&gt;78&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="s s-Atom"&gt;case&lt;/span&gt; &lt;span class="s2"&gt;"${TERM:-dumb}"&lt;/span&gt; &lt;span class="s s-Atom"&gt;in&lt;/span&gt;
+&lt;span class="s s-Atom"&gt;++&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;scripts&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;functions&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;logging&lt;/span&gt; &lt;span class="s s-Atom"&gt;:&lt;/span&gt; &lt;span class="nf"&gt;rvm_pretty_print&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="mi"&gt;81&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="s s-Atom"&gt;case&lt;/span&gt; &lt;span class="s2"&gt;"$1"&lt;/span&gt; &lt;span class="s s-Atom"&gt;in&lt;/span&gt;
+&lt;span class="s s-Atom"&gt;++&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;scripts&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;functions&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;logging&lt;/span&gt; &lt;span class="s s-Atom"&gt;:&lt;/span&gt; &lt;span class="nf"&gt;rvm_pretty_print&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="mi"&gt;83&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;[[&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="s s-Atom"&gt;t&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="p"&gt;]]&lt;/span&gt;
+&lt;span class="s s-Atom"&gt;++&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;scripts&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;functions&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;logging&lt;/span&gt; &lt;span class="s s-Atom"&gt;:&lt;/span&gt; &lt;span class="nf"&gt;rvm_pretty_print&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="mi"&gt;83&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="s s-Atom"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="s s-Atom"&gt;++&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;scripts&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;functions&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;logging&lt;/span&gt; &lt;span class="s s-Atom"&gt;:&lt;/span&gt; &lt;span class="nf"&gt;rvm_error&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="mi"&gt;117&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="s s-Atom"&gt;printf&lt;/span&gt; &lt;span class="c1"&gt;%b 'There has been error while updating '\''apt-get'\'', please give it some time and try again later.&lt;/span&gt;
+&lt;span class="mi"&gt;404&lt;/span&gt; &lt;span class="s s-Atom"&gt;errors&lt;/span&gt; &lt;span class="s s-Atom"&gt;should&lt;/span&gt; &lt;span class="s s-Atom"&gt;be&lt;/span&gt; &lt;span class="s s-Atom"&gt;fixed&lt;/span&gt; &lt;span class="s s-Atom"&gt;for&lt;/span&gt; &lt;span class="s s-Atom"&gt;rvm&lt;/span&gt; &lt;span class="s s-Atom"&gt;to&lt;/span&gt; &lt;span class="s s-Atom"&gt;proceed&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt; &lt;span class="nv"&gt;Check&lt;/span&gt; &lt;span class="s s-Atom"&gt;your&lt;/span&gt; &lt;span class="s s-Atom"&gt;sources&lt;/span&gt; &lt;span class="s s-Atom"&gt;configured&lt;/span&gt; &lt;span class="nn"&gt;in&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;sources&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="s s-Atom"&gt;list&lt;/span&gt;
+    &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;sources&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="s s-Atom"&gt;list&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="s s-Atom"&gt;d&lt;/span&gt;&lt;span class="cm"&gt;/*.list&lt;/span&gt;
+&lt;span class="cm"&gt;\n'&lt;/span&gt;
+&lt;span class="cm"&gt;There has been error while updating 'apt-get', please give it some time and try again later.&lt;/span&gt;
+&lt;span class="cm"&gt;404 errors should be fixed for rvm to proceed. Check your sources configured in:&lt;/span&gt;
+&lt;span class="cm"&gt;    /etc/apt/sources.list&lt;/span&gt;
+&lt;span class="cm"&gt;    /etc/apt/sources.list.d/*.list&lt;/span&gt;
+&lt;span class="cm"&gt;++ /scripts/functions/requirements/ubuntu : requirements_debian_update_system()  53 &amp;gt; return 100&lt;/span&gt;
+&lt;span class="cm"&gt;Requirements installation failed with status: 100.&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;The reason of this error is because RVM will bring error if my Ubuntu machine's &lt;code&gt;apt-get update&lt;/code&gt; has error in it. I used to install Ninja-IDE through &lt;code&gt;apt-get&lt;/code&gt; and I had PPA error when I do &lt;code&gt;apt-get update&lt;/code&gt;. You can view &lt;a href="http://stackoverflow.com/questions/23650992/ruby-rvm-apt-get-update-error"&gt;this stackoverflow post&lt;/a&gt;.&lt;/p&gt;
+&lt;h4 id="solution"&gt;Solution&lt;/h4&gt;
+&lt;p&gt;A user &lt;strong&gt;Avinash Raj&lt;/strong&gt; posted a great solution in &lt;a href="http://askubuntu.com/questions/65911/how-can-i-fix-a-404-error-when-using-a-ppa-or-updating-my-package-lists"&gt;Ubuntu community&lt;/a&gt; for removing PPA with errors.&lt;/p&gt;
+&lt;p&gt;The detail of solution is: create a file called &lt;code&gt;ppa-remove&lt;/code&gt; (no &lt;code&gt;.sh&lt;/code&gt; extension) as following:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+sudo rm /tmp/update.txt&lt;span class="p"&gt;;&lt;/span&gt; tput setaf &lt;span class="m"&gt;6&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;"Initializing.. Please Wait"&lt;/span&gt;
+sudo apt-get update &amp;gt;&amp;gt; /tmp/update.txt &lt;span class="m"&gt;2&lt;/span&gt;&amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; awk &lt;span class="s1"&gt;'( /W:/ &amp;amp;&amp;amp; /launchpad/ &amp;amp;&amp;amp; /404/ ) { print substr($5,26) }'&lt;/span&gt; /tmp/update.txt &amp;gt; /tmp/awk.txt&lt;span class="p"&gt;;&lt;/span&gt; awk -F &lt;span class="s1"&gt;'/'&lt;/span&gt; &lt;span class="s1"&gt;'{ print $1"/"$2 }'&lt;/span&gt; /tmp/awk.txt &amp;gt; /tmp/awk1.txt&lt;span class="p"&gt;;&lt;/span&gt; sort -u /tmp/awk1.txt &amp;gt; /tmp/awk2.txt
+tput sgr0
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; -s /tmp/awk2.txt &lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;then&lt;/span&gt;
+  tput setaf &lt;span class="m"&gt;1&lt;/span&gt;
+  &lt;span class="nb"&gt;printf&lt;/span&gt; &lt;span class="s2"&gt;"PPA's going to be removed\n%s\n"&lt;/span&gt; &lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;cat /tmp/awk2.txt&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;
+  tput sgr0
+  &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="nb"&gt;read&lt;/span&gt; -r line&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;"sudo add-apt-repository -r ppa:&lt;/span&gt;&lt;span class="nv"&gt;$line&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;done&lt;/span&gt; &amp;lt; /tmp/awk2.txt &amp;gt; out
+  bash out
+&lt;span class="k"&gt;else&lt;/span&gt;
+  tput setaf &lt;span class="m"&gt;1&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;"No PPA's to be removed"&lt;/span&gt;
+  tput sgr0
+&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Run &lt;code&gt;sudo chmod +x ppa-remove&lt;/code&gt; after you create this file, then move this file to &lt;code&gt;/usr/bin&lt;/code&gt;. Run &lt;code&gt;sudo ppa-remove&lt;/code&gt;. Your PPA with errors will be removed and you can then re-run &lt;code&gt;\curl -L https://get.rvm.io | bash -s stable&lt;/code&gt; or &lt;code&gt;\curl -L https://get.rvm.io | bash -s stable --ruby&lt;/code&gt; to install RVM.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Note: Till Aug 2015, If you run &lt;code&gt;\curl -L https://get.rvm.io | bash -s stable --ruby&lt;/code&gt;, you will automatically get Ruby 2.2.1 installed. If you run &lt;code&gt;\curl -L https://get.rvm.io | bash -s stable&lt;/code&gt; then install Ruby, you can choose Ruby 2.2.2. These two versions do not have conflict.&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="mac-os-yoemite"&gt;Mac OS Yoemite&lt;/h3&gt;
+&lt;p&gt;RoR installation process for Mac OS Yosemite is almost the same as Ubuntu. Make sure you have &lt;code&gt;xcode&lt;/code&gt; and &lt;code&gt;Homebrew&lt;/code&gt; installed first. This &lt;a href="http://railsapps.github.io/installrubyonrails-mac.html"&gt;post&lt;/a&gt; has very detailed description that you can follow.&lt;/p&gt;
+&lt;h3 id="project-hydra"&gt;Project Hydra&lt;/h3&gt;
+&lt;p&gt;I had a &lt;a href="http://pengyin-shan.com/blog/dive-into-hydra-and-my-thoughts"&gt;post&lt;/a&gt; describing my thoughts about Hydra. In this post I will include detail of installation part.&lt;/p&gt;
+&lt;p&gt;After you finish RoR setting (make sure you have &lt;code&gt;Bundle&lt;/code&gt; installed by &lt;code&gt;RubyGem&lt;/code&gt;), you want to generate a basic rails app, then add &lt;code&gt;gem 'hydra', '9.1.0.rc1'&lt;/code&gt; to your &lt;code&gt;Gemfile&lt;/code&gt;. you can re-run &lt;code&gt;Bundle install&lt;/code&gt; to install all necessary ruby gems for Hydra.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;If you are creating Hydra head for the first time, run &lt;code&gt;rails generate hydra:install&lt;/code&gt; to use Hydra generator. If you done this once and you want to setup this project in a new machine, you should skip this step because your old blacklight files will be overwritten.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;You can use same Gemfile to set up Hydra environment in different machines, but &lt;strong&gt;make sure you run &lt;code&gt;rake jetty:config&lt;/code&gt; and &lt;code&gt;rake db:migrate&lt;/code&gt;&lt;/strong&gt; to prevent possible problem.&lt;/p&gt;
+&lt;p&gt;You can run &lt;code&gt;Rails.env&lt;/code&gt; in rails console to check your current environment.&lt;/p&gt;
+&lt;h4 id="problem-data-immigration-for-existing-project"&gt;Problem: Data Immigration for Existing Project&lt;/h4&gt;
+&lt;p&gt;How to transfer previous data (Fedora files, Solr documents and indexes) to your new environment?&lt;/p&gt;
+&lt;h4 id="solution_1"&gt;Solution&lt;/h4&gt;
+&lt;p&gt;Well, I'm working on solution now :) To figure out a way I did lots of experiments (and made a big mess) in my Hydra project. I started a new post about it &lt;a href="http://pengyin-shan.com/blog/play-with-hydra-data"&gt;here&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;</description><category>Hydra</category><category>Linux</category><category>Ruby on Rails</category><category>Ubuntu</category><guid>https://pengyin-shan.com/posts/2015/Web%20Development%20Tips/setting-up-ror-hydra-environment-problems-and-solutions/</guid><pubDate>Wed, 12 Aug 2015 04:00:00 GMT</pubDate></item><item><title>The Benefit of Hosting Content Library with CDN</title><link>https://pengyin-shan.com/posts/2014/benefit-of-hosting-content-library-with-CDN/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;p&gt;Dave Ward gave three reasons for host jQuery on Google: "&lt;strong&gt;decreased latency&lt;/strong&gt;", "&lt;strong&gt;increased parallelism&lt;/strong&gt;" and "&lt;strong&gt;better caching&lt;/strong&gt;"&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;decreased latency&lt;/strong&gt;, based on what I understand, is the distance between your server and users, comparing with the distance between CDN's servers and users. Since CDN is able to locate user's location, it can ask the server that is &lt;em&gt;closest&lt;/em&gt; to user to give response. For example, CDN may tell user to find server that it's only 1 mile from him. Your server, however, only stay in one place. This means the user on other side of earch needs to make a long request to your server here.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;increased parallelism&lt;/strong&gt;: Broswers all have limitation for how many connection can be established at the same time. When user send request to CDN instead to your server, CDN can move one connection from your server to its server, which means your server can deliver more information to user, using the connection gap created by CDN.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;better caching&lt;/strong&gt;: If you keep all files on your server, users must download all of them every time they reload page. However, since browser can automatically detect the files coming from same CDN address are identical, it will only download it once in a long time period. Then everytime browser will try to find this file in cache first, instead of re-download it.&lt;/p&gt;
+&lt;p&gt;David Hall pointed out some disadvantage about CDN also. Most CDNs do cost money for its hosting, and the user may potentially block contents from a certain CDN, which can cause probelm on your website. Also geo-location may detect wrong location, which means user may take long time dealing with request.&lt;/p&gt;
+&lt;p&gt;Generally, CDN is a good way to host content such as JavaScript library or CSS library. You just need to make decision based on your own situation.&lt;/p&gt;&lt;/div&gt;</description><category>CDN</category><guid>https://pengyin-shan.com/posts/2014/benefit-of-hosting-content-library-with-CDN/</guid><pubDate>Tue, 13 Jan 2015 05:00:00 GMT</pubDate></item><item><title>Use Google Custom Search In Your Website</title><link>https://pengyin-shan.com/posts/2014/use-google-custom-search-in-your-website/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;p&gt;This post is transferred from my &lt;a href="http://blogpengyin.herokuapp.com/"&gt;old Hexo blog site&lt;/a&gt;, created on 2014.&lt;/p&gt;
+&lt;p&gt;You need a google account to use Google Custom Search Engine. Go to "www.google.com/cse" and sign in with your Google account.
+images/posts/google_cse.PNG &lt;/p&gt;
+&lt;p&gt;In the console, click "New search engine" on left menu, then input the website url you want to search from. You also need a name for this new search engine. After finsih setup, click "CREATE" button.
+images/posts/google_cse_create.PNG &lt;/p&gt;
+&lt;p&gt;You need to use &lt;code&gt;Search Engine ID&lt;/code&gt; for creating RESTful service. To do this, select "Edit search engine" on left menu. In the dropdown, select your search engine. Select "Basics" panel on right, then click "Search engine ID" in details part. A pop up box will appears with your Search Engine ID.
+images/posts/google_cse_id.PNG &lt;/p&gt;
+&lt;p&gt;You also need your api key for creating RESTful service. To do this, you need a project and get its API key in &lt;em&gt;Google Developers Console&lt;/em&gt;. You can do this by log in "console.developers.google.com" and select "Credentials" in "APIs &amp;amp; auth" menu. You will see API key appearing on right panel.&lt;/p&gt;
+&lt;p&gt;Then go back to your Custom Search panel. In "Details" part on right, click "Get Code" button (just near "Search Engine ID" button). Copy the code on this page and paste it into a '&lt;/p&gt;&lt;div&gt;' where you want the Google search bar appears.
+&lt;p&gt;You may want to use RESTful api to get results from Google custom search engine. The format of requested url is: &lt;code&gt;https://www.googleapis.com/customsearch/v1?key=XXX&amp;amp;cx=XXX&amp;amp;q=XXX&lt;/code&gt;. You should put your API key as &lt;code&gt;key&lt;/code&gt; parameter, your search engine Id as &lt;code&gt;cx&lt;/code&gt; paramter, and the string your want to search as &lt;code&gt;q&lt;/code&gt; parameter.&lt;/p&gt;
+&lt;p&gt;You can also add query parameters at the end of request url, such as &lt;code&gt;&amp;amp;callback=&lt;/code&gt; for returning &lt;code&gt;JSON-P&lt;/code&gt; object. Please refer to "https://developers.google.com/custom-search/json-api/v1/using_rest" if you need&lt;/p&gt;
+&lt;p&gt;Here is an example using AngularJS:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//We want to search "javascript" using Custom Search Engine&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'https://www.googleapis.com/customsearch/v1?key=XXX&amp;amp;cx=XXX&amp;amp;q=javascript&amp;amp;callback=JSON_CALLBACK'&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="nx"&gt;$http&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;jsonp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;url&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;success&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;status&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;headers&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;config&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+            &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;items&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;item&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;items&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+                &lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getElementById&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"callback"&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;innerHTML&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="s2"&gt;"&amp;lt;br/&amp;gt;"&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;item&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;htmlTitle&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+                &lt;span class="c1"&gt;//This will return all searchign result's title&lt;/span&gt;
+              &lt;span class="p"&gt;}&lt;/span&gt;
+        &lt;span class="p"&gt;})&lt;/span&gt;
+       &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;error&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;status&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;headers&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;config&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="nb"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"error: "&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;data&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;" status: "&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;status&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;" headers: "&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;headers&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;" config: "&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;config&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</description><category>Google</category><category>Web Developement Tips</category><guid>https://pengyin-shan.com/posts/2014/use-google-custom-search-in-your-website/</guid><pubDate>Wed, 10 Dec 2014 05:00:00 GMT</pubDate></item></channel></rss>

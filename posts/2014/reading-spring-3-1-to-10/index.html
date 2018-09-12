@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " vocab="http://ogp.me/ns" lang="en">
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]--><!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]--><!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]--><!--[if gt IE 8]><!--><!--<![endif]--><head>
+<meta charset="utf-8">
+<meta name="description" content="Reading Notes for Spring 3 Core Components Tutorial Part I (Chapter 1 to Chapter 10)">
+<!-- http://t.co/dKP3o1e --><meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading Notes for Spring 3 Core Components Tutorial Part I (Chapter 1 to Chapter 10) | Pengyin's Corner</title>
+<link href="../../../assets/css/all.css" rel="stylesheet" type="text/css">
+<!-- Webfonts --><link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+<!-- Load Modernizr --><script src="//mmistakes.github.io/hpstr-jekyll-theme/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script><link rel="alternate" type="application/rss+xml" title="RSS" href="../../../rss.xml">
+<link rel="canonical" href="https://pengyin-shan.com/posts/2014/reading-spring-3-1-to-10/">
+<!--[if lt IE 9]><script src="../../../assets/js/html5.js"></script><![endif]--><meta name="description" content="Reading Notes for Spring 3 Core Components Tutorial Part I (Chapter 1 to Chapter 10)">
+<meta name="author" content="Pengyin(Wendy) Shan">
+<link rel="prev" href="../reading-spring-3-11-to-13/" title="Reading Notes for Spring 3 Core Components Tutorial Part II (Chapter 11 to Chapter 13)" type="text/html">
+<link rel="next" href="../reading-d3-9/" title="Reading Notes for D3.js Part V (Chapter 9)" type="text/html">
+<meta property="og:site_name" content="Pengyin's Corner">
+<meta property="og:title" content="Reading Notes for Spring 3 Core Components Tutorial Part I (Chapter 1 ">
+<meta property="og:url" content="https://pengyin-shan.com/posts/2014/reading-spring-3-1-to-10/">
+<meta property="og:description" content="Reading Notes for Spring 3 Core Components Tutorial Part I (Chapter 1 to Chapter 10)">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2014-12-10T00:00:00-05:00">
+<meta property="article:tag" content="Java">
+</head>
+<body id="post-index" class="feature">
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    
+
+    <nav id="dl-menu" class="dl-menuwrapper" role="navigation"><button class="dl-trigger">Open Menu</button>
+    <ul class="dl-menu">
+<li><a href="../../">My Knowledge Base</a></li>
+            <li><a href="https://www.linkedin.com/in/pengyinshan">My LinkedIn</a></li>
+            <li><a href="../../../categories/">Tags and Categories</a></li>
+            <li><a href="../../../rss.xml">RSS feed</a></li>
+            <li><a href="../../../archive.html">Archive</a></li>
+    
+    
+    </ul></nav><div class="entry-header">
+<!-- /.image-credit -->
+    <div class="entry-image">
+      <img src="../../../bk.JPG" alt="Latest Posts">
+</div>
+<!-- /.entry-image -->
+      
+  <div class="header-title">
+    <div class="header-title-wrap">
+    <h1 id="brand"><a href="https://pengyin-shan.com/" title="Pengyin's Corner" rel="home">
+    Pengyin's Corner</a></h1>
+      <h2>Be Passionate.</h2>
+    </div>
+<!-- /.header-title-wrap -->
+  </div>
+<!-- /.header-title -->
+
+</div>
+<!-- /.entry-header -->
+
+    <div id="main" role="main">
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><div class="entry-meta">
+            <span class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2014-12-10T00:00:00-05:00" itemprop="datePublished" title="2014-12-10">2014-12-10</time></a></span>  ·  
+            <span class="byline author vcard">Pengyin(Wendy) Shan</span>  ·  
+                <span class="commentline">
+        
+    <a href="#disqus_thread" data-disqus-identifier="cache/posts/2014/reading-spring-3-1-to-10.html">Comments</a>
+
+</span>  ·  
+            
+        <span class="sourceline"><a href="index.md" id="sourcelink">Source</a></span>  ·  
+
+                <meta name="description" itemprop="description" content="Reading Notes for Spring 3 Core Components Tutorial Part I (Chapter 1 to Chapter 10)">
+</div>
+        
+
+    
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Reading Notes for Spring 3 Core Components Tutorial Part I (Chapter 1 to Chapter 10)</a></h1>
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>This post is transferred from my <a href="http://blogpengyin.herokuapp.com/">old Hexo blog site</a>, created on 2014.</p>
+<p>This is a reading note from Spring Framework 3.1 Tutorial pdf, created by <a href="http://www.tutorialspoint.com/spring"><strong>tutorialspoint</strong></a>. This pdf contains information for Spring 3 Core Basics, which is very useful for understanding defination and practive in Spring programming.</p>
+<h2 id="chapter-2-spring-framework-architecture">Chapter 2: Spring Framework Architecture</h2>
+<p>Spring is a modular framework, which means you can pick the modules that only fits your need. Basic structure of Spring framework is following. There are three <em>main</em> componets: <code>Core Container</code>, <code>Data Access Integration</code> and <code>Web (MVC/Remoting)</code>. Other important componets include <code>AOP</code>, <code>Aspects</code>, <code>Instrumentation</code> and <code>Test</code>:
+images/posts/spring-structure.png </p>
+<h3 id="core-container">Core Container</h3>
+<p><code>Core Container</code> contains: <code>Core</code> module, <code>Beans</code> module, <code>Context</code> module and <code>Expression Language</code> module:</p>
+<ul>
+<li>
+<p><code>Core</code>: fundamental of framework, including <code>loC</code> and <code>Dependency Injection</code> features.</p>
+</li>
+<li>
+<p><code>Beans</code>: has <code>Bean Factory</code>, implementing <em>factory pattern</em>.</p>
+</li>
+<li>
+<p><code>Context</code>: based on <code>Core</code> module and <code>Beans</code> module. It is a medium to <em>access</em> any objects defined and configured. The <code>ApplicationContext</code> interface is the focal point of the <code>Context</code> module.</p>
+</li>
+<li>
+<p><code>Expression Language</code>: provides language for <em>querying</em> and <em>manipulating</em> an object graph at run time.</p>
+</li>
+</ul>
+<h3 id="data-accessintegration">Data Access/Integration</h3>
+<p><code>Data Access/Integration</code> contains: <code>JDBC</code> module, <code>ORM</code> module, <code>OXM</code>, <code>JMS</code> module and <code>Transaction</code> module:</p>
+<ul>
+<li>
+<p><code>JDBC</code>: provides a <em>JDBC-abstraction</em> layer that can simplify JDBC coding</p>
+</li>
+<li>
+<p><code>ORM</code>: provide <em>integration</em> for popular <em>object-mapping</em> APIs, including <code>JPA</code>, <code>JDO</code>, <code>Hibernate</code>, <code>iBatis</code>.</p>
+</li>
+<li>
+<p><code>OXM</code>: provide integration for <em>Object/XML mapping</em>, such as <code>JAXB</code>, <code>Castor</code>, <code>XMLBeans</code>, <code>JiBX</code> and <code>XStream</code></p>
+</li>
+<li>
+<p><code>JSM</code>: <em>Java Messaging Service</em>. It can producing and consuming messages.</p>
+</li>
+<li>
+<p><code>Transaction</code>: contains programmatic and declarative <em>transaction management</em> for classes and POJOs.</p>
+</li>
+</ul>
+<h3 id="web">Web</h3>
+<p><code>Web</code> contains: <code>Web</code> module, <code>Web-Servlet</code> module, <code>Web-Struts</code> module and <code>Web-Portlet</code> module:</p>
+<ul>
+<li>
+<p><code>Web</code>: provide important functions for web development, such as <code>multipart file uploader</code> and <code>loC container</code> using <code>servlet listeners</code> and a web-oriented <code>application context</code>.</p>
+</li>
+<li>
+<p><code>Web-Servlet</code>: provide Spring <code>MVC</code> implementation</p>
+</li>
+<li>
+<p><code>Web-Structs</code>: provide support for Structs</p>
+</li>
+<li>
+<p><code>Web-Portlet</code>: provide <code>MVC</code> implemention to be used in a <em>portlet</em> environment.</p>
+</li>
+</ul>
+<h3 id="other-components">Other Components</h3>
+<ul>
+<li>
+<p><code>AOP</code> module provides <code>aspect-oriented</code> programming implementation, allowing you to define method-interceptor or <em>pointcut</em>s to cleanly <em>decouple</em> code that implements functionality that should be <em>seperated</em>.</p>
+</li>
+<li>
+<p><code>Aspects</code> module provides support for <code>AspectJ</code>.</p>
+</li>
+<li>
+<p><code>Instrumenetation</code> module provide <em>class instrumentation</em> support and <em>class loader</em> implementation for certain application servers.</p>
+</li>
+<li>
+<p><code>Test</code>: provides testing support for <code>JUnit</code> or <code>TestNG</code></p>
+</li>
+</ul>
+<h2 id="chapter-5-spring-ioc-containers">Chapter 5: Spring Ioc Containers</h2>
+<p>The main function of Spring IoC Container is to <em>create</em> objects, <em>wire</em> objects together, <em>configure</em> objects and <em>manage</em> objects in their lifecyle.</p>
+<p>Spring IoC containter uses <code>dependency injection/DI</code> to manage objects, which are called spring <code>beans</code>.</p>
+<p>Container gets information from the <code>metadata</code> in <code>xml</code>, <code>Java annotation</code> or <code>Java code</code>.</p>
+<p>This is the process of Spring IoC container works:
+images/posts/spring-containers.png </p>
+<p>Spring has two distinct type of containers: <code>BeanFactory</code> and <code>ApplicationContext</code>:</p>
+<p><code>BeanFactory</code>: this is the <em>simplest</em> container from DI. Most commonly used implementation is <code>XmlBeanFactory</code> class. It reading the configuration metadata from <code>xml</code> file and use it.</p>
+<p>XML:</p>
+<pre class="code literal-block"><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"helloWorld"</span> <span class="na">class=</span><span class="s">"com.example.helloWorld"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"message"</span> <span class="na">value=</span><span class="s">"Hello World!"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</pre>
+
+
+<p>JAVA:</p>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">helloWorld</span><span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">message</span><span class="o">;</span> <span class="c1">//with getter and setter</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">test</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+        <span class="n">XmlBeanFactory</span> <span class="n">factory</span> <span class="o">=</span> <span class="k">new</span> <span class="n">XmlBeanFacotry</span><span class="o">(</span><span class="k">new</span> <span class="n">ClassPathResource</span><span class="o">(</span><span class="err">'</span><span class="n">Beans</span><span class="o">.</span><span class="na">xml</span><span class="err">'</span><span class="o">));</span>
+        <span class="c1">//Note we use ClassPathResource so spring will find relative address for Beans.xml</span>
+
+        <span class="n">helloWorld</span> <span class="n">obj</span> <span class="o">=</span> <span class="o">(</span><span class="n">helloWorld</span><span class="o">)</span> <span class="n">factory</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"helloWorld"</span><span class="o">);</span>
+        <span class="c1">//Using casting here. Notice the factory.getBean() method use corespoding bean id. Then find name of class variable in &lt;property&gt;</span>
+
+        <span class="n">obj</span><span class="o">.</span><span class="na">getMessage</span><span class="o">();</span> <span class="c1">//return message in getter, which is Hello World!</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p><code>ApplicationContext</code>: More advanced and widely used container compare to the one above. This includes some enterprise-function. Most common implementations are: <code>FileSystemXmlApplicationContext</code>, <code>ClassPathXmlApplicationContext</code> and <code>WebXmlApplicationContext</code>.</p>
+<p><code>FileSystemXmlApplicationContext</code>: loads the definations of the beans from <code>xml</code> file. Note you need to provide <em>full path</em> of xml bean configuration file path. Example:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Use same xml example as above</span>
+
+<span class="n">ApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileSystemXmlApplicationContext</span><span class="o">(</span><span class="s">"C:/Users/pshan/workspace/Sample/Beans.xml"</span><span class="o">);</span> <span class="c1">//You need full path here</span>
+
+<span class="n">helloWorld</span> <span class="n">obj</span> <span class="o">=</span> <span class="o">(</span><span class="n">helloWorld</span><span class="o">)</span> <span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"helloWorld"</span><span class="o">);</span> <span class="c1">//Use casting here</span>
+
+<span class="n">obj</span><span class="o">.</span><span class="na">getMessage</span><span class="o">();</span> <span class="c1">//return message in getter (i.e, property in xml), which is Hello World!</span>
+</pre>
+
+
+<p><code>ClassPathXmlApplicationContext</code>: example is in <code>BeanFactory Container</code>. You <em>do not</em> need <em>full</em> path of xml file but you need <em>Class Path</em> to let spring find xml configuration file.</p>
+<p><code>WebXmlApplicationContext</code>: loads all beans with in a <code>web</code> application from xml.</p>
+<h2 id="chapter-6-spring-bean-definition">Chapter 6: Spring Bean Definition</h2>
+<p><code>Beans</code> are <em>objects</em> that are initialized, assembled, and otherwise managed by Spring IoC <em>Container</em>. They are created with the <code>configuration metadata</code> that supplied by <code>&lt;bean/&gt;</code> defination from <code>xml</code> file.</p>
+<p><code>Configuration MetaData</code> provide following:</p>
+<ul>
+<li>
+<p>How to <em>create</em> a bean</p>
+</li>
+<li>
+<p>Bean's <em>lifecycle</em> details</p>
+</li>
+<li>
+<p>Bean's <em>dependencies</em></p>
+</li>
+</ul>
+<h3 id="bean-properties">Bean Properties</h3>
+<p><code>class</code>: mandatory. Give the java class that is used to create beans.</p>
+<p><code>name</code>: specifies the bean <code>identifier</code> uniquely. In an <code>xml</code>, you need <code>id</code> and/or <code>name</code> to specify the bean identifiers.</p>
+<p><code>scope</code>: specifies bean <em>scope</em>. See notes in chapter 7.</p>
+<p><code>constructor-arg</code>: for inject the dependencies. See notes in chapter 8</p>
+<p><code>properties</code>:  for inject the dependencies. See notes in chapter 8</p>
+<p><code>autowiring mode</code>:  for inject the dependencies. See notes in chapter 8</p>
+<p><code>lazy-initialization mode</code>: tells the IoC container to create a bean instance when it is <em>firstly requested</em>, rather than at <em>startup</em>.</p>
+<p><code>initialization method</code>: a <code>callback</code> to be called just after all <code>properties</code> for the bean have been set by container. See notes in Chapter 8.</p>
+<p><code>destruction method</code>: a <code>callback</code> to be used when the <code>container</code> containing the bean is <em>destroyed</em>. See notes in chaper 8.</p>
+<p><code>Configuration Metadata</code> can be provided by:</p>
+<ul>
+<li>
+<p><code>xml</code> based configuration file.</p>
+</li>
+<li>
+<p><code>Annotation-based</code> configuration</p>
+</li>
+<li>
+<p><code>Java-based</code> configuration</p>
+</li>
+</ul>
+<p>Example of Bean Properties from book:
+images/posts/spring-configuration-metadata.png </p>
+<h2 id="chapter-7-spring-bean-scopes">Chapter 7: Spring Bean Scopes</h2>
+<p>You can declaring <em>scope</em> of beans when you creates <code>&lt;bean/&gt;</code> in xml file. There are five scopes that Spring support:</p>
+<p><code>singleton</code>: <em>Default</em>. Spring IoC container cretes <em>exactly one</em> instance of the object defined by that bean defination. This object is stored in a <em>cache</em> of such singletion beans. A request will return the cached object. Example:</p>
+<p>XML:</p>
+<pre class="code literal-block"><span></span><span class="c">&lt;!--beans.xml--&gt;</span>
+
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"helloWorld"</span> <span class="na">class=</span><span class="s">"com.sample.helloWorld"</span> <span class="na">scope=</span><span class="s">"singleton"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</pre>
+
+
+<p>JAVA:</p>
+<pre class="code literal-block"><span></span><span class="n">ApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="s">"beans.xml"</span><span class="o">);</span>
+
+<span class="n">helloWorld</span> <span class="n">objA</span> <span class="o">=</span> <span class="o">(</span><span class="n">helloWorld</span><span class="o">)</span> <span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"helloWorld"</span><span class="o">);</span> <span class="c1">//get from bean id and cast it</span>
+
+<span class="n">objA</span><span class="o">.</span><span class="na">setMessage</span> <span class="o">=</span> <span class="s">"testA"</span><span class="o">;</span>
+
+<span class="n">helloWorld</span> <span class="n">objB</span> <span class="o">=</span> <span class="o">(</span><span class="n">helloWorld</span><span class="o">)</span> <span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"helloWorld"</span><span class="o">);</span>
+
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">prinlnt</span><span class="o">(</span><span class="n">objB</span><span class="o">.</span><span class="na">getMessage</span><span class="o">);</span> <span class="c1">//print out "testA" since objA and objB are pointing to same bean instance</span>
+</pre>
+
+
+<p><code>prototype</code>: create new bean instance of object <em>every time</em> a <em>request</em> for the specific bean is made.</p>
+<p><em>As a rule, use the prototype scope for all</em> <strong>state-full</strong> <em>beans and the singleton scope for</em> <strong>stateless</strong> <em>beans</em>.</p>
+<pre class="code literal-block"><span></span><span class="c1">//Assume we have same xml as above</span>
+
+<span class="n">ApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="s">"beans.xml"</span><span class="o">);</span>
+
+<span class="n">helloWorld</span> <span class="n">objA</span> <span class="o">=</span> <span class="o">(</span><span class="n">helloWorld</span><span class="o">)</span> <span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"helloWorld"</span><span class="o">);</span>
+
+<span class="n">objA</span><span class="o">.</span><span class="na">setMessage</span> <span class="o">=</span> <span class="s">"testA"</span><span class="o">;</span>
+<span class="n">objA</span><span class="o">.</span><span class="na">getMessage</span><span class="o">();</span> <span class="c1">// "testA"</span>
+
+<span class="n">helloWorld</span> <span class="n">objB</span> <span class="o">=</span> <span class="o">(</span><span class="n">helloWorld</span><span class="o">)</span> <span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"helloWorld"</span><span class="o">);</span>
+
+<span class="n">objB</span><span class="o">.</span><span class="na">getMessage</span><span class="o">();</span> <span class="c1">//null. Becuase this is a new request and a new instance is created</span>
+</pre>
+
+
+<h2 id="chapter-8-spring-bean-life-cycle">Chapter 8: Spring Bean Life Cycle</h2>
+<p>In java, <code>initialization</code> work can be done inside <code>afterPropertiesSet()</code> method.</p>
+<p>In xml, you can use <code>init-method</code> attribute to call a self-defined method when a bean instance is created. Then add this method in your bean java class.</p>
+<p>Similarly, <code>destruction</code> can be done insdie <code>destory()</code> method.
+In xml, you can use <code>destroy-method</code> attribute to call a self-defined method. You need to add this method in your bean java class.</p>
+<p>Example:</p>
+<p>XML:</p>
+<pre class="code literal-block"><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"helloWorld"</span> <span class="na">class=</span><span class="s">"com.sample.helloWorld"</span> <span class="na">init-method =</span> <span class="s">"init"</span> <span class="na">destory-method=</span><span class="s">"destroy"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"message"</span> <span class="na">value=</span><span class="s">"hello World!"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</pre>
+
+
+<p>JAVA:</p>
+<pre class="code literal-block"><span></span><span class="c1">//This is the bean class defined in java: com.sample.helloWorld</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">helloWorld</span><span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">message</span><span class="o">;</span> <span class="c1">//The value of message is defined in xml</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMessage</span><span class="o">(</span><span class="n">String</span> <span class="n">message</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">message</span> <span class="o">=</span> <span class="n">message</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">getMessage</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">(){</span>
+    <span class="c1">//This is the initialization method</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"create bean"</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">destroy</span><span class="o">(){</span>
+    <span class="c1">//This is the destroy method</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"destory bean"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">//Now we test it</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+        <span class="n">AbstractApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="s">"beans.xml"</span><span class="o">);</span>
+
+        <span class="n">helloWorld</span> <span class="n">obj</span> <span class="o">=</span> <span class="o">(</span><span class="n">helloWorld</span><span class="o">)</span> <span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"helloWorld"</span><span class="o">);</span>
+        <span class="n">obj</span><span class="o">.</span><span class="na">getMessage</span><span class="o">();</span>
+        <span class="n">context</span><span class="o">.</span><span class="na">registerShutdownHook</span><span class="o">();</span> <span class="c1">//shutdown if you are in a desktop-application</span>
+
+        <span class="c1">//Output: create bean | hello World ! | destroy bean</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>You can also put <code>default-init-method</code> and <code>defalut-destory-method</code> attributes in the main bean in <code>xml</code> file, such as <code>&lt;bean xmlns="..." xmlns:xsi="..."&gt;&lt;/bean&gt;</code>, to let all beans use same initialization method or destruction method.</p>
+<h2 id="chapter-9-spring-bean-post-processors">Chapter 9: Spring Bean Post Processors</h2>
+<p><code>BeanPostProcessor</code> <em>interface</em> defines <strong>callback</strong> methods that you can implement to provide your own instantiation logic, dependency-resolution logic, etc.</p>
+<p>You can configure multiple BeanPostProcess interfaces. You can control the <em>order</em> of them.</p>
+<p>Spring IoC container <em>instantiates</em> a bean instance and then BeanPostProcessor works.</p>
+<p>An <code>ApplicationContext</code> automatically detect beans with BeanPostProcessor implementation and register these beans as post-processors. These processors will be automatcally called when bean is created.</p>
+<p>Example:</p>
+<p>XML:</p>
+<pre class="code literal-block"><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"helloWorld"</span> <span class="na">class=</span><span class="s">"com.sample.helloWorld"</span> <span class="na">init-method=</span><span class="s">"init"</span> <span class="na">destroy-method=</span><span class="s">"destroy"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"message"</span> <span class="na">value=</span><span class="s">"Hello World!"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="c">&lt;!--bean with BeanPostProcessor--&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">"com.sample.InitHelloWorld"</span><span class="nt">/&gt;</span>
+</pre>
+
+
+<p>JAVA:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Bean Class is defined as example in chapter 8</span>
+
+<span class="c1">//Class for BeanPostProcessor</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">InitHelloWorld</span> <span class="kd">implements</span> <span class="n">BeanPostProcessor</span><span class="o">{</span>
+    <span class="c1">//This should be called before bean is initialized</span>
+    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">postProcessBeforeInitialization</span><span class="o">(</span><span class="n">Object</span> <span class="n">bean</span><span class="o">,</span> <span class="n">String</span> <span class="n">beanName</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">BeansException</span><span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Before Init!"</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">bean</span><span class="o">;</span> <span class="c1">//Any object can be returned</span>
+    <span class="o">}</span>
+    <span class="c1">//This should be called after bean is initialized</span>
+    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">postProcessAfterInitialization</span><span class="o">(</span><span class="n">Object</span> <span class="n">bean</span><span class="o">,</span> <span class="n">String</span> <span class="n">beanName</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">BeansException</span><span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"After Init!"</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">bean</span><span class="o">;</span> <span class="c1">//Any object can be returned</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">//Test Class</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="kd">static</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+        <span class="n">AbstractApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="s">"beans.xml"</span><span class="o">);</span>
+
+        <span class="n">helloWorld</span> <span class="n">obj</span> <span class="o">=</span> <span class="o">(</span><span class="n">helloWorld</span><span class="o">)</span> <span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"helloWorld"</span><span class="o">);</span>
+        <span class="n">obj</span><span class="o">.</span><span class="na">getMessage</span><span class="o">();</span>
+        <span class="n">context</span><span class="o">.</span><span class="na">registerShutdownHook</span><span class="o">();</span>
+
+        <span class="c1">//Output: Before Init!</span>
+        <span class="c1">//create bean</span>
+        <span class="c1">//After Init!</span>
+        <span class="c1">//Hello World!</span>
+        <span class="c1">//destry bean</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h2 id="chapter-10-spring-bean-definition-inheritance">Chapter 10: Spring Bean Definition Inheritance**</h2>
+<p>A <code>parent bean</code> can be inherited by a <code>child bean</code>. Child bean can <em>override</em> parent bean's attributes.</p>
+<p><code>parent</code> attribute should be used in <code>xml</code> file to define a parent bean in child bean.</p>
+<p>Example:</p>
+<p>XML:</p>
+<pre class="code literal-block"><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"parentBean"</span> <span class="na">class=</span><span class="s">"com.sample.parentBean"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"message1"</span> <span class="na">value=</span><span class="s">"Parent Message 1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"message2"</span> <span class="na">value=</span><span class="s">"Parent Message 2"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"childBean"</span> <span class="na">class=</span><span class="s">"com.sample.childBean"</span> <span class="na">parent=</span><span class="s">"parentBean"</span><span class="nt">&gt;</span> <span class="c">&lt;!--note we find parent bean id here--&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"message1"</span> <span class="na">value=</span><span class="s">"Child Message1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"message3"</span> <span class="na">value=</span><span class="s">"Child Message3"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</pre>
+
+
+<p>JAVA:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Assume we have a normal setter and getter for both parent and child bean</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="kd">static</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+        <span class="n">ApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="s">"beans.xml"</span><span class="o">);</span>
+
+        <span class="n">parentBean</span> <span class="n">p</span> <span class="o">=</span> <span class="o">(</span><span class="n">parentBean</span><span class="o">)</span> <span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="err">'</span><span class="n">parentBean</span><span class="err">'</span><span class="o">);</span>
+        <span class="n">p</span><span class="o">.</span><span class="na">getMessage1</span><span class="o">();</span> <span class="c1">//Parent Message 1</span>
+        <span class="n">p</span><span class="o">.</span><span class="na">getMessage2</span><span class="o">();</span> <span class="c1">//Parent Message 2</span>
+
+        <span class="n">childBean</span> <span class="n">c</span> <span class="o">=</span> <span class="o">(</span><span class="n">childBean</span><span class="o">)</span> <span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="err">'</span><span class="n">childBean</span><span class="err">'</span><span class="o">);</span>
+        <span class="n">c</span><span class="o">.</span><span class="na">getMessage1</span><span class="o">();</span>
+        <span class="c1">//Child Message 1: Override attribute from parent bean</span>
+        <span class="n">c</span><span class="o">.</span><span class="na">getMessage2</span><span class="o">();</span>
+        <span class="c1">//Parent Message 2: Important! c inherient property from parent bean, so it will not output null value.</span>
+        <span class="c1">//However c still need getter and setter for message 2</span>
+        <span class="n">c</span><span class="o">.</span><span class="na">getMessage3</span><span class="o">();</span>
+        <span class="c1">//Child Message 3: child bean can define its own property</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>You can create <code>Bean Defination Template</code> in <code>xml</code> file if you need a general parent bean for all childs beans. You <em>can not</em> use <code>class</code> attribue in bean template. You <em>must</em> define <code>abstruct</code> attribute as <strong>true</strong>. Example:</p>
+<pre class="code literal-block"><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"templateBean"</span> <span class="na">abstruct=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+<span class="c">&lt;!--template bean can not be instantiated since it is abstract--&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"message1"</span> <span class="na">value=</span><span class="s">"template 1!"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"message2"</span> <span class="na">value=</span><span class="s">"template 2"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"childBean"</span> <span class="na">class=</span><span class="s">"com.sample.childBean"</span> <span class="na">parent=</span><span class="s">"templateBean"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"message1"</span> <span class="na">value=</span><span class="s">"child 1!"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"message3"</span> <span class="na">value=</span><span class="s">"child 3!"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</pre>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../categories/java/" rel="tag">Java</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../reading-spring-3-11-to-13/" rel="prev" title="Reading Notes for Spring 3 Core Components Tutorial Part II (Chapter 11 to Chapter 13)">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../reading-d3-9/" rel="next" title="Reading Notes for D3.js Part V (Chapter 9)">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="pengyinsnotes",
+            disqus_url="https://pengyin-shan.com/posts/2014/reading-spring-3-1-to-10/",
+        disqus_title="Reading Notes for Spring 3 Core Components Tutorial Part I (Chapter 1 to Chapter 10)",
+        disqus_identifier="cache/posts/2014/reading-spring-3-1-to-10.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="pengyinsnotes";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+    
+    <div class="footer-wrapper">
+        <footer role="contentinfo"><p>Contents © 2018         <a href="mailto:pengyin.shan@outlook.com">Pengyin(Wendy) Shan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+        </footer>
+</div>
+
+    
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script src="../../../assets/js/scripts.min.js"></script>
+</body>
+</html>

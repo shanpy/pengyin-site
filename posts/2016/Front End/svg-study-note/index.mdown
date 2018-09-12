@@ -1,0 +1,101 @@
+.. title: SVG Study Note
+.. date: 2016-08-01
+.. category: Front End
+.. tags: Graph
+.. slug: svg-study-note
+.. authors: Pengyin Shan
+.. description: A recent project involves in using SVG (Scalable Vector Graphics) to create triangle borders. This is a quick study note of using SVG in web development.
+
+
+
+#Reference List
+
+- (Chinese) <a href="http://waylau.com/svg-viewport-view-box/?utm_source=tuicool&utm_medium=referral">SVG Viewport and View Box</a> written by *Way Lau*.
+
+- (Chinese) <a href="http://www.zhangxinxu.com/wordpress/2014/08/svg-viewport-viewbox-preserveaspectratio/">Understand viewport, viewVox, preserveAspectRatio in SVG</a> by *zhangxinxu*.
+
+
+#`viewport`
+
+`viewport` creates a new axis inside svg area. It provides a new scale inside svg.
+
+
+
+It has two attribute: `width` and `height`. These two attributes is defined as **unit**, such as `em`, `px` or `%`, depends on css setting. The default unit is `px`.
+
+Example code:
+
+    :::html
+    <svg width="500" height="300"></svg>
+    <!-- A svg area with width of 500 unit, height of 300 unit-->
+
+#`viewbox`
+
+`viewbox` is a way of scaling svg view-able space. it has four attributes: `x-position`, `y-position`, `width`, `height`. **Note a positive value in y-position meaning counting down from start point.**
+
+The use of `viewbox` is to expand item to full svg area, following the scale defined in `viewbox`. For example, `<svg width="500" height="300" viewbox="0 0 150 300"></svg>` means define a area width a width of 150 and height of 300 from zero-point, then **expand it to full svg (width 500 height 300)**. Everything inside viewbox will be also re-scaled.
+
+A great demo (Chinese) created by **zhangxinyu** can be found <a href="http://www.zhangxinxu.com/study/201408/svg-viewbox-explain.html">here</a>.
+
+img-responsive images/articles/2016/frontend/viewbox.gif 
+
+#`preserveAspectRatio`
+
+`preserveAspectRatio` has two attributes: `how viewBox align with viewport`, `ratio of height and width`.
+
+The first attribute has two parts: `x alignment` and `y alignment`. Options are:
+
+- `xMin`: `viewport` and `viewbox` align on left edge
+
+- `xMid`: `viewport` and `viewbox` align on center of x-axis
+
+- `xMax`: `viewport` and `viewbox` align on right edge
+
+- `YMin`: `viewport` and `viewbox` align on top edge
+
+- `YMid`: `viewport` and `viewbox` align on middle of y-axis
+
+- `YMax`: `viewport` and `viewbox` align on bottom edge
+
+So, a full option for first attribute is something like `xMinYMid` or `xMaxYMax`.
+
+The second attribute has following option:
+
+##`meet`
+
+`viewbox` following its ratio, even the graph is out of svg area.
+
+Example Code:
+
+    :::html
+    <svg width="400" height="200" viewBox="0 0 200 300" preserveAspectRatio="xMinYMin meet" style="border:1px solid #cd0000;">
+        <rect x="10" y="10" width="300" height="300" fill="#cd0000"/>
+    </svg>
+
+Result from code above. Notice the rectangle is still in *2:3* ratio for *width:height*.
+
+img-responsive images/articles/2016/frontend/ratio-meet 
+
+##`slice`
+
+Keep current ratio, while expanding `viewbox` till **short slide** of `viewport` is **filled** (Even though the inner shape is smaller width/height than svg, the short side of svg is still be filled).
+
+Result from code above. Note *height* is filled first, since it's the shorter side:
+
+img-responsive images/articles/2016/frontend/ratio-slice 
+
+##`none`
+
+Shapes inside `viewbox` is hardly defined by its own width and height, without following any ratio.
+
+Result from code above. :
+
+img-responsive images/articles/2016/frontend/ratio-slice 
+
+If no `preserveAspectRatio` is market, following result should be seen:
+
+img-responsive images/articles/2016/frontend/ratio-no 
+
+Also see this <a href="http://www.zhangxinxu.com/study/201408/svg-preserveaspectratio-meet-slice-none.html">demo</a> created by *zhangxinxu*.
+
+

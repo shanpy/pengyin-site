@@ -1,0 +1,812 @@
+.. title: Reading Note - JavaScript Scoping, Hoisting and Others
+.. date: 2016-06-22
+.. modified: 2016-06-24
+.. category: JavaScript
+.. tags: JavaScript
+.. slug: reading-note-javascript-scoping-hoisting-and-others
+.. authors: Pengyin Shan
+
+During the process of learning TypeScript, I read an old blog article about JavaScript Scoping and Hoisting from <a href="http://www.adequatelygood.com/about.html">Ben Cherry</a>, and I like it. From this blog I go through more blog posts to extend my understanding about JavaScript scoping, hoisting, prototype, etc. This is a study note for all of these knowledges.
+
+#Reference List
+
+- <a href="http://www.adequatelygood.com/JavaScript-Scoping-and-Hoisting.html">JavaScript Scoping and Hoisting</a> by Ben Cherry
+
+- <a href="http://developer.telerik.com/featured/seven-javascript-quirks-i-wish-id-known-about">Seven JavaScript Quirks I Wish I'd Known About</a> by Jim Cowart
+
+- <a href="https://javascriptweblog.wordpress.com/2010/07/06/function-declarations-vs-function-expressions/">Function Declarations vs. Function Expressions</a>by Angus Croll
+
+- (Chinese)<a href="http://www.jb51.net/article/75090.htm">Understanding JavaScript Scoping & Hoisting (II)</a> by mdxy-dxy
+
+- <a href="https://toddmotto.com/everything-you-wanted-to-know-about-javascript-scope/">Everything you wanted to know about JavaScript scope</a> by Developer Advocate Telerik
+
+- <a href="http://ryanmorr.com/understanding-scope-and-context-in-javascript/">Understanding Scope and Context in JavaScript</a> by Ryan Morr
+
+- <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain">Inheritance and the prototype chain</a> by MDN
+
+- <a href="https://developers.google.com/speed/articles/optimizing-javascript">Optimizing JavaScript code</a> written by Gregory Baker, Software Engineer on GMail & Erik Arvidsson, Software Engineer on Google Chrome
+
+- <a href="https://www.toptal.com/javascript/javascript-prototypes-scopes-and-performance-what-you-need-to-know">JavaScript Prototype Chains, Scope Chains, and Performance: What You Need to Know</a> written by DIEGO CASTORINA
+
+##Declarations, Names and Hoisting
+
+There is difference between declaring a variable and assigning value to a variable: `var x;` is declaration; `x = 1;` is assignment; `var x = 1;` is both declaring and assignment.
+
+JavaScript has `function-level scope`, which mean *blocks does not create scope*.
+
+From Ben, in JavaScript, a name enters a scope in four ways, with **priority starting from top to bottom**:
+
+1. Language-defined: i.e. `this` and `argument` keyword
+
+2. Formal parameters: the parameters of function are scoped to the *body* of that function
+
+3. Function declarations: as the form of `function foo(){}`
+
+4. Variable declarations: as the form of `var foo`
+
+*Above them, Function declarations and Variable declarations* are moved or `hoisted` to top of their **containing scope**. Two functions below are equivalent:
+
+    :::javascript
+    function foo() {
+        if (false) {
+            var x = 1;
+        }
+        return;
+        var y = 1;
+    }
+    function foo() {
+        var x, y;
+        if (false) {
+            x = 1; //Note assignment will not be hoisted
+        }
+        return;
+        y = 1;
+    }
+
+When a function expression is assigned to a declared variable, only this variable will be hoisted. The function body is left behind:
+
+    :::javascript
+    function test() {
+        foo(); // TypeError "foo is not a function"
+        bar(); // "this will run!"
+        var foo = function () { // function expression assigned to local variable 'foo'
+            alert("this won't run!");
+        }
+        function bar() { // function declaration, given the name 'bar'
+            alert("this will run!");
+        }
+    }
+    test();
+
+
+Angus Croll explained `return` statement also in his post:
+
+- Code after the `return` statement is **unreachable**.
+
+- However, declarations contributes to its variable environment when *execution scope is entered*. **They are distinct from Statements (such as `return`)** and not subject to their rule of process.
+
+
+##Function Declaration & Function Expressions
+
+Function can be declared (or actually not being declared) in different ways. Ben gave following example in his post:
+
+    :::javascript
+    foo(); // TypeError "foo is not a function". The code below only hoists 'foo' variable, without function
+    bar(); // valid. See code below
+    baz(); // TypeError "baz is not a function"
+    spam(); // ReferenceError "spam is not defined"
+
+    var foo = function () {}; // anonymous function expression ('foo' gets hoisted)
+    function bar() {}; // function declaration ('bar' and the function body get hoisted)
+    var baz = function spam() {}; // named function expression (only 'baz' gets hoisted)
+
+    foo(); // valid
+    bar(); // valid
+    baz(); // valid
+    spam(); // ReferenceError "spam is not defined"
+
+
+Another very good explanation is made by Angus Croll in his <a href="https://javascriptweblog.wordpress.com/2010/07/06/function-declarations-vs-function-expressions/">post</a>.
+
+`Function Declaration` defines a named function variable without requiring variable assignment. It must start with `function` keyword:
+
+    :::javascript
+    function bar(){
+        return 3;
+    }
+
+>For function declaration, the function name is visible within its own scope and scope of its parent.
+
+`Function Expression` defines a function as part of a larger expression syntax (like a variable assignment). Function can be named or `anonymous`:
+
+    :::javascript
+    //anonymous function expression
+    var a = function() {
+        return 3;
+    }
+
+    //named function expression
+    var a = function bar() {
+        return 3;
+    }
+
+    //self invoking function expression
+    (function sayHello() {
+        alert("hello!");
+    })();
+
+>For function expression, the function name is not visible outside of its own function scope
+
+He gave out following 4 questions as example:
+
+Q1:
+
+    :::javascript
+    function foo(){
+        function bar() {
+            return 3;
+        }
+        return bar();
+        function bar() {
+            return 8;
+        }
+    }
+    alert(foo());
+    //8 is the answer
+
+Q2:
+
+    :::javascript
+    function foo(){
+        var bar = function() {
+            return 3;
+        };
+        return bar();
+        var bar = function() {
+            return 8;
+        };
+    }
+    alert(foo());
+    //3 is the answer
+
+Q3:
+
+    :::javascript
+    alert(foo());
+    function foo(){
+        var bar = function() {
+            return 3;
+        };
+        return bar();
+        var bar = function() {
+            return 8;
+        };
+    }
+    //3 is the answer
+
+Q4:
+
+    :::javascript
+    function foo(){
+        return bar();
+        var bar = function() {
+            return 3;
+        };
+        var bar = function() {
+            return 8;
+        };
+    }
+    alert(foo());
+    //[Type Error: bar is not a function] is the answer
+
+Based on theory above and `return` statement explanation, Q1 can be rewrite to:
+
+    :::javascript
+    //**Simulated processing sequence for Question 1**
+    function foo(){
+        //define bar once
+        function bar() {
+            return 3;
+        }
+        //redefine it
+        function bar() {
+            return 8; //Here bar() is rewrite
+        }
+        //return its invocation
+        return bar(); //8
+    }
+    alert(foo());
+
+Based on ECMA5, A variable with an `initialzier` is assigned the value of its Assignment Expression when the Variable Statement is **executed**, not when the variable is created. So Q2 can be rewrite to:
+
+    :::javascript
+    //**Simulated processing sequence for Question 2**
+    function foo(){
+        //a declaration for each function expression
+        var bar = undefined;
+        var bar = undefined;
+        //first Function Expression is executed
+        bar = function() {
+            return 3;
+        };
+        // Function created by first Function Expression is invoked
+        return bar();
+        /*
+        second Function Expression unreachable because of return statement.
+        Note second function expression itself cannot be hoisted,so it cannot pass return statement
+        */*
+    }
+    alert(foo()); //3
+
+Similarly, Q4 can be rewrite to:
+
+    :::javascript
+    //**Simulated processing sequence for Question 4**
+    function foo(){
+        //a declaration for each function expression
+        var bar = undefined;
+        var bar = undefined;
+        return bar(); //TypeError: "bar not defined"
+        //neither Function Expression is reached
+    }
+    alert(foo());
+
+
+##Best Practice
+
+>Ben highly suggest having *exactly one* `var` statement per scope.
+
+Example:
+
+    :::javascript
+    /*jslint onevar: true [...] */
+    function foo(a, b, c) {
+        var x = 1,
+            bar,
+            baz = "something";
+    }
+
+Here is suggestion from ECMAScript Standard:
+
+*`If the variable statement occurs inside a FunctionDeclaration, the variables are defined with function-local scope in that function, as described in section 10.1.3.` Otherwise, they are defined with global scope(that is, they are created as members of the global object, as described in section 10.1.3) using property attributes { DontDelete }. `Variables are created when the execution scope is entered. A Block does not define a new execution scope.` Only Program and FunctionDeclaration produce a new scope. Variables are initialized to undefined when created. `A variable with an Initializer is assigned the value of its AssignmentExpression when the VariableStatement is executed, not when the variable is created.`*
+
+
+#Scope, Context and Prototype
+
+
+##Scope & Context
+
+>Scope and Context are different.
+
+From <a href="http://ryanmorr.com/understanding-scope-and-context-in-javascript/">Ryan's blog post</a>, every function invocation has both a scope and a context associate with it. **Scope is function-based and Context is object-based**. Scope is depending on every time a function is invokes, while context is always *the value of `this` keyword* belonging to the object that **owns the current executing code**.
+
+##Scope
+
+<a href="https://toddmotto.com/everything-you-wanted-to-know-about-javascript-scope/">Telerik</a> explained the usage of scope in detail.
+
+
+###Global Scope & Local Scope
+
+There is `Global Scope` and `Local Scope`.
+
+`Global Scope` is very useful for creating `namespace`, which is usually used to define highest level of scope. An exmaple is `jQuery('.myClass)`. `jQuery` is the namespace and in global scope.
+
+`Local Scope` is the scope besides global scope. Normal type is `Function scope`, which is existing in each function. Any locally scoped items are not visible in global scope. Example:
+
+    :::javascript
+    /*
+    After applying hoisting rule, still 'name' is in local scope
+    */
+    var myFunction = function () {
+      var name = 'Todd';
+      console.log(name); // Todd
+    };
+    // Uncaught ReferenceError: name is not defined
+    console.log(name);
+
+> a new scope is added to the scope chain when a `try-catch` block or a `with` block is encountered
+
+###Scope Chain
+
+`Lexical Scope`: the inner function has access to the scope in outer function, but does not work backwards:
+
+    :::javascript
+    var myFunction = function () {
+      var name = 'Todd';
+      var myOtherFunction = function () {
+        console.log('My name is ' + name);
+      };
+      console.log(name);
+      myOtherFunction(); // call function
+    };
+
+    // myFunction() will log out:
+    // `Todd`
+    // `My name is Todd`
+
+`Scope Chain`: any function defined within another function has a local scope with *linked to the outer function*. This linking is the chain.
+
+See graph from Diego Castorina below:
+
+img-responsive images/articles/2016/javascript/scope_chain.png 
+
+> It’s always the position in the code that defines the scope. When resolving a variable, JavaScript starts at the innermost scope and searches outwards until it finds the variable/object/function it was looking for.
+
+By Ryan, for each **execution context** there is a scope chain coupled with it. The scope chain contains the objects for every execution context in the execution stack.
+
+Example:
+
+    :::javascript
+    function first(){
+        second();
+        function second(){
+            third();
+            function third(){
+                fourth();
+                function fourth(){
+                    // do something
+                }
+            }
+        }
+    }
+    first();
+
+In the code above, the scope chain would be, from top to bottom: `fourth`, `third`, `second`, `first`, `global`.
+
+- Naming Conflict: local variables with the same name as variables higher up the scope chain take precedence. So in code above, variables in `fourth` has highest priority if there is any naming conflict.
+
+- Look-up Process: if lacking of local variable, the look-up process will always *begin with its own variable object*. If the identifier is not found in the variable object, the search continues into the scope chain.
+
+`Closure`: it is normally used in a `return` statement with function. This returned function itself is un-modified by any call to its outer function. However, A function doesn’t have to return in order to be called a closure though. Simply accessing variables outside of the immediate lexical scope creates a closure. Example:
+
+    :::javascript
+    var sayHello = function (name) {
+      var text = 'Hello, ' + name;
+      return function () {
+        console.log(text);
+      };
+    };
+
+    sayHello('Todd'); // nothing happens, no errors. Since a function is returned, an object is required to be assigned by this function
+    var helloTodd = sayHello('Todd');
+    helloTodd(); // will call the closure and log 'Hello, Todd'
+
+    sayHello('Bob')();
+    /*
+    Calls the returned function without assignment.
+    If any parameter required for inner function, this will become sayHello('Bob')('parameter')
+    */*
+
+> Closure is significantly slower than creating an inner function without a closure, and mush slower than reusing a static function. Also closure is the most common resource for memory leaks.
+
+For example, for `setTimeout` function, following code is actually quickest:
+
+    :::javascript
+    function alertMsg() {
+      var msg = 'Message to alert';
+      alert(msg);
+    }
+
+    function setupAlertTimeout() {
+      window.setTimeout(alertMsg, 100);
+    }
+
+
+###Private and Public Scope
+
+To create public/private environment in JavaScript, just like Java, `Closure` and `namespace` can be used.
+
+**Wrapping functions inside function** is a easy way to create private scope. In JavaScript, we need to wrap outer anonymous function in `()`, as following example:
+
+    :::javascript
+    (function () {
+      var myFunction = function () {
+        // do some stuff here
+      };
+    })();
+
+    myFunction(); // Uncaught ReferenceError: myFunction is not defined
+
+To access the function in public but without modifying it, `Module Pattern` can be used. Declare a variable `module` using as a **namespace**, and assign a wrapped anonymous function to this variable. The anonymous function return a collection of attributes. Each attribute corresponds to a private function.
+
+Example:
+
+    :::javascript
+    // define module/namespace
+    var Module = (function () {
+      return {
+        myMethod: function () {
+            //items inside this private function cannot be modified from outside
+        },
+        someOtherMethod: function () {
+
+        }
+      };
+    })();
+
+    // call module + methods
+    Module.myMethod();
+    Module.someOtherMethod();
+
+To create `private methods`, which is the methods being used inside wrapping function but not from outside, create a local variable inside outer function, then assign the private method to it. Example:
+
+    :::javascript
+    var Module = (function () {
+      var privateMethod = function () {
+
+      };
+      return {
+        publicMethod: function () {
+            //private Method can be called here, but only publicMethod can be called from outside
+        }
+      };
+    })();
+
+The code above can be written to *returning an object*:
+
+    :::javascript
+    var Module = (function () {
+      var myModule = {};
+      var privateMethod = function () {
+
+      };
+      myModule.publicMethod = function () {
+
+      };
+      myModule.anotherPublicMethod = function () {
+
+      };
+      return myModule; // returns the Object with public methods
+    })();
+
+    // usage
+    Module.publicMethod();
+
+> A good naming convention is to begin `private method` with an underscore`_`
+
+Following is an example of returning an anonymous object, with attribute as each public method:
+
+    :::javascript
+     var Module = (function () {
+      var _privateMethod = function () {
+
+      };
+      var publicMethod = function () {
+
+      };
+      return {
+        publicMethod: publicMethod,
+        anotherPublicMethod: anotherPublicMethod
+      }
+    })();
+
+
+###Context and `this`
+
+When a function is called as a method of an object, `this` is set to the object *it is called on*:
+
+    :::javascript
+    var obj = {
+        foo: function(){
+            alert(this === obj);
+        }
+    };
+
+    obj.foo(); // true
+
+When a `new` keyword is used to create new instance of an object, `this` is set to the newly-created instance:
+
+    :::javascript
+    function foo(){
+        alert(this);
+    }
+
+    foo() // window
+    new foo() // foo
+
+
+###Execution Context
+
+>Execution Context refer more like a scope. It's not like the context discussed above.
+
+As Ryan stated, when the JavaScript interpreter initially executes code, it first enters to a **global execution context** by default.
+
+Each time a new execution context is created it is appended to **the top of the execution stack**. The browser will always execute the current execution context that is at *top* of the execution stack. Once completed, it will be *removed* from the top of the stack and control will return to the execution context below.
+
+An execution context can be divided into a **creation** and **execution** phase.
+
+In the creation phase, the interpreter will first create a `variable object`(also called an `activation object`) that is composed of all the variables, function declarations, and arguments defined inside the execution context. From there the `scope chain` is *initialized* next, and the value of `this` is determined last.
+
+Then in the execution phase, code is interpreted and executed.
+
+
+###Context with `.call()`, `.apply()` and `.bind()`
+
+`call()`, `apply()` and `bind()` allow you to change function execution context.
+
+`my_function.call(scope, arg1, arg2, arg3)` requires arguments to be listed explicitly
+
+`my_function.apply(scope, [arg1, arg2])` allows array as to be parameter.
+
+`bind()` returns a new function which is **permanently bound** to the first argument of bind regardless of how the function is being used.
+
+Example:
+
+    :::javascript
+    var links = document.querySelectorAll('nav li');
+    for (var i = 0; i < links.length; i++) {
+      (function () {
+        console.log(this);
+      }).call(links[i]);//change this to be links[i]
+    }
+
+    nav.addEventListener('click', function () {
+      toggleNav(arg1, arg2);
+    }, false);
+
+
+##Inheritance/Prototype Chain
+
+MDN has an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain">article</a> explaining Inheritance/Prototype Chain in detail.
+
+>JavaScirpt is prototype-based. It is not class-based.
+
+###Inheritance
+
+**Property Inheritance**
+
+Before ES6, there is no `class` implementation. JavaScript only has one construct: `object`.
+
+Each object has an **internal link** to another object called its `prototype`. This prototype object has *another prototype object of its own*. This link (prototype -> prototype) continues *until an object is reached with `null` as its prototype*.
+
+`null` has no prototype. When reaching `null`, this marks the **end** of this `prototype chain`.
+
+When trying to access a property of an object, original object is sought first. If no property found, this object's prototype will be searched. This process continues till the end of prototype chain is reached.
+
+Use `object_name.[[Prototype]]` pattern to reach the prototype of **object**. `function_name.prototype` is used to reach all `instances` of this function.
+
+>ES6 use `object_name.getPrototypeOf()` and `object_name.setPrototypeOf()` (getter& setter) to access prototype.
+
+Example from MDN:
+
+    :::javascript
+    // Let's assume we have object o, with its own properties a and b:
+    // {a: 1, b: 2}
+    // o.[[Prototype]] has properties b and c:
+    // {b: 3, c: 4}
+    // Finally, o.[[Prototype]].[[Prototype]] is null.
+    // This is the end of the prototype chain as null,
+    // by definition, null has no [[Prototype]].
+    // Thus, the full prototype chain looks like:
+    // {a:1, b:2} ---> {b:3, c:4} ---> null
+
+    console.log(o.a); // 1
+    // Is there an 'a' own property on o? Yes, and its value is 1.
+
+    console.log(o.b); // 2
+    // Is there a 'b' own property on o? Yes, and its value is 2.
+    // The prototype also has a 'b' property, but it's not visited.
+    // This is called "property shadowing"
+
+    console.log(o.c); // 4
+    // Is there a 'c' own property on o? No, check its prototype.
+    // Is there a 'c' own property on o.[[Prototype]]? Yes, its value is 4.
+
+    console.log(o.d); // undefined
+    // Is there a 'd' own property on o? No, check its prototype.
+    // Is there a 'd' own property on o.[[Prototype]]? No, check its prototype.
+    // o.[[Prototype]].[[Prototype]] is null, stop searching,
+    // no property found, return undefined
+
+**Method Inheritance**
+
+In JavaScript, method inheritance is done by *adding function to be a property of an object*.
+
+> When an inherited function is executed, the value of `this` points to the inheriting object, not to the prototype object where the function is an own property.
+
+Code Example:
+
+    :::javascript
+    var o = {
+      a: 2,
+      m: function(b){
+        return this.a + 1;
+      }
+    };
+
+    console.log(o.m()); // 3
+    // When calling o.m in this case, 'this' refers to o
+
+    var p = Object.create(o);
+    // p is an object that inherits from o
+
+    p.a = 12; // creates an own property 'a' on p
+    console.log(p.m()); // 13
+    // when p.m is called, 'this' refers to p.
+    // So when p inherits the function m of o,
+    // 'this.a' means p.a, the own property 'a' of p
+
+
+###Create Object with Prototype Chain
+
+If a prototype chain is too long, it may has negative impact about code performance. Following rules are important to know:
+
+- Remember to use `hasOwnProperty()` method to detect if this object has certain property on itself. **This is the only method in JavaScript with dealing with prototype without traversing the whole prototype chain**.
+
+- It is not enough to check whether a property is `undefined`. The property might very well exist, but its value just happens to be set to `undefined`.
+
+- Trying to access *nonexistent* properties will always traverse the **full** prototype chain.
+
+- If a object has instance A/B, and the prototype of this object change later, A and B's prototype of this object will also change. i.e. `Object.getPrototypeOf(a1).doSomething` == `Object.getPrototypeOf(a2).doSomething` == `A.prototype.doSomething`.
+
+- `[[Prototype]]` is looked at **recursively**, i.e. `a1.doSomething`, `Object.getPrototypeOf(a1).doSomething`, `Object.getPrototypeOf(Object.getPrototypeOf(a1)).doSomething` etc., until it's found or `Object.getPrototypeOf` returns `null`.
+
+>In short, prototype is for types, while `Object.getPrototypeOf()` is the same for instances.
+
+When iterating over the properties of an object, every enumerable property that is on the prototype chain will be enumerated.
+
+>It is a bad practice to extend `object.prototype`/`_proto_` or one of the other built-in prototypes. This is called `monkey` patching and breaks `encapsulation`.
+
+A graph from <a href="https://www.toptal.com/javascript/javascript-prototypes-scopes-and-performance-what-you-need-to-know">JavaScript Prototype Chains, Scope Chains, and Performance: What You Need to Know</a> written by DIEGO CASTORINA describe prototype chain very well:
+
+img-responsive images/articles/2016/javascript/prototype_chain.png 
+
+
+**Simply Construct**
+
+Code Example:
+
+    :::javascript
+    var o = {a: 1};
+
+    // The newly created object o has Object.prototype as its [[Prototype]]
+    // o has no own property named 'hasOwnProperty'
+    // hasOwnProperty is an own property of Object.prototype.
+    // So o inherits hasOwnProperty from Object.prototype
+    // Object.prototype has null as its prototype.
+    // o ---> Object.prototype ---> null
+
+    var a = ["yo", "whadup", "?"];
+
+    // Arrays inherit from Array.prototype
+    // (which has methods like indexOf, forEach, etc.)
+    // The prototype chain looks like:
+    // a ---> Array.prototype ---> Object.prototype ---> null
+
+    function f(){
+      return 2;
+    }
+
+    // Functions inherit from Function.prototype
+    // (which has methods like call, bind, etc.)
+    // f ---> Function.prototype ---> Object.prototype ---> null
+
+**By `new` Keyword (Constructor)**
+
+When an object is intialized by `new` keyword, it inherits all the properties in the prototype of that function. However, this object instance can not access `prototype` of its parent object directly. Instance can only acess its properties.
+
+Code Example:
+
+    :::javascript
+    function Graph() {
+      this.vertices = [];
+      this.edges = [];
+    }
+
+    Graph.prototype = {
+      addVertex: function(v){
+        this.vertices.push(v);
+      }
+    };
+
+    var g = new Graph();
+    // g is an object with own properties 'vertices' and 'edges'.
+    // g.[[Prototype]] is the value of Graph.prototype when new Graph() is executed.
+
+Another example:
+
+    :::javascript
+    // Extending the Person prototype from our earlier example to
+    // also include a 'getFullName' method:
+    Person.prototype.getFullName = function() {
+      return this.firstName + ' ' + this.lastName;
+    }
+
+    // Referencing the p1 object from our earlier example
+    console.log(p1.getFullName());            // prints 'John Doe'
+    // but p1 can’t directly access the 'prototype' object...
+    console.log(p1.prototype);                // prints 'undefined'
+    console.log(p1.prototype.getFullName());  // generates an error
+
+See graph example below:
+
+img-responsive images/articles/2016/javascript/prototype_chain_2.png 
+
+Note: `var g = new Graph()` constructor above equals to following code:
+
+    :::javascript
+    var g = new Object();
+    g.[[Prototype]] = Graph.prototype;
+    Graph.call(g);
+
+**ES6: By `class` Keyword**
+
+Code Example:
+
+    :::javascript
+    var a = {a: 1};
+    // a ---> Object.prototype ---> null
+
+    var b = Object.create(a);
+    // b ---> a ---> Object.prototype ---> null
+    console.log(b.a); // 1 (inherited)
+
+    var c = Object.create(b);
+    // c ---> b ---> a ---> Object.prototype ---> null
+
+    var d = Object.create(null);
+    // d ---> null
+    console.log(d.hasOwnProperty);
+    // undefined, because d doesn't inherit from Object.prototype
+
+
+###Apply Prototype as Best Practice
+
+From <a href="https://www.toptal.com/javascript/javascript-prototypes-scopes-and-performance-what-you-need-to-know">Diego Castorina</a>, prototype chain works as following:
+
+- If the object has a property with the given name, that value is returned. (The `hasOwnProperty` method can be used to check if an object has a particular named property.)
+
+- If the object does not have the named property, the object’s prototype is checked
+
+- Since the prototype is an object as well, if it does not contain the property either, its parent’s prototype is checked.
+
+- This process continues up the prototype chain until the property is found.
+
+- If Object.prototype is reached and it does not have the property either, the property is considered `undefined`.
+
+**Constructor**
+
+Gregory Baker write a article about<a href="https://developers.google.com/speed/articles/optimizing-javascript">Optimizing JavaScript code</a>. He mentioned *instead of* following constructor:
+
+    :::javascript
+    baz.Bar = function() {
+      // constructor body
+      this.foo = function() {
+        // method body
+      };
+    }
+
+Using prototype is the *preferred* way of add attributes. In following code, no matter how many instances of `baz.Bar` are constructed, only a single function is ever created for `foo`, and no closures are created.
+
+    :::javascript
+    baz.Bar = function() {
+      // constructor body
+    };
+
+    baz.Bar.prototype.foo = function() {
+      // method body
+    };
+
+**Initialize Instance**
+
+Place instance variable declaration/initialization on the `prototype` for instance variables with `value type` (rather than reference type) initialization values (i.e. values of type `number`, `Boolean`, `null`, `undefined`, or `string`).  *This does not apply to initial value of parameters*.
+
+Instead of following:
+
+    :::javascript
+    foo.Bar = function() {
+      this.prop1_ = 4;
+      this.prop2_ = true;
+      this.prop3_ = [];
+      this.prop4_ = 'blah';
+    };
+
+Use following:
+
+    :::javascript
+    foo.Bar = function() {
+      this.prop3_ = [];
+    };
+    foo.Bar.prototype.prop1_ = 4;
+    foo.Bar.prototype.prop2_ = true;
+    foo.Bar.prototype.prop4_ = 'blah';

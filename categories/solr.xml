@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Pengyin's Corner (Posts about Solr)</title><link>https://pengyin-shan.com/</link><description></description><atom:link type="application/rss+xml" href="https://pengyin-shan.com/categories/solr.xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Tue, 11 Sep 2018 20:57:17 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>A Journal of Playing with Hydra Data</title><link>https://pengyin-shan.com/posts/2015/Others/play-with-hydra-data/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;h3 id="data-immigration"&gt;Data Immigration&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;This part is based on the &lt;a href="https://github.com/projecthydra/hydra/wiki/Dive-into-Hydra"&gt;dive-into-hydra&lt;/a&gt; tutorial project.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;What should I do to immigrate Hydra Data (Fedora files, Solr documents and indexes, etc) from one Hydra project to another project?&lt;/p&gt;
+&lt;p&gt;To figure out a way, I have explored following items:&lt;/p&gt;
+&lt;h4 id="step-1-sqlite3"&gt;Step 1: SQLite3&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;8/12/15&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;My first idea is to check database. Tutorial project uses SQLite3 as database. All files are included in &lt;code&gt;/db&lt;/code&gt; folder. Before going to production, you may get &lt;code&gt;developer.sqlite3&lt;/code&gt;, &lt;code&gt;test.sqlite3&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;I used &lt;code&gt;SQLiteStudio&lt;/code&gt; to open these two SQLite3 databases. Each database has four tables, which are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;bookmarks&lt;/code&gt;: save information when a bookmark is created. Sample Fields: &lt;code&gt;user_id&lt;/code&gt;, &lt;code&gt;document_id&lt;/code&gt;, &lt;code&gt;title&lt;/code&gt;, &lt;code&gt;created_at&lt;/code&gt;, etc&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;schema_migrations&lt;/code&gt;: version of query schema&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;searches&lt;/code&gt;: save information when a search operation is performed. Sample Fields: &lt;code&gt;user_id&lt;/code&gt;, &lt;code&gt;query_params&lt;/code&gt;, &lt;code&gt;created_at&lt;/code&gt;, etc&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;users&lt;/code&gt;: user information. Sample Fields: &lt;code&gt;email&lt;/code&gt;, &lt;code&gt;current_sign_in_ip&lt;/code&gt;, &lt;code&gt;encrpted_password&lt;/code&gt;, etc.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It seems that database(SQLite3) here is used to record information in search process, after all previous data has been immigrated.&lt;/p&gt;
+&lt;p&gt;Now my question is: &lt;em&gt;Does Hydra have a solution?&lt;/em&gt;&lt;/p&gt;
+&lt;h4 id="step-2-hydra"&gt;Step 2: Hydra&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;8/12/15&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I did some research about a full immigration solution in Hydra. I didn't find any result, which is nature because Hydra includes so many components: Fedora, Solr, Blacklight, etc. It would be extremely hard to transfer all data from these components once, without any error.&lt;/p&gt;
+&lt;p&gt;After I re-think my requirement, I realize this is what I want: &lt;strong&gt;Get all data from Fedora in old project -&amp;gt; Put it to Fedora in new project, with same structure -&amp;gt; Solr in new project re-indexing -&amp;gt; Blacklight can find new documents&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Now I want to start the process of &lt;em&gt;export and import Fedora data&lt;/em&gt;.&lt;/p&gt;
+&lt;h4 id="step-3-fedora"&gt;Step 3: Fedora&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;8/12/15&lt;/strong&gt;&lt;/p&gt;
+&lt;h5 id="data-export"&gt;Data Export&lt;/h5&gt;
+&lt;p&gt;Fedora4 provides a &lt;a href="https://wiki.duraspace.org/display/FEDORA40/RESTful+HTTP+API"&gt;RESTful HTTP API&lt;/a&gt; for data processing.&lt;/p&gt;
+&lt;p&gt;To export serialized form of a resource, &lt;strong&gt;with all subtress and binary content&lt;/strong&gt;, run following in your terminal (I adjust path based on my project):&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;curl -u fedoraAdmin:fedoraAdmin http://127.0.0.1:8983/fedora/dev/fcr:export?recurse=true&amp;amp;skipBinary=false"
+&lt;/pre&gt;
+
+
+&lt;p&gt;Make sure to use your own fedora username and password.&lt;/p&gt;
+&lt;p&gt;This command will generate a group of &lt;code&gt;xml&lt;/code&gt; code, save it to a &lt;code&gt;xml&lt;/code&gt; file, such as &lt;code&gt;FedoraExport.xml&lt;/code&gt;.&lt;/p&gt;
+&lt;h5 id="data-import"&gt;Data Import&lt;/h5&gt;
+&lt;p&gt;Now go to your new project and get a copy of your exported xml file. Run following command to import:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;curl -u fedoraAdmin:fedoraAdmin -X POST --data-binary "@FedoraExport.xml" "http://127.0.0.1:8983/fedora/rest/dev/fcr:import?format=jcr/xml"
+&lt;/pre&gt;
+
+
+&lt;p&gt;Now restart jetty and navigate to &lt;code&gt;http://127.0.0.1:8983/fedora/rest/dev&lt;/code&gt;. I'll be able to see all data, includes all subtrees, in the Fedora of new project.&lt;/p&gt;
+&lt;p&gt;I also noticed Fedora UI can import and export xml files. However, there is no recursive export feature there.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Problem: When I followed tutorial project, I made all the book nodes under /fedora/rest/dev. When I did export, I had to export dev node to make sure it includes book childnodes. After I imported dev node to new /fedora/rest/dev, I realized I had two dev nodes now. Another solution is to replace new fedora's dev node. However after I imported dev node directly to /fedora/rest, the new dev node will show as 'dev%5B2%5D' instead of 'dev'.&lt;/p&gt;
+&lt;p&gt;Possible Solution: I should create a summary node, which includes all my books data. I export this summary node and import it to /fedora/rest/dev. Now I can have exactly same structure as old fedora.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Now I want to start the process of &lt;em&gt;Solr re-indexing&lt;/em&gt;.&lt;/p&gt;
+&lt;h4 id="step-4-solr"&gt;Step 4: Solr&lt;/h4&gt;
+&lt;p&gt;Working in process :)&lt;/p&gt;&lt;/div&gt;</description><category>Fedora</category><category>Hydra</category><category>Solr</category><guid>https://pengyin-shan.com/posts/2015/Others/play-with-hydra-data/</guid><pubDate>Wed, 12 Aug 2015 04:00:00 GMT</pubDate></item></channel></rss>

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " vocab="http://ogp.me/ns" lang="en">
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]--><!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]--><!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]--><!--[if gt IE 8]><!--><!--<![endif]--><head>
+<meta charset="utf-8">
+<meta name="description" content="Manning OCA Java SE 7 Reading Note: Chapter 2">
+<!-- http://t.co/dKP3o1e --><meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manning OCA Java SE 7 Reading Note: Chapter 2 | Pengyin's Corner</title>
+<link href="../../../../assets/css/all.css" rel="stylesheet" type="text/css">
+<!-- Webfonts --><link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+<!-- Load Modernizr --><script src="//mmistakes.github.io/hpstr-jekyll-theme/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script><link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../rss.xml">
+<link rel="canonical" href="https://pengyin-shan.com/posts/2015/Java/manning-oca-java-se7-reading-note-chapter-2/">
+<!--[if lt IE 9]><script src="../../../../assets/js/html5.js"></script><![endif]--><meta name="description" content="Manning OCA Java SE 7 Reading Note: Chapter 2">
+<meta name="author" content="Pengyin(Wendy) Shan">
+<link rel="prev" href="../manning-oca-java-se7-reading-note-chapter-3/" title="Manning OCA Java SE 7 Reading Note: Chapter 3" type="text/html">
+<link rel="next" href="../manning-oca-java-se7-reading-note-chapter-1/" title="Manning OCA Java SE 7 Reading Note: Chapter 1" type="text/html">
+<meta property="og:site_name" content="Pengyin's Corner">
+<meta property="og:title" content="Manning OCA Java SE 7 Reading Note: Chapter 2">
+<meta property="og:url" content="https://pengyin-shan.com/posts/2015/Java/manning-oca-java-se7-reading-note-chapter-2/">
+<meta property="og:description" content="Manning OCA Java SE 7 Reading Note: Chapter 2">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-01-13T00:00:00-05:00">
+<meta property="article:tag" content="Java">
+</head>
+<body id="post-index" class="feature">
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    
+
+    <nav id="dl-menu" class="dl-menuwrapper" role="navigation"><button class="dl-trigger">Open Menu</button>
+    <ul class="dl-menu">
+<li><a href="../../../">My Knowledge Base</a></li>
+            <li><a href="https://www.linkedin.com/in/pengyinshan">My LinkedIn</a></li>
+            <li><a href="../../../../categories/">Tags and Categories</a></li>
+            <li><a href="../../../../rss.xml">RSS feed</a></li>
+            <li><a href="../../../../archive.html">Archive</a></li>
+    
+    
+    </ul></nav><div class="entry-header">
+<!-- /.image-credit -->
+    <div class="entry-image">
+      <img src="../../../../bk.JPG" alt="Latest Posts">
+</div>
+<!-- /.entry-image -->
+      
+  <div class="header-title">
+    <div class="header-title-wrap">
+    <h1 id="brand"><a href="https://pengyin-shan.com/" title="Pengyin's Corner" rel="home">
+    Pengyin's Corner</a></h1>
+      <h2>Be Passionate.</h2>
+    </div>
+<!-- /.header-title-wrap -->
+  </div>
+<!-- /.header-title -->
+
+</div>
+<!-- /.entry-header -->
+
+    <div id="main" role="main">
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><div class="entry-meta">
+            <span class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2015-01-13T00:00:00-05:00" itemprop="datePublished" title="2015-01-13">2015-01-13</time></a></span>  ·  
+            <span class="byline author vcard">Pengyin(Wendy) Shan</span>  ·  
+                <span class="commentline">
+        
+    <a href="#disqus_thread" data-disqus-identifier="cache/posts/2015/Java/manning-oca-java-se7-reading-note-chapter-2.html">Comments</a>
+
+</span>  ·  
+            
+        <span class="sourceline"><a href="index.md" id="sourcelink">Source</a></span>  ·  
+
+                <meta name="description" itemprop="description" content="Manning OCA Java SE 7 Reading Note: Chapter 2">
+</div>
+        
+
+    
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Manning OCA Java SE 7 Reading Note: Chapter 2</a></h1>
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>This is a post that I moved from <a href="blogpengyin.herokuapp.com"> my old blog site</a>. This is the reading note for <strong>OCA Java SE 7 Certification Guide</strong> from <strong>Manning</strong>. <em>Please note that all definations and examples in this post are taken from the book.</em></p>
+<h2 id="chapter-2-working-with-java-data-types">Chapter 2: Working with Java Data Types</h2>
+<p>This chapter main covers:</p>
+<ul>
+<li>
+<p><strong>Primitive data</strong> types in Java</p>
+</li>
+<li>
+<p><strong>Literal values</strong> of primitive Java data types</p>
+</li>
+<li>
+<p><strong>Object reference</strong> variables in Java</p>
+</li>
+<li>
+<p>Valid and invalid <strong>identifiers</strong></p>
+</li>
+<li>
+<p>Usage of Java <strong>operators</strong></p>
+</li>
+<li>
+<p>Modification of default operator precedence via parentheses</p>
+</li>
+</ul>
+<h3 id="21-primitivate-variables">2.1 Primitivate Variables</h3>
+<p>A variable defined as one of the primitive data types is a <strong>primary variable</strong>.</p>
+<p>Primitive data types is the <strong>simplest data types</strong> in a programming language.</p>
+<p>Java has <strong>eight</strong> primitive data types:</p>
+<ul>
+<li>
+<p><strong>char</strong></p>
+</li>
+<li>
+<p><strong>byte</strong></p>
+</li>
+<li>
+<p><strong>short</strong></p>
+</li>
+<li>
+<p><strong>int</strong></p>
+</li>
+<li>
+<p><strong>long</strong></p>
+</li>
+<li>
+<p><strong>float</strong></p>
+</li>
+<li>
+<p><strong>double</strong></p>
+</li>
+<li>
+<p><strong>boolean</strong></p>
+</li>
+</ul>
+<blockquote>
+<p><strong>String</strong> is not primitive type in Java.</p>
+<p><strong>char</strong> and <strong>int</strong> are the only short-name primitive data types, with low case as begining, others are all full-name.</p>
+<p><strong>Integer</strong> or <strong>Character</strong> or <strong>Boolean</strong> is not primitive data type in Java.</p>
+</blockquote>
+<p>Primitive Date Type can be devided to three <strong>categories</strong>:</p>
+<ul>
+<li>
+<p>Boolean: boolean</p>
+</li>
+<li>
+<p>Character: char</p>
+</li>
+<li>
+<p>Numeric:</p>
+</li>
+<li>
+<ol>
+<li>Integers: int, byte, short, long</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>Floating-point/<strong>decimals</strong>: float, double</li>
+</ol>
+</li>
+</ul>
+<h4 id="boolean">boolean</h4>
+<p>A <strong>literal</strong> is a <strong>fixed</strong> value that does not need further calculations in order for it to be assigned to any varible.</p>
+<p><strong>true</strong> and <strong>false</strong> are the <em>only</em> boolean literal variables.</p>
+<h4 id="numeric">Numeric</h4>
+<p>Range of <strong>byte</strong>: <code>-128</code> to <code>127</code>, inclusive. <code>8</code> bits.</p>
+<p>The <strong>default type</strong> of a nondecimal number is <code>int</code>.</p>
+<p>To designate an integer value as a <strong>long</strong> value, just add suffix <code>L</code> or <code>l</code>: <code>23333000000L</code>.</p>
+<p>Integer literal values comes in four categories: <strong>binary</strong>, <strong>decimal</strong>, <strong>octal</strong>, and <strong>hexoadecimal</strong>:</p>
+<ul>
+<li>
+<p>Binary: A <strong>base-2</strong> system. Use prefix <code>0B</code> or <code>0b</code> to define it: <code>int b = 0B1110011;</code></p>
+</li>
+<li>
+<p>Decimal: A <strong>base-10</strong> system. <strong>This is the default setting for <code>System.out.println()</code></strong>.</p>
+</li>
+<li>
+<p>Octal: A <strong>base-8</strong> system, which means in octal , <code>10</code> has decimal value <code>9</code>. Use prefix <code>0</code> to define it: <code>int o = 036620;</code></p>
+</li>
+<li>
+<p>Hex: A <strong>base-16</strong> system, <code>A</code>-&gt;<code>F</code> means <code>10-&gt;16</code>. Use <code>0X</code> or <code>0x</code> to define it.Example: <code>int h = 0X23232FA;</code></p>
+</li>
+</ul>
+<p>In Java7, you can use <strong>underscores</strong>. Underscore has no effect on values: <code>long oc = 045_13;</code></p>
+<p><strong>Rules to Remember</strong></p>
+<ul>
+<li>
+<p>You can not <strong>start</strong> or <strong>end</strong> a literal value with an underscore, such as <code>_100_</code></p>
+</li>
+<li>
+<p>You can not place an underscore <strong>right after</strong> the prefixes <code>0b</code> for binary, <code>0</code> for octal and <code>0x</code> for hex.</p>
+</li>
+<li>
+<p>You can not place an underscre <strong>prior</strong> the an <code>L</code> suffix for <code>long</code> value</p>
+</li>
+<li>
+<p>You can not use an underscore in positions where a <strong>string of digits</strong> is expected, such as <code>int i = Integer.parseInt("45_98");</code>. Note this will <em>compile successfully</em> but <em>fail in run time</em>.</p>
+</li>
+</ul>
+<p>In Java, you use <strong>float</strong> and <strong>double</strong> to store decimal numbers. <strong>float</strong> is smaller and takes less space. <strong>float has less precision</strong>.</p>
+<p>The <strong>default type</strong> of a decial litercal is <code>double</code> in Java. You can place a <strong>suffix</strong> <code>f/F</code> to transfer to to <code>float</code> in compile time. a <code>D/d</code> suffix can also be used to transfer to <code>double</code>, but this can be skipped since <code>double</code> is default.</p>
+<p>You can also assign <strong>scientific notation</strong> as a literal decimal value:
+<code>double test = 1.4444e4;</code></p>
+<p>In Java7, you can use <strong>underscore</strong> for floating-points. Rules:</p>
+<ul>
+<li>
+<p>All rules for <em>numberic</em> literals above</p>
+</li>
+<li>
+<p>You can not place an underscore <strong>prior</strong> to a <code>D/d</code> or <code>F/f</code> suffix</p>
+</li>
+<li>
+<p>You can not place an underscore <strong>adjacent(i.e. attched before or attched after)</strong> to a <code>decimal point</code>: <code>100_.21</code> or <code>89._45</code></p>
+</li>
+</ul>
+<h4 id="char">char</h4>
+<p>A char can store a single <strong>16-bit Unicode</strong> character.</p>
+<p>Range of char: from <code>\</code>u0000<code>or</code>0<code>to</code>`ufff<code>or</code>65,535`, inclusive.</p>
+<p>Use <strong>single quote</strong> for characters. Double quote will fail compile.</p>
+<p>Since Java store characters internally as <strong>unsigned integer value (i.e. positivate integer)</strong>, so it's fine to <strong>assign positive integer</strong> to a char. <em>Negative number will fail to compile, but you can cast</em>.</p>
+<blockquote>
+<p>For example: <code>char a = 122;</code>, character is transferred to <code>\</code>u0122<code>. The format is first a number based on</code>10<code>, then a number that is based on</code>16`.</p>
+<p>You must use quotes to assign Unicode values to char variables: <code>char c = '\u0122';</code></p>
+</blockquote>
+<p>You can <strong>cast</strong> only capatible data types.</p>
+<p>If you cast a negative number for char, the sign will be recognize as a part of numberic value becuase Java does not store sign of an integer.</p>
+<h3 id="22-identifiers">2.2 Identifiers</h3>
+<p><strong>Indentifiers</strong> are names of packages, classes, interfaces, methods and variables.</p>
+<p><strong>Hyphens (-)</strong> are not allowed in identifier. <strong>Underscotres</strong> are allowed.</p>
+<h4 id="valid-identifiers">Valid Identifiers</h4>
+<p>Unlimited length</p>
+<p>Starts with a letter ( a–z, upper- or lowercase), a <strong>currency sign</strong>, or an underscore Uses special characters: <code>!</code> , <code>@</code> , <code>#</code> , <code>%</code> , <code>^</code> , <code>&amp;</code> , <code>*</code> , <code>(</code>, <code>)</code> ,<code>'</code>, <code>:</code> ,<code>;</code> , <code>[</code> , <code>/</code> , <code>\`` ,</code>}`</p>
+<p>Can use a digit (not at the starting position)</p>
+<p>Can use an underscore (in <strong>any</strong> position)</p>
+<p>Can use a currency sign (in any position): <code>$</code> , <code>£</code> , <code>¢</code> ,<code>¥</code> and others</p>
+<h4 id="invalid-indentifier">Invalid Indentifier</h4>
+<p>Same spelling as a Java reserved word or keyword</p>
+<p>Starts with a Java digit ( 0 – 9 )</p>
+<h3 id="23-object-reference-variables">2.3 Object Reference Variables</h3>
+<p>The variables in Java can be categorized into two types: <strong>primitive variables</strong> and <strong>reference variables</strong>.</p>
+<p><strong>Reference variables</strong> are also known as <strong>object reference variables</strong> or <strong>object references</strong>.</p>
+<p><strong>Objects are instances of classes</strong>.</p>
+<p>An object reference is a <strong>memory address</strong> that points to a memory area where an object’s data is located.</p>
+<p>When an object is instantiated with the new operator, a <strong>heap-memory address</strong> value to that object is returned. That address is usually assigned to the reference variable.</p>
+<p>Code Example:</p>
+<pre class="code literal-block"><span></span><span class="n">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Person</span><span class="o">();</span>
+
+<span class="c1">//Step 1: A new Person object is created</span>
+<span class="c1">//Step 2: A variable named person is created in the stack with an empty ( null ) value.</span>
+<span class="c1">//Step 3: The variable person is assigned the memory address value where the object is located.</span>
+</pre>
+
+
+<p>The <strong>literal value</strong> of all types of object reference variables is <code>null</code>. You can also assign a <code>null</code> value to a reference variable explicitly.</p>
+<p>The basic difference is that primitive variables store the <strong>actual values</strong>, whereas reference variables store the <strong>addresses</strong> of the objects they refer to.</p>
+<h3 id="24-operators">2.4 Operators</h3>
+<h4 id="assignment-operators">Assignment Operators</h4>
+<p>The <code>+=</code> , <code>-=</code> , <code>*=</code> , and <code>/=</code> operators are short forms of addition, subtraction, multiplication and division with assignment.</p>
+<p>You cannot assign larger range of values to smaller range of values. For example: <code>long num = 188883544333334L; int val = numl</code> will give complie error. However, opposite and <strong>casting</strong> is allowed.</p>
+<p>You cannot assisn <code>boolean</code> to other primitive data types.</p>
+<p>You can also assign <strong>multiple values</strong> on the <strong>same line</strong> using the
+assignment operator and comma: <code>int a=7, b=5, c=3;</code></p>
+<h5 id="arithmetic-operators">Arithmetic Operators</h5>
+<p><strong>Unary operators (++/--)</strong> can also be used in <strong>prefix</strong> and <strong>postfix</strong> notation.</p>
+<blockquote>
+<p>In prefix notation, the unary calculation run first, then closest expression run.</p>
+<p>In postfix notation, closest expression run first, then the unary calcuation run.</p>
+<p><strong>cloest expression</strong> means the one expression that this variable needs to attend now.</p>
+</blockquote>
+<p>Code example for unaray operators:</p>
+<pre class="code literal-block"><span></span><span class="kt">int</span> <span class="n">a</span>  <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">++</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="n">a</span><span class="o">--</span> <span class="o">-</span> <span class="n">a</span><span class="o">--</span> <span class="o">+</span> <span class="o">++</span><span class="n">a</span><span class="o">;</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span><span class="o">)</span>
+</pre>
+
+
+<p>For the code above:</p>
+<ul>
+<li>
+<p><code>a++</code> means <code>a=10</code>, after expression <code>a=11</code>. However, there is no expression before this step. <strong>so now totally we have <code>a=10</code> as whole function, but the single <code>a</code> value on right for next step is <code>11</code></strong>;</p>
+</li>
+<li>
+<p>Then <code>+ a</code> now means <code>+ 11</code>, so now <code>a = 10 + 11</code>;</p>
+</li>
+<li>
+<p>Then <code>a--</code> means first do <code>+</code>, then do <code>--</code>. So now <code>a = 10 + 11 + 11</code>, but single <code>a</code> on right side now is <code>10</code>.</p>
+</li>
+<li>
+<p>Then <code>a--</code> means first do <code>-</code>, then do <code>--</code>. So now <code>a = 10 + 11 + 11 - 10</code>, but single <code>a</code> on right side now is <code>9</code>.</p>
+</li>
+<li>
+<p>Then <code>++a</code> means first make single <code>a = 10</code>, then do <code>+</code>. So now <code>a = 10 + 11 + 11 -10 + 10</code></p>
+</li>
+<li>
+<p>Now we can hava <code>a=32</code> for final printout.</p>
+</li>
+</ul>
+<p>During steps above, the variable assignment is the last step. It needs to waiting for all expressions on right finish.</p>
+<h4 id="relational-operators">Relational Operators</h4>
+<p><strong>Relational operators</strong> are used to check one condition, with two categories:</p>
+<ul>
+<li>
+<p>Comparing greater ( <code>&gt;</code> , <code>&gt;=</code> ) and lesser values ( <code>&lt;</code> , <code>&lt;=</code> )</p>
+</li>
+<li>
+<p>Comparing values for equality ( <code>==</code> ) and nonequality ( <code>!=</code> )</p>
+</li>
+</ul>
+<p>The result of the relational operation is always a <strong>boolean</strong> value</p>
+<p>The operators <code>==</code> (equal to) and <code>!=</code>(not equal to) can be used to compare <strong>all types of primitives</strong>: <code>char</code> , <code>byte</code> , <code>short</code> , <code>int</code> , <code>long</code> , <code>float</code> , <code>double</code>, and <code>boolean</code>.</p>
+<blockquote>
+<p>Remember that you can’t apply these operators to incomparable types.</p>
+</blockquote>
+<h4 id="logical-operators">Logical Operators</h4>
+<p>These expressions should return a <strong>boolean</strong> value.</p>
+<p>You can use the logical operators <code>AND (&amp;&amp;)</code> , <code>OR (||)</code> , and <code>NOT (!)</code> to check multiple conditions and proceed accordingly.</p>
+<blockquote>
+<p><strong>If there is any false, <code>&amp;&amp;</code> always return false;</strong></p>
+<p><strong>If there is any true, <code>||</code> always return true;</strong></p>
+</blockquote>
+<p><code>&amp;&amp;</code> and <code>||</code> is called <strong>short-circuit operators</strong>, because as long as there is any expression that can decide the result of whole expression (Using the rule above), they will stop evaluating and give out result.</p>
+<h5 id="operator-precedence">Operator Precedence</h5>
+<p>the operator on top has the <strong>highest</strong> precedence, and operators within the same group have the same precedence and are evaluated from
+<strong>left to right</strong>:</p>
+<ul>
+<li>
+<p><code>Exp++</code>,<code>Exp--</code></p>
+</li>
+<li>
+<p><code>++Exp</code>, <code>--Exp</code>, <code>+Exp</code>, <code>-Exp</code>, <code>!</code></p>
+</li>
+<li>
+<p><code>*</code>, <code>/</code>, <code>%</code></p>
+</li>
+<li>
+<p><code>+</code>, <code>-</code></p>
+</li>
+<li>
+<p><code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code></p>
+</li>
+<li>
+<p><code>==</code>, <code>!=</code></p>
+</li>
+<li>
+<p><code>&amp;&amp;</code></p>
+</li>
+<li>
+<p><code>||</code>  Note OR has lower precedence than AND</p>
+</li>
+<li>
+<p><code>=</code>, <code>+=</code>, <code>-=</code>, <code>*=</code>, <code>/=</code>, <code>%=</code></p>
+</li>
+<li>
+<p>You can use <code>()</code> i.e. parentheses to override the default operator precedence.</p>
+</li>
+</ul>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../categories/java/" rel="tag">Java</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../manning-oca-java-se7-reading-note-chapter-3/" rel="prev" title="Manning OCA Java SE 7 Reading Note: Chapter 3">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../manning-oca-java-se7-reading-note-chapter-1/" rel="next" title="Manning OCA Java SE 7 Reading Note: Chapter 1">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="pengyinsnotes",
+            disqus_url="https://pengyin-shan.com/posts/2015/Java/manning-oca-java-se7-reading-note-chapter-2/",
+        disqus_title="Manning OCA Java SE 7 Reading Note: Chapter 2",
+        disqus_identifier="cache/posts/2015/Java/manning-oca-java-se7-reading-note-chapter-2.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="pengyinsnotes";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+    
+    <div class="footer-wrapper">
+        <footer role="contentinfo"><p>Contents © 2018         <a href="mailto:pengyin.shan@outlook.com">Pengyin(Wendy) Shan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+        </footer>
+</div>
+
+    
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script src="../../../../assets/js/scripts.min.js"></script>
+</body>
+</html>

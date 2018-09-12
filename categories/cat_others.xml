@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Pengyin's Corner (Posts about Others)</title><link>https://pengyin-shan.com/</link><description></description><atom:link type="application/rss+xml" href="https://pengyin-shan.com/categories/cat_others.xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Tue, 11 Sep 2018 20:57:10 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>A Journal of Playing with Hydra Data</title><link>https://pengyin-shan.com/posts/2015/Others/play-with-hydra-data/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;h3 id="data-immigration"&gt;Data Immigration&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;This part is based on the &lt;a href="https://github.com/projecthydra/hydra/wiki/Dive-into-Hydra"&gt;dive-into-hydra&lt;/a&gt; tutorial project.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;What should I do to immigrate Hydra Data (Fedora files, Solr documents and indexes, etc) from one Hydra project to another project?&lt;/p&gt;
+&lt;p&gt;To figure out a way, I have explored following items:&lt;/p&gt;
+&lt;h4 id="step-1-sqlite3"&gt;Step 1: SQLite3&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;8/12/15&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;My first idea is to check database. Tutorial project uses SQLite3 as database. All files are included in &lt;code&gt;/db&lt;/code&gt; folder. Before going to production, you may get &lt;code&gt;developer.sqlite3&lt;/code&gt;, &lt;code&gt;test.sqlite3&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;I used &lt;code&gt;SQLiteStudio&lt;/code&gt; to open these two SQLite3 databases. Each database has four tables, which are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;bookmarks&lt;/code&gt;: save information when a bookmark is created. Sample Fields: &lt;code&gt;user_id&lt;/code&gt;, &lt;code&gt;document_id&lt;/code&gt;, &lt;code&gt;title&lt;/code&gt;, &lt;code&gt;created_at&lt;/code&gt;, etc&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;schema_migrations&lt;/code&gt;: version of query schema&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;searches&lt;/code&gt;: save information when a search operation is performed. Sample Fields: &lt;code&gt;user_id&lt;/code&gt;, &lt;code&gt;query_params&lt;/code&gt;, &lt;code&gt;created_at&lt;/code&gt;, etc&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;users&lt;/code&gt;: user information. Sample Fields: &lt;code&gt;email&lt;/code&gt;, &lt;code&gt;current_sign_in_ip&lt;/code&gt;, &lt;code&gt;encrpted_password&lt;/code&gt;, etc.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It seems that database(SQLite3) here is used to record information in search process, after all previous data has been immigrated.&lt;/p&gt;
+&lt;p&gt;Now my question is: &lt;em&gt;Does Hydra have a solution?&lt;/em&gt;&lt;/p&gt;
+&lt;h4 id="step-2-hydra"&gt;Step 2: Hydra&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;8/12/15&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I did some research about a full immigration solution in Hydra. I didn't find any result, which is nature because Hydra includes so many components: Fedora, Solr, Blacklight, etc. It would be extremely hard to transfer all data from these components once, without any error.&lt;/p&gt;
+&lt;p&gt;After I re-think my requirement, I realize this is what I want: &lt;strong&gt;Get all data from Fedora in old project -&amp;gt; Put it to Fedora in new project, with same structure -&amp;gt; Solr in new project re-indexing -&amp;gt; Blacklight can find new documents&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Now I want to start the process of &lt;em&gt;export and import Fedora data&lt;/em&gt;.&lt;/p&gt;
+&lt;h4 id="step-3-fedora"&gt;Step 3: Fedora&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;8/12/15&lt;/strong&gt;&lt;/p&gt;
+&lt;h5 id="data-export"&gt;Data Export&lt;/h5&gt;
+&lt;p&gt;Fedora4 provides a &lt;a href="https://wiki.duraspace.org/display/FEDORA40/RESTful+HTTP+API"&gt;RESTful HTTP API&lt;/a&gt; for data processing.&lt;/p&gt;
+&lt;p&gt;To export serialized form of a resource, &lt;strong&gt;with all subtress and binary content&lt;/strong&gt;, run following in your terminal (I adjust path based on my project):&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;curl -u fedoraAdmin:fedoraAdmin http://127.0.0.1:8983/fedora/dev/fcr:export?recurse=true&amp;amp;skipBinary=false"
+&lt;/pre&gt;
+
+
+&lt;p&gt;Make sure to use your own fedora username and password.&lt;/p&gt;
+&lt;p&gt;This command will generate a group of &lt;code&gt;xml&lt;/code&gt; code, save it to a &lt;code&gt;xml&lt;/code&gt; file, such as &lt;code&gt;FedoraExport.xml&lt;/code&gt;.&lt;/p&gt;
+&lt;h5 id="data-import"&gt;Data Import&lt;/h5&gt;
+&lt;p&gt;Now go to your new project and get a copy of your exported xml file. Run following command to import:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;curl -u fedoraAdmin:fedoraAdmin -X POST --data-binary "@FedoraExport.xml" "http://127.0.0.1:8983/fedora/rest/dev/fcr:import?format=jcr/xml"
+&lt;/pre&gt;
+
+
+&lt;p&gt;Now restart jetty and navigate to &lt;code&gt;http://127.0.0.1:8983/fedora/rest/dev&lt;/code&gt;. I'll be able to see all data, includes all subtrees, in the Fedora of new project.&lt;/p&gt;
+&lt;p&gt;I also noticed Fedora UI can import and export xml files. However, there is no recursive export feature there.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Problem: When I followed tutorial project, I made all the book nodes under /fedora/rest/dev. When I did export, I had to export dev node to make sure it includes book childnodes. After I imported dev node to new /fedora/rest/dev, I realized I had two dev nodes now. Another solution is to replace new fedora's dev node. However after I imported dev node directly to /fedora/rest, the new dev node will show as 'dev%5B2%5D' instead of 'dev'.&lt;/p&gt;
+&lt;p&gt;Possible Solution: I should create a summary node, which includes all my books data. I export this summary node and import it to /fedora/rest/dev. Now I can have exactly same structure as old fedora.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Now I want to start the process of &lt;em&gt;Solr re-indexing&lt;/em&gt;.&lt;/p&gt;
+&lt;h4 id="step-4-solr"&gt;Step 4: Solr&lt;/h4&gt;
+&lt;p&gt;Working in process :)&lt;/p&gt;&lt;/div&gt;</description><category>Fedora</category><category>Hydra</category><category>Solr</category><guid>https://pengyin-shan.com/posts/2015/Others/play-with-hydra-data/</guid><pubDate>Wed, 12 Aug 2015 04:00:00 GMT</pubDate></item><item><title>Dive into Hydra and My Thoughts</title><link>https://pengyin-shan.com/posts/2015/Others/dive-into-hydra-and-my-thoughts/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;p&gt;&lt;em&gt;This post is being updated while I'm learning more about Hydra&lt;/em&gt;&lt;/p&gt;
+&lt;h4 id="main-idea"&gt;Main Idea&lt;/h4&gt;
+&lt;p&gt;I used to create a small Spring MVC web app &lt;a href="https://github.com/shanpy/RDFExperiment"&gt;RDF Experiment&lt;/a&gt; to experiment the ideas behind Hydra. Following is a graph about my assumption of Hydra Idea:&lt;/p&gt;
+&lt;p&gt;../images/articles/2015/digital_library/ProjectHydra.png &lt;/p&gt;
+&lt;p&gt;Behind this large frame, there are lots of small classes/methods that will push through stages above.&lt;/p&gt;
+&lt;h5 id="key-concerns"&gt;Key Concerns&lt;/h5&gt;
+&lt;p&gt;Following key concerns should be evaluated carefully during the processes above:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;When parsing RDF file to Model, what are the key properties which should be kept? What are properties that should be ignored? How client and domain expert think about your solution?&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;What's the best way of modeling Fedora and Solr such that user can use different way of searching, and getting best result? Is there any possibility to shorten result list, while not losing necessary close-results? Is there any way to shorten the searching time?&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Is there any visualization job can be done to let user understand more about results?&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="problems-and-thoughts"&gt;Problems and Thoughts&lt;/h4&gt;
+&lt;h5 id="installation"&gt;Installation&lt;/h5&gt;
+&lt;p&gt;Although RubyInstaller is available in Windows, I still encountered lots of unexpected errors when setting up environment in Windows 10. I took much less time in Linux. I used to run CygWin for virtual Linux environment in Windows, but it's not work well for any environment setup process, including Python and RoR.&lt;/p&gt;
+&lt;p&gt;If anyone is like me who are starting a taste of Hydra, I suggest using Unix-Based system first.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Update on 8/12/15&lt;/em&gt;: I created a &lt;a href="http://pengyin-shan.com/blog/setting-up-ror-hydra-environment-problems-and-solutions"&gt;post&lt;/a&gt; talking about installation of RoR and Hydra. If you need to install RoR or Hydra, feel free to use this post.&lt;/p&gt;
+&lt;h5 id="ror"&gt;RoR&lt;/h5&gt;
+&lt;p&gt;Since both Spring and Rails framework are holding MVC structure, it's not hard to transfer idea from Spring to RoR. Subfolders in &lt;code&gt;app&lt;/code&gt; folder self-explained themselves:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;controllers&lt;/code&gt;, &lt;code&gt;models&lt;/code&gt;, &lt;code&gt;views&lt;/code&gt; are folders for MVC structure.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;assets&lt;/code&gt; has static resources.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;helpers&lt;/code&gt; is special for RoR. Since &lt;code&gt;helper&lt;/code&gt; is targeted to for variables talking before controller and view, they are very similar to &lt;code&gt;model attributes&lt;/code&gt; in Spring MVC framework.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The basic structure of Hydra-Demo is similar to the a Node.js app, and &lt;code&gt;Gemfile&lt;/code&gt; is similar to &lt;code&gt;requirements.txt&lt;/code&gt; file in Python.&lt;/p&gt;
+&lt;h5 id="deployment"&gt;Deployment&lt;/h5&gt;
+&lt;p&gt;Unfortunately, although Hydra is can be deployed on development environment easily for a single developer, there's no hosting platform that fully host a production environment of it. Following problem needs to be considered:&lt;/p&gt;
+&lt;p&gt;First, the default database needs to be changed in &lt;code&gt;database.yml&lt;/code&gt;. Obviously not a lot of institutions will use SQLite3 (Default) in production environment.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Solution&lt;/em&gt;: I have tried to replace it by MySQL and PostgreSQL, and these two solution all work. I believe other RDBMS should also work well. Just need to change &lt;code&gt;Gemfile&lt;/code&gt;. Replace &lt;code&gt;gem 'sqlite3'&lt;/code&gt; to &lt;code&gt;gem 'pg'&lt;/code&gt; or &lt;code&gt;gem 'mysql2'&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;database.yml&lt;/code&gt; can be changed as following for development purpose:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;default: &amp;amp;default
+adapter: postgresql
+pool: 5
+development:
+  &amp;lt;&amp;lt;: *default
+  url: postgresql_url_or_environment_virable
+  database: database_name
+  username:
+  pasword:
+test: #...
+production: #...
+&lt;/pre&gt;
+
+
+&lt;p&gt;Second problem is the host of fedora commons. As a single developer, I cannot find a cloud-hosted fedora to make calls, which cause me the problem of hosting hydra demo on cloud.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Solution&lt;/em&gt;: Since fedora commons has pretty good deployment guideline, I will try to deploy one on Amazon AWS, then adjust &lt;code&gt;fedora.yml&lt;/code&gt; in hydra-demo when moving to cloud.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Update 08/10/15&lt;/em&gt;: When I tried to deploy Fedora 4 on my local machine using Jetty 8, I got unexpected error message, such as  &lt;code&gt;Problem processing jar entry org/fcrepo/kernel/modeshape/observer/GetNamespacedProperties.class&lt;/code&gt; &lt;code&gt;java.lang.ArrayIndexOutOfBoundsException: 16680&lt;/code&gt;. It happens to lots of fedora classes, such as &lt;code&gt;org/fcrepo/http/commons/api/rdf/HttpTripleUtil.class&lt;/code&gt;. I need to figure out this problem before deploying fedora to cloud platform. Tomcat 7 gave no error message, but still unable to deploy it.&lt;/p&gt;&lt;/div&gt;</description><category>Digial Library</category><category>Hydra</category><guid>https://pengyin-shan.com/posts/2015/Others/dive-into-hydra-and-my-thoughts/</guid><pubDate>Sun, 09 Aug 2015 04:00:00 GMT</pubDate></item><item><title>RDF Basics</title><link>https://pengyin-shan.com/posts/2015/Others/rdf-basics/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;h4 id="resource"&gt;Resource&lt;/h4&gt;
+&lt;p&gt;&lt;a href="http://www.w3schools.com/webservices/ws_rdf_intro.asp"&gt;Introduction to RDF From W3C&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id="intro-to-rdf"&gt;Intro to RDF&lt;/h4&gt;
+&lt;p&gt;RDF (Resource Description Framework) is standard from W3C to describe describe title, author, content, and copyright information of web pages.&lt;/p&gt;
+&lt;p&gt;It is really useful for search engines or digital library.&lt;/p&gt;
+&lt;h5 id="realities-of-rdf"&gt;Realities of RDF&lt;/h5&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;RDF is designed to be read and understood by computers, instead ofbeing displayed to people. &lt;em&gt;RDF descriptions are not designed to be displayed on the web&lt;/em&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;RDF is written in &lt;strong&gt;XML&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;RDF is a part of the W3C's Semantic Web Activity&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;RDF is a &lt;strong&gt;W3C Recommendation&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;W3C's &lt;strong&gt;Semantic Web Version&lt;/strong&gt; has following features:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Web information has exact meaning&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Web information can be understood and processed by computers&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Computers can integrate information from the web&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h4 id="rdf-rules"&gt;RDF Rules&lt;/h4&gt;
+&lt;p&gt;RDF identifies things using &lt;strong&gt;Web identifiers&lt;/strong&gt; (URIs), and describes resources with &lt;strong&gt;properties&lt;/strong&gt; and &lt;strong&gt;property values&lt;/strong&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Resource&lt;/code&gt;:  anything that can have a &lt;code&gt;URI&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Property&lt;/code&gt;: a Resource that has a &lt;strong&gt;name&lt;/strong&gt;, such as "author" or "homepage"&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Property value&lt;/code&gt;: the &lt;strong&gt;value&lt;/strong&gt; of a Property&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example From W3C:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?xml version="1.0"?&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;RDF&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;Description&lt;/span&gt; &lt;span class="na"&gt;about=&lt;/span&gt;&lt;span class="s"&gt;"http://www.w3schools.com/rdf"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;author&amp;gt;&lt;/span&gt;Jan Egil Refsnes&lt;span class="nt"&gt;&amp;lt;/author&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;homepage&amp;gt;&lt;/span&gt;http://www.w3schools.com&lt;span class="nt"&gt;&amp;lt;/homepage&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;/Description&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/RDF&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="rdf-statements"&gt;RDF Statements&lt;/h4&gt;
+&lt;p&gt;The &lt;strong&gt;combination&lt;/strong&gt; of a &lt;code&gt;Resource&lt;/code&gt;, a &lt;code&gt;Property&lt;/code&gt;, and a &lt;code&gt;Property value&lt;/code&gt; forms a &lt;code&gt;Statement&lt;/code&gt; .&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Resource is the &lt;code&gt;subject&lt;/code&gt; of Statement&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Property is the &lt;code&gt;predicate&lt;/code&gt; of Statement&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Property value is the &lt;code&gt;object&lt;/code&gt; of Statement.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example from W3C:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Statement: "The author of http://www.w3schools.com/rdf is Jan Egil Refsnes".&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Subject: http://www.w3schools.com/rdf&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Predict: author&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Object: Jan Egil Refsnes&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="rdf-main-elements"&gt;RDF Main Elements&lt;/h4&gt;
+&lt;p&gt;A full RDF example with from W3C:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?xml version="1.0"?&amp;gt;&lt;/span&gt;
+&lt;span class="c"&gt;&amp;lt;!-- Declare RDF --&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;rdf:RDF&lt;/span&gt;
+&lt;span class="na"&gt;xmlns:rdf=&lt;/span&gt;&lt;span class="s"&gt;"http://www.w3.org/1999/02/22-rdf-syntax-ns#"&lt;/span&gt;
+&lt;span class="na"&gt;xmlns:cd=&lt;/span&gt;&lt;span class="s"&gt;"http://www.recshop.fake/cd#"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="c"&gt;&amp;lt;!-- Start of a Description. rdf:about contains the description of resource --&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;rdf:Description&lt;/span&gt; &lt;span class="na"&gt;rdf:about=&lt;/span&gt;&lt;span class="s"&gt;"http://www.recshop.fake/cd/Empire Burlesque"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="c"&gt;&amp;lt;!-- following cd items are properties of resource, with property values --&amp;gt;&lt;/span&gt;
+          &lt;span class="nt"&gt;&amp;lt;cd:artist&amp;gt;&lt;/span&gt;Bob Dylan&lt;span class="nt"&gt;&amp;lt;/cd:artist&amp;gt;&lt;/span&gt;
+          &lt;span class="nt"&gt;&amp;lt;cd:country&amp;gt;&lt;/span&gt;USA&lt;span class="nt"&gt;&amp;lt;/cd:country&amp;gt;&lt;/span&gt;
+          &lt;span class="nt"&gt;&amp;lt;cd:company&amp;gt;&lt;/span&gt;Columbia&lt;span class="nt"&gt;&amp;lt;/cd:company&amp;gt;&lt;/span&gt;
+          &lt;span class="nt"&gt;&amp;lt;cd:price&amp;gt;&lt;/span&gt;10.90&lt;span class="nt"&gt;&amp;lt;/cd:price&amp;gt;&lt;/span&gt;
+          &lt;span class="nt"&gt;&amp;lt;cd:year&amp;gt;&lt;/span&gt;1985&lt;span class="nt"&gt;&amp;lt;/cd:year&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/rdf:Description&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;rdf:Description&lt;/span&gt; &lt;span class="na"&gt;rdf:about=&lt;/span&gt;&lt;span class="s"&gt;"http://www.recshop.fake/cd/Hide your heart"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+          &lt;span class="nt"&gt;&amp;lt;cd:artist&amp;gt;&lt;/span&gt;Bonnie Tyler&lt;span class="nt"&gt;&amp;lt;/cd:artist&amp;gt;&lt;/span&gt;
+          &lt;span class="nt"&gt;&amp;lt;cd:country&amp;gt;&lt;/span&gt;UK&lt;span class="nt"&gt;&amp;lt;/cd:country&amp;gt;&lt;/span&gt;
+          &lt;span class="nt"&gt;&amp;lt;cd:company&amp;gt;&lt;/span&gt;CBS Records&lt;span class="nt"&gt;&amp;lt;/cd:company&amp;gt;&lt;/span&gt;
+          &lt;span class="nt"&gt;&amp;lt;cd:price&amp;gt;&lt;/span&gt;9.90&lt;span class="nt"&gt;&amp;lt;/cd:price&amp;gt;&lt;/span&gt;
+          &lt;span class="nt"&gt;&amp;lt;cd:year&amp;gt;&lt;/span&gt;1988&lt;span class="nt"&gt;&amp;lt;/cd:year&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/rdf:Description&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/rdf:RDF&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;The main elements of RDF are:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;&amp;lt;rdf:RDF&amp;gt;&lt;/code&gt; root element&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;&amp;lt;RDF&amp;gt;&lt;/code&gt; element&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;&amp;lt;Description&amp;gt;&lt;/code&gt; element&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h5 id="_1"&gt;&lt;rdf&gt;&lt;/rdf&gt;&lt;/h5&gt;
+&lt;p&gt;&lt;code&gt;&amp;lt;rdf:RDF&amp;gt;&lt;/code&gt; is the root element of an RDF document.&lt;/p&gt;
+&lt;p&gt;It defines the XML document to be an RDF document.&lt;/p&gt;
+&lt;p&gt;It also contains a reference to the RDF namespace.&lt;/p&gt;
+&lt;h5 id="_2"&gt;&lt;description&gt;&lt;/description&gt;&lt;/h5&gt;
+&lt;p&gt;The &lt;code&gt;&amp;lt;rdf:Description&amp;gt;&lt;/code&gt; element identifies a resource with the &lt;code&gt;about&lt;/code&gt; attribute.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;&amp;lt;rdf:Description&amp;gt;&lt;/code&gt; element contains elements that &lt;em&gt;describe&lt;/em&gt; the resource.&lt;/p&gt;
+&lt;h5 id="_3"&gt;&lt;cd&gt;&lt;/cd&gt;&lt;/h5&gt;
+&lt;p&gt;Elements with &lt;code&gt;&amp;lt;cd&amp;gt;&lt;/code&gt; namespace is not part of RDF. RDF defines only the framework.&lt;/p&gt;
+&lt;p&gt;So the elements, artist, country, company, price, and year, &lt;em&gt;must be defined by someone else&lt;/em&gt; (company, organization, person, etc).&lt;/p&gt;
+&lt;p&gt;You can also define these &lt;strong&gt;properties as attributes&lt;/strong&gt; of &lt;code&gt;&amp;lt;rdf:Description&amp;gt;&lt;/code&gt;. For example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?xml version="1.0"?&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;rdf:RDF&lt;/span&gt;
+&lt;span class="na"&gt;xmlns:rdf=&lt;/span&gt;&lt;span class="s"&gt;"http://www.w3.org/1999/02/22-rdf-syntax-ns#"&lt;/span&gt;
+&lt;span class="na"&gt;xmlns:cd=&lt;/span&gt;&lt;span class="s"&gt;"http://www.recshop.fake/cd#"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;rdf:Description&lt;/span&gt;
+    &lt;span class="na"&gt;rdf:about=&lt;/span&gt;&lt;span class="s"&gt;"http://www.recshop.fake/cd/Empire Burlesque"&lt;/span&gt;
+    &lt;span class="na"&gt;cd:artist=&lt;/span&gt;&lt;span class="s"&gt;"Bob Dylan"&lt;/span&gt; &lt;span class="na"&gt;cd:country=&lt;/span&gt;&lt;span class="s"&gt;"USA"&lt;/span&gt;
+    &lt;span class="na"&gt;cd:company=&lt;/span&gt;&lt;span class="s"&gt;"Columbia"&lt;/span&gt; &lt;span class="na"&gt;cd:price=&lt;/span&gt;&lt;span class="s"&gt;"10.90"&lt;/span&gt;
+    &lt;span class="na"&gt;cd:year=&lt;/span&gt;&lt;span class="s"&gt;"1985"&lt;/span&gt; &lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/rdf:RDF&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;You can also define these &lt;strong&gt;properties as resources&lt;/strong&gt; of &lt;code&gt;&amp;lt;rdf:Description&amp;gt;&lt;/code&gt;. For example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?xml version="1.0"?&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;rdf:RDF&lt;/span&gt;
+&lt;span class="na"&gt;xmlns:rdf=&lt;/span&gt;&lt;span class="s"&gt;"http://www.w3.org/1999/02/22-rdf-syntax-ns#"&lt;/span&gt;
+&lt;span class="na"&gt;xmlns:cd=&lt;/span&gt;&lt;span class="s"&gt;"http://www.recshop.fake/cd#"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;rdf:Description&lt;/span&gt; &lt;span class="na"&gt;rdf:about=&lt;/span&gt;&lt;span class="s"&gt;"http://www.recshop.fake/cd/Empire Burlesque"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;cd:artist&lt;/span&gt; &lt;span class="na"&gt;rdf:resource=&lt;/span&gt;&lt;span class="s"&gt;"http://www.recshop.fake/cd/dylan"&lt;/span&gt; &lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+        &lt;span class="c"&gt;&amp;lt;!-- other rdf:resource with cd namespace --&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/rdf:Description&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/rdf:RDF&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="rdf-container-elements"&gt;RDF Container Elements&lt;/h4&gt;
+&lt;p&gt;RDF containers are used to describe &lt;strong&gt;group of things&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The following RDF elements are used to describe groups: &lt;code&gt;&amp;lt;Bag&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;Seq&amp;gt;&lt;/code&gt;, and &lt;code&gt;&amp;lt;Alt&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;h4 id="_4"&gt;&lt;bag&gt;&lt;/bag&gt;&lt;/h4&gt;
+&lt;p&gt;The &lt;code&gt;&amp;lt;rdf:Bag&amp;gt;&lt;/code&gt; element is used to describe a list of values that &lt;em&gt;do not have to be in a specific order&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;&amp;lt;rdf:Bag&amp;gt;&lt;/code&gt; element &lt;em&gt;may contain duplicate values&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Example from W3C:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?xml version="1.0"?&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;rdf:RDF&lt;/span&gt;
+&lt;span class="na"&gt;xmlns:rdf=&lt;/span&gt;&lt;span class="s"&gt;"http://www.w3.org/1999/02/22-rdf-syntax-ns#"&lt;/span&gt;
+&lt;span class="na"&gt;xmlns:cd=&lt;/span&gt;&lt;span class="s"&gt;"http://www.recshop.fake/cd#"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;rdf:Description&lt;/span&gt;
+    &lt;span class="na"&gt;rdf:about=&lt;/span&gt;&lt;span class="s"&gt;"http://www.recshop.fake/cd/Beatles"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;lt;cd:artist&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;rdf:Bag&amp;gt;&lt;/span&gt;
+          &lt;span class="nt"&gt;&amp;lt;rdf:li&amp;gt;&lt;/span&gt;John&lt;span class="nt"&gt;&amp;lt;/rdf:li&amp;gt;&lt;/span&gt;
+          &lt;span class="nt"&gt;&amp;lt;rdf:li&amp;gt;&lt;/span&gt;Paul&lt;span class="nt"&gt;&amp;lt;/rdf:li&amp;gt;&lt;/span&gt;
+          &lt;span class="nt"&gt;&amp;lt;rdf:li&amp;gt;&lt;/span&gt;George&lt;span class="nt"&gt;&amp;lt;/rdf:li&amp;gt;&lt;/span&gt;
+          &lt;span class="nt"&gt;&amp;lt;rdf:li&amp;gt;&lt;/span&gt;Ringo&lt;span class="nt"&gt;&amp;lt;/rdf:li&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;/rdf:Bag&amp;gt;&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;lt;/cd:artist&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/rdf:Description&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/rdf:RDF&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="_5"&gt;&lt;seq&gt;&lt;/seq&gt;&lt;/h4&gt;
+&lt;p&gt;The &lt;code&gt;&amp;lt;rdf:Seq&amp;gt;&lt;/code&gt; element is used to describe an &lt;em&gt;ordered list of values&lt;/em&gt; (For example, in alphabetical order).&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;&amp;lt;rdf:Seq&amp;gt;&lt;/code&gt; element &lt;em&gt;may contain duplicate values&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;If you want to see an example, just replace &lt;code&gt;&amp;lt;rdf:Bag&amp;gt;&lt;/code&gt; with &lt;code&gt;&amp;lt;rdf:Seq&amp;gt;&lt;/code&gt; from example abpve.&lt;/p&gt;
+&lt;h4 id="_6"&gt;&lt;alt&gt;&lt;/alt&gt;&lt;/h4&gt;
+&lt;p&gt;The &lt;code&gt;&amp;lt;rdf:Alt&amp;gt;&lt;/code&gt; element is used to describe a list of alternative values (&lt;em&gt;the user can select only one of the values&lt;/em&gt;).&lt;/p&gt;
+&lt;p&gt;Example from W3C:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?xml version="1.0"?&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;rdf:RDF&lt;/span&gt;
+&lt;span class="na"&gt;xmlns:rdf=&lt;/span&gt;&lt;span class="s"&gt;"http://www.w3.org/1999/02/22-rdf-syntax-ns#"&lt;/span&gt;
+&lt;span class="na"&gt;xmlns:cd=&lt;/span&gt;&lt;span class="s"&gt;"http://www.recshop.fake/cd#"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;rdf:Description&lt;/span&gt;
+    &lt;span class="na"&gt;rdf:about=&lt;/span&gt;&lt;span class="s"&gt;"http://www.recshop.fake/cd/Beatles"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+          &lt;span class="nt"&gt;&amp;lt;cd:format&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;rdf:Alt&amp;gt;&lt;/span&gt;
+              &lt;span class="nt"&gt;&amp;lt;rdf:li&amp;gt;&lt;/span&gt;CD&lt;span class="nt"&gt;&amp;lt;/rdf:li&amp;gt;&lt;/span&gt;
+              &lt;span class="nt"&gt;&amp;lt;rdf:li&amp;gt;&lt;/span&gt;Record&lt;span class="nt"&gt;&amp;lt;/rdf:li&amp;gt;&lt;/span&gt;
+              &lt;span class="nt"&gt;&amp;lt;rdf:li&amp;gt;&lt;/span&gt;Tape&lt;span class="nt"&gt;&amp;lt;/rdf:li&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;/rdf:Alt&amp;gt;&lt;/span&gt;
+          &lt;span class="nt"&gt;&amp;lt;/cd:format&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/rdf:Description&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/rdf:RDF&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h5 id="rdf-terms"&gt;RDF Terms&lt;/h5&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;A &lt;code&gt;container&lt;/code&gt; is a resource that contains things&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The contained things are called &lt;code&gt;member&lt;/code&gt;s (not list of values)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="rdf-collections"&gt;RDF Collections&lt;/h4&gt;
+&lt;p&gt;RDF collections describe groups that can &lt;strong&gt;ONLY&lt;/strong&gt; contain the specified members.&lt;/p&gt;
+&lt;p&gt;A collection is described by the attribute &lt;code&gt;rdf:parseType="Collection"&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Example from W3C:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?xml version="1.0"?&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;rdf:RDF&lt;/span&gt;
+&lt;span class="na"&gt;xmlns:rdf=&lt;/span&gt;&lt;span class="s"&gt;"http://www.w3.org/1999/02/22-rdf-syntax-ns#"&lt;/span&gt;
+&lt;span class="na"&gt;xmlns:cd=&lt;/span&gt;&lt;span class="s"&gt;"http://recshop.fake/cd#"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;rdf:Description&lt;/span&gt;
+    &lt;span class="na"&gt;rdf:about=&lt;/span&gt;&lt;span class="s"&gt;"http://recshop.fake/cd/Beatles"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+          &lt;span class="c"&gt;&amp;lt;!-- This cd namespace element contains a series of rdf description elements --&amp;gt;&lt;/span&gt;
+          &lt;span class="nt"&gt;&amp;lt;cd:artist&lt;/span&gt; &lt;span class="na"&gt;rdf:parseType=&lt;/span&gt;&lt;span class="s"&gt;"Collection"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+                &lt;span class="nt"&gt;&amp;lt;rdf:Description&lt;/span&gt; &lt;span class="na"&gt;rdf:about=&lt;/span&gt;&lt;span class="s"&gt;"http://recshop.fake/cd/Beatles/George"&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+                &lt;span class="nt"&gt;&amp;lt;rdf:Description&lt;/span&gt; &lt;span class="na"&gt;rdf:about=&lt;/span&gt;&lt;span class="s"&gt;"http://recshop.fake/cd/Beatles/John"&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+                &lt;span class="nt"&gt;&amp;lt;rdf:Description&lt;/span&gt; &lt;span class="na"&gt;rdf:about=&lt;/span&gt;&lt;span class="s"&gt;"http://recshop.fake/cd/Beatles/Paul"&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+                &lt;span class="nt"&gt;&amp;lt;rdf:Description&lt;/span&gt; &lt;span class="na"&gt;rdf:about=&lt;/span&gt;&lt;span class="s"&gt;"http://recshop.fake/cd/Beatles/Ringo"&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+              &lt;span class="nt"&gt;&amp;lt;/cd:artist&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/rdf:Description&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/rdf:RDF&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="rdf-schema-rdfs"&gt;RDF Schema (RDFS)&lt;/h4&gt;
+&lt;p&gt;RDF Schema does not provide actual application-specific classes and properties.&lt;/p&gt;
+&lt;p&gt;Instead RDF Schema provides &lt;strong&gt;the framework to describe&lt;/strong&gt; application-specific classes and properties.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Classes in RDF Schema are much like classes in object oriented programming languages&lt;/em&gt;. This allows resources to be defined as instances of classes, and subclasses of classes.&lt;/p&gt;
+&lt;p&gt;Example from W3C:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?xml version="1.0"?&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;rdf:RDF&lt;/span&gt;
+&lt;span class="na"&gt;xmlns:rdf=&lt;/span&gt;&lt;span class="s"&gt;"http://www.w3.org/1999/02/22-rdf-syntax-ns#"&lt;/span&gt;
+&lt;span class="na"&gt;xmlns:rdfs=&lt;/span&gt;&lt;span class="s"&gt;"http://www.w3.org/2000/01/rdf-schema#"&lt;/span&gt;
+&lt;span class="na"&gt;xml:base=&lt;/span&gt;&lt;span class="s"&gt;"http://www.animals.fake/animals#"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;rdf:Description&lt;/span&gt; &lt;span class="na"&gt;rdf:ID=&lt;/span&gt;&lt;span class="s"&gt;"animal"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;rdf:type&lt;/span&gt; &lt;span class="na"&gt;rdf:resource=&lt;/span&gt;&lt;span class="s"&gt;"http://www.w3.org/2000/01/rdf-schema#Class"&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/rdf:Description&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;rdf:Description&lt;/span&gt; &lt;span class="na"&gt;rdf:ID=&lt;/span&gt;&lt;span class="s"&gt;"horse"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;rdf:type&lt;/span&gt; &lt;span class="na"&gt;rdf:resource=&lt;/span&gt;&lt;span class="s"&gt;"http://www.w3.org/2000/01/rdf-schema#Class"&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+        &lt;span class="c"&gt;&amp;lt;!-- Note the resource "horse" is a subclass of the class "animal"--&amp;gt;&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;lt;rdfs:subClassOf&lt;/span&gt; &lt;span class="na"&gt;rdf:resource=&lt;/span&gt;&lt;span class="s"&gt;"#animal"&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/rdf:Description&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/rdf:RDF&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;The example above can be abbreviated to:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;?xml version="1.0"?&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;rdf:RDF&lt;/span&gt;
+&lt;span class="na"&gt;xmlns:rdf=&lt;/span&gt;&lt;span class="s"&gt;"http://www.w3.org/1999/02/22-rdf-syntax-ns#"&lt;/span&gt;
+&lt;span class="na"&gt;xmlns:rdfs=&lt;/span&gt;&lt;span class="s"&gt;"http://www.w3.org/2000/01/rdf-schema#"&lt;/span&gt;
+&lt;span class="na"&gt;xml:base=&lt;/span&gt;&lt;span class="s"&gt;"http://www.animals.fake/animals#"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;rdfs:Class&lt;/span&gt; &lt;span class="na"&gt;rdf:ID=&lt;/span&gt;&lt;span class="s"&gt;"animal"&lt;/span&gt; &lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;rdfs:Class&lt;/span&gt; &lt;span class="na"&gt;rdf:ID=&lt;/span&gt;&lt;span class="s"&gt;"horse"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+          &lt;span class="c"&gt;&amp;lt;!-- Define the resource "horse" is a subclass of the class "animal"--&amp;gt;&lt;/span&gt;
+          &lt;span class="nt"&gt;&amp;lt;rdfs:subClassOf&lt;/span&gt; &lt;span class="na"&gt;rdf:resource=&lt;/span&gt;&lt;span class="s"&gt;"#animal"&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/rdfs:Class&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/rdf:RDF&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="owl"&gt;OWL&lt;/h4&gt;
+&lt;p&gt;OWL is a language for processing web information. It is built on top of RDF, and also written in &lt;code&gt;XML&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Ontology&lt;/code&gt; is about the exact description of things and their relationships.&lt;/p&gt;
+&lt;p&gt;For the web, ontology is about the exact description of web information and relationships between web information.&lt;/p&gt;
+&lt;p&gt;OWL and RDF are much of the same thing, but OWL is a &lt;strong&gt;stronger&lt;/strong&gt; language with greater machine interpretability than RDF.&lt;/p&gt;
+&lt;p&gt;OWL comes with a larger vocabulary and stronger syntax than RDF.&lt;/p&gt;
+&lt;p&gt;OWL is also a W3C recommendation.&lt;/p&gt;&lt;/div&gt;</description><category>Data</category><category>Digital Library</category><category>Research</category><category>Search Engine</category><guid>https://pengyin-shan.com/posts/2015/Others/rdf-basics/</guid><pubDate>Tue, 21 Jul 2015 04:00:00 GMT</pubDate></item><item><title>Reading Note for Andorid Development Guide Part I</title><link>https://pengyin-shan.com/posts/2014/reading-note-android-I/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;h2 id="android-intents-and-intent-filters-from-developer-guides"&gt;Android Intents and Intent Filters from Developer Guides&lt;/h2&gt;
+&lt;p&gt;http://developer.android.com/guide/components/intents-filters.html&lt;/p&gt;
+&lt;p&gt;An Intent is a messaging object you can use to request an action from another app component.&lt;/p&gt;
+&lt;p&gt;Intent carries information for determining which object to start&lt;/p&gt;
+&lt;p&gt;Information that the recipient component uses in order to properly perform the action&lt;/p&gt;
+&lt;p&gt;Start a new instance of an Activity by passing an Intent to &lt;code&gt;startActivity()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Receieve result from activity by calling &lt;code&gt;startActivityForResult()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Bind a service to another component by passing an Intent to &lt;code&gt;bindService()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Deliver a broadcast by passing an Intent to &lt;code&gt;sendBroadcast()&lt;/code&gt;, &lt;code&gt;sendOrderedBroadcast()&lt;/code&gt; or &lt;code&gt;sendStickyBroadcast()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Two types of intents:&lt;/p&gt;
+&lt;p&gt;Explicit intents: used to start a component inside app. Must know class name or service name before start&lt;/p&gt;
+&lt;p&gt;Always use explicit intent when starting a service and do not declare intent filter for service:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;// Executed in an Activity, so 'this' is the context&lt;/span&gt;
+&lt;span class="c1"&gt;// The fileUrl is a string Url, such as "http://www.example.com/image.png"&lt;/span&gt;
+&lt;span class="n"&gt;Intent&lt;/span&gt; &lt;span class="n"&gt;downloadIntent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Intent&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;DownloadService&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;class&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;downloadIntent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setData&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Uri&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;parse&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fileUrl&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+&lt;span class="n"&gt;startService&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;downloadIntent&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;An explicit intent is always delivered to its target, regardless of any intent filters the componenet declares.&lt;/p&gt;
+&lt;p&gt;Implicit intents: don't specify class name. declare an action and ask other app to perform it.&lt;/p&gt;
+&lt;p&gt;To start implicit intents, the intent defined in &lt;code&gt;intent filter&lt;/code&gt; in &lt;code&gt;manifest file&lt;/code&gt; will be find and match with passed intent. If matching, system start another app/component and deliver the passed intenet:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//Create the text message with a string&lt;/span&gt;
+&lt;span class="n"&gt;Intent&lt;/span&gt; &lt;span class="n"&gt;sendIntent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Intent&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="n"&gt;sendIntent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAction&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Intent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;ACTION_SEND&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;sendIntent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;putExtra&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Intent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;EXTRA_TEXT&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;textMessage&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;sendIntent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setType&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HTTP&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;PLAIN_TEXT_TYPE&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;// "text/plain" MIME Type&lt;/span&gt;
+&lt;span class="c1"&gt;//Verify that the intent will resolve to an activity, in case no app in device can start this activity&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sendIntent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;resolveActivity&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;getPackageManager&lt;/span&gt;&lt;span class="o"&gt;()!=&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;)){&lt;/span&gt;
+    &lt;span class="n"&gt;startActivity&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sendIntent&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Intent filter is an expression in manifest file to search for components that should receive the intent.&lt;/p&gt;
+&lt;p&gt;Intent has following information:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Componenet Name: must have for explict (ex. service) and skipped for implict&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Example Name: &lt;code&gt;com.example.ExActivity&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Set component name: &lt;code&gt;setComponent()&lt;/code&gt;, &lt;code&gt;setClass()&lt;/code&gt;, &lt;code&gt;setClassName()&lt;/code&gt; or &lt;code&gt;Intent constructor&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Action: a string that specifies the generic action to perform (such as view or pick)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Example: &lt;code&gt;ACTION_VIEW&lt;/code&gt;: use for &lt;code&gt;startActivity()&lt;/code&gt;. Activity should show something to user, like picture&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Example: &lt;code&gt;ACTION_SEND&lt;/code&gt;: i.e. "share"intent. use for &lt;code&gt;startActivity()&lt;/code&gt;. Activity should have data to share with other apps, like email.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;ACTION_TIME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"com.example.action.TIME"&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Data: A URI object that references data to be acted and/or the MIME type of data.&lt;/p&gt;
+&lt;p&gt;content: URI will specify MIME type of data&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;setData()&lt;/code&gt;: set data URI. &lt;code&gt;setType()&lt;/code&gt;: set MIME type. &lt;code&gt;setDataAndType()&lt;/code&gt;: set both data and type&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;setDate()&lt;/code&gt; and &lt;code&gt;setType()&lt;/code&gt; can not be used at the same time: null problem&lt;/p&gt;
+&lt;p&gt;Catagory: optional. Describe info about the kind of component that should handle the intent. Andorid will know which app should start based on this&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Example: &lt;code&gt;CATEGORY_BROWSABLE&lt;/code&gt;: target the activity that start a web browser and show data referenced by a link&lt;/p&gt;
+&lt;p&gt;Example: &lt;code&gt;CATAGORY_LAUNCHER&lt;/code&gt;: tartget the activity that initial a task and listed in system's application launcher&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Extras: &lt;em&gt;Key-Value&lt;/em&gt; pair that carry additional information.  using &lt;code&gt;putExtra()&lt;/code&gt; or create Bundle&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Example: define recipts or subjects in am email-send action&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Flags: define metadata for intent. use &lt;code&gt;setFlags()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Forcing an app choose:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;Intent&lt;/span&gt; &lt;span class="n"&gt;intent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Intent&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Intent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;ACTION_SEND&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;//...&lt;/span&gt;
+&lt;span class="c1"&gt;//Always use string resource for UI text&lt;/span&gt;
+&lt;span class="c1"&gt;//This says something like "Share this photo with"&lt;/span&gt;
+&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;title&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getResources&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getString&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;string&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;chooser_title&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;//Create intent to show chooser&lt;/span&gt;
+&lt;span class="n"&gt;Intent&lt;/span&gt; &lt;span class="n"&gt;chooser&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Intent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;createChooser&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;intent&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;//This is used to call app chooser&lt;/span&gt;
+&lt;span class="c1"&gt;//Verify the intent will resolve at least one activity&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;intent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;resolveActivity&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;getPackageManager&lt;/span&gt;&lt;span class="o"&gt;())&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+    &lt;span class="n"&gt;startActivity&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;intent&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Receiving an Implicit Intent:&lt;/p&gt;
+&lt;p&gt;The system will deliver an implicit intent to app only if the intent pass through one of intent filters.&lt;/p&gt;
+&lt;p&gt;Each unique job should have a intent filter&lt;/p&gt;
+&lt;p&gt;Inside &lt;code&gt;&amp;lt;intent-filter&amp;gt;&lt;/code&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;&amp;lt;action&amp;gt;&lt;/code&gt;: declares the intent action accepted, in the name attribute. Value must be a literal string.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;&amp;lt;data&amp;gt;&lt;/code&gt;: declares the type of data accepted, using attributes from data URL (scheme, host, port, path, etc) and MIME type.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;&amp;lt;category&amp;gt;&lt;/code&gt;: declares the intent category accepted, in the name attribute and value must be literal string.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;activity&lt;/span&gt; &lt;span class="na"&gt;android:name=&lt;/span&gt;&lt;span class="s"&gt;"ShareActivity"&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;intent-filter&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;action&lt;/span&gt; &lt;span class="na"&gt;android:name=&lt;/span&gt;&lt;span class="s"&gt;"android.intent.action.SEND"&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;catagory&lt;/span&gt; &lt;span class="na"&gt;android:name=&lt;/span&gt;&lt;span class="s"&gt;"android.intent.category.DEFAULT"&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;data&lt;/span&gt; &lt;span class="na"&gt;android:mimeType=&lt;/span&gt;&lt;span class="s"&gt;"text/plain"&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/intent-filter&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/activity&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Pending Intent: a wrapper around an Intent object. Purpose is to get permission to a foreign application to use the contained intent&lt;/p&gt;
+&lt;p&gt;Cases to use it:
+- Declare an intent to be executed when the user performs an action with your &lt;em&gt;notification&lt;/em&gt; /Notification Manager Execution
+-
+- Declare an intent to be executed when the user performs an action with your &lt;em&gt;App Widget&lt;/em&gt; /Home Screen App Execution&lt;/p&gt;&lt;/div&gt;</description><category>Android</category><category>Java</category><guid>https://pengyin-shan.com/posts/2014/reading-note-android-I/</guid><pubDate>Tue, 13 Jan 2015 05:00:00 GMT</pubDate></item></channel></rss>
