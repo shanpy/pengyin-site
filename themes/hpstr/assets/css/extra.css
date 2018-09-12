@@ -49,3 +49,7 @@
 .thumbnails > li:last-of-type {
         margin-right: 0;
 }
+
+time {
+        margin-right: 0.5em;
+}
