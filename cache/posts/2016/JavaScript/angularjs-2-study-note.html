@@ -1,0 +1,123 @@
+<p>While my recent project involving in processing data, I think this is a good chance for to touch AngularJS 2, and a little bit TypeScript. <em>This study note follows BASICS and DEVELOPER GUIDE part in official document</em>.</p>
+<!-- TEASER_END -->
+
+<h1 id="reference-list">Reference List</h1>
+<ul>
+<li>
+<p><a href="https://angular.cn">AngularJS 2 Official Website (Chinese)</a></p>
+</li>
+<li>
+<p><a href="https://angular.io/">AngularJS 2 Office Website (English)</a></p>
+</li>
+</ul>
+<h1 id="architecture">Architecture</h1>
+<p>Based on official suggestion, an angular app should contains following parts:</p>
+<ul>
+<li>
+<p>HTML Templates: combined with Angular-markup/tags</p>
+</li>
+<li>
+<p>Component: talk directly with templates through property binding and event binding.</p>
+</li>
+<li>
+<p>Injectable Service: creating business logic. It talk with components, but not with template.</p>
+</li>
+<li>
+<p>Modules: boxing components and injectable services.</p>
+</li>
+</ul>
+<p>Other parts includes MetaData, Directives, etc. Angular website has a very clear graph which describe how things works together:</p>
+<p>img-responsive images/articles/2016/javascript/angular-architecture.png </p>
+<h1 id="module">Module</h1>
+<p>Angular Module is also called <code>NgModule</code>.</p>
+<p>Generally, module is used to:</p>
+<ol>
+<li>
+<p>divide components, directives and pipes into cohesive blocks of functionality.</p>
+</li>
+<li>
+<p>Add services to application. These services can be loaded immediately or use lazy-loading.</p>
+</li>
+</ol>
+<p>All modules are a <code>class</code> with <strong>decorator</strong> called <code>@NgModule</code>.</p>
+<p>It includes <strong>root module</strong> and <strong>feature module</strong>, which includes a group of similar domain or business logic. Root module will <strong>import</strong> feature modules to use them.</p>
+<blockquote>
+<p>A <strong>decorator</strong> is used to add <code>metadata</code> to class, like <code>@randomly</code> or <code>@superhero</code>.</p>
+</blockquote>
+<h2 id="appmodule">AppModule</h2>
+<p>Every angular app has a <strong>root module</strong>, called <code>AppModule</code>. It is in <code>app.module.ts</code> file.</p>
+<p>The minimal <code>app.module.ts</code>:</p>
+<pre class="code literal-block"><span></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">NgModule</span> <span class="p">}</span>      <span class="nx">from</span> <span class="s1">&#39;@angular/core&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">BrowserModule</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@angular/platform-browser&#39;</span><span class="p">;</span>
+
+<span class="c1">//This imports setting in app.component.ts</span>
+<span class="kr">import</span>
+       <span class="p">{</span> <span class="nx">AppComponent</span> <span class="p">}</span>  <span class="nx">from</span> <span class="s1">&#39;./app.component&#39;</span><span class="p">;</span>
+
+<span class="kd">@NgModule</span><span class="p">({</span>
+  <span class="nx">imports</span><span class="o">:</span> <span class="p">[</span> <span class="nx">BrowserModule</span> <span class="p">],</span>
+  <span class="nx">declarations</span><span class="o">:</span> <span class="p">[</span> <span class="nx">AppComponent</span> <span class="p">],</span>
+  <span class="nx">bootstrap</span><span class="o">:</span>    <span class="p">[</span> <span class="nx">AppComponent</span> <span class="p">]</span>
+<span class="p">})</span>
+<span class="kr">export</span> <span class="kr">class</span> <span class="nx">AppModule</span> <span class="p">{</span> <span class="p">}</span>
+</pre>
+
+
+<p><code>app.component.ts</code>:</p>
+<pre class="code literal-block"><span></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">Component</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@angular/core&#39;</span><span class="p">;</span>
+
+<span class="kd">@Component</span><span class="p">({</span>
+  <span class="nx">selector</span><span class="o">:</span> <span class="s1">&#39;my-app&#39;</span><span class="p">,</span>
+  <span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;&lt;h1&gt;{{title}}&lt;/h1&gt;&#39;</span><span class="p">,</span>
+<span class="p">})</span>
+<span class="c1">//This class is exported and being imported in app.module.ts</span>
+<span class="kr">export</span> <span class="kr">class</span> <span class="nx">AppComponent</span> <span class="p">{</span>
+  <span class="nx">title</span> <span class="o">=</span> <span class="s1">&#39;Minimal NgModule&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+
+
+<p>Bootstrap process can be done dynamically or statically. Official document has detail.</p>
+<h2 id="ngmodule">NgModule</h2>
+<p>NgModule is a decorator class. It has following properties:</p>
+<ul>
+<li>
+<p><code>declarations</code>: the <strong>view classes</strong> that belong to this module. Angular has three kinds of view classes: <code>components</code>, <code>directives</code> and <code>pipes</code>.</p>
+</li>
+<li>
+<p><code>exports</code>: the parts for exports can be visible and used in the <em>component templates</em> of other modules.</p>
+</li>
+<li>
+<p><code>imports</code>: the classes from other modules, which is used by component templates in this module.</p>
+</li>
+<li>
+<p><code>providers</code>: provides services. The services created by this provider are usable all around module.</p>
+</li>
+<li>
+<p><code>bootstrap</code>: identify main application view. Can only be used set in root module.</p>
+</li>
+</ul>
+<p>Example NgModule:</p>
+<pre class="code literal-block"><span></span><span class="kd">@NgModule</span><span class="p">({</span>
+  <span class="nx">imports</span><span class="o">:</span>      <span class="p">[</span> <span class="nx">BrowserModule</span> <span class="p">],</span> <span class="c1">//BrowserModule is used for run app in browser</span>
+  <span class="nx">providers</span><span class="o">:</span>    <span class="p">[</span> <span class="nx">Logger</span> <span class="p">],</span>
+  <span class="nx">declarations</span><span class="o">:</span> <span class="p">[</span> <span class="nx">AppComponent</span> <span class="p">],</span>
+  <span class="nx">exports</span><span class="o">:</span>      <span class="p">[</span> <span class="nx">AppComponent</span> <span class="p">],</span>
+  <span class="nx">bootstrap</span><span class="o">:</span>    <span class="p">[</span> <span class="nx">AppComponent</span> <span class="p">]</span>
+<span class="p">});</span>
+</pre>
+
+
+<p>Normally, <code>main.ts</code> is used to <strong>bootstrapping</strong> the root module, like following:</p>
+<pre class="code literal-block"><span></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">bootstrap</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@angular/platform-browser-dynamic&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">AppComponent</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;./app.component&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">HTTP_PROVIDERS</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@angular/http&#39;</span><span class="p">;</span>
+
+
+<span class="nx">bootstrap</span><span class="p">(</span><span class="nx">AppComponent</span><span class="p">,</span> <span class="p">[</span><span class="nx">HTTP_PROVIDERS</span><span class="p">]);</span>
+</pre>
+
+
+<h2 id="angular-module-library">Angular Module Library</h2>
+<p>Angular has a series of module libraries. User can use <code>import {} from '@angular/XXX</code> format to import and use it.</p>
+<p>Use <code>npm</code> to install these modules.</p>

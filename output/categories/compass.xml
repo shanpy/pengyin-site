@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Pengyin's Corner (Posts about Compass)</title><link>https://pengyin-shan.com/</link><description></description><atom:link type="application/rss+xml" href="https://pengyin-shan.com/categories/compass.xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Tue, 11 Sep 2018 20:57:16 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>SASS Q&amp;A and Tips CONTINUALLY UPDATE</title><link>https://pengyin-shan.com/posts/2015/Front%20End/sass-qa-and-tips/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;p&gt;This post will serve as a Q&amp;amp;A note during the process of learning Sass. I'm absolutely a new beginner so I'll keep questions and answers updating continously:)&lt;/p&gt;
+&lt;h3 id="question-what-is-the-syntax-difference-between-sass-and-scss"&gt;Question: What is the syntax difference between sass and scss?&lt;/h3&gt;
+&lt;p&gt;So far I've found following difference:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;scss is similar to css style, requires "{" and ";"&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;sass has none of these&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;sass is white space recoginized while scss not&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="question-how-jekyll-work-with-sass"&gt;Question: How Jekyll work with Sass?&lt;/h3&gt;
+&lt;p&gt;Currently version of Jekyll (2.4.0) has native support for Sass and CoffeeScript. Official documentation is here: http://jekyllrb.com/docs/assets/&lt;/p&gt;
+&lt;p&gt;I use official way for sass compile by following step:&lt;/p&gt;
+&lt;p&gt;In home directory, create a folder called _sass. I decide to use this folder for sass files that I will import from.&lt;/p&gt;
+&lt;p&gt;Add following lines in _config.yml to register _sass folder:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;sass:
+ sass_dir: _sass&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;You can always modify it to your folder name.&lt;/p&gt;
+&lt;p&gt;Create a folder called "css", then put all scss file there. Now website has:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;/css
+    - default.scss
+    - header.scss
+    - page.scss
+/_sass
+    - _test.css
+&lt;/pre&gt;
+
+
+&lt;p&gt;In scss file, first two lines needs to be '- - -'. You can use @import 'test' to import _test.sass file in _sass.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Please make sure everything in &lt;em&gt;sass folder start with a '&lt;/em&gt;'.&lt;/p&gt;
+&lt;p&gt;You don't need to put '- - -' to files in _sass folder.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In html page, add link to these scss file, using '.css' extension. For example: &lt;code&gt;&amp;lt;link rel="stylesheet" type="text/css" href="/css/default.css"&amp;gt;&lt;/code&gt; pointing to default.scss in css folder. You can actually find default.css in _site/css folder&lt;/p&gt;
+&lt;p&gt;Jeyll will automatically compile scss and sass file when you build your project.&lt;/p&gt;
+&lt;p&gt;On Jekyll website, there are some websites that are built with Sass. You can refer them for folder structure on your own blog site.&lt;/p&gt;&lt;/div&gt;</description><category>Compass</category><category>CSS</category><category>SASS</category><guid>https://pengyin-shan.com/posts/2015/Front%20End/sass-qa-and-tips/</guid><pubDate>Tue, 13 Jan 2015 05:00:00 GMT</pubDate></item></channel></rss>

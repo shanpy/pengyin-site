@@ -1,0 +1,580 @@
+<p><em>This is a reading note for node.js part on <a href="http://www.tutorialspoint.com/nodejs/index.htm">tutorialspoint</a>.</em></p>
+<h1 id="introduction">Introduction</h1>
+<p>Node.js (MIT License) is a server-side framework built on Good V8 Engine. From Tutorialpoints.com, it has following features:</p>
+<ul>
+<li>
+<p>Asynchronous and Event Driven: the server will always move on. Once it gets a notification of a event with returned data, it will trigger this event.</p>
+</li>
+<li>
+<p>Single Threaded Model but Highly Scalable: although node.js use a single threaded server, it can response to multiple requests because of its asynchronous feature. It is easy to be scaled.</p>
+</li>
+<li>
+<p>Node.js does not buffer any data.</p>
+</li>
+</ul>
+<h1 id="components">Components</h1>
+<p>One node.js application has following three parts:</p>
+<p>Import Required Modules: use <code>require</code> to import node.js modules. Example: <code>var http = require("http")</code></p>
+<p>Create server: user <code>http.createServer()</code> to create server instance. This method includes callbacks for response information, such as port number, content-type, etc:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
+<span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">){</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">200</span><span class="p">,{</span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">});</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">&#39;Hello World\n&#39;</span><span class="p">);</span> <span class="c1">//add data in response body</span>
+<span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8081</span><span class="p">);</span><span class="c1">//in example use 8081 as port number</span>
+</pre>
+
+
+<p>Start Server: use <code>node xxx.js</code> in terminal to start server. Use name of server js file. Example: <code>node config.js</code>.</p>
+<h1 id="npm">NPM</h1>
+<p>node.js use <code>npm</code> (Node Package Manager) to install/control node modules. <code>npm install package_name [-g] [--save/--save-dev]</code> can be used to install package (<strong><code>--save</code> or <code>--save-dev</code> is used to add dependencies to your package.json file</strong>). There are two way of installation: <strong>Global</strong> and <strong>Local</strong>:</p>
+<ul>
+<li>
+<p>Local modules are installed inside project, in <code>node_modules</code> folder. <em>Locally deployed packages are accessiable via <code>require()</code> method.</em> Local packages can be listed by <code>npm ls</code> command.</p>
+</li>
+<li>
+<p>Globally packages are stored in system directory. <em>It cannot be imported by <code>require()</code></em>. They can be used in terminal. <code>npm ls -g</code> can be used to list global packages.</p>
+</li>
+</ul>
+<p>npm also has following common command:</p>
+<ul>
+<li>
+<p><code>npm uninstall package_name</code>: uninstall a package</p>
+</li>
+<li>
+<p><code>npm update package_name</code>: update a package</p>
+</li>
+<li>
+<p><code>npm search package_name</code>: search package name using npm.</p>
+</li>
+</ul>
+<h2 id="packagejson">package.json</h2>
+<p>For project: Run <code>npm init</code> at top level of a project can be used to generate <code>package.json</code> for <strong>this project</strong>, which is a JSON file defining the property of <strong>this project</strong>.  A few questions will be asked during initialization process.</p>
+<p>A <code>package.json</code> for project contains <code>dependencies</code>, which is for publication pages, and <code>devDependencies</code> for dev/test only packages. Following is an example:</p>
+<pre class="code literal-block"><span></span><span class="p">{</span>
+  <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="c1">//name of project</span>
+  <span class="s2">&quot;version&quot;</span><span class="o">:</span> <span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;main&quot;</span><span class="o">:</span> <span class="s2">&quot;gulpfile.js&quot;</span><span class="p">,</span> <span class="c1">//entry point of project</span>
+  <span class="s2">&quot;scripts&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="c1">//handle status of project, see https://docs.npmjs.com/misc/scripts for detail</span>
+    <span class="s2">&quot;test&quot;</span><span class="o">:</span> <span class="s2">&quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;author&quot;</span><span class="o">:</span> <span class="s2">&quot;test author&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;license&quot;</span><span class="o">:</span> <span class="s2">&quot;ISC&quot;</span><span class="p">,</span>
+  <span class="c1">//packages and versions for dev/test only</span>
+  <span class="s2">&quot;devDependencies&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;gulp&quot;</span><span class="o">:</span> <span class="s2">&quot;^3.9.1&quot;</span>
+  <span class="p">},</span>
+  <span class="c1">//packages and versions for production</span>
+  <span class="s2">&quot;dependencies&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;gulp&quot;</span><span class="o">:</span> <span class="s2">&quot;^3.9.1&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre>
+
+
+<p>For node modules: there is also a package.json file in each node module in <code>node_modules</code> folder. Following is the <code>package.json</code> file in <code>gulp-jade</code> module package:</p>
+<pre class="code literal-block"><span></span><span class="p">{</span>
+  <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;gulp-jade&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;version&quot;</span><span class="o">:</span> <span class="s2">&quot;1.1.0&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;Compile Jade templates&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;keywords&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="s2">&quot;jade&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;gulpplugin&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;stream&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;compile&quot;</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;repository&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;git&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;url&quot;</span><span class="o">:</span> <span class="s2">&quot;git+https://github.com/phated/gulp-jade.git&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;author&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;Blaine Bublitz&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;email&quot;</span><span class="o">:</span> <span class="s2">&quot;blaine@iceddev.com&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;dependencies&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;gulp-util&quot;</span><span class="o">:</span> <span class="s2">&quot;^3.0.2&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;jade&quot;</span><span class="o">:</span> <span class="s2">&quot;1.1 - 1.11&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;through2&quot;</span><span class="o">:</span> <span class="s2">&quot;^2.0.0&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;files&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="s2">&quot;index.js&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LICENSE&quot;</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;engines&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;node&quot;</span><span class="o">:</span> <span class="s2">&quot;&gt;= 0.10&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;scripts&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;test&quot;</span><span class="o">:</span> <span class="s2">&quot;gulp jshint &amp;&amp; tap ./test&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;license&quot;</span><span class="o">:</span> <span class="s2">&quot;MIT&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;devDependencies&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;gulp&quot;</span><span class="o">:</span> <span class="s2">&quot;^3.8.10&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tap&quot;</span><span class="o">:</span> <span class="s2">&quot;^1.3.1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;gulp-jshint&quot;</span><span class="o">:</span> <span class="s2">&quot;^1.9.0&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;gitHead&quot;</span><span class="o">:</span> <span class="s2">&quot;671714d09e9ccd291489f22988bbc40fe8db40ec&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;bugs&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;url&quot;</span><span class="o">:</span> <span class="s2">&quot;https://github.com/phated/gulp-jade/issues&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;homepage&quot;</span><span class="o">:</span> <span class="s2">&quot;https://github.com/phated/gulp-jade#readme&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;_id&quot;</span><span class="o">:</span> <span class="s2">&quot;gulp-jade@1.1.0&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;_shasum&quot;</span><span class="o">:</span> <span class="s2">&quot;cb2f332ac46824671f36891655c165c591c33bd4&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;_from&quot;</span><span class="o">:</span> <span class="s2">&quot;gulp-jade@latest&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;_npmVersion&quot;</span><span class="o">:</span> <span class="s2">&quot;2.8.3&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;_nodeVersion&quot;</span><span class="o">:</span> <span class="s2">&quot;0.10.36&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;_npmUser&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;phated&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;email&quot;</span><span class="o">:</span> <span class="s2">&quot;blaine@iceddev.com&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;maintainers&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;phated&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;email&quot;</span><span class="o">:</span> <span class="s2">&quot;blaine@iceddev.com&quot;</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;dist&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;shasum&quot;</span><span class="o">:</span> <span class="s2">&quot;cb2f332ac46824671f36891655c165c591c33bd4&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tarball&quot;</span><span class="o">:</span> <span class="s2">&quot;https://registry.npmjs.org/gulp-jade/-/gulp-jade-1.1.0.tgz&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;directories&quot;</span><span class="o">:</span> <span class="p">{},</span>
+  <span class="s2">&quot;_resolved&quot;</span><span class="o">:</span> <span class="s2">&quot;https://registry.npmjs.org/gulp-jade/-/gulp-jade-1.1.0.tgz&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;readme&quot;</span><span class="o">:</span> <span class="s2">&quot;ERROR: No README data found!&quot;</span>
+<span class="p">}</span>
+</pre>
+
+
+<p><code>npm adduser</code> to register current user to npm repository, then <code>npm publish</code> can be used to publish current module to <code>repository</code> address in <code>package.json</code>.</p>
+<h1 id="concurrency-callback-and-events">Concurrency: Callback and Events</h1>
+<h2 id="callbacks">Callbacks</h2>
+<p>JavaScript callback functions are heavily used in node.js to make sure no block exists. Following is an example:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Assume &#39;input.txt&#39; has one line &#39;Hello World!&#39;</span>
+<span class="kd">var</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span>
+<span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="nx">data</span><span class="p">){</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="k">return</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">toString</span><span class="p">());</span>
+<span class="p">});</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;End Program!&#39;</span><span class="p">);</span>
+</pre>
+
+
+<p>The code above should output: <code>End Program! Hello World!</code>. Program goes till <code>readFile()</code> finished, then callback statements will run.</p>
+<h2 id="events">Events</h2>
+<p>Node.js use <strong>observer pattern</strong>, which means there exists dependency from one to many. Many observers (i.e. event listeners) will observe one subject (i.e. event). When subjects changes, all observers will be notified and updated based on the update.</p>
+<blockquote>
+<p>Node thread keeps an event loop and whenever any task get completed, it fires the corresponding event which signals the event listener function to get executed.</p>
+</blockquote>
+<p>Image from tutorialspoint.com:</p>
+<p>images/articles/2016/javascript/node_js_events.png </p>
+<p>This is the difference between callbacks and events. The <code>EventEmitter</code> is used to bind events and event listeners.</p>
+<p>EventEmitter Methods:</p>
+<ul>
+<li>
+<p><code>eventemitter.on('eventName',eventhandler)</code> is used to bind event name and event handler.</p>
+</li>
+<li>
+<p><code>eventemitter.once('eventName', eventhandler)</code> is to add a listener that <em>only the next time</em> event is fired, after which it is removed.</p>
+</li>
+<li>
+<p><code>eventemitter.removeListener</code>/<code>eventemitter.removeAllListeners</code>: remove listener</p>
+</li>
+<li>
+<p><code>eventemitter.emit('eventName')</code> is used to fire an event.</p>
+</li>
+</ul>
+<p><em>'eventName' above is just a identifier for an event concept, it's not a real object.</em> See example below:</p>
+<pre class="code literal-block"><span></span><span class="c1">// Import events module</span>
+<span class="kd">var</span> <span class="nx">events</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;events&#39;</span><span class="p">);</span>
+<span class="c1">// Create an eventEmitter object</span>
+<span class="kd">var</span> <span class="nx">eventEmitter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">events</span><span class="p">.</span><span class="nx">EventEmitter</span><span class="p">();</span>
+
+<span class="c1">// Create an event handler as follows</span>
+<span class="kd">var</span> <span class="nx">connectHandler</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">connected</span><span class="p">()</span> <span class="p">{</span>
+ <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;connection succesful.&#39;</span><span class="p">);</span>
+
+ <span class="c1">// Fire the data_received event</span>
+ <span class="nx">eventEmitter</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;data_received&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// Bind the connection event with the handler</span>
+<span class="nx">eventEmitter</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;connection&#39;</span><span class="p">,</span> <span class="nx">connectHandler</span><span class="p">);</span>
+
+<span class="c1">// Bind the data_received event with the anonymous function (callback)</span>
+<span class="nx">eventEmitter</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;data_received&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">){</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;err&#39;</span><span class="p">);</span>
+    <span class="k">else</span><span class="p">{</span>
+        <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;data received&#39;</span><span class="p">);</span>
+        <span class="p">},</span><span class="mi">2000</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="c1">// Fire the connection event</span>
+<span class="nx">eventEmitter</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;connection&#39;</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Program Ended.&quot;</span><span class="p">);</span>
+</pre>
+
+
+<p>Since I purposely added a <code>setTimeout</code> function to test callback, code above will generate output:</p>
+<pre class="code literal-block"><span></span>connection succesful.
+Program Ended.
+data received
+</pre>
+
+
+<p><em>If no <code>setTimeout</code> (i.e. <code>data_received</code> event finish immediately), 'data received' will output before 'Program Ended'.</em></p>
+<p>In Node Application, any async function accepts a callback as a <strong>last</strong> parameter and the callback function accepts error as a <strong>first</strong> parameter.</p>
+<h1 id="streams">Streams</h1>
+<p>Reading/Writing files needs <code>require('fs')</code> module.</p>
+<p>Streams is used to read/write data. In node.js, there are four type of streams:</p>
+<ol>
+<li>
+<p>Readable: stream for read operation. Common operation: <code>fs.createReadStream(file)</code></p>
+</li>
+<li>
+<p>Writable: stream for write operation. Common operation: <code>fs.createWriteStream(file)</code>, <code>stream.write(data)</code>, <code>stream.end()</code></p>
+</li>
+<li>
+<p>Duplex: stream for both read and write operation.</p>
+</li>
+<li>
+<p>Transform: a duplex stream which output is based on input</p>
+</li>
+</ol>
+<p>Each type of stream is an <code>EventEmitter</code> instance. This means it is used the same way as EventEmitter above. Some common events that are bind to these EventEmitters are:</p>
+<ul>
+<li>
+<p>data: fired when data is available to read</p>
+</li>
+<li>
+<p>end: fired when no more data to be read</p>
+</li>
+<li>
+<p>error: fired when getting error while receiving/writing data</p>
+</li>
+<li>
+<p>finish: fired when transferring data process is finished</p>
+</li>
+</ul>
+<p><code>Piping</code> is a mechanism where the output of one stream is the input of another stream.  Piping stream in node.js looks like following:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">readerStream</span> <span class="o">=</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">createReadStream</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">writeStream</span> <span class="o">=</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">createWriteStream</span><span class="p">(</span><span class="s1">&#39;output.txt&#39;</span><span class="p">);</span>
+<span class="c1">//Pipe Operation. Read input and write to output</span>
+<span class="nx">readerStream</span><span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">writeStream</span><span class="p">);</span>
+</pre>
+
+
+<p><code>Chanining</code> is a mechanism to connect output of one stream to another stream and create a chain of multiple stream operations.</p>
+<p>It usually use with Piping stream. Example:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">zlib</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;zlib&#39;</span><span class="p">);</span>
+<span class="nx">fs</span><span class="p">.</span><span class="nx">createReadStream</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">zlib</span><span class="p">.</span><span class="nx">createGzip</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">createWriteStream</span><span class="p">(</span><span class="s1">&#39;input.txt.gz&#39;</span><span class="p">));</span>
+</pre>
+
+
+<h1 id="global-variables-and-common-modules-in-nodejs">Global Variables and Common Modules in node.js</h1>
+<p>Following are some global variables in node.js, which can be used directly, instead of requiring it first:</p>
+<ul>
+<li>
+<p><code>_filename</code>: the filename of the code being executed. Example: <code>console.log(_filename)</code></p>
+</li>
+<li>
+<p><code>_dirname</code>: name of the directory that the currently executing script resides in</p>
+</li>
+<li>
+<p><code>setTimeout(function, milliseconds)</code>/<code>clearTimeout(object)</code>/<code>setInterval(function, milliseconds)</code>: timer functions in node.js.</p>
+</li>
+</ul>
+<p>Two global objects: <code>console</code> and <code>process</code> can be used directly in js file. <code>console</code> is used to print information. <code>process</code> is used to get information on current process.</p>
+<p>Following modules are commonly used in node.js. They needs to be required at the beginning:</p>
+<ul>
+<li>
+<p>OS Module: <code>require('os')</code> module provides a few basic operating system related utility functions</p>
+</li>
+<li>
+<p>Path Module: <code>require('path')</code> module provides methods to handle file paths.</p>
+</li>
+<li>
+<p>Net Module: <code>require('net')</code> module is used to create both servers and clients. It provides an asynchronous network wrapper. It has methods such as <code>net.createServer()</code>, <code>net.connect()</code>, etc. See <a href="http://www.tutorialspoint.com/nodejs/nodejs_net_module.htm">here</a> for details.</p>
+</li>
+<li>
+<p>DNS Module: Provides functions to do DNS lookup. Provides functions to use underlying operating system name resolution functions. It provides an asynchronous network wrapper. It has methods such as <code>dns.lookup()</code>, <code>dns.resolve()</code>, etc. See <a href="http://www.tutorialspoint.com/nodejs/nodejs_dns_module.htm">here</a> for details.</p>
+</li>
+<li>
+<p>Domain Module: <code>require('domain')</code> module is used to intercept unhandled error:</p>
+</li>
+</ul>
+<p>There are two ways to handle error: <code>Internal Binding</code>, meaning error emmitter is executing its code within <code>run</code> method of a domain; <code>External Binding</code>, meaning error emmitter is added explicitly to a domain using its add method.</p>
+<h2 id="error-object">Error Object</h2>
+<p>Reference to <a href="https://docs.nodejitsu.com/articles/errors/what-is-the-error-object/">this site</a>: in node.js, <code>error</code> is a build-in object that provides a standard set of useful information when an error occurs. such as a stack trace and the error message:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">error</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;The error message&#39;</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+</pre>
+
+
+<p>Output will be:</p>
+<pre class="code literal-block"><span></span>{ stack: [Getter/Setter],
+ arguments: undefined,
+ type: undefined,
+ message: &#39;The error message&#39; }
+</pre>
+
+
+<p><code>domain.create()</code> needs to be used create an instance of domain, then it can be used to listen to error event:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">EventEmitter</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;events&#39;</span><span class="p">).</span><span class="nx">EventEmitter</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">domain</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;domain&#39;</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">emitter1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">EventEmitter</span><span class="p">();</span> <span class="c1">//create an instance of eventemitter</span>
+
+<span class="kd">var</span> <span class="nx">domain1</span> <span class="o">=</span> <span class="nx">domain</span><span class="p">.</span><span class="nx">create</span><span class="p">();</span> <span class="c1">//create a domain</span>
+<span class="c1">//Domain handle error</span>
+<span class="nx">domain1</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;domain1 error handler&#39;</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nx">domain1</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">emitter1</span><span class="p">);</span> <span class="c1">//Explicit Binding</span>
+
+<span class="c1">//Bind error event and error handler</span>
+<span class="nx">emitter1</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;emittter1 error handler&#39;</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">//In output, fire emitter handler instead of domain handler</span>
+<span class="nx">emitter1</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;Error to be handled by listener&#39;</span><span class="p">));</span>
+
+<span class="kd">var</span> <span class="nx">domain2</span> <span class="o">=</span> <span class="nx">domain</span><span class="p">.</span><span class="nx">create</span><span class="p">();</span>
+<span class="nx">domain2</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;domain2 error handler&#39;</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">//Implicit Binding. Create EventEmitter inside run method</span>
+<span class="nx">domain2</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+  <span class="kd">var</span> <span class="nx">emitter2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">EventEmitter</span><span class="p">();</span>
+  <span class="nx">emitter2</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;Implicit error handler&#39;</span><span class="p">));</span> <span class="c1">//fire an error event with error message</span>
+<span class="p">});</span>
+
+<span class="c1">//Remove explict binding and try again. Remember to remove all listeners and remove eventemitter together!</span>
+<span class="nx">emitter1</span><span class="p">.</span><span class="nx">removeAllListeners</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">);</span>
+<span class="nx">domain1</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="nx">emitter1</span><span class="p">);</span>
+<span class="nx">emitter1</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;Converted to exception. System will crash!&#39;</span><span class="p">));</span>
+</pre>
+
+
+<p>Code above will have following output. Noted error message does not show unless there is no error handler for it:</p>
+<pre class="code literal-block"><span></span>emittter1 error handler
+domain2 error handler
+
+events.js:72
+        throw er; // Unhandled &#39;error&#39; event
+              ^
+Error: Converted to exception. System will crash!
+    at Object. (/web/com/1464273829_135671/main.js:36:28)
+    at Module._compile (module.js:456:26)
+    at Object.Module._extensions..js (module.js:474:10)
+    at Module.load (module.js:356:32)
+    at Function.Module._load (module.js:312:12)
+    at Function.Module.runMain (module.js:497:10)
+    at startup (node.js:119:16)
+    at node.js:929:3
+</pre>
+
+
+<h1 id="nodejs-as-web-serverclient">Node.js as Web Server/Client</h1>
+<p>Following is the image to describe web application architecture in tutorialspoint.com:</p>
+<p>Following code is to use node.js as web server (<code>server.js</code>):</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;url&#39;</span><span class="p">);</span>
+
+<span class="c1">// Create a server</span>
+<span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+   <span class="c1">// Parse the request containing file name</span>
+   <span class="kd">var</span> <span class="nx">pathname</span> <span class="o">=</span> <span class="nx">url</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">).</span><span class="nx">pathname</span><span class="p">;</span> <span class="c1">// /index.htm here</span>
+
+   <span class="c1">// Print the name of the file for which request is made.</span>
+   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Request for &quot;</span> <span class="o">+</span> <span class="nx">pathname</span> <span class="o">+</span> <span class="s2">&quot; received.&quot;</span><span class="p">);</span>
+
+   <span class="cm">/*</span>
+<span class="cm">    Read the requested file content from file system.</span>
+<span class="cm">    Here file is index.htm, so content type is text/html. Notice the usage of file system here.</span>
+<span class="cm">   */</span>
+   <span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="nx">pathname</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+         <span class="c1">// HTTP Status: 404 : NOT FOUND</span>
+         <span class="c1">// Content Type: text/plain</span>
+         <span class="nx">response</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span> <span class="s1">&#39;text/html&#39;</span><span class="p">});</span>
+      <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+         <span class="c1">//Page found</span>
+         <span class="c1">// HTTP Status: 200 : OK</span>
+         <span class="c1">// Content Type: text/plain</span>
+         <span class="nx">response</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span> <span class="s1">&#39;text/html&#39;</span><span class="p">});</span>
+
+         <span class="c1">// Write the content of the file to response body</span>
+         <span class="nx">response</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">toString</span><span class="p">());</span>
+      <span class="p">}</span>
+      <span class="c1">// Send the response body</span>
+      <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
+   <span class="p">});</span>
+<span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8081</span><span class="p">);</span>
+
+<span class="c1">// Console will print the message</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Server running at http://127.0.0.1:8081/&#39;</span><span class="p">);</span>
+</pre>
+
+
+<p>Following code is to use node.js as web client (<code>client.js</code>). <code>http</code> module is also used in this part:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
+
+<span class="c1">//Options to used by request</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">host</span><span class="o">:</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
+  <span class="nx">port</span><span class="o">:</span> <span class="s1">&#39;8081&#39;</span><span class="p">,</span>
+  <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/index.htm&#39;</span>
+<span class="p">};</span>
+
+<span class="c1">//Deal with response from web server</span>
+<span class="kd">var</span> <span class="nx">callback</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">){</span>
+  <span class="kd">var</span> <span class="nx">body</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+  <span class="c1">//While data is being received by client, update body variable</span>
+  <span class="nx">response</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+    <span class="nx">body</span> <span class="o">+=</span> <span class="nx">data</span><span class="p">;</span>
+  <span class="p">});</span>
+  <span class="c1">//Finish data receiving process</span>
+  <span class="nx">response</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;end&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="c1">//Make request to web server</span>
+<span class="kd">var</span> <span class="nx">req</span> <span class="o">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span>
+<span class="nx">req</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span><span class="c1">//Close request after finishing</span>
+</pre>
+
+
+<p>Following is a base <code>index.htm</code>:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Sample Page<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    Hello World!
+  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre>
+
+
+<p>To run code above, create these three files:</p>
+<ol>
+<li>
+<p>Then open one terminal and type <code>node server.js</code>. Terminal will show 'Server running at http://127.0.0.1:8081/' and you can open 'http://127.0.0.1:8081/' in web browser.</p>
+</li>
+<li>
+<p>Now browse 'http://127.0.0.1:8081/index.htm'. Browser should have html available and terminal will give message 'Request for /index.htm received.'.</p>
+</li>
+<li>
+<p>Then open another terminal and type <code>node client.js</code>. New terminal should show html code (i.e. body variable). Old terminal should show 'Request for /index.htm received.'</p>
+</li>
+<li>
+<p>If you don't have <code>index.htm</code> file available, on step 2 terminal will give out error message, which is the code handled in server.js (404 part)</p>
+</li>
+</ol>
+<h1 id="express">Express</h1>
+<p>Express is a popular Node.js framework. It has following features:</p>
+<ul>
+<li>
+<p>Set up <strong>middleware</strong> to respond to HTTP requests</p>
+</li>
+<li>
+<p>Define the <strong>route table</strong> to perform different action based on HTTP method and url</p>
+</li>
+<li>
+<p>Dynamically render HTML based on <strong>passing arguments</strong> to templates</p>
+</li>
+</ul>
+<p>Express is normally being installed with following modules (using <code>npm install xxx --save)</code>:</p>
+<ol>
+<li>
+<p>body-parser: the middle-ware for handling JSON, Raw, Text and URL encoded form data.</p>
+</li>
+<li>
+<p>cookie-parser: Parse cookie header and populate <code>req.cookies</code> with an object keyed by the cookie names</p>
+</li>
+<li>
+<p>multer - the middle-ware for handling multipart/form-data.</p>
+</li>
+</ol>
+<h2 id="routing">Routing</h2>
+<p>Express uses <code>request</code> and <code>response</code> objects in a <em>callback</em> function. Basic usage is following:</p>
+<pre class="code literal-block"><span></span><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="nx">res</span><span class="p">){</span>
+  <span class="c1">//deal with request and response objects</span>
+<span class="p">});</span>
+</pre>
+
+
+<p>Basic way to routing (web application response to different url end point to perform operations like get, post) is following:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+
+<span class="c1">//GET for abcd, abcxd, ab123cd and so on, using Regular Expression</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/abc*d&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="nx">res</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">);</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Hello GET&#39;</span><span class="p">);</span> <span class="c1">//send response back</span>
+<span class="p">});</span>
+
+<span class="c1">//POST</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="nx">res</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;POST from homepage&#39;</span><span class="p">);</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Hello POST&#39;</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">//PUT</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="s1">&#39;/put&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="nx">res</span><span class="p">){</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;PUT from /put page&#39;</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">//DELETE</span>
+<span class="nx">app</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="s1">&#39;/delete&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;DELETE from /delete page&#39;</span><span class="p">);</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Hello DELETE&#39;</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8081</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">server</span><span class="p">.</span><span class="nx">address</span><span class="p">());</span>
+<span class="p">});</span>
+</pre>
+
+
+<p>The console information for <code>server.address</code> may return <code>address</code> attribute as <code>::</code>. This is because if the host name is omitted, the IPv6 address will show <code>::</code> and IPv4 address will return <code>0.0.0.0</code>. See <a href="http://stackoverflow.com/questions/33853695/node-js-server-address-address-returns">this Stack Overflow post</a> for detail.</p>
+<h2 id="static-files-in-express">Static Files in Express</h2>
+<p><code>express.static</code> middleware is used to serve static files, such as images, stylesheets or JS files. An example is following:</p>
+<pre class="code literal-block"><span></span><span class="cm">/*</span>
+<span class="cm">now files in public folder (based on root) can be detected in browser</span>
+<span class="cm">*/</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="kr">static</span><span class="p">(</span><span class="s1">&#39;public&#39;</span><span class="p">));</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="nx">res</span><span class="p">){</span>
+  <span class="c1">//continue with other operations</span>
+<span class="p">});</span>
+</pre>
+
+
+<p>After running code above, URL such as <code>http://localhost:8081/images/test.png</code> can be typed and viewed in browser, as long as <code>image/test.png</code> is under <code>public</code> folder and <code>public</code> folder is in root.</p>
+<h2 id="cookie">Cookie</h2>
+<p>Use <code>cookie-parser</code> middleware to print out cookie information. Example:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">cookieParser</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;cookie-parser&#39;</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">cookieParser</span><span class="p">());</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Cookies: &quot;</span><span class="p">,</span> <span class="nx">req</span><span class="p">.</span><span class="nx">cookies</span><span class="p">);</span>
+<span class="p">})</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8081</span><span class="p">);</span>
+</pre>

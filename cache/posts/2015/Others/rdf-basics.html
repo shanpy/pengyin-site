@@ -1,0 +1,288 @@
+<h3 id="resource">Resource</h3>
+<p><a href="http://www.w3schools.com/webservices/ws_rdf_intro.asp">Introduction to RDF From W3C</a></p>
+<h3 id="intro-to-rdf">Intro to RDF</h3>
+<p>RDF (Resource Description Framework) is standard from W3C to describe describe title, author, content, and copyright information of web pages.</p>
+<p>It is really useful for search engines or digital library.</p>
+<h4 id="realities-of-rdf">Realities of RDF</h4>
+<ul>
+<li>
+<p>RDF is designed to be read and understood by computers, instead ofbeing displayed to people. <em>RDF descriptions are not designed to be displayed on the web</em>.</p>
+</li>
+<li>
+<p>RDF is written in <strong>XML</strong></p>
+</li>
+<li>
+<p>RDF is a part of the W3C's Semantic Web Activity</p>
+</li>
+<li>
+<p>RDF is a <strong>W3C Recommendation</strong></p>
+</li>
+</ul>
+<blockquote>
+<p>W3C's <strong>Semantic Web Version</strong> has following features:</p>
+<ul>
+<li>
+<p>Web information has exact meaning</p>
+</li>
+<li>
+<p>Web information can be understood and processed by computers</p>
+</li>
+<li>
+<p>Computers can integrate information from the web</p>
+</li>
+</ul>
+</blockquote>
+<h3 id="rdf-rules">RDF Rules</h3>
+<p>RDF identifies things using <strong>Web identifiers</strong> (URIs), and describes resources with <strong>properties</strong> and <strong>property values</strong>.</p>
+<ul>
+<li>
+<p><code>Resource</code>:  anything that can have a <code>URI</code></p>
+</li>
+<li>
+<p><code>Property</code>: a Resource that has a <strong>name</strong>, such as "author" or "homepage"</p>
+</li>
+<li>
+<p><code>Property value</code>: the <strong>value</strong> of a Property</p>
+</li>
+</ul>
+<p>Example From W3C:</p>
+<pre class="code literal-block"><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
+<span class="nt">&lt;RDF&gt;</span>
+  <span class="nt">&lt;Description</span> <span class="na">about=</span><span class="s">&quot;http://www.w3schools.com/rdf&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;author&gt;</span>Jan Egil Refsnes<span class="nt">&lt;/author&gt;</span>
+    <span class="nt">&lt;homepage&gt;</span>http://www.w3schools.com<span class="nt">&lt;/homepage&gt;</span>
+  <span class="nt">&lt;/Description&gt;</span>
+<span class="nt">&lt;/RDF&gt;</span>
+</pre>
+
+
+<h3 id="rdf-statements">RDF Statements</h3>
+<p>The <strong>combination</strong> of a <code>Resource</code>, a <code>Property</code>, and a <code>Property value</code> forms a <code>Statement</code> .</p>
+<ul>
+<li>
+<p>Resource is the <code>subject</code> of Statement</p>
+</li>
+<li>
+<p>Property is the <code>predicate</code> of Statement</p>
+</li>
+<li>
+<p>Property value is the <code>object</code> of Statement.</p>
+</li>
+</ul>
+<p>Example from W3C:</p>
+<ul>
+<li>
+<p>Statement: "The author of http://www.w3schools.com/rdf is Jan Egil Refsnes".</p>
+</li>
+<li>
+<p>Subject: http://www.w3schools.com/rdf</p>
+</li>
+<li>
+<p>Predict: author</p>
+</li>
+<li>
+<p>Object: Jan Egil Refsnes</p>
+</li>
+</ul>
+<h3 id="rdf-main-elements">RDF Main Elements</h3>
+<p>A full RDF example with from W3C:</p>
+<pre class="code literal-block"><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
+<span class="c">&lt;!-- Declare RDF --&gt;</span>
+<span class="nt">&lt;rdf:RDF</span>
+<span class="na">xmlns:rdf=</span><span class="s">&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;</span>
+<span class="na">xmlns:cd=</span><span class="s">&quot;http://www.recshop.fake/cd#&quot;</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- Start of a Description. rdf:about contains the description of resource --&gt;</span>
+    <span class="nt">&lt;rdf:Description</span> <span class="na">rdf:about=</span><span class="s">&quot;http://www.recshop.fake/cd/Empire Burlesque&quot;</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!-- following cd items are properties of resource, with property values --&gt;</span>
+          <span class="nt">&lt;cd:artist&gt;</span>Bob Dylan<span class="nt">&lt;/cd:artist&gt;</span>
+          <span class="nt">&lt;cd:country&gt;</span>USA<span class="nt">&lt;/cd:country&gt;</span>
+          <span class="nt">&lt;cd:company&gt;</span>Columbia<span class="nt">&lt;/cd:company&gt;</span>
+          <span class="nt">&lt;cd:price&gt;</span>10.90<span class="nt">&lt;/cd:price&gt;</span>
+          <span class="nt">&lt;cd:year&gt;</span>1985<span class="nt">&lt;/cd:year&gt;</span>
+    <span class="nt">&lt;/rdf:Description&gt;</span>
+    <span class="nt">&lt;rdf:Description</span> <span class="na">rdf:about=</span><span class="s">&quot;http://www.recshop.fake/cd/Hide your heart&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;cd:artist&gt;</span>Bonnie Tyler<span class="nt">&lt;/cd:artist&gt;</span>
+          <span class="nt">&lt;cd:country&gt;</span>UK<span class="nt">&lt;/cd:country&gt;</span>
+          <span class="nt">&lt;cd:company&gt;</span>CBS Records<span class="nt">&lt;/cd:company&gt;</span>
+          <span class="nt">&lt;cd:price&gt;</span>9.90<span class="nt">&lt;/cd:price&gt;</span>
+          <span class="nt">&lt;cd:year&gt;</span>1988<span class="nt">&lt;/cd:year&gt;</span>
+    <span class="nt">&lt;/rdf:Description&gt;</span>
+<span class="nt">&lt;/rdf:RDF&gt;</span>
+</pre>
+
+
+<p>The main elements of RDF are:</p>
+<ol>
+<li>
+<p><code>&lt;rdf:RDF&gt;</code> root element</p>
+</li>
+<li>
+<p><code>&lt;RDF&gt;</code> element</p>
+</li>
+<li>
+<p><code>&lt;Description&gt;</code> element</p>
+</li>
+</ol>
+<h4 id="_1"><rdf:RDF></h4>
+<p><code>&lt;rdf:RDF&gt;</code> is the root element of an RDF document.</p>
+<p>It defines the XML document to be an RDF document.</p>
+<p>It also contains a reference to the RDF namespace.</p>
+<h4 id="_2"><rdf:Description></h4>
+<p>The <code>&lt;rdf:Description&gt;</code> element identifies a resource with the <code>about</code> attribute.</p>
+<p>The <code>&lt;rdf:Description&gt;</code> element contains elements that <em>describe</em> the resource.</p>
+<h4 id="_3"><cd></h4>
+<p>Elements with <code>&lt;cd&gt;</code> namespace is not part of RDF. RDF defines only the framework.</p>
+<p>So the elements, artist, country, company, price, and year, <em>must be defined by someone else</em> (company, organization, person, etc).</p>
+<p>You can also define these <strong>properties as attributes</strong> of <code>&lt;rdf:Description&gt;</code>. For example:</p>
+<pre class="code literal-block"><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
+<span class="nt">&lt;rdf:RDF</span>
+<span class="na">xmlns:rdf=</span><span class="s">&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;</span>
+<span class="na">xmlns:cd=</span><span class="s">&quot;http://www.recshop.fake/cd#&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;rdf:Description</span>
+    <span class="na">rdf:about=</span><span class="s">&quot;http://www.recshop.fake/cd/Empire Burlesque&quot;</span>
+    <span class="na">cd:artist=</span><span class="s">&quot;Bob Dylan&quot;</span> <span class="na">cd:country=</span><span class="s">&quot;USA&quot;</span>
+    <span class="na">cd:company=</span><span class="s">&quot;Columbia&quot;</span> <span class="na">cd:price=</span><span class="s">&quot;10.90&quot;</span>
+    <span class="na">cd:year=</span><span class="s">&quot;1985&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/rdf:RDF&gt;</span>
+</pre>
+
+
+<p>You can also define these <strong>properties as resources</strong> of <code>&lt;rdf:Description&gt;</code>. For example:</p>
+<pre class="code literal-block"><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
+<span class="nt">&lt;rdf:RDF</span>
+<span class="na">xmlns:rdf=</span><span class="s">&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;</span>
+<span class="na">xmlns:cd=</span><span class="s">&quot;http://www.recshop.fake/cd#&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;rdf:Description</span> <span class="na">rdf:about=</span><span class="s">&quot;http://www.recshop.fake/cd/Empire Burlesque&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;cd:artist</span> <span class="na">rdf:resource=</span><span class="s">&quot;http://www.recshop.fake/cd/dylan&quot;</span> <span class="nt">/&gt;</span>
+        <span class="c">&lt;!-- other rdf:resource with cd namespace --&gt;</span>
+    <span class="nt">&lt;/rdf:Description&gt;</span>
+<span class="nt">&lt;/rdf:RDF&gt;</span>
+</pre>
+
+
+<h3 id="rdf-container-elements">RDF Container Elements</h3>
+<p>RDF containers are used to describe <strong>group of things</strong>.</p>
+<p>The following RDF elements are used to describe groups: <code>&lt;Bag&gt;</code>, <code>&lt;Seq&gt;</code>, and <code>&lt;Alt&gt;</code>.</p>
+<h3 id="_4"><rdf:Bag></h3>
+<p>The <code>&lt;rdf:Bag&gt;</code> element is used to describe a list of values that <em>do not have to be in a specific order</em>.</p>
+<p>The <code>&lt;rdf:Bag&gt;</code> element <em>may contain duplicate values</em>.</p>
+<p>Example from W3C:</p>
+<pre class="code literal-block"><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
+<span class="nt">&lt;rdf:RDF</span>
+<span class="na">xmlns:rdf=</span><span class="s">&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;</span>
+<span class="na">xmlns:cd=</span><span class="s">&quot;http://www.recshop.fake/cd#&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;rdf:Description</span>
+    <span class="na">rdf:about=</span><span class="s">&quot;http://www.recshop.fake/cd/Beatles&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;cd:artist&gt;</span>
+        <span class="nt">&lt;rdf:Bag&gt;</span>
+          <span class="nt">&lt;rdf:li&gt;</span>John<span class="nt">&lt;/rdf:li&gt;</span>
+          <span class="nt">&lt;rdf:li&gt;</span>Paul<span class="nt">&lt;/rdf:li&gt;</span>
+          <span class="nt">&lt;rdf:li&gt;</span>George<span class="nt">&lt;/rdf:li&gt;</span>
+          <span class="nt">&lt;rdf:li&gt;</span>Ringo<span class="nt">&lt;/rdf:li&gt;</span>
+        <span class="nt">&lt;/rdf:Bag&gt;</span>
+      <span class="nt">&lt;/cd:artist&gt;</span>
+    <span class="nt">&lt;/rdf:Description&gt;</span>
+<span class="nt">&lt;/rdf:RDF&gt;</span>
+</pre>
+
+
+<h3 id="_5"><rdf:Seq></h3>
+<p>The <code>&lt;rdf:Seq&gt;</code> element is used to describe an <em>ordered list of values</em> (For example, in alphabetical order).</p>
+<p>The <code>&lt;rdf:Seq&gt;</code> element <em>may contain duplicate values</em>.</p>
+<p>If you want to see an example, just replace <code>&lt;rdf:Bag&gt;</code> with <code>&lt;rdf:Seq&gt;</code> from example abpve.</p>
+<h3 id="_6"><rdf:Alt></h3>
+<p>The <code>&lt;rdf:Alt&gt;</code> element is used to describe a list of alternative values (<em>the user can select only one of the values</em>).</p>
+<p>Example from W3C:</p>
+<pre class="code literal-block"><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
+<span class="nt">&lt;rdf:RDF</span>
+<span class="na">xmlns:rdf=</span><span class="s">&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;</span>
+<span class="na">xmlns:cd=</span><span class="s">&quot;http://www.recshop.fake/cd#&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;rdf:Description</span>
+    <span class="na">rdf:about=</span><span class="s">&quot;http://www.recshop.fake/cd/Beatles&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;cd:format&gt;</span>
+            <span class="nt">&lt;rdf:Alt&gt;</span>
+              <span class="nt">&lt;rdf:li&gt;</span>CD<span class="nt">&lt;/rdf:li&gt;</span>
+              <span class="nt">&lt;rdf:li&gt;</span>Record<span class="nt">&lt;/rdf:li&gt;</span>
+              <span class="nt">&lt;rdf:li&gt;</span>Tape<span class="nt">&lt;/rdf:li&gt;</span>
+            <span class="nt">&lt;/rdf:Alt&gt;</span>
+          <span class="nt">&lt;/cd:format&gt;</span>
+    <span class="nt">&lt;/rdf:Description&gt;</span>
+<span class="nt">&lt;/rdf:RDF&gt;</span>
+</pre>
+
+
+<h4 id="rdf-terms">RDF Terms</h4>
+<ul>
+<li>
+<p>A <code>container</code> is a resource that contains things</p>
+</li>
+<li>
+<p>The contained things are called <code>member</code>s (not list of values)</p>
+</li>
+</ul>
+<h3 id="rdf-collections">RDF Collections</h3>
+<p>RDF collections describe groups that can <strong>ONLY</strong> contain the specified members.</p>
+<p>A collection is described by the attribute <code>rdf:parseType="Collection"</code>.</p>
+<p>Example from W3C:</p>
+<pre class="code literal-block"><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
+<span class="nt">&lt;rdf:RDF</span>
+<span class="na">xmlns:rdf=</span><span class="s">&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;</span>
+<span class="na">xmlns:cd=</span><span class="s">&quot;http://recshop.fake/cd#&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;rdf:Description</span>
+    <span class="na">rdf:about=</span><span class="s">&quot;http://recshop.fake/cd/Beatles&quot;</span><span class="nt">&gt;</span>
+          <span class="c">&lt;!-- This cd namespace element contains a series of rdf description elements --&gt;</span>
+          <span class="nt">&lt;cd:artist</span> <span class="na">rdf:parseType=</span><span class="s">&quot;Collection&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;rdf:Description</span> <span class="na">rdf:about=</span><span class="s">&quot;http://recshop.fake/cd/Beatles/George&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;rdf:Description</span> <span class="na">rdf:about=</span><span class="s">&quot;http://recshop.fake/cd/Beatles/John&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;rdf:Description</span> <span class="na">rdf:about=</span><span class="s">&quot;http://recshop.fake/cd/Beatles/Paul&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;rdf:Description</span> <span class="na">rdf:about=</span><span class="s">&quot;http://recshop.fake/cd/Beatles/Ringo&quot;</span><span class="nt">/&gt;</span>
+              <span class="nt">&lt;/cd:artist&gt;</span>
+    <span class="nt">&lt;/rdf:Description&gt;</span>
+<span class="nt">&lt;/rdf:RDF&gt;</span>
+</pre>
+
+
+<h3 id="rdf-schema-rdfs">RDF Schema (RDFS)</h3>
+<p>RDF Schema does not provide actual application-specific classes and properties.</p>
+<p>Instead RDF Schema provides <strong>the framework to describe</strong> application-specific classes and properties.</p>
+<p><em>Classes in RDF Schema are much like classes in object oriented programming languages</em>. This allows resources to be defined as instances of classes, and subclasses of classes.</p>
+<p>Example from W3C:</p>
+<pre class="code literal-block"><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
+<span class="nt">&lt;rdf:RDF</span>
+<span class="na">xmlns:rdf=</span><span class="s">&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;</span>
+<span class="na">xmlns:rdfs=</span><span class="s">&quot;http://www.w3.org/2000/01/rdf-schema#&quot;</span>
+<span class="na">xml:base=</span><span class="s">&quot;http://www.animals.fake/animals#&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;rdf:Description</span> <span class="na">rdf:ID=</span><span class="s">&quot;animal&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;rdf:type</span> <span class="na">rdf:resource=</span><span class="s">&quot;http://www.w3.org/2000/01/rdf-schema#Class&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/rdf:Description&gt;</span>
+    <span class="nt">&lt;rdf:Description</span> <span class="na">rdf:ID=</span><span class="s">&quot;horse&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;rdf:type</span> <span class="na">rdf:resource=</span><span class="s">&quot;http://www.w3.org/2000/01/rdf-schema#Class&quot;</span><span class="nt">/&gt;</span>
+        <span class="c">&lt;!-- Note the resource &quot;horse&quot; is a subclass of the class &quot;animal&quot;--&gt;</span>
+      <span class="nt">&lt;rdfs:subClassOf</span> <span class="na">rdf:resource=</span><span class="s">&quot;#animal&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/rdf:Description&gt;</span>
+<span class="nt">&lt;/rdf:RDF&gt;</span>
+</pre>
+
+
+<p>The example above can be abbreviated to:</p>
+<pre class="code literal-block"><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
+<span class="nt">&lt;rdf:RDF</span>
+<span class="na">xmlns:rdf=</span><span class="s">&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;</span>
+<span class="na">xmlns:rdfs=</span><span class="s">&quot;http://www.w3.org/2000/01/rdf-schema#&quot;</span>
+<span class="na">xml:base=</span><span class="s">&quot;http://www.animals.fake/animals#&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;rdfs:Class</span> <span class="na">rdf:ID=</span><span class="s">&quot;animal&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;rdfs:Class</span> <span class="na">rdf:ID=</span><span class="s">&quot;horse&quot;</span><span class="nt">&gt;</span>
+          <span class="c">&lt;!-- Define the resource &quot;horse&quot; is a subclass of the class &quot;animal&quot;--&gt;</span>
+          <span class="nt">&lt;rdfs:subClassOf</span> <span class="na">rdf:resource=</span><span class="s">&quot;#animal&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/rdfs:Class&gt;</span>
+<span class="nt">&lt;/rdf:RDF&gt;</span>
+</pre>
+
+
+<h3 id="owl">OWL</h3>
+<p>OWL is a language for processing web information. It is built on top of RDF, and also written in <code>XML</code>.</p>
+<p><code>Ontology</code> is about the exact description of things and their relationships.</p>
+<p>For the web, ontology is about the exact description of web information and relationships between web information.</p>
+<p>OWL and RDF are much of the same thing, but OWL is a <strong>stronger</strong> language with greater machine interpretability than RDF.</p>
+<p>OWL comes with a larger vocabulary and stronger syntax than RDF.</p>
+<p>OWL is also a W3C recommendation.</p>

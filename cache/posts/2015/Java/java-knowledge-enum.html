@@ -1,0 +1,107 @@
+<p><code>Enum</code> is use to define <strong>pre-defined</strong>, <strong>finite</strong> set of objects.</p>
+<p>We can also use <code>Enumerated Types</code> to describe <code>Enum</code> type.</p>
+<p>An <code>enum</code> defines a new <strong>custom data type</strong> (like <code>interfaces</code> and <code>classes</code>).</p>
+<blockquote>
+<p>Users are allowed to <strong>use</strong> only <strong>existing</strong> <code>enum</code> objects;</p>
+<p>They <strong>can’t create</strong> new enum objects.</p>
+</blockquote>
+<h3 id="create-enum">Create Enum</h3>
+<p>An <code>enum</code> enables you to create a <strong>type</strong>, which has a <strong>fixed</strong> set of <code>constants</code>.</p>
+<p>Code Example:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Assume we have: enum Level {BEGINNER,INTERMEDIATE,EXPERT}</span>
+<span class="kd">class</span> <span class="nc">Game</span> <span class="o">{</span>
+    <span class="n">Level</span> <span class="n">gameLevel</span><span class="o">;</span> <span class="c1">//gameLevel is a variable with type Level</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">GameApp</span> <span class="o">{</span>
+    <span class="n">Game</span> <span class="n">game</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">startGame</span> <span class="o">()</span> <span class="o">{</span>
+        <span class="n">game</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Game</span><span class="o">();</span>
+        <span class="n">game</span><span class="o">.</span><span class="na">gameLevel</span> <span class="o">=</span> <span class="n">Level</span><span class="o">.</span><span class="na">BEGINNER</span><span class="o">;</span> <span class="c1">//Assgin constant BEGINNER</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<blockquote>
+<p>You can assign <strong>only one constants</strong> defined in the enum level to <code>gameLevel</code>, since it is type <code>Level</code>.</p>
+</blockquote>
+<h3 id="detail-about-a-enum-class">Detail about a Enum Class</h3>
+<p>Following is the implicate class for <code>enum Level {BEGINNER,INTERMEDIATE,EXPERT}</code>:</p>
+<pre class="code literal-block"><span></span><span class="kd">final</span> <span class="kd">class</span> <span class="nc">Level</span> <span class="kd">extends</span> <span class="n">Enum</span> <span class="c1">//enum is implicitly final</span>
+<span class="o">{</span>
+    <span class="c1">//enum constants are implicitly public, static and final</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Level</span> <span class="n">BEGINNER</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Level</span> <span class="n">INTERMEDIATE</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Level</span> <span class="n">EXPERT</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Level</span> <span class="n">$VALUES</span><span class="o">[];</span>
+    <span class="c1">//creation of enum constants. This compiles after constructor</span>
+    <span class="kd">static</span>
+    <span class="o">{</span>
+        <span class="n">BEGINNER</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Level</span><span class="o">(</span><span class="s">&quot;BEGINNER&quot;</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+        <span class="n">INTERMEDIATE</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Level</span><span class="o">(</span><span class="s">&quot;INTERMEDIATE&quot;</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+        <span class="n">EXPERT</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Level</span><span class="o">(</span><span class="s">&quot;EXPERT&quot;</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span>
+        <span class="n">$VALUES</span> <span class="o">=</span> <span class="o">(</span><span class="k">new</span> <span class="n">Level</span><span class="o">[]</span> <span class="o">{</span>
+            <span class="n">BEGINNER</span><span class="o">,</span> <span class="n">INTERMEDIATE</span><span class="o">,</span> <span class="n">EXPERT</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+    <span class="c1">//return an array of all enum constants</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Level</span><span class="o">[]</span> <span class="nf">values</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="o">(</span><span class="n">Level</span><span class="o">[])</span><span class="n">$VALUES</span><span class="o">.</span><span class="na">clone</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="c1">//pass a string and return corresponding enum constant</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Level</span> <span class="nf">valueOf</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="o">(</span><span class="n">Level</span><span class="o">)</span><span class="n">Enum</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">Level</span><span class="o">,</span> <span class="n">s</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="c1">//constructor</span>
+    <span class="kd">private</span> <span class="nf">Level</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">,</span> <span class="kt">int</span> <span class="n">i</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3 id="javalangenum">java.lang.Enum</h3>
+<p>All enums in Java extend the abstract class <code>java.lang.Enum</code>, defined in the Java API.</p>
+<p>Code:</p>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Enum</span><span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">Enum</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;&gt;</span> <span class="kd">implements</span> <span class="n">Comparable</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;,</span> <span class="n">Serializable</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span> <span class="c1">//name of enum constant</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">ordinal</span><span class="o">;</span> <span class="c1">//position of enum constant</span>
+    <span class="kd">protected</span> <span class="nf">Enum</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="kt">int</span> <span class="n">ordinal</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">ordinal</span> <span class="o">=</span> <span class="n">ordinal</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="c1">//Can be overridden, return name of constant</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="c1">//Can not be overridden, return name of constant</span>
+    <span class="kd">public</span> <span class="kd">final</span> <span class="n">String</span> <span class="nf">name</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>The class <code>Enum</code> defines only <strong>one constructor</strong> with <code>String</code> and <code>int</code> parameters to specify its <em>name</em> and <em>ordinal (order)</em>. Every <code>enum</code> constant is implicitly assigned <strong>an order on its creation</strong>.</p>
+<p>The <strong>default order</strong> of enum constants is their <strong>order of definition</strong>. The enum constants <em>aren’t sorted alphabetically</em>.</p>
+<blockquote>
+<p>Note that both methods—<code>toString()</code> and <code>name()</code> defined in <code>java.lang.Enum</code> — return the value of the instance variable <code>name</code></p>
+</blockquote>
+<p>Because method <code>name()</code> is a <code>final</code> method, you <strong>can’t override</strong> it. But you <strong>can override</strong> method <code>toString()</code> to return any description that you want.</p>
+<p>For an <code>enum</code> constant <code>BEGINNER</code> in <code>enum</code> <code>Level</code>, calling <code>System.out.println(Level.BEGINNER)</code> returns the <strong>name</strong> of the enum constant—that is, <code>BEGINNER</code></p>
+<p>You can override <code>toString()</code> in an <code>enum</code> to modify this default return value.</p>
+<p>A class can <strong>extend from only one base class</strong>, an attempt to make your <code>enum</code> extend any another class will fail. The following code won’t compile:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Won&#39;t compile</span>
+<span class="kd">class</span> <span class="nc">Person</span> <span class="o">{}</span>
+<span class="kd">enum</span> <span class="n">Level</span> <span class="kd">extends</span> <span class="n">Person</span> <span class="o">{</span> <span class="n">BEGINNER</span><span class="o">,</span> <span class="n">INTERMEDIATE</span><span class="o">,</span> <span class="n">EXPERT</span> <span class="o">}</span>
+</pre>
+
+
+<p>But you can make your <code>enum</code> implement any number of <code>interfaces</code>. A class can extend only one base class but <strong>can implement multiple interfaces</strong>. The following code compiles successfully:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Compile successfully</span>
+<span class="kd">interface</span> <span class="nc">MyInterface</span> <span class="o">{}</span>
+<span class="kd">enum</span> <span class="n">Level</span> <span class="kd">implements</span> <span class="n">MyInterface</span> <span class="o">{</span> <span class="n">BEGINNER</span><span class="o">,</span> <span class="n">INTERMEDIATE</span><span class="o">,</span> <span class="n">EXPERT</span> <span class="o">}</span>
+</pre>

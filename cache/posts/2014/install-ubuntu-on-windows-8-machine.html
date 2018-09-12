@@ -1,0 +1,72 @@
+<p>Yesterday, I was thinking of changing my window 8.1 laptop to a dual boot Liunx PC. After checking out my laptop configuration, I felt it may not be a good idea because since my laptop only has 100GB storage in total. After giving windows 8.1 at least 60G, new system can not get enough space. So I decided to install linux system on a 300G external drive, and let laptop boot from this hard drive when I start it.</p>
+<p>I followed this article <a href="http://www.everydaylinuxuser.com/2014/05/install-ubuntu-1404-alongside-windows.html">Install Ubuntu 14.04 alongside Windows 8.1 in 10 easy steps</a>, posted by <em>Gary Newell</em>, and had no big trouble in process. However, I want to write this post to record some tips during installation process and configuration for Node.js, Hexo and Jekyll after installation.</p>
+<h1 id="installation-process">Installation Process</h1>
+<h2 id="step-1">Step 1</h2>
+<p>First you need to backup your windows 8.1. Windows requires you using at least <em>16GB</em> usb for backup. You just need to type "recovery" in start window and Windows will find "Recovery Drive" program for you.</p>
+<blockquote>
+<p>Please note during recovery process, the focus on your screen is set to the "cancel" button by default. So if you accidently hid Enter, the recovery process will be cancelled. I learned this becuase my cat step over Enter button twice during this process :-(</p>
+</blockquote>
+<p>You have a choice to free recovery partition after back-up finishing.</p>
+<p>You may also want to back-up your personal file to a save place</p>
+<h2 id="step-2">Step 2</h2>
+<p>Create Linux Boot USB. Normally a 4GB usb is fine. I use <a href="http://www.linuxliveusb.com/">LinuxLive USB Creator</a>, which is free and very powerful.</p>
+<h2 id="step-3">Step 3</h2>
+<p>Shrink windows parition if you want to install Linux locally.</p>
+<blockquote>
+<p>Please note you may not be able to shrink C drive a lot using Disk Management on Windows 8.1 when Window is active.</p>
+</blockquote>
+<p>I searched on Google and downloaded <a href="http://www.partitionwizard.com/">Partition Wizard</a> to shrink C drive. There is a free "Home Edition" and a demo "Professional Edition". Home edition can not merge partitions.</p>
+<p>You may want to format your Linux drive to <em>NTFS</em> format. But when I installed Ubuntu 14 I was give a chance to re-format it to <code>Ext4</code> format, so I don't think it is necessary.</p>
+<h2 id="step-4">Step 4</h2>
+<p>You need to turn off your <code>fast-boot</code> and <code>secure boot</code>.</p>
+<p>To turn off your fast boot, go to <code>control panel</code> -&gt; <code>power options</code> -&gt; <code>Choose what the power button does</code>. In the new window, expand <code>Shutdown Settings</code> then uncheck <code>Turn on fast startup (recommanded)</code>.</p>
+<p>To turn off secure boot, you need to first hold <code>shift</code> button, then restart while holding <code>shift</code>. You will be lead to a blue screen with a button called <code>Troubleshoot</code>. Click this button and choose <code>Advanced Options</code>, then select <code>UEFI Firmeware Settings</code>. Click <code>resart</code> button on this page, and your pc will restart and go to BIOS setting.</p>
+<p>BIOS may looks differently for different PC. In my dell XPS 12, you can move to Boot menu in BIOS setting, then you can disable secure boot. In the next few step you will setup boot priority from here also. Make sure you click <code>F10</code> to save setting and restart your pc.</p>
+<h2 id="step-5">Step 5</h2>
+<p>Insert your Linux live USB to your pc. If you want to install Linux on a external drive, insert your external drive also. Start your pc. Re-start pc with <code>shift</code> key to enter the blue setup scrren in step 4. This time click "Use a device" button, and select the name of your Linux live USB</p>
+<h2 id="step-6">Step 6</h2>
+<p>Now your pc should run the Linux system from Live USB. Installation process is different between different systems.</p>
+<p>If you want to install Ubuntu on <em>external drive or select internal drive</em>, make sure you choose <strong>something else</strong> in installation manager.</p>
+<blockquote>
+<p>Special for Ubuntu 14: the installation manager will give you a change to choose the drive you want to install to. Usually the internal drive is <code>sda</code> and external drive is <code>sdb</code>. The empty drive that you want to install should under one of these two type. <em>You should format this drive to ext4 format and assign</em> <code>/</code> <em>as the mount</em>. If you don't choose <code>/</code>, Ubuntu will report a <code>root not found</code> error. You can format certain drive by clicking <code>change</code> button.</p>
+</blockquote>
+<p>You may choose to set a small <em>swap</em> driver based on Ubuntu's recommandation.</p>
+<p>You just need to format this drive to <code>linux-swap</code>.</p>
+<h2 id="step-7">Step 7</h2>
+<p>After finish installation, make sure you adjust BIOS boot priority. <code>USB storage</code> should be have highest priority</p>
+<h1 id="configuration-process-ubuntu14linux-mint-cinam-example">Configuration Process: Ubuntu14/Linux Mint Cinam Example</h1>
+<h2 id="nodejs-hexo-heroku-github">Node.js &amp; Hexo &amp; Heroku &amp; Github</h2>
+<p>Install Node.js: <code>sudo apt-get install nodejs</code></p>
+<p>Install npm: <code>sudo apt-get install npm</code></p>
+<p>Check version: <code>nodejs -v</code> | <code>npm -v</code></p>
+<p>Install Hexo: <code>sudo npm install hexo -g</code></p>
+<p>Install Git: <code>sudo apt-get install git</code></p>
+<p>You can download <code>Heroku Toolbel</code> from Heroku website and install it.</p>
+<p>Clone proejct from Heroku (Please check Heroku website if you need to create project): <code>heroku git:clone -a app_name</code></p>
+<p>Get into your project folder and do <code>sudo npm install</code>. <em>You may encounter error message for node-sass: node not found. Solution is to do</em> <code>sudo apt-get install nodejs-legacy</code>.</p>
+<p>Now you can test Hexo. Get into project folder and try <code>hexo clean</code>, <code>hexo generate</code> and <code>hexo server</code>. They should all works fine.</p>
+<p>To re-add Github <code>origin master</code> branch, do <code>git remote add origin your_git_repo_address.git</code>. Please refer Github website if you want to create a new repository.</p>
+<p>You can check your existing git remote for current folder by doing <code>git remove -v</code>.</p>
+<h2 id="ruby-jekyll">Ruby &amp; Jekyll</h2>
+<p>Install rvm: <code>sudo apt-get install curl</code> -&gt; <code>\curl -L https://get.rvm.io | bash -s stable</code>. <em>Please check the message in terminal after this process. You may need to download signature</em>.</p>
+<p>Read message in terminal and run <code>source /home/pshan/.rvm/scripts/rvm</code></p>
+<p>Install necessary dependencies: <code>rvm requirements</code></p>
+<p>Install Ruby: <code>rvm install ruby</code></p>
+<p>Use Ruby: <code>rvm use ruby --default</code></p>
+<p>Use RubyGem: <code>rvm rubygems current</code></p>
+<p>Install Jekyll: <code>gem install jekyll</code></p>
+<h2 id="java-jdk-eclipse">Java JDK &amp; Eclipse</h2>
+<p>Download JDK file from Oracle's website</p>
+<p><code>cd /usr/local</code></p>
+<p><code>sudo tax xzf Path_to_JDK_File</code></p>
+<p><code>export JAVA_HOME=/usr/local/jdk1._x.0xx</code></p>
+<p><code>export PATH=$PATH:$JAV_HOME/bin</code></p>
+<p>Dowload <code>Eclipse</code> from Oracle wbesite and Extract folder</p>
+<p>You may want to choose <code>window</code>-&gt;<code>preference</code> to change your default JRE path to your preferred JDK. Ubuntu or LinuxMint use OpenJDK as defautl JDK</p>
+<p>To add server support, First download and extract tomact from Apache website. Then select <code>File</code> -&gt; <code>New</code> -&gt; <code>Server</code>, choose tomcat server in list. You can configure tomcat here.</p>
+<h2 id="reference-my-list-of-necessary-apps-on-ubuntu">Reference: My List of Necessary Apps on Ubuntu</h2>
+<p><code>Okular</code>: pdf annotation</p>
+<p><code>Chrome</code> | <code>Firefox</code></p>
+<p><code>Dropbox</code></p>
+<p><code>Sublime Text</code>: Only Sublime Text <em>3</em> has <code>.deb</code> version</p>
+<p><code>MySQL Server</code> &amp; <code>MySQL Workbench</code>: can be installed by <code>apt-get</code></p>

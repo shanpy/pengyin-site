@@ -1,0 +1,119 @@
+<h2 id="syntax-basics">Syntax Basics</h2>
+<p>All VTL statements, begins with the <code>#</code> character. For rendering process: the <strong>Velocity Templating Engine</strong> will:</p>
+<ol>
+<li>
+<p><strong>search</strong> through your web page to find all <code>#</code> characters</p>
+</li>
+<li>
+<p>Then <strong>determine</strong> which mark the beginning of VTL statements, and which of the <code>#</code> characters that have nothing to do with VTL.</p>
+</li>
+</ol>
+<blockquote>
+<p>It is recommended to start each VTL statement on a <strong>new line</strong>.</p>
+</blockquote>
+<h3 id="references">References</h3>
+<p>There are <strong>three</strong> types of references in the VTL: <code>variables</code>, <code>properties</code> and <code>methods</code>.</p>
+<blockquote>
+<p>In VTL, References begin with $ and are used to <strong>get</strong> something. Directives begin with # and are used to <strong>do</strong> something.</p>
+</blockquote>
+<h4 id="variables">Variables</h4>
+<p>All variables/references in VTL begins with the <code>$</code> character,followed by a <strong>VTL Identifier</strong>.</p>
+<ul>
+<li>A <strong>VTL Identifier</strong> must start with an alphabetic character (i.e. a to z case insensitive). The rest of the characters are limited to the following types of characters: alphabetic, numeric, <code>-</code> or <code>_</code>.</li>
+</ul>
+<p>In VTL, the variable can get its value from either a <strong>set directive</strong> in the template, or from the <strong>Java code</strong>. Example: for <code>#set( $foo = "bar" )</code>, <code>"bar"</code> will replace all <code>$foo</code> variables in VTL.</p>
+<p>Once a value has been assigned to a variable, you can reference the variable <strong>anywhere</strong> in your HTML document. Example:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    #set( $foo = &quot;Velocity&quot; )
+    Hello $foo World!
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre>
+
+
+<h5 id="string">String</h5>
+<p>String values are always enclosed in <em>quotes</em>, either <em>single</em> or <em>double</em> quotes:</p>
+<ul>
+<li>
+<p>Single quotes will ensure that the quoted value will be <strong>assigned</strong> to the reference as is.</p>
+</li>
+<li>
+<p>Double quotes allow you to use <strong>velocity references and directives</strong> to interpolate</p>
+</li>
+<li>
+<p>Example: for <code>"Hello $name"</code>, the <code>$name</code> will be replaced by the referenced value.</p>
+</li>
+</ul>
+<h4 id="properties">Properties</h4>
+<p>Properties have a distinctive format.</p>
+<p>The shorthand notation consists of a leading <code>$</code> character followed a <strong>VTL Identifier</strong>, followed by a dot character <code>.</code> and another <strong>VTL Identifier</strong></p>
+<p>Example: <code>$customer.Address</code> has <strong>two meanings</strong>:</p>
+<ol>
+<li>
+<p>VTL should look in the <strong>hashtable</strong> named as <code>customer</code>, then return the value associated with the <strong>key</strong> <code>Address</code>.</p>
+</li>
+<li>
+<p>VTL should find a referring to a <strong>method</strong> called <code>$customer.getAddress()</code>.</p>
+</li>
+</ol>
+<h4 id="methods">Methods</h4>
+<p>Methods are references that consist of a leading <code>$</code> character followed a <strong>VTL Identifier</strong>, followed by a <strong>VTL Method Body</strong>.</p>
+<p>A <strong>VTL Method Body</strong> consists of a <strong>VTL Identifier</strong> followed by an left parenthesis character <code>(</code>, followed by an <strong>optional parameter list</strong>, followed by right parenthesis character <code>)</code>.</p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="p">$</span><span class="nv">customer</span><span class="p">.</span><span class="nv">getAddress</span><span class="p">()</span><span class="x"></span>
+<span class="p">$</span><span class="nv">purchase</span><span class="p">.</span><span class="nv">getTotal</span><span class="p">()</span><span class="x"></span>
+<span class="p">$</span><span class="nv">page</span><span class="p">.</span><span class="nv">setTitle</span><span class="p">(</span> <span class="s2">&quot;My Home Page&quot;</span> <span class="p">)</span><span class="x"></span>
+<span class="p">$</span><span class="nv">person</span><span class="p">.</span><span class="nv">setAttributes</span><span class="p">(</span> <span class="p">[</span><span class="s2">&quot;Strange&quot;</span><span class="p">,</span> <span class="s2">&quot;Weird&quot;</span><span class="p">,</span> <span class="s2">&quot;Excited&quot;</span><span class="p">]</span> <span class="p">)</span><span class="x"></span>
+</pre>
+
+
+<h5 id="a-shorthand-notation-for-vtl-methods">a <em>shorthand notation</em> for <strong>VTL Methods</strong></h5>
+<p>In the example above, The <strong>property</strong> <code>$customer.Address</code> has the exact same effect as using the <strong>method</strong> <code>$customer.getAddress()</code>.</p>
+<p><em>It is generally <strong>preferable</strong> to use a <strong>Property</strong> when available.</em></p>
+<blockquote>
+<p>The main difference between Properties and Methods is that you can specify a <strong>parameter list</strong> to a Method.</p>
+</blockquote>
+<h5 id="array-as-lists">Array as Lists</h5>
+<p>As of Velocity 1.6, all <strong>array</strong> references are treated as <strong>fixed-length lists</strong>. User can call <code>java.util.List</code> methods on array references. Example:</p>
+<pre class="code literal-block"><span></span><span class="p">$</span><span class="nv">myarray</span><span class="p">.</span><span class="nv">isEmpty</span><span class="p">()</span><span class="x"></span>
+<span class="p">$</span><span class="nv">myarray</span><span class="p">.</span><span class="nv">size</span><span class="p">()</span><span class="x"></span>
+<span class="p">$</span><span class="nv">myarray</span><span class="p">.</span><span class="nv">get</span><span class="p">(</span><span class="m">2</span><span class="p">)</span><span class="x"></span>
+<span class="p">$</span><span class="nv">myarray</span><span class="p">.</span><span class="nv">set</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">)</span><span class="x"></span>
+</pre>
+
+
+<h5 id="vararg-methods">vararg methods</h5>
+<p>From Velocity 1.6, <strong>setter</strong> methods can have different parameter list:</p>
+<pre class="code literal-block"><span></span><span class="p">$</span><span class="nv">sun</span><span class="p">.</span><span class="nv">setPlanets</span><span class="p">(</span><span class="s1">&#39;Earth&#39;</span><span class="p">,</span> <span class="s1">&#39;Mars&#39;</span><span class="p">,</span> <span class="s1">&#39;Neptune&#39;</span><span class="p">)</span><span class="x"></span>
+<span class="p">$</span><span class="nv">sun</span><span class="p">.</span><span class="nv">setPlanets</span><span class="p">(</span><span class="s1">&#39;Mercury&#39;</span><span class="p">)</span><span class="x"></span>
+<span class="p">$</span><span class="nv">sun</span><span class="p">.</span><span class="nv">setPlanets</span><span class="p">()</span><span class="x"></span>
+<span class="cp">##</span><span class="c">  Will just pass in an empty, zero-length array</span><span class="x"></span>
+</pre>
+
+
+<h3 id="other-syntax-information">Other Syntax Information</h3>
+<h4 id="comments">Comments</h4>
+<p>In VTL, A single line comment begins with <code>##</code> and finishes at the end of the line. Example: <code>## This is a single line comment.</code></p>
+<p><strong>Multi-line</strong> comments, which begin with <code>#*</code> and end with <code>*#</code>, are available to handle this scenario.</p>
+<pre class="code literal-block"><span></span><span class="x">This is text that is outside the multi-line comment.</span>
+<span class="x">Online visitors can see it.</span>
+<span class="x">*</span><span class="err">#</span><span class="x"></span>
+<span class="x"> Thus begins a multi-line comment. Online visitors won&#39;t</span>
+<span class="x"> see this text because the Velocity Templating Engine will</span>
+<span class="x"> ignore it.</span>
+<span class="x">*</span><span class="err">#</span><span class="x"></span>
+<span class="x">Here is text outside the multi-line comment; it is visible.</span>
+</pre>
+
+
+<p>User can also set <strong>javadoc-style</strong> annotation in VTL comment block:</p>
+<pre class="code literal-block"><span></span><span class="cp">#</span><span class="c">**</span>
+<span class="c">This is a VTL comment block and</span>
+<span class="c">may be used to store such information</span>
+<span class="c">as the document author and versioning</span>
+<span class="c">information:</span>
+<span class="c">@author</span>
+<span class="c">@version 5</span>
+<span class="c">*</span><span class="cp">#</span><span class="x"></span>
+</pre>

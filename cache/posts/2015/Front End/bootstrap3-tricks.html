@@ -1,0 +1,76 @@
+<p>This post is transferred from my <a href="http://blogpengyin.herokuapp.com/">old Hexo blog site</a>, created on 2014. This blog will be <strong>updating continually</strong>.</p>
+<p>If you want to find specific topic, feel free to use <code>ctrl + F</code> to search for keyword.</p>
+<h1 id="change-glyphicon-when-bootstrap-collapse-show-or-hide">Change Glyphicon when Bootstrap Collapse Show or Hide</h1>
+<p>This is what I learned from: http://stackoverflow.com/questions/18325779/bootstrap-3-collapse-show-state-with-chevron-icon . The answer is from <code>zessx</code>.</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;panel-heading&quot;</span> <span class="na">role</span><span class="o">=</span><span class="s">&quot;tab&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;collapsed&quot;</span> <span class="na">data-toggle</span><span class="o">=</span><span class="s">&quot;collapse&quot;</span> <span class="na">data-parent</span><span class="o">=</span><span class="s">&quot;#accordion&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#test&quot;</span> <span class="na">aria-expanede</span><span class="o">=</span><span class="s">&quot;true&quot;</span> <span class="na">aria-controls</span><span class="o">=</span><span class="s">&quot;test&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;glyphicon glyphicon-plus&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+        Here, when a panel is collapsed, a glyphicon-plus will appear.
+        When it is toggled (i.e, change to a different state, which is not collapsed), a glyphicon-minus will appear.
+    <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
+    <span class="kd">function</span> <span class="nx">toggleChevron</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">prev</span><span class="p">(</span><span class="s1">&#39;.panel-heading&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;span&#39;</span><span class="p">)</span> <span class="c1">//find elements that has tage &#39;span&#39;</span>
+        <span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s1">&#39;glyphicon glyphicon-minus glyphicon-plus&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#accordion&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;hidden.bs.collapse&#39;</span><span class="p">,</span> <span class="nx">toggleChevron</span><span class="p">);</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#accordion&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;shown.bs.collapse&#39;</span><span class="p">,</span> <span class="nx">toggleChevron</span><span class="p">);</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre>
+
+
+<h1 id="collapse-panel-hide-or-show">Collapse Panel Hide or Show</h1>
+<p><code>hide</code>: will hide panel</p>
+<p><code>show</code>: will show panel</p>
+<p><code>toggle</code>: will change to opposite status</p>
+<p>To use this, try <code>$('.class_name').collapse('toggle');</code> or <code>$('#id_name').collapse('hide')</code>.</p>
+<h1 id="sticky-headerfooter">Sticky Header/Footer</h1>
+<p>Bootstrap has two classes: <code>navbar-fixed-top</code> and <code>navbar-fixed-bottom</code> that can be served as sticky header and footer. Make sure add <code>body{ padding-top: 50px;}</code> or <code>body{ padding-bottom: 50px;}</code> when you use them.</p>
+<blockquote>
+<p>Note: the default height for navbar in Bootstrap3 is 50px high.</p>
+</blockquote>
+<h1 id="dynamically-edit-checkbox">Dynamically Edit Checkbox</h1>
+<h2 id="default-status">Default Status</h2>
+<p>In Bootstrap3, when you add a simple check box, the default code is <code>&lt;input type="checkbox" /&gt;</code>.</p>
+<p>This checkbox will keep un-checked. When you check it, this default code will keep the same.</p>
+<p>If you use <code>this.getAttribute('checked')</code> to check if checkbox is checked or not, you always get <code>undefined</code>.</p>
+<h2 id="default-checked-status">Default Checked Status</h2>
+<p>In Bootstrap3, you can set a default <code>checked</code> attribute to checkbox to make it default checked: <code>&lt;input type='checkbox' checked/&gt;</code>.</p>
+<p>If you use <code>$(this).attr('checked')</code> to check status, it will return <code>checked</code> or <code>undefined</code>. But if you use <code>this.getAttribute("checked")</code>, you will always get <code>empty</code> value returned.</p>
+<p>If you use <code>&lt;input type='checkbox' checked = "checked"/&gt;</code>, <code>$(this).attr('checked')</code> will return same result as above, but <code>this.getAttribute("checked")</code> will always get <code>checked</code> no matter if you check it or not.</p>
+<p>You can also set <code>&lt;input type='checkbox' checked="checked"/&gt;</code> to make it default checked.</p>
+<h2 id="change-status">Change Status</h2>
+<p>Following JQuery Code can divide status of checkbox if someone check or uncheck it:</p>
+<pre class="code literal-block"><span></span><span class="nx">$document</span><span class="p">.</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="c1">//You should change &#39;type=checkbox&#39; based on your code. &#39;name&#39; can be skipped</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;[type=checkbox][name=&#39;</span><span class="nx">checkbox_name</span><span class="s1">&#39;]&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;checked&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="kc">undefined</span><span class="p">){</span>
+            <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;checked&quot;</span><span class="p">,</span> <span class="s2">&quot;checked&quot;</span><span class="p">);</span>
+            <span class="c1">//steps for a checked checkbox...</span>
+        <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+            <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;checked&quot;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span>
+            <span class="c1">//steps for an un-checked checkbox...</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre>
+
+
+<p>The usage of code above: when you check the checkbox, this default code will become <code>&lt;input type='checkbox' checked='checked'&gt;</code>. If you un-check it, code will change back to <code>&lt;input type="checkbox" /&gt;</code>.</p>
+<p>In this case, if you use <code>$(this).attr(checked)</code> or <code>this.getAttribute(</code>checked<code>)</code> to check the status of checkbox, the <em>un-checked</em> checkbox will return <code>undefined</code>. the <em>checked</em> checkbox will return <code>checked</code>.</p>
+<h2 id="checkuncheck-checkbox-using-javascirpt">Check/UnCheck Checkbox Using JavaScirpt</h2>
+<p>In Bootstrap3, you can also set the <code>checked</code> attribute of checkbox to <code>true</code> or <code>false</code>.</p>
+<p>If you use JQuery, <code>$(this).attr("checked",false)</code> will remove <code>checked</code> attribute in code.</p>
+<p>If you use pure JavaScript, You have two steps to do this:</p>
+<ul>
+<li>
+<p><code>this.setAttribute("checked", true)</code> or <code>this.setAttribute("checked", "checked")</code> can change the <em>code</em> but not <em>behavior</em>. i.e. code will become <code>&lt;input type='checkbox' checked='checked'&gt;</code> or <code>&lt;input type='checkbox' checked='true'&gt;</code>, but on user interface, checkbox is not checked</p>
+</li>
+<li>
+<p><code>this.checked="checked"</code> or <code>this.checked = true</code> will only change use interface. Your checkbox will be checked buy there is nothing changed in code.</p>
+</li>
+</ul>

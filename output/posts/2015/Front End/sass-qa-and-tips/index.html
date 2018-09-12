@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " vocab="http://ogp.me/ns" lang="en">
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]--><!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]--><!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]--><!--[if gt IE 8]><!--><!--<![endif]--><head>
+<meta charset="utf-8">
+<meta name="description" content="This is an old blog I created when I started to learn SASS on late 2014. I'll continue to update this post while I'm using Compass/SASS.">
+<!-- http://t.co/dKP3o1e --><meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SASS Q&amp;A and Tips CONTINUALLY UPDATE | Pengyin's Corner</title>
+<link href="../../../../assets/css/all.css" rel="stylesheet" type="text/css">
+<!-- Webfonts --><link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+<!-- Load Modernizr --><script src="//mmistakes.github.io/hpstr-jekyll-theme/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script><link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../rss.xml">
+<link rel="canonical" href="https://pengyin-shan.com/posts/2015/Front%20End/sass-qa-and-tips/">
+<!--[if lt IE 9]><script src="../../../../assets/js/html5.js"></script><![endif]--><meta name="description" content="This is an old blog I created when I started to learn SASS on late 2014. I'll continue to update this post while I'm using Compass/SASS.">
+<meta name="author" content="Pengyin(Wendy) Shan">
+<link rel="prev" href="../../Java/ajax-and-spring-mvc-controller/" title="Ajax and Spring MVC Controller" type="text/html">
+<link rel="next" href="../../Front%20End/html5-tips/" title="HTML5 Tips" type="text/html">
+<meta property="og:site_name" content="Pengyin's Corner">
+<meta property="og:title" content="SASS Q&amp;A and Tips CONTINUALLY UPDATE">
+<meta property="og:url" content="https://pengyin-shan.com/posts/2015/Front%20End/sass-qa-and-tips/">
+<meta property="og:description" content="This is an old blog I created when I started to learn SASS on late 2014. I'll continue to update this post while I'm using Compass/SASS.">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-01-13T00:00:00-05:00">
+<meta property="article:tag" content="Compass">
+<meta property="article:tag" content="CSS">
+<meta property="article:tag" content="SASS">
+</head>
+<body id="post-index" class="feature">
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    
+
+    <nav id="dl-menu" class="dl-menuwrapper" role="navigation"><button class="dl-trigger">Open Menu</button>
+    <ul class="dl-menu">
+<li><a href="../../../">My Knowledge Base</a></li>
+            <li><a href="https://www.linkedin.com/in/pengyinshan">My LinkedIn</a></li>
+            <li><a href="../../../../categories/">Tags and Categories</a></li>
+            <li><a href="../../../../rss.xml">RSS feed</a></li>
+            <li><a href="../../../../archive.html">Archive</a></li>
+    
+    
+    </ul></nav><div class="entry-header">
+<!-- /.image-credit -->
+    <div class="entry-image">
+      <img src="../../../../bk.JPG" alt="Latest Posts">
+</div>
+<!-- /.entry-image -->
+      
+  <div class="header-title">
+    <div class="header-title-wrap">
+    <h1 id="brand"><a href="https://pengyin-shan.com/" title="Pengyin's Corner" rel="home">
+    Pengyin's Corner</a></h1>
+      <h2>Be Passionate.</h2>
+    </div>
+<!-- /.header-title-wrap -->
+  </div>
+<!-- /.header-title -->
+
+</div>
+<!-- /.entry-header -->
+
+    <div id="main" role="main">
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><div class="entry-meta">
+            <span class="dateline"><a href="../../Front%20End/sass-qa-and-tips/" rel="bookmark"><time class="published dt-published" datetime="2015-01-13T00:00:00-05:00" itemprop="datePublished" title="2015-01-13">2015-01-13</time></a></span>  ·  
+            <span class="byline author vcard">Pengyin(Wendy) Shan</span>  ·  
+                <span class="commentline">
+        
+    <a href="../../Front%20End/sass-qa-and-tips/#disqus_thread" data-disqus-identifier="cache/posts/2015/Front End/sass-qa-and-tips.html">Comments</a>
+
+</span>  ·  
+            
+        <span class="sourceline"><a href="../../Front%20End/sass-qa-and-tips/index.md" id="sourcelink">Source</a></span>  ·  
+
+                <meta name="description" itemprop="description" content="This is an old blog I created when I started to learn SASS on late 2014. I'll continue to update this post while I'm using Compass/SASS.">
+</div>
+        
+
+    
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="../../Front%20End/sass-qa-and-tips/" class="u-url">SASS Q&amp;A and Tips CONTINUALLY UPDATE</a></h1>
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>This post will serve as a Q&amp;A note during the process of learning Sass. I'm absolutely a new beginner so I'll keep questions and answers updating continously:)</p>
+<h3 id="question-what-is-the-syntax-difference-between-sass-and-scss">Question: What is the syntax difference between sass and scss?</h3>
+<p>So far I've found following difference:</p>
+<ul>
+<li>
+<p>scss is similar to css style, requires "{" and ";"</p>
+</li>
+<li>
+<p>sass has none of these</p>
+</li>
+<li>
+<p>sass is white space recoginized while scss not</p>
+</li>
+</ul>
+<h3 id="question-how-jekyll-work-with-sass">Question: How Jekyll work with Sass?</h3>
+<p>Currently version of Jekyll (2.4.0) has native support for Sass and CoffeeScript. Official documentation is here: http://jekyllrb.com/docs/assets/</p>
+<p>I use official way for sass compile by following step:</p>
+<p>In home directory, create a folder called _sass. I decide to use this folder for sass files that I will import from.</p>
+<p>Add following lines in _config.yml to register _sass folder:</p>
+<blockquote>
+<p>sass:
+ sass_dir: _sass</p>
+</blockquote>
+<p>You can always modify it to your folder name.</p>
+<p>Create a folder called "css", then put all scss file there. Now website has:</p>
+<pre class="code literal-block"><span></span>/css
+    - default.scss
+    - header.scss
+    - page.scss
+/_sass
+    - _test.css
+</pre>
+
+
+<p>In scss file, first two lines needs to be '- - -'. You can use @import 'test' to import _test.sass file in _sass.</p>
+<blockquote>
+<p>Please make sure everything in <em>sass folder start with a '</em>'.</p>
+<p>You don't need to put '- - -' to files in _sass folder.</p>
+</blockquote>
+<p>In html page, add link to these scss file, using '.css' extension. For example: <code>&lt;link rel="stylesheet" type="text/css" href="/css/default.css"&gt;</code> pointing to default.scss in css folder. You can actually find default.css in _site/css folder</p>
+<p>Jeyll will automatically compile scss and sass file when you build your project.</p>
+<p>On Jekyll website, there are some websites that are built with Sass. You can refer them for folder structure on your own blog site.</p>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../categories/compass/" rel="tag">Compass</a></li>
+            <li><a class="tag p-category" href="../../../../categories/css/" rel="tag">CSS</a></li>
+            <li><a class="tag p-category" href="../../../../categories/sass/" rel="tag">SASS</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../../Java/ajax-and-spring-mvc-controller/" rel="prev" title="Ajax and Spring MVC Controller">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../../Front%20End/html5-tips/" rel="next" title="HTML5 Tips">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="pengyinsnotes",
+            disqus_url="https://pengyin-shan.com/posts/2015/Front%20End/sass-qa-and-tips/",
+        disqus_title="SASS Q&A and Tips CONTINUALLY UPDATE",
+        disqus_identifier="cache/posts/2015/Front End/sass-qa-and-tips.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="pengyinsnotes";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+    
+    <div class="footer-wrapper">
+        <footer role="contentinfo"><p>Contents © 2018         <a href="mailto:pengyin.shan@outlook.com">Pengyin(Wendy) Shan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+        </footer>
+</div>
+
+    
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script src="../../../../assets/js/scripts.min.js"></script>
+</body>
+</html>

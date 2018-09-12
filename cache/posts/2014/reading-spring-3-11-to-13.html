@@ -1,0 +1,305 @@
+<p>This post is transferred from my <a href="http://blogpengyin.herokuapp.com/">old Hexo blog site</a>, created on 2014.</p>
+<p>This is a reading note from Spring Framework 3.1 Tutorial pdf, created by <a href="http://www.tutorialspoint.com/spring"><strong>tutorialspoint</strong></a>. This pdf contains information for Spring 3 Core Basics, which is very useful for understanding defination and practive in Spring programming.</p>
+<p>This note includes Chapter 11 to Chapter 13 in tutorial.</p>
+<h1 id="chapter-11-spring-dependency-injection">Chapter 11: Spring Dependency Injection</h1>
+<p>Dependency Injection (or Wiring) helps in gluing individual application classes together and same time keeping them independent.</p>
+<p>There are two types of DI: <code>Constructor-Based</code> DI and <code>Setter-Based</code> DI:</p>
+<ul>
+<li>
+<p>Constructor-based DI is accomplished when the container invokes a <em>class constructor</em> with a number of arguments, each representing a dependency on other class.</p>
+</li>
+<li>
+<p>Setter-based DI is accomplished by the container calling <em>setter</em> methods on your beans <em>after</em> invoking a <em>no-argument constructor</em> or <em>no-argument static factory</em> method to instantiate your bean.</p>
+</li>
+</ul>
+<p>It is a good practive to <em>use constructor arguments for</em> <strong>mandatory dependencies</strong> <em>and setter for</em> <strong>option dependencies</strong></p>
+<h2 id="constructor-based-dependency-injection">Constructor-Based Dependency Injection</h2>
+<p>Example:</p>
+<p>XML:</p>
+<pre class="code literal-block"><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;textEditor&quot;</span> <span class="na">class=</span><span class="s">&quot;com.sample.TextEditor&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;contructor-arg</span> <span class="na">ref=</span><span class="s">&quot;spellChecker&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;spellChecker&quot;</span> <span class="na">class=</span><span class="s">&quot;com.sample.spellChecker&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</pre>
+
+
+<p>JAVA:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Constructor for textEditor</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TextEditor</span><span class="o">{</span>
+    <span class="kd">private</span> <span class="n">SpellCheck</span> <span class="n">spellChecker</span><span class="o">;</span>
+    <span class="c1">//Constructor that takes one argument</span>
+    <span class="kd">public</span> <span class="nf">TextEditor</span><span class="o">(</span><span class="n">SpellCheck</span> <span class="n">spellChecker</span><span class="o">){</span>
+        <span class="c1">//A SpellCheck will be instantiated first, based on bean setting</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Construcor of Text Editor&quot;</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">spellChecker</span> <span class="o">=</span> <span class="n">spellChecker</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">spellCheck</span><span class="o">(){</span>
+        <span class="n">spellChecker</span><span class="o">.</span><span class="na">checkSpelling</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">//Constructor for spellChecker</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">spellChecker</span><span class="o">{</span>
+        <span class="c1">//Construcor that doesn&#39;t take any argument</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">prinln</span><span class="o">(</span><span class="s">&quot;Construcor of Spell Checker&quot;</span><span class="o">)</span><span class="err">&#39;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">checkSpelling</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Checking Spelling !&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+
+<span class="c1">//Main Class</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main</span><span class="o">{</span>
+    <span class="n">pulic</span> <span class="kt">void</span> <span class="kd">static</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+    <span class="n">ApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="err">&#39;</span><span class="n">bean</span><span class="o">.</span><span class="na">xml</span><span class="err">&#39;</span><span class="o">);</span>
+
+    <span class="n">TextEditor</span> <span class="n">te</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextEditor</span><span class="o">)</span> <span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="err">&#39;</span><span class="n">textEditor</span><span class="err">&#39;</span><span class="o">);</span>
+    <span class="n">te</span><span class="o">.</span><span class="na">spellCheck</span><span class="o">();</span>
+
+    <span class="c1">//Output: Contrutor of Spell Checker</span>
+    <span class="c1">//Output: Contrutor of Text Editor</span>
+    <span class="c1">//Output: Check Spelling !</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h2 id="consructor-arguments-resolution">Consructor Arguments Resolution</h2>
+<p><code>Ambiguity</code> can happen when a constroctor takes more than one parameters. Spring make sure the <em>order</em> of <code>constrctor-arg</code> in bean <code>xml</code> file defines the <em>order</em> of parameters taken by construcor in <code>java</code> file.</p>
+<p>If you have <code>type</code> attribute in <code>xml</code> file, Spring can use <em>Type-Matching</em> to check these parameters.</p>
+<p><strong>Important</strong>: If you try to pass <em>reference</em> in <code>&lt;constructor-args&gt;</code>, use <code>ref</code> attribute. If you try to pass <em>value</em> in <code>&lt;constructor-args&gt;</code>, use <code>value</code> attribute.</p>
+<p>The best way is to use <code>index</code> attribute in <code>xml</code> file. Example:</p>
+<p>XML:</p>
+<pre class="code literal-block"><span></span><span class="nt">&lt;beans&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;foo&quot;</span> <span class="na">class=</span><span class="s">&quot;x.y.Foo&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;constructor-arg</span> <span class="na">index=</span><span class="s">&quot;0&quot;</span> <span class="na">ref=</span><span class="s">&quot;bar&quot;</span><span class="nt">/&gt;</span> <span class="c">&lt;!--part by reference--&gt;</span>
+        <span class="nt">&lt;constroctor-arg</span> <span class="na">index=</span><span class="s">&quot;1&quot;</span> <span class="na">type=</span><span class="s">&quot;java.lang.String&quot;</span> <span class="na">value=</span><span class="s">&quot;Test&quot;</span><span class="nt">/&gt;</span> <span class="c">&lt;!--pass by value. Specify type here--&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;bar&quot;</span> <span class="na">class=</span><span class="s">&quot;x.y.Bar&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/beans&gt;</span>
+</pre>
+
+
+<p>JAVA:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Class for Foo</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Foo</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">Foo</span><span class="o">(</span><span class="n">Bar</span> <span class="n">bar</span><span class="o">,</span> <span class="n">Stirng</span> <span class="n">t</span><span class="o">){</span>
+        <span class="c1">//Here bar call its own constructor</span>
+        <span class="c1">//t have value &quot;test&quot;, which is defined in xml file</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h2 id="setter-based-dependncy-injection">Setter-based Dependncy Injection</h2>
+<p>Example:</p>
+<p>XML:</p>
+<pre class="code literal-block"><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;textEditor&quot;</span> <span class="na">class=</span><span class="s">&quot;com.sample.TextEditor&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;spellChecker&quot;</span> <span class="na">ref=</span><span class="s">&quot;spellChecker&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;spellChecker&quot;</span> <span class="na">class=</span><span class="s">&quot;com.sample.SpellChecker&quot;</span><span class="nt">&gt;</span>
+</pre>
+
+
+<p>JAVA:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Class for spellChecker</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SpellChecker</span><span class="o">{</span>
+    <span class="c1">//Constructor</span>
+    <span class="kd">public</span> <span class="nf">SpellChecker</span><span class="o">(){</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;spellChecker constructor!&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">checkSpelling</span><span class="o">(){</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;checkSpelling!&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">//Class for textEditor</span>
+<span class="c1">//This class use default-construcor (i.e, no self-defined constructor)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TextEditor</span><span class="o">{</span>
+    <span class="kd">private</span> <span class="n">SpellChekcer</span> <span class="n">spellChecker</span><span class="o">;</span>
+
+    <span class="c1">//getter to ruturn a spellChecker</span>
+    <span class="kd">public</span> <span class="n">SpellChecker</span> <span class="n">getSpellChecker</span><span class="o">{</span>
+        <span class="k">return</span> <span class="n">spellChecker</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="c1">//setter</span>
+    <span class="kd">public</span> <span class="n">ovid</span> <span class="nf">setSpellChecker</span><span class="o">(</span><span class="n">SepellChekcer</span> <span class="n">spellChecker</span><span class="o">){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;setSpellChecker!&quot;</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">spellChecker</span> <span class="o">=</span> <span class="n">spellChecker</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">spellCheck</span><span class="o">(){</span>
+        <span class="n">spellChecker</span><span class="o">.</span><span class="na">checkSpelling</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">//Main Class</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+        <span class="n">ApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="err">&#39;</span><span class="n">beans</span><span class="o">.</span><span class="na">xml</span><span class="err">&#39;</span><span class="o">);</span>
+        <span class="o">(</span><span class="n">TextEditor</span><span class="o">)</span> <span class="n">te</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextEditor</span><span class="o">)</span> <span class="n">context</span><span class="o">.</span><span class="na">getBeans</span><span class="o">(</span><span class="err">&#39;</span><span class="n">textEditor</span><span class="err">&#39;</span><span class="o">);</span>
+        <span class="n">te</span><span class="o">.</span><span class="na">spellCheck</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="c1">//Output: spellChecker constructor!</span>
+    <span class="c1">//setSpellChecker!</span>
+    <span class="c1">//checkSpelling!</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>The difference in <code>xml</code> file between Constructor DI and Setter-Base DI is: <code>&lt;construcotr-args&gt;</code> is used by Constructor DI; <code>&lt;property&gt;</code> is used by Setter-Based DI.</p>
+<p>Similar as Constructor DI, if you want to pass <em>reference</em> in <code>xml</code> file, use <code>ref</code> attribute. If you want to pass <em>value</em> in <code>xml</code> file, use <code>value</code> attribute.</p>
+<p><em>XML Configuration using P-Namespace</em></p>
+<p><code>p-namespace</code> is easier for a bean with <em>many</em> setter methods.</p>
+<pre class="code literal-block"><span></span><span class="c">&lt;!--old way--&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;test&quot;</span> <span class="na">class=</span><span class="s">&quot;com.sample.test&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">value=</span><span class="s">&quot;John Smith&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;spouse&quot;</span> <span class="na">ref=</span><span class="s">&quot;jane&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;jane&quot;</span> <span class="na">class=</span><span class="s">&quot;com.sample.Person&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">value=</span><span class="s">&quot;John Smith&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="c">&lt;!--new way--&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;test&quot;</span> <span class="na">class=</span><span class="s">&quot;com.sample.test&quot;</span>
+    <span class="na">p:name=</span><span class="s">&quot;John Smith&quot;</span>
+    <span class="na">p:spouse-ref =</span> <span class="s">&quot;jane&quot;</span>
+<span class="nt">&gt;</span> <span class="c">&lt;!--you don&#39;t need -value attribute if you pass by value--&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;jane&quot;</span> <span class="na">class=</span><span class="s">&quot;com.sample.Person&quot;</span>
+    <span class="na">p:name=</span><span class="s">&quot;John Smith&quot;</span>
+<span class="nt">&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</pre>
+
+
+<h1 id="chapter-12-spring-injecting-inner-beans">Chapter 12: Spring Injecting Inner Beans</h1>
+<p>The code above can be transferred to <code>inner bean</code>. Just like <code>inner class</code> in Java, <code>inner bean</code> is the bean defined inside <code>&lt;construcor-args&gt;</code> or <code>&lt;property&gt;</code>.</p>
+<p>Example:</p>
+<p>XML:</p>
+<pre class="code literal-block"><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;testEditor&quot;</span> <span class="na">class=</span><span class="s">&quot;com.sample.testEditor&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;spellChecker&quot;</span><span class="nt">&gt;</span> <span class="c">&lt;!--only bean has id--&gt;</span>
+        <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;spellChecker&quot;</span> <span class="na">class=</span><span class="s">&quot;com.sample.spellChecker&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</pre>
+
+
+<p>JAVA:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Assume the getter and setter for testEditor are the same as above</span>
+<span class="c1">//Assume construcor for spellChecker is the same as above</span>
+<span class="c1">//Assue main class is the same as above</span>
+
+<span class="c1">//Output: spellChecker constructor!</span>
+<span class="c1">//setSpellChecker!</span>
+<span class="c1">//checkSpelling!</span>
+</pre>
+
+
+<h1 id="chapter-13-spring-injecting-collection">Chapter 13: Spring Injecting Collection</h1>
+<p>Spring has data type so you can pass value groups in <code>xml</code> file. There are four types: List, Set, Map and Properties. Difference is following:
+images/posts/spring-di-collection.png </p>
+<p><em>You can use</em> <code>&lt;list&gt;</code> or <code>&lt;set&gt;</code> to wire any implementation of <code>java.util.Collection</code> or <code>Array</code>.</p>
+<p>Same as single value, value collection can be passed by <em>value</em> or <em>reference</em>.</p>
+<p>Example:</p>
+<p>XML:</p>
+<pre class="code literal-block"><span></span><span class="nt">&lt;beans&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;javaCollection&quot;</span> <span class="na">class=</span><span class="s">&quot;com.sample.javaCollection&quot;</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!--List Example--&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;addressList&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;list&gt;</span>
+                <span class="nt">&lt;value&gt;</span>USA<span class="nt">&lt;/value&gt;</span>
+                <span class="nt">&lt;value&gt;</span>USA<span class="nt">&lt;/value&gt;</span>
+                <span class="nt">&lt;value&gt;</span>UK<span class="nt">&lt;/value&gt;</span>
+            <span class="nt">&lt;/list&gt;</span>
+        <span class="nt">&lt;/property&gt;</span>
+        <span class="c">&lt;!--Set Example--&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;addressSet&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;set&gt;</span>
+                <span class="nt">&lt;value&gt;</span>USA<span class="nt">&lt;/value&gt;</span>
+                <span class="nt">&lt;value&gt;</span>USA<span class="nt">&lt;/value&gt;</span>
+                <span class="nt">&lt;value&gt;</span>UK<span class="nt">&lt;/value&gt;</span>
+            <span class="nt">&lt;/set&gt;</span>
+        <span class="nt">&lt;/property&gt;</span>
+        <span class="c">&lt;!--Map Example--&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;addressMap&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;map&gt;</span>
+                <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>USA<span class="nt">&lt;/entry&gt;</span>
+                <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;2&quot;</span><span class="nt">&gt;</span>USA<span class="nt">&lt;/entry&gt;</span>
+                <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;3&quot;</span><span class="nt">&gt;</span>UK<span class="nt">&lt;/entry&gt;</span>
+            <span class="nt">&lt;/map&gt;</span>
+        <span class="nt">&lt;/property&gt;</span>
+        <span class="c">&lt;!--Property Example--&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;addressProp&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;props&gt;</span><span class="c">&lt;!--Note property has different structure--&gt;</span>
+                <span class="nt">&lt;prop</span> <span class="na">key=</span><span class="s">&quot;one&quot;</span><span class="nt">&gt;</span>USA<span class="nt">&lt;/prop&gt;</span>
+                <span class="nt">&lt;prop</span> <span class="na">key=</span><span class="s">&quot;two&quot;</span><span class="nt">&gt;</span>USA<span class="nt">&lt;/prop&gt;</span>
+                <span class="nt">&lt;prop</span> <span class="na">key=</span><span class="s">&quot;three&quot;</span><span class="nt">&gt;</span>UK<span class="nt">&lt;/prop&gt;</span>
+            <span class="nt">&lt;/props&gt;</span>
+        <span class="nt">&lt;/property&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+<span class="nt">&lt;/beans&gt;</span>
+</pre>
+
+
+<p>JAVA:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Class for javaCollection</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">JavaCollection</span><span class="o">{</span>
+    <span class="n">List</span> <span class="n">addressList</span><span class="o">;</span>
+    <span class="n">Set</span> <span class="n">addressSet</span><span class="o">;</span>
+    <span class="n">Map</span> <span class="n">addressMap</span><span class="o">;</span>
+    <span class="n">Properties</span> <span class="n">addressProp</span><span class="o">;</span>
+
+    <span class="c1">//Assume each one has getter and setter, with corresponding output</span>
+<span class="o">}</span>
+
+<span class="c1">//Class for Test</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+        <span class="n">ApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="err">&#39;</span><span class="n">beans</span><span class="o">.</span><span class="na">xml</span><span class="err">&#39;</span><span class="o">);</span>
+
+        <span class="n">JavaCollection</span> <span class="n">jc</span> <span class="o">=</span> <span class="o">(</span><span class="n">JavaXollection</span><span class="o">)</span> <span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="err">&#39;</span><span class="n">javaCollection</span><span class="err">&#39;</span><span class="o">);</span>
+
+        <span class="n">jc</span><span class="o">.</span><span class="na">getAddressList</span><span class="o">();</span> <span class="c1">//USA, USA, UK</span>
+        <span class="n">jc</span><span class="o">.</span><span class="na">getAddressSet</span><span class="o">();</span> <span class="c1">//USA, UK</span>
+        <span class="n">jc</span><span class="o">.</span><span class="na">getAddressMap</span><span class="o">();</span> <span class="c1">//1=USA 2=USA 3=UK</span>
+        <span class="n">jc</span><span class="o">.</span><span class="na">getAddressProp</span><span class="o">();</span> <span class="c1">//one=USA two=USA three=UK</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>In <code>xml</code> file, you can mix <code>references</code> and <code>values</code> together:</p>
+<pre class="code literal-block"><span></span><span class="c">&lt;!--List Example--&gt;</span>
+<span class="nt">&lt;list&gt;</span>
+    <span class="nt">&lt;ref</span> <span class="na">bean=</span><span class="s">&quot;addressList1&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;ref</span> <span class="na">bean=</span><span class="s">&quot;addressList2&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;value&gt;</span>UK<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/list&gt;</span>
+<span class="c">&lt;!--Set Example--&gt;</span>
+<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;addressSet&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;set&gt;</span>
+        <span class="nt">&lt;ref</span> <span class="na">bean=</span><span class="s">&quot;address1&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;ref</span> <span class="na">bean=</span><span class="s">&quot;address2&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;value&gt;</span>UK<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/set&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="c">&lt;!--Map Example--&gt;</span>
+<span class="nt">&lt;map&gt;</span>
+    <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;one&quot;</span> <span class="na">value=</span><span class="s">&quot;USA&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;entry</span> <span class="na">key=</span><span class="s">&quot;two&quot;</span> <span class="na">value-ref=</span><span class="s">&quot;address1&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/map&gt;</span>
+
+<span class="c">&lt;!--Reference Bean--&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;address1&quot;</span> <span class="na">class=</span><span class="s">&quot;...&quot;</span><span class="nt">&gt;&lt;/bean&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;address2&quot;</span> <span class="na">class=</span><span class="s">&quot;...&quot;</span><span class="nt">&gt;&lt;/bean&gt;</span>
+</pre>
+
+
+<p>To use <em>empty</em> or <em>null</em> value in beans, you can do following:</p>
+<pre class="code literal-block"><span></span><span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;test&quot;</span> <span class="na">value=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span> <span class="c">&lt;!--empty string--&gt;</span>
+<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;test2&quot;</span><span class="nt">&gt;&lt;null/&gt;&lt;/property&gt;</span> <span class="c">&lt;!--null--&gt;</span>
+</pre>

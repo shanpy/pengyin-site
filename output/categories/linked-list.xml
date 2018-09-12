@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Pengyin's Corner (Posts about Linked List)</title><link>https://pengyin-shan.com/</link><description></description><atom:link type="application/rss+xml" href="https://pengyin-shan.com/categories/linked-list.xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Tue, 11 Sep 2018 20:57:15 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Algorithm and Data Structure Basics - Linked List</title><link>https://pengyin-shan.com/posts/2015/Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-linkedlist/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;h4 id="reference-list"&gt;Reference List&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.linuxidc.com/Linux/2014-04/99926.htm"&gt;Merge Sort for Single Linked List Java (Chinese)&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;Data Structures and Algorithms in Java (Second Edition)&lt;/em&gt;, written by &lt;em&gt;Robert Lafore&lt;/em&gt;, Chinese Version&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="efficiency-of-linked-list"&gt;Efficiency of Linked List&lt;/h4&gt;
+&lt;p&gt;Insertion and Deletion &lt;strong&gt;at the head of linked list&lt;/strong&gt; is really quick. It need &lt;code&gt;O(1)&lt;/code&gt; time complexity.&lt;/p&gt;
+&lt;h5 id="compare-with-array"&gt;Compare with Array&lt;/h5&gt;
+&lt;p&gt;Both array and linked list need &lt;code&gt;O(N)&lt;/code&gt; time complexity for searching and insertion/deletion to certain node. However, linked list may still be a better option, because it &lt;strong&gt;does not need to move&lt;/strong&gt; anything when it does these operations. Linked list can save lots of time expecially if there exists a large amount of elements.&lt;/p&gt;
+&lt;p&gt;Linked list is also better at saving space. Linked list also gives flexibility of expanding size.&lt;/p&gt;
+&lt;p&gt;So if we don't know exact size of data, linked list can be a better option comparing to array.&lt;/p&gt;
+&lt;h4 id="adt"&gt;ADT&lt;/h4&gt;
+&lt;p&gt;You can create &lt;code&gt;stack&lt;/code&gt; using linked list. When you create &lt;code&gt;push&lt;/code&gt; and &lt;code&gt;pop&lt;/code&gt; method, just insert/remove first element from head of linked list.&lt;/p&gt;
+&lt;h4 id="insertion-sort-for-sorted-linked-list"&gt;Insertion Sort for Sorted Linked List&lt;/h4&gt;
+&lt;p&gt;If you have a un-sorted array, you can take all elements out, and insert them to a sorted linked list. Then after you deleting all elements and re-put them to array, this array will become a sorted one.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/*&lt;/span&gt;
+&lt;span class="cm"&gt;  Insert Node at the end of a linked list&lt;/span&gt;
+&lt;span class="cm"&gt;  head pointer input could be NULL as well for empty list&lt;/span&gt;
+&lt;span class="cm"&gt;  Node is defined as&lt;/span&gt;
+&lt;span class="cm"&gt;  class Node {&lt;/span&gt;
+&lt;span class="cm"&gt;     int data;&lt;/span&gt;
+&lt;span class="cm"&gt;     Node next;&lt;/span&gt;
+&lt;span class="cm"&gt;  }&lt;/span&gt;
+&lt;span class="cm"&gt;*/&lt;/span&gt;
+&lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;SortedList&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;head&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;//head of linked list&lt;/span&gt;
+
+  &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="nf"&gt;SortedList&lt;/span&gt;&lt;span class="o"&gt;(){&lt;/span&gt;
+    &lt;span class="n"&gt;head&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="c1"&gt;//constructor for empty list&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+
+  &lt;span class="c1"&gt;//Constructor for taking a array of nodes as parameter&lt;/span&gt;
+  &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="nf"&gt;SortedList&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Node&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;nodearray&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+    &lt;span class="n"&gt;head&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;nodearray&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;length&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="o"&gt;++){&lt;/span&gt;
+      &lt;span class="n"&gt;insert&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;nodearray&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="o"&gt;]);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+
+  &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;insert&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;insertNode&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+    &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;currentNode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Node&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="n"&gt;currentNode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;head&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+    &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;currentNode&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+      &lt;span class="c1"&gt;//Skip this process. Insert insertNode if there is only one node in linked list&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+
+    &lt;span class="c1"&gt;//Do insertion sort. Left most is always the largest one&lt;/span&gt;
+    &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;currentNode&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;insertNode&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;data&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;currentNode&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;data&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+      &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;temp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;currentNode&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+      &lt;span class="n"&gt;currentNode&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;insertNode&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+      &lt;span class="n"&gt;insertNode&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;temp&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+      &lt;span class="n"&gt;currentNode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;currentNode&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="iterator"&gt;Iterator&lt;/h4&gt;
+&lt;p&gt;Iterator is used as a reference so that it can point to any node in linked list, in order to find and change certain node.&lt;/p&gt;
+&lt;h5 id="class-of-iterator"&gt;Class of Iterator&lt;/h5&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nf"&gt;ListIterator&lt;/span&gt;&lt;span class="o"&gt;(){&lt;/span&gt;
+  &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;current&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;//current node in linked list that iterator is pointing to&lt;/span&gt;
+  &lt;span class="c1"&gt;//private Node previous;  for doubly linked list&lt;/span&gt;
+  &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;LinkedList&lt;/span&gt; &lt;span class="n"&gt;currentList&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;//current linked list&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h5 id="main-class"&gt;Main Class&lt;/h5&gt;
+&lt;p&gt;You may have different iterators for one linked list. Each iterator points to a certain node.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(...){&lt;/span&gt;
+  &lt;span class="n"&gt;LinkedList&lt;/span&gt; &lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;LinkedList&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+  &lt;span class="n"&gt;ListIterator&lt;/span&gt; &lt;span class="n"&gt;iter&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;l&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getIterator&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+  &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;point&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;iter&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getCurrent&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt; &lt;span class="c1"&gt;//get current node in iterator&lt;/span&gt;
+  &lt;span class="c1"&gt;//point.next...&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h5 id="possible-methods"&gt;Possible Methods&lt;/h5&gt;
+&lt;p&gt;You can add following possible methods to your iterator:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;reset(): Make iterator point to head of linked list&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;nextLink(): Make iterator point to next node&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;getCurrent(): return current node&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;atEnd(): return &lt;code&gt;true&lt;/code&gt; if iterator is pointing to end of linked list&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;insertAfter()/insertBefore()/deletCurretn(): operation for insertion/deletion&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="merge-two-sorted-linked-listsmerge-sort-single-linked-list"&gt;Merge Two Sorted Linked Lists/Merge Sort Single Linked List&lt;/h4&gt;
+&lt;p&gt;You can check &lt;strong&gt;Merge Two Sorted Linked Lists&lt;/strong&gt; on &lt;a href="https://www.hackerrank.com/challenges/merge-two-sorted-linked-lists/submissions/code/13529242"&gt;hackerrank.com&lt;/a&gt;.&lt;/p&gt;
+&lt;h5 id="idea"&gt;Idea&lt;/h5&gt;
+&lt;p&gt;To merge two sorted linked lists, you just need to create a new node and always get the smaller node from two source linked lists. Every time a node is passed, move &lt;code&gt;header&lt;/code&gt; to next node.&lt;/p&gt;
+&lt;p&gt;To merge sort a single linked list, you need to have two pointer: &lt;code&gt;p&lt;/code&gt; and &lt;code&gt;f&lt;/code&gt;. Every time if &lt;code&gt;p&lt;/code&gt; points to next node, &lt;code&gt;f&lt;/code&gt; should point to the node after the next one. In this case, when &lt;code&gt;f&lt;/code&gt; finish walking through &lt;strong&gt;a certain part of linked list&lt;/strong&gt;, &lt;code&gt;p&lt;/code&gt; is &lt;strong&gt;on the half&lt;/strong&gt; of that linked list.&lt;/p&gt;
+&lt;p&gt;Recursively call the method above for first part(start from origin head) of linked list and second part(start from &lt;code&gt;p&lt;/code&gt;) for division process. Then merge result using same method as merging two sorted linked lists&lt;/p&gt;
+&lt;h5 id="code"&gt;Code&lt;/h5&gt;
+&lt;h6 id="code-for-merging-two-sorted-linked-list-on-hackerrankcom"&gt;Code for merging two sorted linked list, on hackerrank.com:&lt;/h6&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/*&lt;/span&gt;
+&lt;span class="cm"&gt;  Insert Node at the end of a linked list&lt;/span&gt;
+&lt;span class="cm"&gt;  head pointer input could be NULL as well for empty list&lt;/span&gt;
+&lt;span class="cm"&gt;  Node is defined as&lt;/span&gt;
+&lt;span class="cm"&gt;  class Node {&lt;/span&gt;
+&lt;span class="cm"&gt;     int data;&lt;/span&gt;
+&lt;span class="cm"&gt;     Node next;&lt;/span&gt;
+&lt;span class="cm"&gt;  }&lt;/span&gt;
+&lt;span class="cm"&gt;*/&lt;/span&gt;
+
+&lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="nf"&gt;MergeLists&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;headA&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;headB&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Node&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+        &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+        &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;headA&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;headB&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt; &lt;span class="o"&gt;){&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;headA&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;data&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;headB&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;data&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+                &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;headA&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                &lt;span class="n"&gt;headA&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;headA&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;&lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;headB&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                &lt;span class="n"&gt;headB&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;headB&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+            &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+
+        &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;headA&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+            &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;headB&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;headA&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="c1"&gt;//result is a empty node. result.next (i.e. c.next) is the start of new linked list&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h6 id="code-for-merging-single-linked-list-divide-part"&gt;Code for merging single linked list, divide part:&lt;/h6&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/*&lt;/span&gt;
+&lt;span class="cm"&gt;  Insert Node at the end of a linked list&lt;/span&gt;
+&lt;span class="cm"&gt;  head pointer input could be NULL as well for empty list&lt;/span&gt;
+&lt;span class="cm"&gt;  Node is defined as&lt;/span&gt;
+&lt;span class="cm"&gt;  class Node {&lt;/span&gt;
+&lt;span class="cm"&gt;     int data;&lt;/span&gt;
+&lt;span class="cm"&gt;     Node next;&lt;/span&gt;
+&lt;span class="cm"&gt;  }&lt;/span&gt;
+&lt;span class="cm"&gt;*/&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Solution&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="nf"&gt;sortList&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;head&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;head&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="n"&gt;head&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;head&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+
+    &lt;span class="n"&gt;ListNode&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;head&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;ListNode&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;head&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+    &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt; &lt;span class="o"&gt;){&lt;/span&gt;
+        &lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+
+    &lt;span class="c1"&gt;//Perform division to second half of linked list&lt;/span&gt;
+    &lt;span class="n"&gt;ListNode&lt;/span&gt; &lt;span class="n"&gt;h2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sortList&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+    &lt;span class="cm"&gt;/*&lt;/span&gt;
+&lt;span class="cm"&gt;    Perform divide to first half of linked list (starting from head),then merge division result.&lt;/span&gt;
+&lt;span class="cm"&gt;    'MergeLists' method is the code in first part&lt;/span&gt;
+&lt;span class="cm"&gt;    */&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;MergeLists&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sortList&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;head&lt;/span&gt;&lt;span class="o"&gt;),&lt;/span&gt;&lt;span class="n"&gt;h2&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="flatten-a-doubly-linked-list"&gt;Flatten a Doubly Linked List&lt;/h4&gt;
+&lt;p&gt;This is a question from the book &lt;em&gt;Programming Interview Exposed&lt;/em&gt;. Following graph is a example of a doubly linked list, from &lt;a href="http://www.geeksforgeeks.org/flatten-a-linked-list-with-next-and-child-pointers/"&gt;this post&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;../images/articles/2015/algorithm/double_linkedlist.png &lt;/p&gt;
+&lt;h5 id="idea_1"&gt;Idea&lt;/h5&gt;
+&lt;p&gt;Generally, each child linked list can be flattened as a single linked list, which can be appended to the end of result linked list. Each time you encounter a node with a child, append the child (and thus the child list) to the &lt;strong&gt;end of the first level&lt;/strong&gt; and update the &lt;strong&gt;tail pointer&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;This is a description of algorithm:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;Start at the beginning of the first level
+While you are not at the end of the first level
+    If the current node has a child
+        Append the child to the end of the first level
+        Update the tail pointer
+    Advance to next node
+&lt;/pre&gt;
+
+
+&lt;h5 id="code_1"&gt;Code&lt;/h5&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/*&lt;/span&gt;
+&lt;span class="cm"&gt;  Insert Node at the end of a linked list&lt;/span&gt;
+&lt;span class="cm"&gt;  head pointer input could be NULL as well for empty list&lt;/span&gt;
+&lt;span class="cm"&gt;  Node is defined as&lt;/span&gt;
+&lt;span class="cm"&gt;  class Node {&lt;/span&gt;
+&lt;span class="cm"&gt;     int data;&lt;/span&gt;
+&lt;span class="cm"&gt;     Node next;&lt;/span&gt;
+&lt;span class="cm"&gt;     Node prev;&lt;/span&gt;
+&lt;span class="cm"&gt;     Node child;&lt;/span&gt;
+&lt;span class="cm"&gt;  }&lt;/span&gt;
+&lt;span class="cm"&gt;*/&lt;/span&gt;
+&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;flattenList&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;head&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;tail&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+    &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;currentNode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Node&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="n"&gt;currentNode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;head&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+    &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;currentNode&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;currentNode&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;child&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;currentNode&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;child&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tail&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="n"&gt;currentNode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;currentNode&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="cm"&gt;/*&lt;/span&gt;
+&lt;span class="cm"&gt;Append the child list to the end of the tail and update the tail;&lt;/span&gt;
+&lt;span class="cm"&gt;*/&lt;/span&gt;
+&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;append&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;child&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;tail&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+    &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;currentNode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Node&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+
+    &lt;span class="c1"&gt;//Append child list to tail&lt;/span&gt;
+    &lt;span class="n"&gt;tail&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;child&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;child&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;prev&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;tail&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+    &lt;span class="c1"&gt;//Find the new tail, which should be the end of the child list&lt;/span&gt;
+    &lt;span class="n"&gt;currentNode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;child&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;currentNode&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+        &lt;span class="n"&gt;currentNode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;currentNode&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+
+    &lt;span class="c1"&gt;//Update the tail pointer now that currentNode is the new tail&lt;/span&gt;
+    &lt;span class="n"&gt;tail&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;currentNode&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="unflatten-previous-linked-list"&gt;Unflatten Previous Linked List&lt;/h4&gt;
+&lt;h5 id="idea_2"&gt;Idea&lt;/h5&gt;
+&lt;p&gt;To unflatten previous linked list, you can do following:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;Explore Path:
+    While not at the end
+        If current node has a child
+            Separate the child from its previous node
+            Explore path beginning with the child
+        Go onto the next node
+&lt;/pre&gt;
+
+
+&lt;h5 id="code_2"&gt;Code&lt;/h5&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/*&lt;/span&gt;
+&lt;span class="cm"&gt;  Insert Node at the end of a linked list&lt;/span&gt;
+&lt;span class="cm"&gt;  head pointer input could be NULL as well for empty list&lt;/span&gt;
+&lt;span class="cm"&gt;  Node is defined as&lt;/span&gt;
+&lt;span class="cm"&gt;  class Node {&lt;/span&gt;
+&lt;span class="cm"&gt;     int data;&lt;/span&gt;
+&lt;span class="cm"&gt;     Node next;&lt;/span&gt;
+&lt;span class="cm"&gt;     Node prev;&lt;/span&gt;
+&lt;span class="cm"&gt;     Node child;&lt;/span&gt;
+&lt;span class="cm"&gt;  }&lt;/span&gt;
+&lt;span class="cm"&gt;*/&lt;/span&gt;
+&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;unflattenList&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;tail&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+    &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;currentNode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Node&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+
+    &lt;span class="n"&gt;exploreAndSeparate&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+
+    &lt;span class="c1"&gt;//Update the tail pointer&lt;/span&gt;
+    &lt;span class="n"&gt;currentNode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;currentNode&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;current&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;current&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt;
+    &lt;span class="n"&gt;tail&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;currentNode&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;//exploreAndSeparate actually does the recursion and separation&lt;/span&gt;
+&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;exploreAndSeparate&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;childListStart&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+    &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;currentNode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Node&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="n"&gt;currentNode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;childListStart&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+    &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;currentNode&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+        &lt;span class="c1"&gt;//Check if currentNode is a start of a child list&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;currentNode&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;child&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+            &lt;span class="c1"&gt;//Broken child list from origin list. i.e. original prev node should point to null now&lt;/span&gt;
+            &lt;span class="n"&gt;currentNode&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;child&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;prev&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+            &lt;span class="c1"&gt;//Split new child list out. Remember original parent can still do node.child to get this child list&lt;/span&gt;
+            &lt;span class="n"&gt;currentNode&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;child&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;prev&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+            &lt;span class="c1"&gt;//Run recursion so that all childs from child node can be split&lt;/span&gt;
+            &lt;span class="n"&gt;exploreAndSeparate&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;currentNode&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;child&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+        &lt;span class="n"&gt;currentNode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;currentNode&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><category>Algorithm</category><category>Data Structure</category><category>Java</category><category>Linked List</category><guid>https://pengyin-shan.com/posts/2015/Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-linkedlist/</guid><pubDate>Wed, 02 Sep 2015 04:00:00 GMT</pubDate></item></channel></rss>

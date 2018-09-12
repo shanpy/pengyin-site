@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Pengyin's Corner (Posts about Heap)</title><link>https://pengyin-shan.com/</link><description></description><atom:link type="application/rss+xml" href="https://pengyin-shan.com/categories/heap.xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Tue, 11 Sep 2018 20:57:15 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Algorithm and Data Structure Basics - Heap</title><link>https://pengyin-shan.com/posts/2015/Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-heap/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;h4 id="reference-list"&gt;Reference List&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Data Structures and Algorithms in Java (Second Edition)&lt;/em&gt;, written by &lt;em&gt;Robert Lafore&lt;/em&gt;, Chinese Version&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="basic-information"&gt;Basic Information&lt;/h4&gt;
+&lt;p&gt;Heap is a type of tree. If you create a &lt;strong&gt;priority queue&lt;/strong&gt; from heap. The time complexity for insertion and deletion is &lt;code&gt;O(logN)&lt;/code&gt;. However, heap doesn't support traversal and search by value, because all path in heap is following descending/ascending order.&lt;/p&gt;
+&lt;p&gt;Heap has following features:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;It is a &lt;strong&gt;complete binary tree&lt;/strong&gt;. A complete binary tree means every layer except leaf layer has full nodes.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Heap is normally implemented by a array&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;For each node in heap, the value of this node is larger or equal to the value of its child nodes (Maximum Heap). If current node is smaller or equal to its child nodes, the heap is Minimum Heap.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Following is the graph for array implementation of heap, taken from &lt;em&gt;Data Structures and Algorithms in Java (Second Edition)&lt;/em&gt;:&lt;/p&gt;
+&lt;p&gt;../images/articles/2015/algorithm/heap_array.PNG &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;As you can see, if the index of a random element in array is &lt;code&gt;x&lt;/code&gt;, then the index of its parent node is &lt;code&gt;(x-1)/2&lt;/code&gt;. The index of its left child node is &lt;code&gt;2*x+1&lt;/code&gt;. The index of its right child node is &lt;code&gt;2*x+2&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;em&gt;In Java, &lt;code&gt;/&lt;/code&gt; will get floor integer value&lt;/em&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;All nodes which have index larger than &lt;code&gt;n/2&lt;/code&gt; are leaf nodes, assuming there are n elements in array.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id="remove"&gt;Remove&lt;/h4&gt;
+&lt;p&gt;In heap, remove means removing the root of the heap. This root is always the largest/smallest value of all elements. For the heap array, root always has index &lt;code&gt;0&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;You need two steps to find removing process:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Take root of heap out&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Fill the root hold by move the last element to root, then reverse and change nodes until heap is correct.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Detail of steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Remove root by using &lt;code&gt;max = heapArray[o];&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Move last element to root by using &lt;code&gt;heapArray[0] = heapArray[N-1]; N--;&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Move this new root to bottom, until it's smaller than its parent node and larger than its child nodes. To do this, check if root is smaller than it's &lt;strong&gt;larger child&lt;/strong&gt;. If so, swap root and its larger child. Repeat this.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h5 id="code"&gt;Code&lt;/h5&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//We assume each node has a attribute 'key', which determine the value/priority of this node&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="nf"&gt;remove&lt;/span&gt;&lt;span class="o"&gt;(){&lt;/span&gt;
+    &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;heapArray&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;];&lt;/span&gt;
+    &lt;span class="n"&gt;heapArray&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;heapArray&lt;/span&gt;&lt;span class="o"&gt;[--&lt;/span&gt;&lt;span class="n"&gt;currentSize&lt;/span&gt;&lt;span class="o"&gt;];&lt;/span&gt; &lt;span class="c1"&gt;//Move last element to root position&lt;/span&gt;
+    &lt;span class="n"&gt;trickleDown&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt;&lt;span class="o"&gt;];&lt;/span&gt; &lt;span class="c1"&gt;//trickleDown new root&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;trackleDown&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+    &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;largetChild&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;current&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;heapArray&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;];&lt;/span&gt; &lt;span class="c1"&gt;//current Node&lt;/span&gt;
+
+    &lt;span class="c1"&gt;//while index is not on leaf node&lt;/span&gt;
+    &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;currentSize&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+        &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;leftChild&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;rightChild&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;leftChild&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+        &lt;span class="c1"&gt;//Get larger child&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rightChild&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;currentSize&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;heapArray&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;leftChild&lt;/span&gt;&lt;span class="o"&gt;].&lt;/span&gt;&lt;span class="na"&gt;getKey&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;heapArray&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;rightChild&lt;/span&gt;&lt;span class="o"&gt;].&lt;/span&gt;&lt;span class="na"&gt;getKey&lt;/span&gt;&lt;span class="o"&gt;()){&lt;/span&gt;
+            &lt;span class="n"&gt;largerChild&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;rightChild&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;&lt;span class="k"&gt;else&lt;/span&gt;
+            &lt;span class="n"&gt;largerChild&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;leftChild&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+        &lt;span class="c1"&gt;//Break while loop when current value is larger than larger child value&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;current&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getKey&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;=&lt;/span&gt; &lt;span class="n"&gt;heapArray&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;largerChild&lt;/span&gt;&lt;span class="o"&gt;].&lt;/span&gt;&lt;span class="na"&gt;getKey&lt;/span&gt;&lt;span class="o"&gt;())&lt;/span&gt;
+            &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="cm"&gt;/*&lt;/span&gt;
+&lt;span class="cm"&gt;        If not break loop, move child to current position.&lt;/span&gt;
+&lt;span class="cm"&gt;        Go to another loop starting from larger child position.&lt;/span&gt;
+&lt;span class="cm"&gt;        current keeps the same&lt;/span&gt;
+&lt;span class="cm"&gt;        */&lt;/span&gt;
+        &lt;span class="n"&gt;heapArray&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;heapArray&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;largerChild&lt;/span&gt;&lt;span class="o"&gt;];&lt;/span&gt;
+        &lt;span class="n"&gt;index&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;largerChild&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+
+    &lt;span class="n"&gt;heapArray&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;current&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;//After loop, assign new root to proper position&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="insert"&gt;Insert&lt;/h4&gt;
+&lt;p&gt;Insertion can by down by following step:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Put the new element to end of array(i.e. end of heap): &lt;code&gt;heapArray[N] = insertNode; N++;&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Recursively moving this node so that it will be larger than its child elements and smaller than its parent node. i.e. if node is smaller larger than its parent node, swap this node and its parent node.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h5 id="code_1"&gt;Code&lt;/h5&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//We assume each node has a attribute 'key', which determine the value/priority of this node&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;boolean&lt;/span&gt; &lt;span class="nf"&gt;insert&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;currentSize&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;maxSize&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;//no more room for insertion&lt;/span&gt;
+    &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;newNode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Node&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="n"&gt;heapArray&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;currentSize&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;newNode&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;currentSize&lt;/span&gt;&lt;span class="o"&gt;++;&lt;/span&gt;
+    &lt;span class="n"&gt;trickleUp&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;currentSize&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;trickleUp&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+    &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;parent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;)/&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;//get parent index&lt;/span&gt;
+    &lt;span class="n"&gt;Node&lt;/span&gt; &lt;span class="n"&gt;current&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;heapArray&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;];&lt;/span&gt; &lt;span class="c1"&gt;//get current node&lt;/span&gt;
+
+    &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;heapArray&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;parent&lt;/span&gt;&lt;span class="o"&gt;].&lt;/span&gt;&lt;span class="na"&gt;getKey&lt;/span&gt;&lt;span class="o"&gt;()&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;bottom&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getKey&lt;/span&gt;&lt;span class="o"&gt;()){&lt;/span&gt;
+        &lt;span class="n"&gt;heapArray&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;heapArray&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;parent&lt;/span&gt;&lt;span class="o"&gt;];&lt;/span&gt;
+        &lt;span class="n"&gt;index&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;parent&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;//Now parent index should be current index&lt;/span&gt;
+        &lt;span class="n"&gt;parent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;parent&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;)/&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;//Get new parent index&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+
+    &lt;span class="n"&gt;heapArray&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;current&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;//after while loop, assign current node to final place&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="change-value"&gt;Change Value&lt;/h4&gt;
+&lt;p&gt;Working in process...&lt;/p&gt;&lt;/div&gt;</description><category>Algorithm</category><category>Data Structure</category><category>Heap</category><category>Java</category><guid>https://pengyin-shan.com/posts/2015/Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-heap/</guid><pubDate>Thu, 03 Sep 2015 04:00:00 GMT</pubDate></item></channel></rss>

@@ -1,0 +1,203 @@
+<p>This is the reading note for <strong>OCP Java SE 7 Certification Guide</strong> from <strong>Manning</strong>. <em>Please note that all definations and examples in this post are taken from the book.</em></p>
+<h1 id="chapter-1-java-class-design">Chapter 1: Java Class Design*</h1>
+<h2 id="11-java-access-modifiers">1.1 Java access modifiers</h2>
+<p>Java has four access modifiers:</p>
+<ul>
+<li>
+<p><code>public</code>: least restrictive</p>
+</li>
+<li>
+<p><code>protected</code></p>
+</li>
+<li>
+<p><code>default</code></p>
+</li>
+<li>
+<p><code>private</code>: most restrictive</p>
+</li>
+</ul>
+<p>Access modifier can be applied to classes, interfaces and their varibles and methods. <em>Can not</em> be applied to local variables and method parameters.</p>
+<p>Members of an interface are public in default. If you set it to <code>protected</code> or <code>private</code>, the interface <em>will not compile</em>.</p>
+<p><code>public</code> is the least restrictive access modifier. Classes and interfaces defined using the public modifier are accessisble across <em>all packages</em>, from <em>derived</em> to <em>unrelated</em> classes.</p>
+<p><code>protected</code> classes and interfaces are accessiable if <em>in same package</em>. Also, <em>All derived class</em> is accessable even in <em>different package</em> (i.e. <code>extends</code> is used in this class).</p>
+<p>A derived class can inherite and access protected memebers of its base class, regardless of the package it's defined. A derived class in a separate package can't access protected memebers of its base class using <code>reference variables</code>.</p>
+<pre class="code literal-block"><span></span><span class="kn">package</span> <span class="nn">library</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Book</span><span class="o">{</span>
+    <span class="kd">protected</span> <span class="n">String</span> <span class="n">author</span><span class="o">;</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">modifyTemplate</span><span class="o">(){};</span>
+<span class="o">}</span>
+<span class="cm">/*********************/</span>
+<span class="kn">package</span> <span class="nn">building</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">library.book</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">StoryBook</span> <span class="kd">extends</span> <span class="n">Book</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="n">StoryBook</span><span class="o">{</span>
+        <span class="n">author</span><span class="o">=</span><span class="s">&quot;ABC&quot;</span><span class="o">;</span> <span class="c1">//Works Fine</span>
+        <span class="n">modifyTemplate</span><span class="o">();</span> <span class="c1">//Works Fine</span>
+
+        <span class="c1">//If you want to access memebers in book, a new instance of Book needs to be declared first to access inside.</span>
+        <span class="n">Book</span> <span class="n">book</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Book</span><span class="o">();</span>
+        <span class="n">String</span> <span class="n">v</span> <span class="o">=</span> <span class="n">book</span><span class="o">.</span><span class="na">author</span><span class="o">;</span>
+        <span class="n">book</span><span class="o">.</span><span class="na">modifyTemplate</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>A class that has no access modifier marked always has <code>default access</code>, also called <code>package-private access</code>. Only memebers in same package can access it.</p>
+<pre class="code literal-block"><span></span><span class="kn">package</span> <span class="nn">library</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Book</span><span class="o">{</span>
+    <span class="kt">int</span> <span class="n">issueCount</span><span class="o">;</span>
+    <span class="kt">void</span> <span class="nf">issueHistory</span><span class="o">(){};</span>
+<span class="o">}</span>
+
+<span class="kn">package</span> <span class="nn">building</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">library.Book</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">House</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">House</span><span class="o">(){</span>
+        <span class="n">Book</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Book</span><span class="o">();</span> <span class="c1">//Works Fine</span>
+        <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="na">issueCount</span><span class="o">();</span> <span class="c1">//Compile Error</span>
+        <span class="n">b</span><span class="o">.</span><span class="na">issueHistory</span><span class="o">();</span> <span class="c1">//Compile Error</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kn">package</span> <span class="nn">library</span><span class="o">;</span>
+<span class="kd">class</span> <span class="nc">Book</span><span class="o">{</span>
+    <span class="kt">int</span> <span class="n">issueCount</span><span class="o">;</span>
+    <span class="kt">void</span> <span class="nf">issueHistory</span><span class="o">(){};</span>
+<span class="o">}</span>
+
+<span class="kn">package</span> <span class="nn">building</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">library.Book</span><span class="o">;</span> <span class="c1">//Compile Error. library.Book can not be accessed</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">House</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">House</span><span class="o">(){</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p><code>private</code> means this member can only be accessed in its own class.</p>
+<p><code>private</code> and <code>protected</code> can not be applied to top level class/interface. Method parameter and local varaibels can only use <code>default access</code>. In these cases java will not compile.</p>
+<h2 id="12-overloaded-methods-and-constructors">1.2 Overloaded methods and constructors</h2>
+<p>Overloaded methods are mothods with the same name but different method parameter lists. Also, a derived class can overload its base class's methods</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nf">Paper</span><span class="o">();</span>
+<span class="kd">class</span> <span class="nf">Laptop</span><span class="o">();</span>
+
+<span class="kd">class</span> <span class="nc">Lecture</span><span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">takeNotes</span><span class="o">(</span><span class="n">Paper</span> <span class="n">paper</span><span class="o">);</span>
+    <span class="kt">void</span> <span class="nf">takeNotes</span><span class="o">(</span><span class="n">Laptop</span> <span class="n">laptop</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nf">Pen</span><span class="o">();</span>
+<span class="kd">class</span> <span class="nc">newLecture</span> <span class="kd">extends</span> <span class="n">Lecture</span><span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">takeNotes</span><span class="o">(</span><span class="n">Pen</span> <span class="n">pen</span><span class="o">);</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>Overloaded method can accept:</p>
+<p>Different number of parameters</p>
+<p><em>Or</em> different type of parameters</p>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="n">Test</span><span class="o">{</span>
+
+<span class="kt">double</span> <span class="nf">Case</span><span class="o">(</span><span class="kt">double</span> <span class="n">test1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">test2</span><span class="o">){</span>
+    <span class="k">return</span> <span class="mf">0.5</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="kt">double</span> <span class="nf">Case</span><span class="o">(</span><span class="kt">int</span> <span class="n">test1</span><span class="o">,</span> <span class="kt">double</span> <span class="n">test2</span><span class="o">){</span>
+    <span class="k">return</span> <span class="mf">0.6</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">..</span> <span class="n">args</span><span class="o">){</span>
+    <span class="n">Test</span> <span class="n">test</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Test</span><span class="o">();</span>
+    <span class="n">test</span><span class="o">.</span><span class="na">Case</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">);</span>
+    <span class="cm">/*</span>
+<span class="cm">    This will get compile error.</span>
+<span class="cm">    Java compiler is unable to determine which overloaded method should be called.</span>
+<span class="cm">    */</span>
+<span class="o">}</span>
+
+<span class="c1">//Following will solve the problem</span>
+<span class="kt">double</span> <span class="nf">Case</span><span class="o">(</span><span class="kt">int</span> <span class="n">test1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">test2</span><span class="o">){</span>
+    <span class="k">return</span> <span class="mf">0.7</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p><em>Or</em> different positions of parameter, based on parameter type</p>
+<p>Overloaded method can not accept:</p>
+<ul>
+<li>
+<p>Only differ in return types becuase java compiler does not differentiates turn types.</p>
+</li>
+<li>
+<p>Only differ in access modifiers</p>
+</li>
+<li>
+<p>Only different in non-access modifiers such as <code>final</code>.</p>
+</li>
+</ul>
+<p>The overloaded methods are bound are <em>compile time</em> and not run time. To resolve the call to the overloaded methods, the complier consider the type of the variable that is used to <em>refer</em> to an object.</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">Result</span><span class="o">{</span>
+    <span class="n">String</span> <span class="nf">getValue</span><span class="o">(</span><span class="n">Object</span> <span class="n">obj</span><span class="o">){</span>
+        <span class="k">return</span> <span class="s">&quot;Object&quot;</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="n">String</span> <span class="nf">getValue</span><span class="o">(</span><span class="n">String</span> <span class="n">str</span><span class="o">){</span>
+        <span class="k">return</span> <span class="s">&quot;String&quot;</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">TestResult</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">...</span> <span class="n">args</span><span class="o">){</span>
+        <span class="n">Object</span> <span class="n">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="s">&quot;Harry&quot;</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">new</span> <span class="n">Result</span><span class="o">().</span><span class="na">getValue</span><span class="o">(</span><span class="n">obj</span><span class="o">));</span>
+
+        <span class="cm">/*</span>
+<span class="cm">        &quot;Object&quot; will be print out.</span>
+<span class="cm">        String is just a reference, pointing to the object obj.</span>
+<span class="cm">        So getValue will find type of the reference object obj, which is a object.</span>
+<span class="cm">        Note that obj here is a reference variable becuase we use obj to refer an instance of String, &quot;Harry&quot;.</span>
+<span class="cm">        */</span>
+
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>Overloaded constructors can be defined by using a different argument list, but no a change of its access or nonaccess modifiers.</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">Employee</span><span class="o">{</span>
+    <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
+
+    <span class="n">Employee</span><span class="o">(</span><span class="n">String</span> <span class="n">newName</span><span class="o">){</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">newName</span><span class="o">;</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="mi">12</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="n">Employee</span><span class="o">(</span><span class="n">String</span> <span class="n">newName</span><span class="o">,</span> <span class="kt">int</span> <span class="n">newAge</span><span class="o">){</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">newName</span><span class="o">;</span>
+        <span class="n">age</span> <span class="o">=</span> <span class="n">newAge</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>Overloaded constructor can be called from another overloaded constructor. <code>this</code> keyword should be used to do this. Also, the class to another constructor must be the <em>first</em> statement in a constructor.
+    :::java
+    class Employee{
+        String name;
+        int age;</p>
+<pre class="code literal-block"><span></span>    Employee(){
+    /*
+    Note: if I add a &quot;System.println.out...&quot; here, there will be compile error.
+    Because this() must be the first statment here
+    */
+    this(null,0); //Invoke a constructor that takes two parameters
+    }
+
+    Employee(String newName, int newAge){
+        name = newName;
+        age = newAge;
+    }
+}
+</pre>

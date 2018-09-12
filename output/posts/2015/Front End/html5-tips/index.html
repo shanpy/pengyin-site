@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " vocab="http://ogp.me/ns" lang="en">
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]--><!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]--><!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]--><!--[if gt IE 8]><!--><!--<![endif]--><head>
+<meta charset="utf-8">
+<meta name="description" content="During JavaScript development in my job, I found HTML5 has some interesting features. I want to make notes of these features for future usage. Till July 2015, following features has been updated: Canvas, Drag and Drop.">
+<!-- http://t.co/dKP3o1e --><meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML5 Tips | Pengyin's Corner</title>
+<link href="../../../../assets/css/all.css" rel="stylesheet" type="text/css">
+<!-- Webfonts --><link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+<!-- Load Modernizr --><script src="//mmistakes.github.io/hpstr-jekyll-theme/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script><link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../rss.xml">
+<link rel="canonical" href="https://pengyin-shan.com/posts/2015/Front%20End/html5-tips/">
+<!--[if lt IE 9]><script src="../../../../assets/js/html5.js"></script><![endif]--><meta name="description" content="During JavaScript development in my job, I found HTML5 has some interesting features. I want to make notes of these features for future usage. Till July 2015, following features has been updated: Canvas, Drag and Drop.">
+<meta name="author" content="Pengyin(Wendy) Shan">
+<link rel="prev" href="../../Front%20End/sass-qa-and-tips/" title="SASS Q&amp;A and Tips CONTINUALLY UPDATE" type="text/html">
+<link rel="next" href="../../Data%20Science/use-amazon-ec2-to-host-ipython-notebook/" title="Use Amazon EC2 to Host IPython Notebook" type="text/html">
+<meta property="og:site_name" content="Pengyin's Corner">
+<meta property="og:title" content="HTML5 Tips">
+<meta property="og:url" content="https://pengyin-shan.com/posts/2015/Front%20End/html5-tips/">
+<meta property="og:description" content="During JavaScript development in my job, I found HTML5 has some interesting features. I want to make notes of these features for future usage. Till July 2015, following features has been updated: Canv">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-01-13T00:00:00-05:00">
+<meta property="article:tag" content="HTML5">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="jQuery">
+</head>
+<body id="post-index" class="feature">
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    
+
+    <nav id="dl-menu" class="dl-menuwrapper" role="navigation"><button class="dl-trigger">Open Menu</button>
+    <ul class="dl-menu">
+<li><a href="../../../">My Knowledge Base</a></li>
+            <li><a href="https://www.linkedin.com/in/pengyinshan">My LinkedIn</a></li>
+            <li><a href="../../../../categories/">Tags and Categories</a></li>
+            <li><a href="../../../../rss.xml">RSS feed</a></li>
+            <li><a href="../../../../archive.html">Archive</a></li>
+    
+    
+    </ul></nav><div class="entry-header">
+<!-- /.image-credit -->
+    <div class="entry-image">
+      <img src="../../../../bk.JPG" alt="Latest Posts">
+</div>
+<!-- /.entry-image -->
+      
+  <div class="header-title">
+    <div class="header-title-wrap">
+    <h1 id="brand"><a href="https://pengyin-shan.com/" title="Pengyin's Corner" rel="home">
+    Pengyin's Corner</a></h1>
+      <h2>Be Passionate.</h2>
+    </div>
+<!-- /.header-title-wrap -->
+  </div>
+<!-- /.header-title -->
+
+</div>
+<!-- /.entry-header -->
+
+    <div id="main" role="main">
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><div class="entry-meta">
+            <span class="dateline"><a href="../../Front%20End/html5-tips/" rel="bookmark"><time class="published dt-published" datetime="2015-01-13T00:00:00-05:00" itemprop="datePublished" title="2015-01-13">2015-01-13</time></a></span>  ·  
+            <span class="byline author vcard">Pengyin(Wendy) Shan</span>  ·  
+                <span class="commentline">
+        
+    <a href="../../Front%20End/html5-tips/#disqus_thread" data-disqus-identifier="cache/posts/2015/Front End/html5-tips.html">Comments</a>
+
+</span>  ·  
+            
+        <span class="sourceline"><a href="../../Front%20End/html5-tips/index.md" id="sourcelink">Source</a></span>  ·  
+
+                <meta name="description" itemprop="description" content="During JavaScript development in my job, I found HTML5 has some interesting features. I want to make notes of these features for future usage. Till July 2015, following features has been updated: Canvas, Drag and Drop.">
+</div>
+        
+
+    
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="../../Front%20End/html5-tips/" class="u-url">HTML5 Tips</a></h1>
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<h2 id="canvas">Canvas</h2>
+<h4 id="html">HTML</h4>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">canvas</span> <span class="na">style</span><span class="o">=</span><span class="s">"width:1000px; height:1000px;"</span> <span class="na">id</span><span class="o">=</span><span class="s">"thecanvas"</span><span class="p">&gt;&lt;/</span><span class="nt">canvas</span><span class="p">&gt;</span>
+</pre>
+
+
+<h4 id="javascript-operation">JavaScript Operation</h4>
+<h5 id="get-context-2d">Get Context (2d)</h5>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">oCanvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"thecanvas"</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">oCtx</span> <span class="o">=</span> <span class="nx">oCanvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">"2d"</span><span class="p">);</span>
+</pre>
+
+
+<h5 id="add-text-and-edit-text-style">Add Text and Edit Text Style</h5>
+<pre class="code literal-block"><span></span><span class="c1">//Example of Text Shadow. If you make them to 0, you can remove text shadow</span>
+<span class="nx">oCtx</span><span class="p">.</span><span class="nx">shadowColor</span> <span class="o">=</span> <span class="s2">"#000000"</span><span class="p">;</span>
+<span class="nx">oCtx</span><span class="p">.</span><span class="nx">shadowOffsetX</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>
+<span class="nx">oCtx</span><span class="p">.</span><span class="nx">shadowOffsetY</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>
+<span class="nx">oCtx</span><span class="p">.</span><span class="nx">shadowBlur</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>
+<span class="c1">//Example of Text Style</span>
+<span class="nx">oCtx</span><span class="p">.</span><span class="nx">font</span> <span class="o">=</span> <span class="s2">"normal 18px Arial"</span><span class="p">;</span>
+<span class="nx">oCtx</span><span class="p">.</span><span class="nx">fillStyle</span> <span class="o">=</span> <span class="s2">"#ccc"</span><span class="p">;</span>
+<span class="c1">//Draw Text</span>
+<span class="nx">oCtx</span><span class="p">.</span><span class="nx">fillText</span><span class="p">(</span><span class="s2">"Hello World"</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> <span class="c1">//x-axis and y-axis</span>
+</pre>
+
+
+<h5 id="draw-existing-image-to-canvas">Draw Existing Image to Canvas</h5>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">imageObj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Image</span><span class="p">();</span>
+<span class="c1">//get src of existing image</span>
+<span class="nx">imageObj</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'existing_image'</span><span class="p">).</span><span class="nx">src</span><span class="p">;</span>
+<span class="nx">oCtx</span><span class="p">.</span><span class="nx">drawImage</span><span class="p">(</span><span class="nx">imageObj</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> <span class="c1">//x-axis and y-axis</span>
+</pre>
+
+
+<h5 id="download-canvas-as-image">Download Canvas as Image</h5>
+<pre class="code literal-block"><span></span><span class="cm">/**Create a (hidden) image to hold canvas data:</span>
+<span class="cm">&lt;img hidden src="" id="downloadCanvas" /&gt;</span>
+<span class="cm">**/</span>
+<span class="kd">var</span> <span class="nx">dataURL</span> <span class="o">=</span> <span class="nx">oCanvas</span><span class="p">.</span><span class="nx">toDataURL</span><span class="p">(</span><span class="s1">'image/png'</span><span class="p">);</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'downloadCanvas'</span><span class="p">).</span><span class="nx">width</span> <span class="o">=</span> <span class="nx">oCanvas</span><span class="p">.</span><span class="nx">width</span><span class="p">;</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'downloadCanvas'</span><span class="p">).</span><span class="nx">height</span> <span class="o">=</span> <span class="nx">oCanvas</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'downloadCanvas'</span><span class="p">).</span><span class="nx">src</span> <span class="o">=</span> <span class="nx">dataURL</span><span class="p">;</span>
+<span class="cm">/**</span>
+<span class="cm">If you want to have a download link to download canvas image, make sure you have HTML such as:</span>
+<span class="cm">&lt;a id="downloadBanner" href="#" class="button" download="banner_result.png"&gt;Download&lt;/a&gt;</span>
+<span class="cm">Note "download" attribute is able to re-name the downloadable image.</span>
+<span class="cm">**/</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'downloadBanner'</span><span class="p">).</span><span class="nx">href</span> <span class="o">=</span> <span class="nx">dataURL</span><span class="p">;</span>
+</pre>
+
+
+<h5 id="clear-canvas">Clear Canvas</h5>
+<pre class="code literal-block"><span></span><span class="c1">//You may want to do this to remove unwanted elements from canvas</span>
+<span class="nx">oCtx</span><span class="p">.</span><span class="nx">clearRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">oCanvas</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span> <span class="nx">oCanvas</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+</pre>
+
+
+<h2 id="drag-and-drop">Drag and Drop</h2>
+<p>Examples are taken from <a href="../../Front%20End/html5-tips/www.w3schools.com/html/html5_draganddrop.asp">w3schools.com</a>.</p>
+<h4 id="general-process">General Process</h4>
+<p>Draable stuff has <code>draggable = 'true'</code> attribute; has <code>ondragstart</code> attribute, which takes a method.</p>
+<p>Destination stuff has <code>ondrop</code> and <code>ondragover</code> attribute. Both of them take method.</p>
+<h4 id="ondragstart">ondragstart</h4>
+<p>This attribute takes a JavaScript method. This method takes a <code>event</code> parameter and describe what will happen when you start to drag.</p>
+<p>You need to set the data to drag by using <code>event.dataTransfer.setData(format, event.target.id)</code>:</p>
+<blockquote>
+<p><code>format</code> above can be <code>text</code>, <code>text/plain</code>, <code>text/html</code> etc, or <code>URL</code> format.</p>
+<p>This function set up the data that is take via <code>event.target.id</code>, which is the <code>id</code> for draggable stuff, and temparary store it. Note <code>event.target</code> now pointing to draggable stuff.</p>
+</blockquote>
+<h4 id="ondragover">ondragover</h4>
+<p>This attribute takes a JavaScript method. This method takes a <code>event</code> parameter and describe what will happen when you drag stuff over elements without drop the stuff.</p>
+<p>Basic set up is <code>event.preventDefault()</code>, which prevents browser asking elements doing default behavior.</p>
+<h4 id="ondrop">ondrop</h4>
+<p>This attribute takes a JavaScript method. This method takes a <code>event</code> parameter and describe what will happen when you drop the draggable stuff.</p>
+<p>First, you should do <code>event.preventDefault()</code>, which prevents browser asking elements doing default behavior.</p>
+<p>Then, you need to get the data that you dragged by using <code>event.dataTransfer.getData(format)</code>. The format should corresponding what you had in <code>event.dataTransfer.setData()</code> method.</p>
+<blockquote>
+<p>The method will return all data that has same format.</p>
+</blockquote>
+<p>You can get current dropdown container by using <code>event.target</code> (instead of draggable element). You can choose to append your draggable stuff by using</p>
+<pre class="code literal-block"><span></span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">dataTransfer</span><span class="p">.</span><span class="nx">getData</span><span class="p">(</span><span class="nx">format</span><span class="p">))</span>
+</pre>
+
+
+<p>if you passed <code>id</code> in <code>ondragstart</code>'s method. Or you can do whatever you want.</p>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../categories/html5/" rel="tag">HTML5</a></li>
+            <li><a class="tag p-category" href="../../../../categories/javascript/" rel="tag">JavaScript</a></li>
+            <li><a class="tag p-category" href="../../../../categories/jquery/" rel="tag">jQuery</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../../Front%20End/sass-qa-and-tips/" rel="prev" title="SASS Q&amp;A and Tips CONTINUALLY UPDATE">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../../Data%20Science/use-amazon-ec2-to-host-ipython-notebook/" rel="next" title="Use Amazon EC2 to Host IPython Notebook">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="pengyinsnotes",
+            disqus_url="https://pengyin-shan.com/posts/2015/Front%20End/html5-tips/",
+        disqus_title="HTML5 Tips",
+        disqus_identifier="cache/posts/2015/Front End/html5-tips.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="pengyinsnotes";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+    
+    <div class="footer-wrapper">
+        <footer role="contentinfo"><p>Contents © 2018         <a href="mailto:pengyin.shan@outlook.com">Pengyin(Wendy) Shan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+        </footer>
+</div>
+
+    
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script src="../../../../assets/js/scripts.min.js"></script>
+</body>
+</html>

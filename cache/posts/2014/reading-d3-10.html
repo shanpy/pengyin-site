@@ -1,0 +1,272 @@
+<p>This post is transferred from my <a href="http://blogpengyin.herokuapp.com/">old Hexo blog site</a>, created on 2014.</p>
+<p>This is a Reading Note for <em>Interactive Data Visualization for the Web - An Introduction to Designing with D3</em> by <em>Scott Murray</em>, pulished by <em>O'Reilly, 2013</em></p>
+<p>This post will contains concepts that I think it's importa</p>
+<h1 id="chapter-10-interactive-design">Chapter 10 : Interactive Design</h1>
+<p>code example for this chapter is <a href="http://shanpy.github.io/Front-End-Playground/D3/Reading-D3-VI.html"><strong>here</strong></a>. This part involves lots of code practice.</p>
+<p>To add transition to element using <code>css</code>:</p>
+<pre class="code literal-block"><span></span><span class="nt">rect</span><span class="p">:</span><span class="nd">hover</span> <span class="p">{</span>
+    <span class="k">transition</span><span class="p">:</span> <span class="kc">all</span> <span class="mf">0.3</span><span class="kt">s</span><span class="p">;</span>
+    <span class="kp">-moz-</span><span class="k">transition</span><span class="p">:</span> <span class="kc">all</span> <span class="mf">0.3</span><span class="kt">s</span><span class="p">;</span>
+    <span class="kp">-o-</span><span class="k">transition</span><span class="p">:</span> <span class="kc">all</span> <span class="mf">0.3</span><span class="kt">s</span><span class="p">;</span>
+    <span class="kp">-webkit-</span><span class="k">transition</span><span class="p">:</span> <span class="kc">all</span> <span class="mf">0.3</span><span class="kt">s</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+
+
+<p>We can do same thing using <code>javascript</code>: <code>.on('mouseover',function(){...}</code>; In function, we can use <code>d3.select(this).attr()</code> to adjust attribute of elements. Using <code>.on('mouseout',function(){...}</code> to make sure when moving mouse out, the effect disappears.</p>
+<p>Note: It is the best to set <em>hover</em> effect in <code>css</code>, and set other complex effect to <code>javascript</code>.</p>
+<p><code>pointer-events: none;</code> can be used to let css <em>ingore</em> mouse event for certain element. <code>.style('pointer-events','none')</code> can achieve same effect.</p>
+<h2 id="sort-bar">Sort Bar</h2>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">sortBars</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;rect&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">sort</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">){</span>
+            <span class="k">return</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">ascending</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">);</span> <span class="c1">//can also do decending</span>
+        <span class="p">})</span>
+        <span class="p">.</span><span class="nx">transition</span><span class="p">()</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+            <span class="k">return</span> <span class="nx">xScale</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+        <span class="p">})</span>
+<span class="p">}</span>
+</pre>
+
+
+<p>In the code above, <code>sort</code> needs to know which is front, which is next, so we need to pass it two parameters, and using <code>ascending()</code> to give a order. Now each element in dataset will be compared and sorted.</p>
+<h2 id="tool-tip">Tool Tip</h2>
+<p>If you want to use <em>default</em> tooltip setting by browser, just add <code>.append('title').text(function(d){...});</code> after appending elements.</p>
+<p>You can also set <em>SVG</em> tooltip. First, re-set <code>x</code> and <code>y</code>, then append <code>text</code> to element:</p>
+<pre class="code literal-block"><span></span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;mouseover&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">xPosition</span> <span class="o">=</span> <span class="nb">parseFloat</span><span class="p">(</span><span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">))</span> <span class="o">+</span> <span class="nx">xScale</span><span class="p">.</span><span class="nx">randBand</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+    <span class="c1">//make tooltip x position to current x plus half of bar width</span>
+    <span class="kd">var</span> <span class="nx">yPosition</span> <span class="o">=</span> <span class="nb">parseFloat</span><span class="p">(</span><span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">))</span> <span class="o">+</span> <span class="mi">14</span><span class="p">;</span> <span class="c1">//make y go down</span>
+
+    <span class="nx">svg</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;tooltip&#39;</span><span class="p">)</span> <span class="c1">//Assign id for easy remove</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="nx">xPostion</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="nx">yPosition</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;text-anchor&#39;</span><span class="p">,</span><span class="s1">&#39;middle&#39;</span><span class="p">)</span> <span class="c1">//In svg, this is used to align text</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="nx">d</span><span class="p">);</span>
+
+    <span class="c1">//We can remove tooltip by d3.select(&#39;#tooltip&#39;).remove();</span>
+<span class="p">});</span>
+</pre>
+
+
+<p><em>HTML</em> tooltip can make tooltip out of svg, which is better in some case. You can make it using <code>html</code> or <code>javascript</code>.</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;tooltip&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;hidden&quot;</span><span class="p">&gt;</span>  <span class="c">&lt;!--hidden class can hide this element--&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>Label Heading<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">strong</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;value&quot;</span><span class="p">&gt;</span>100<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/css&quot;</span><span class="p">&gt;</span>
+    <span class="p">#</span><span class="nn">tooltip</span><span class="p">{</span>
+        <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span> <span class="err">//This</span> <span class="err">is</span> <span class="err">important</span>
+        <span class="k">width</span><span class="p">:</span> <span class="mi">299</span><span class="kt">px</span><span class="p">;</span>
+        <span class="k">height</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
+        <span class="k">padding</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+        <span class="k">background-color</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
+        <span class="err">//...</span>
+        <span class="n">pointer-events</span><span class="p">:</span><span class="kc">none</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="p">#</span><span class="nn">tooltip</span><span class="p">.</span><span class="nc">hidden</span><span class="p">{</span>
+        <span class="k">display</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="p">#</span><span class="nn">tooltip</span> <span class="nt">p</span><span class="p">{</span>
+        <span class="k">margin</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="err">//...</span>
+    <span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
+    <span class="c1">//re-set xPosition and yPosition as code above</span>
+
+    <span class="c1">//on mouse over</span>
+    <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s1">&#39;#tooltip&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">style</span><span class="p">(</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="nx">xPosition</span> <span class="o">+</span> <span class="s2">&quot;px&quot;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">style</span><span class="p">(</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="nx">yPosition</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s1">&#39;#value&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="nx">d</span><span class="p">);</span>
+
+    <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s1">&#39;#tooltip&#39;</span><span class="p">).</span><span class="nx">classed</span><span class="p">(</span><span class="s1">&#39;hidden&#39;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span> <span class="c1">//show tooltip</span>
+
+
+    <span class="c1">//on mouse out</span>
+    <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s1">&#39;#tooltip&#39;</span><span class="p">).</span><span class="nx">classed</span><span class="p">(</span><span class="s1">&#39;hidden&#39;</span><span class="p">,</span><span class="kc">true</span><span class="p">);</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre>
+
+
+<h2 id="code-for-this-chapter">Code for This Chapter</h2>
+<p>You can view interative version <a href="http://shanpy.github.io/Front-End-Playground/D3/Reading-D3-VI.html"><strong>here</strong></a>.</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">style</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/css&quot;</span><span class="p">&gt;</span>
+        <span class="nt">rect</span><span class="p">:</span><span class="nd">hover</span><span class="p">{</span>
+            <span class="n">fill</span><span class="p">:</span><span class="kc">orange</span><span class="p">;</span>
+            <span class="kp">-moz-</span><span class="k">transition</span><span class="p">:</span> <span class="kc">all</span> <span class="mf">0.3</span><span class="kt">s</span><span class="p">;</span>
+            <span class="kp">-o-</span><span class="k">transition</span><span class="p">:</span> <span class="kc">all</span> <span class="mf">0.3</span><span class="kt">s</span><span class="p">;</span>
+            <span class="kp">-webkit-</span><span class="k">transition</span><span class="p">:</span> <span class="kc">all</span> <span class="mf">0.3</span><span class="kt">s</span><span class="p">;</span>
+            <span class="k">transition</span><span class="p">:</span> <span class="kc">all</span> <span class="mf">0.3</span><span class="kt">s</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="p">#</span><span class="nn">tooltip</span><span class="p">{</span>
+            <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
+            <span class="k">width</span><span class="p">:</span> <span class="mi">10</span><span class="kt">em</span><span class="p">;</span>
+            <span class="k">height</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
+            <span class="k">padding</span><span class="p">:</span> <span class="mi">1</span><span class="kt">em</span><span class="p">;</span>
+            <span class="k">background-color</span><span class="p">:</span> <span class="kc">white</span><span class="p">;</span>
+            <span class="kp">-webkit-</span><span class="k">border-radius</span><span class="p">:</span> <span class="mi">5</span><span class="kt">px</span><span class="p">;</span>
+            <span class="err">-</span><span class="n">mox-border-radius</span><span class="p">:</span> <span class="mi">5</span><span class="kt">px</span><span class="p">;</span>
+            <span class="k">border-radius</span><span class="p">:</span> <span class="mi">5</span><span class="kt">px</span><span class="p">;</span>
+            <span class="kp">-webkit-</span><span class="k">box-shadow</span><span class="p">:</span> <span class="mi">3</span><span class="kt">px</span> <span class="mi">3</span><span class="kt">px</span> <span class="mi">3</span><span class="kt">px</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.5</span><span class="p">);</span>
+            <span class="kp">-moz-</span><span class="k">box-shadow</span><span class="p">:</span> <span class="mi">3</span><span class="kt">px</span> <span class="mi">3</span><span class="kt">px</span> <span class="mi">3</span><span class="kt">px</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.5</span><span class="p">);</span>
+            <span class="k">box-shadow</span><span class="p">:</span> <span class="mi">3</span><span class="kt">px</span> <span class="mi">3</span><span class="kt">px</span> <span class="mi">3</span><span class="kt">px</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.5</span><span class="p">);</span>
+            <span class="n">pointer-events</span><span class="p">:</span><span class="kc">none</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="p">#</span><span class="nn">tooltip</span><span class="p">.</span><span class="nc">hidden</span><span class="p">{</span>
+            <span class="k">display</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="p">#</span><span class="nn">tooltip</span> <span class="nt">p</span><span class="p">{</span>
+            <span class="k">margin</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
+    <span class="c1">//create key-value pair dataset</span>
+    <span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="kd">var</span> <span class="nx">base1</span> <span class="o">=</span> <span class="mi">80</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">base2</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">count</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">count</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span><span class="nx">count</span><span class="o">++</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">pair</span> <span class="o">=</span> <span class="p">{};</span>
+        <span class="nx">pair</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="o">*</span><span class="nx">base1</span><span class="p">);</span>
+        <span class="nx">pair</span><span class="p">.</span><span class="nx">key</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="o">*</span><span class="nx">base2</span><span class="p">);</span>
+        <span class="nx">dataset</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">pair</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">//set up svg</span>
+    <span class="kd">var</span> <span class="nx">h</span> <span class="o">=</span> <span class="mi">400</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">padding</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">svg</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;chapter10&#39;</span><span class="p">).</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>         <span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span><span class="s1">&#39;100%&#39;</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span><span class="nx">h</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">w</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">offsetWidth</span><span class="p">;</span>
+
+    <span class="c1">//set up scale</span>
+    <span class="kd">var</span> <span class="nx">xScale</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">ordinal</span><span class="p">()</span>
+                    <span class="p">.</span><span class="nx">domain</span><span class="p">(</span><span class="nx">d3</span><span class="p">.</span><span class="nx">range</span><span class="p">(</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">))</span>
+                    <span class="p">.</span><span class="nx">rangeRoundBands</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="nx">w</span><span class="p">],</span><span class="mf">0.05</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">yScale</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">linear</span><span class="p">()</span>
+                    <span class="p">.</span><span class="nx">domain</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="nx">d3</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">dataset</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+                        <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+                    <span class="p">})])</span>
+                    <span class="p">.</span><span class="nx">range</span><span class="p">([</span><span class="nx">h</span><span class="o">-</span><span class="nx">padding</span><span class="p">,</span><span class="mi">0</span><span class="p">]);</span>
+
+    <span class="c1">//set up bar chart</span>
+    <span class="kd">var</span> <span class="nx">rect</span> <span class="o">=</span> <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;rect&#39;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">).</span><span class="nx">enter</span><span class="p">().</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;rect&#39;</span><span class="p">)</span>
+                    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+                        <span class="k">return</span> <span class="nx">xScale</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+                    <span class="p">})</span>
+                    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+                        <span class="k">return</span> <span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span> <span class="o">-</span> <span class="nx">padding</span><span class="p">;</span>
+                    <span class="p">})</span>
+                    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+                        <span class="k">return</span> <span class="nx">xScale</span><span class="p">.</span><span class="nx">rangeBand</span><span class="p">();</span>
+                    <span class="p">})</span>
+                    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+                        <span class="k">return</span> <span class="nx">h</span><span class="o">-</span><span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+                    <span class="p">})</span>
+                    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+                        <span class="k">return</span> <span class="s2">&quot;rgb(120,150,&quot;</span> <span class="o">+</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="o">*</span><span class="mi">5</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">;</span>
+                    <span class="p">});</span>
+    <span class="nx">rect</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+                        <span class="nx">sortBars</span><span class="p">();</span> <span class="c1">//add a clickable function to it, sorting</span>
+                    <span class="p">});</span>
+
+    <span class="c1">//set up tags</span>
+    <span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">).</span><span class="nx">enter</span><span class="p">().</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">);</span>
+    <span class="nx">text</span><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+    <span class="p">});</span>
+    <span class="nx">text</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">xScale</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="o">+</span> <span class="nx">xScale</span><span class="p">.</span><span class="nx">rangeBand</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+    <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span><span class="o">+</span><span class="nx">padding</span><span class="o">*</span><span class="mi">3</span><span class="p">;</span>
+    <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;class&#39;</span><span class="p">,</span><span class="s1">&#39;tags&#39;</span><span class="p">);</span>  <span class="c1">//add class for easier sorting</span>
+
+
+    <span class="c1">//set up axis. Note if axis should be added as last step, otherwise it will mess up tags, and be covered by bars</span>
+    <span class="kd">var</span> <span class="nx">xAxis</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">svg</span><span class="p">.</span><span class="nx">axis</span><span class="p">()</span>
+                    <span class="p">.</span><span class="nx">scale</span><span class="p">(</span><span class="nx">xScale</span><span class="p">)</span>
+                    <span class="p">.</span><span class="nx">orient</span><span class="p">(</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
+                    <span class="p">.</span><span class="nx">ticks</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">yAxis</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">svg</span><span class="p">.</span><span class="nx">axis</span><span class="p">()</span>
+                    <span class="p">.</span><span class="nx">scale</span><span class="p">(</span><span class="nx">yScale</span><span class="p">)</span>
+                    <span class="p">.</span><span class="nx">orient</span><span class="p">(</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+                    <span class="p">.</span><span class="nx">ticks</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+    <span class="nx">svg</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;class&#39;</span><span class="p">,</span><span class="s1">&#39;axis xaxis&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;transform&#39;</span><span class="p">,</span><span class="s1">&#39;translate(0,&#39;</span><span class="o">+</span><span class="p">(</span><span class="nx">h</span><span class="o">-</span><span class="nx">padding</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;)&#39;</span><span class="p">).</span><span class="nx">call</span><span class="p">(</span><span class="nx">xAxis</span><span class="p">);</span>
+    <span class="nx">svg</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;class&#39;</span><span class="p">,</span><span class="s1">&#39;axis yaxis&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;transform&#39;</span><span class="p">,</span><span class="s1">&#39;translate(&#39;</span><span class="o">+</span><span class="nx">padding</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="s1">&#39;)&#39;</span><span class="p">).</span><span class="nx">call</span><span class="p">(</span><span class="nx">yAxis</span><span class="p">);</span>
+
+
+    <span class="c1">//sortBar method</span>
+    <span class="kd">var</span> <span class="nx">sortBars</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+            <span class="c1">//sort rect</span>
+         <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;rect&#39;</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">sort</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">){</span>
+                <span class="c1">//Important: Use a.value here if your dataset is key/value pair!</span>
+                <span class="k">return</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">ascending</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span><span class="nx">b</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span> <span class="c1">//if pass two parameter a,b, sort them using ascending order</span>
+            <span class="p">})</span> <span class="c1">//default is ascending order</span>
+            <span class="p">.</span><span class="nx">transition</span><span class="p">()</span>
+            <span class="p">.</span><span class="nx">duration</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+                <span class="k">return</span> <span class="nx">xScale</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span> <span class="c1">//after sort, re-asign x value</span>
+            <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+                        <span class="k">return</span> <span class="s2">&quot;rgb(200,150,&quot;</span> <span class="o">+</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="o">*</span><span class="mi">5</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">;</span>
+                    <span class="p">});</span>
+
+            <span class="c1">//sort tags</span>
+            <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s2">&quot;.tags&quot;</span><span class="p">)</span><span class="c1">//selectAll for class name in D3</span>
+                <span class="p">.</span><span class="nx">sort</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">){</span>
+                    <span class="k">return</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">ascending</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span><span class="nx">b</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+                <span class="p">}).</span><span class="nx">transition</span><span class="p">()</span>
+                <span class="p">.</span><span class="nx">duration</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+                    <span class="k">return</span> <span class="nx">xScale</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="o">+</span> <span class="nx">xScale</span><span class="p">.</span><span class="nx">rangeBand</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span> <span class="c1">//after sort, re-asign x value</span>
+                <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+                            <span class="k">return</span> <span class="s1">&#39;blue&#39;</span><span class="p">;</span>
+                        <span class="p">});</span>
+    <span class="p">}</span>
+
+
+    <span class="c1">//Add HTML Reminder</span>
+    <span class="nx">rect</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;mouseover&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+        <span class="c1">//get reminder&#39;s x and y value</span>
+
+        <span class="c1">//get current current x value and add rangeBand</span>
+        <span class="kd">var</span> <span class="nx">xPosition</span> <span class="o">=</span> <span class="nb">parseFloat</span><span class="p">(</span><span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">))</span> <span class="o">+</span> <span class="nx">xScale</span><span class="p">.</span><span class="nx">rangeBand</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">yPosition</span> <span class="o">=</span> <span class="nb">parseFloat</span><span class="p">(</span><span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">))</span> <span class="o">+</span> <span class="nx">h</span><span class="p">;</span>
+        <span class="nb">window</span><span class="p">.</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">));</span>
+
+        <span class="c1">//create a div to hold reminder. Style for this div is on top</span>
+        <span class="kd">var</span> <span class="nx">newDiv</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">);</span>
+        <span class="nx">newDiv</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;tooltip&#39;</span><span class="p">);</span>
+        <span class="nx">newDiv</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;class&#39;</span><span class="p">,</span><span class="s1">&#39;hidden&#39;</span><span class="p">);</span>
+        <span class="nx">newDiv</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s1">&#39;&lt;p&gt;&lt;strong&gt;Percentage&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span id=&quot;value&quot;&gt;100&lt;/span&gt;%&lt;/p&gt;&#39;</span><span class="p">;</span>
+        <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;chapter10&#39;</span><span class="p">).</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">newDiv</span><span class="p">);</span>
+
+        <span class="c1">//create new reminder</span>
+        <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s1">&#39;#tooltip&#39;</span><span class="p">).</span><span class="nx">style</span><span class="p">(</span><span class="s1">&#39;left&#39;</span><span class="p">,</span><span class="nx">xPosition</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="p">)</span>
+                            <span class="p">.</span><span class="nx">style</span><span class="p">(</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="nx">yPosition</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="p">)</span>
+                            <span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s1">&#39;#value&#39;</span><span class="p">)</span>
+                            <span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span> <span class="c1">//select id as value, then assign d.value to it</span>
+        <span class="c1">//now show tooltip</span>
+        <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s1">&#39;#tooltip&#39;</span><span class="p">).</span><span class="nx">classed</span><span class="p">(</span><span class="s1">&#39;hidden&#39;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span>
+    <span class="p">});</span>
+
+    <span class="c1">//If mouse move out, hide tooltip</span>
+    <span class="nx">rect</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;mouseout&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+        <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s1">&#39;#tooltip&#39;</span><span class="p">).</span><span class="nx">classed</span><span class="p">(</span><span class="s1">&#39;hidden&#39;</span><span class="p">,</span><span class="kc">true</span><span class="p">);</span> <span class="c1">//re-add class by using classed()</span>
+    <span class="p">});</span>
+
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre>

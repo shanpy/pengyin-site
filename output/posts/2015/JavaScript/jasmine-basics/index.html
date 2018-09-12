@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " vocab="http://ogp.me/ns" lang="en">
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]--><!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]--><!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]--><!--[if gt IE 8]><!--><!--<![endif]--><head>
+<meta charset="utf-8">
+<meta name="description" content="To automated the testing process of my JavaScript code, I decided to learn Jasmine, a behavior-driven development framework for testing JavaScript code. This post includes basic usage and my learning experience in Jasmine.">
+<!-- http://t.co/dKP3o1e --><meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jasmine Basics | Pengyin's Corner</title>
+<link href="../../../../assets/css/all.css" rel="stylesheet" type="text/css">
+<!-- Webfonts --><link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+<!-- Load Modernizr --><script src="//mmistakes.github.io/hpstr-jekyll-theme/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script><link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../rss.xml">
+<link rel="canonical" href="https://pengyin-shan.com/posts/2015/JavaScript/jasmine-basics/">
+<!--[if lt IE 9]><script src="../../../../assets/js/html5.js"></script><![endif]--><meta name="description" content="To automated the testing process of my JavaScript code, I decided to learn Jasmine, a behavior-driven development framework for testing JavaScript code. This post includes basic usage and my learning experience in Jasmine.">
+<meta name="author" content="Pengyin(Wendy) Shan">
+<link rel="prev" href="../../Web%20Development%20Tips/regular-expression/" title="Regular Expression" type="text/html">
+<link rel="next" href="../../Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-dynamic-programming/" title="Algorithm and Data Structure Basics - Dynamic Programming" type="text/html">
+<meta property="og:site_name" content="Pengyin's Corner">
+<meta property="og:title" content="Jasmine Basics">
+<meta property="og:url" content="https://pengyin-shan.com/posts/2015/JavaScript/jasmine-basics/">
+<meta property="og:description" content="To automated the testing process of my JavaScript code, I decided to learn Jasmine, a behavior-driven development framework for testing JavaScript code. This post includes basic usage and my learning ">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-08-25T00:00:00-04:00">
+<meta property="article:tag" content="Jasmine">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="jQuery">
+<meta property="article:tag" content="Software Testing">
+</head>
+<body id="post-index" class="feature">
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    
+
+    <nav id="dl-menu" class="dl-menuwrapper" role="navigation"><button class="dl-trigger">Open Menu</button>
+    <ul class="dl-menu">
+<li><a href="../../../">My Knowledge Base</a></li>
+            <li><a href="https://www.linkedin.com/in/pengyinshan">My LinkedIn</a></li>
+            <li><a href="../../../../categories/">Tags and Categories</a></li>
+            <li><a href="../../../../rss.xml">RSS feed</a></li>
+            <li><a href="../../../../archive.html">Archive</a></li>
+    
+    
+    </ul></nav><div class="entry-header">
+<!-- /.image-credit -->
+    <div class="entry-image">
+      <img src="../../../../bk.JPG" alt="Latest Posts">
+</div>
+<!-- /.entry-image -->
+      
+  <div class="header-title">
+    <div class="header-title-wrap">
+    <h1 id="brand"><a href="https://pengyin-shan.com/" title="Pengyin's Corner" rel="home">
+    Pengyin's Corner</a></h1>
+      <h2>Be Passionate.</h2>
+    </div>
+<!-- /.header-title-wrap -->
+  </div>
+<!-- /.header-title -->
+
+</div>
+<!-- /.entry-header -->
+
+    <div id="main" role="main">
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><div class="entry-meta">
+            <span class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2015-08-25T00:00:00-04:00" itemprop="datePublished" title="2015-08-25">2015-08-25</time></a></span>  ·  
+            <span class="byline author vcard">Pengyin(Wendy) Shan</span>  ·  
+                <span class="commentline">
+        
+    <a href="#disqus_thread" data-disqus-identifier="cache/posts/2015/JavaScript/jasmine-basics.html">Comments</a>
+
+</span>  ·  
+            
+        <span class="sourceline"><a href="index.md" id="sourcelink">Source</a></span>  ·  
+
+                <meta name="description" itemprop="description" content="To automated the testing process of my JavaScript code, I decided to learn Jasmine, a behavior-driven development framework for testing JavaScript code. This post includes basic usage and my learning experience in Jasmine.">
+</div>
+        
+
+    
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Jasmine Basics</a></h1>
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>You can find Jasmine <a href="http://jasmine.github.io/2.3/introduction.html">here</a>. I choose it because:</p>
+<ol>
+<li>
+<p>It's a JavaScript framework which does not depend on any other JavaScript frameworks, and it does not require a DOM. So I can apply it on different web apps and platforms.</p>
+</li>
+<li>
+<p>Jasmine (and its syntax) is really popular. In the future, I can also use Jasmine to test AngularJS code and other JavaScript frameworks.</p>
+</li>
+<li>
+<p>Jasmine has good object-oriented support, making code being modular.</p>
+</li>
+</ol>
+<h3 id="describe">Describe</h3>
+<p><code>describe</code> keyword represents the beginning of a <strong>test suite</strong>.</p>
+<p>It takes two parameters: a <code>string</code> and a <code>function</code>.</p>
+<p>The content of string represents the content of the test suite.</p>
+<p>There can be nested test suites/nested specs exist.</p>
+<h3 id="specs">Specs</h3>
+<p><code>it</code> keyword represents the beginning of a spec.</p>
+<p>It takes two parameters: a <code>string</code> and a <code>function</code>.</p>
+<p>The content of string represents that title/introduction of the spec.</p>
+<p>A spec contains one or more <code>expectation</code>s that test the state of the code.</p>
+<p>A spec with all true expectations is a <code>passing spec</code>. A spec with one or more false expectations is a <code>failing spec</code>.</p>
+<h4 id="fail-a-spec">Fail a Spec</h4>
+<p>You can use <code>fail</code> function to manually fail a spec. This function takes a failure message or a Error object as a parameter:</p>
+<table class="codehilitetable"><tr>
+<td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td>
+<td class="code">
+<pre class="code literal-block"><span></span>  <span class="nx">describe</span><span class="p">(</span><span class="s2">"A spec using the fail function"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">callBack</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">callBack</span><span class="p">();</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s2">"should not call the callBack"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">foo</span><span class="p">(</span><span class="kc">false</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">fail</span><span class="p">(</span><span class="s2">"Callback has been called"</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre>
+</td>
+</tr></table>
+<h4 id="setups">Setups</h4>
+<p><code>beforeEach</code>, <code>afterEach</code>, <code>beforeAll</code>, <code>afterAll</code> can be used to setup environment before/after test suites/specs.</p>
+<p><code>beforeEach</code> function is called once before <strong>each</strong> spec run in test suite.</p>
+<p><code>afterEach</code> function is called once after <strong>each</strong> spec run.</p>
+<blockquote>
+<p>i.e. For each spec in a test suite, <code>beforeEach</code> function run first, then the spec function, then <code>afterEach</code> function. So if a test suite has multiple specs, <code>beforeEach</code> function and <code>afterEach</code> function should be run multiple times.</p>
+</blockquote>
+<p><code>beforeAll</code> function is called *<em>only once</em> before all the specs run.</p>
+<p><code>afterAll</code> function is called <strong>only once</strong> after all the specs run.</p>
+<blockquote>
+<p>Remember if you have a variable which is share between <code>beforeAll</code> function, spec function and <code>afterAll</code> function, this variable will be continuously modified until all specs are done.</p>
+</blockquote>
+<p>Example:</p>
+<table class="codehilitetable"><tr>
+<td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td>
+<td class="code">
+<pre class="code literal-block"><span></span> <span class="nx">describe</span><span class="p">(</span><span class="s2">"A spec using beforeEach and afterEach"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">foo</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="p">});</span>
+  <span class="nx">afterEach</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">foo</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">});</span>
+  <span class="c1">//Here foo will be reset to 0 everytime after a spec running, because of afterEach()</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s2">"is just a function, so it can contain any code"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">foo</span><span class="p">).</span><span class="nx">toEqual</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+  <span class="p">});</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s2">"can have more than one expectation"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">foo</span><span class="p">).</span><span class="nx">toEqual</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="kc">true</span><span class="p">).</span><span class="nx">toEqual</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre>
+</td>
+</tr></table>
+<blockquote>
+<p>For nested <code>describe</code> blocks, before one spec running, <code>beforeEach</code> function <strong>for all describes</strong> will be run. Similarly, after one spec running, <code>afterEach</code> function <strong>for all describes</strong> will be run.</p>
+</blockquote>
+<h5 id="use-this-in-setup">Use <code>this</code> in Setup</h5>
+<p><code>this</code> variable can be shared between <code>beforeEach</code>, <code>it</code> and <code>afterEach</code> function.</p>
+<p><code>this</code> will be <strong>reset</strong> every time a spec run.</p>
+<p>Example:</p>
+<table class="codehilitetable"><tr>
+<td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td>
+<td class="code">
+<pre class="code literal-block"><span></span>  <span class="nx">describe</span><span class="p">(</span><span class="s2">"A spec"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">foo</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">});</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s2">"can use the `this` to share state"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">foo</span><span class="p">).</span><span class="nx">toEqual</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">bar</span> <span class="o">=</span> <span class="s2">"test pollution?"</span><span class="p">;</span>
+  <span class="p">});</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s2">"prevents test pollution by having an empty `this` created for the next spec"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">foo</span><span class="p">).</span><span class="nx">toEqual</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">bar</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="kc">undefined</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre>
+</td>
+</tr></table>
+<h4 id="disable-suites-and-specs">Disable Suites and Specs</h4>
+<p>Instead of <code>describe</code> and <code>it</code>, you can use <code>xdescribe</code> and <code>xit</code> to skip this test suite or spec.</p>
+<h3 id="expectations">Expectations</h3>
+<p>An expectation in Jasmine is an <strong>assertion</strong> that is either <code>true</code> or <code>false</code>.</p>
+<p>Syntax Example:</p>
+<pre class="code literal-block"><span></span><span class="nx">expect</span><span class="p">(</span><span class="nx">a</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+</pre>
+
+
+<p><code>expect</code> takes a value, called <code>actual</code>.</p>
+<p><code>expect</code> take a <code>matcher function</code> on second part, which takes the <strong>expected value</strong>.</p>
+<h4 id="matcher">Matcher</h4>
+<p>You can always add a <code>not</code> in front of any matcher to turn it to a negative assertion.</p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="nx">expect</span><span class="p">(</span><span class="nx">a</span><span class="p">).</span><span class="nx">toEqual</span><span class="p">(</span><span class="mi">9</span><span class="p">);</span>
+<span class="nx">expect</span><span class="p">(</span><span class="nx">a</span><span class="p">).</span><span class="nx">not</span><span class="p">.</span><span class="nx">toEqual</span><span class="p">(</span><span class="mi">9</span><span class="p">);</span>
+</pre>
+
+
+<h4 id="list-of-matcher">List of Matcher</h4>
+<ul>
+<li>
+<p><code>toBe</code></p>
+</li>
+<li>
+<p><code>toEqual</code></p>
+</li>
+<li>
+<p><code>toBeDefined</code></p>
+</li>
+<li>
+<p><code>toBeUndefined</code></p>
+</li>
+<li>
+<p><code>toBeNull</code></p>
+</li>
+<li>
+<p><code>toBeTruthy</code></p>
+</li>
+<li>
+<p><code>toBeFalsy</code></p>
+</li>
+<li>
+<p><code>toContain</code></p>
+</li>
+<li>
+<p><code>toBeLessThan</code></p>
+</li>
+<li>
+<p><code>toBeGreaterThan</code></p>
+</li>
+<li>
+<p><code>toBeCloseTo</code></p>
+</li>
+<li>
+<p><code>toThrow</code></p>
+</li>
+<li>
+<p><code>toThrowError</code></p>
+</li>
+</ul>
+<h4 id="custom-matchers">Custom Matchers</h4>
+<p>A custom matcher at its root is a <strong>comparison function</strong> that takes an <strong>actual value</strong> and <strong>expected value</strong>.</p>
+<h5 id="structure-of-custom-matcher">Structure of Custom Matcher</h5>
+<p>Create a object, which contains one to many custom matchers.</p>
+<p>Each custom matcher is a function, which takes <code>util</code> and <code>customEqualityTesters</code> as parameters.</p>
+<p><code>util</code>: contains a set of <strong>utility functions</strong> for matchers to use. For example:</p>
+<pre class="code literal-block"><span></span><span class="c1">//this utility function test hyuk property of actual object</span>
+<span class="nx">result</span><span class="p">.</span><span class="nx">pass</span> <span class="o">=</span> <span class="nx">util</span><span class="p">.</span><span class="nx">equals</span><span class="p">(</span><span class="nx">actual</span><span class="p">.</span><span class="nx">hyuk</span><span class="p">,</span> <span class="s2">"gawrsh"</span> <span class="o">+</span> <span class="nx">expected</span><span class="p">,</span> <span class="nx">customEqualityTesters</span><span class="p">);</span>
+</pre>
+
+
+<blockquote>
+<p>Check <a href="https://github.com/jasmine/jasmine/blob/master/src/core/matchers/matchersUtil.js">matchersUtil.js</a> for all utility functions.</p>
+</blockquote>
+<ul>
+<li>
+<code>customEqualityTesters</code>: You may or maynot need customEqualityTester, depending on your choice of utility function.</li>
+</ul>
+<p><em>You custom matcher method must return an object with a <code>compare</code> function.</em> The <code>compare</code> function takes <code>actual</code> and <code>expected</code> as parameter.</p>
+<p>In following code, a <code>result</code> object is returned. <em>This <code>result</code> object must have a <code>pass</code> property, which is <code>true</code> or <code>false</code></em>:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">customMatchers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">sample_custom_method</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">util</span><span class="p">,</span> <span class="nx">customEqualityTesters</span><span class="p">){</span>
+        <span class="k">return</span><span class="p">{</span>
+            <span class="nx">compare</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">actual</span><span class="p">,</span><span class="nx">expected</span><span class="p">){</span>
+                <span class="c1">//You may or maynot use expected variable. If not, you can skip parameter when you call this method</span>
+                <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="p">{};</span>
+                <span class="nx">result</span><span class="p">.</span><span class="nx">pass</span> <span class="o">=</span> <span class="nx">util</span><span class="p">.</span><span class="nx">utility_function</span><span class="p">();</span> <span class="c1">//see code above</span>
+                <span class="k">if</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">pass</span><span class="p">){</span>
+                    <span class="nx">result</span><span class="p">.</span><span class="nx">message</span> <span class="o">=</span> <span class="s2">"custom your pass message"</span><span class="p">;</span>
+                <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+                    <span class="nx">result</span><span class="p">.</span><span class="nx">message</span> <span class="o">=</span> <span class="s2">"custom your fail message"</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre>
+
+
+<blockquote>
+<p>You can add <code>.not</code> in utility function for result.pass</p>
+<p>You can skip defining result.message. jasmine will try to craft one for your custom matcher.</p>
+<p>If you have too many negative comparison (<code>.not</code>), you can add <code>negativeCompare</code> function alongside <code>compare</code>, using similar structure to include all <code>.not</code> methods.</p>
+</blockquote>
+<h5 id="how-to-use-custom-matcher">How to Use Custom Matcher</h5>
+<p>You should register you custom matchers in <code>beforeEach</code> block, using a function <code>jasmine.addMatchers</code>:</p>
+<pre class="code literal-block"><span></span><span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//You can get all matcher methods in customMatchers</span>
+    <span class="nx">jasmine</span><span class="p">.</span><span class="nx">addMatchers</span><span class="p">(</span><span class="nx">customMatchers</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+
+
+<p>To use it, just call matcher method in expectations:</p>
+<pre class="code literal-block"><span></span><span class="nx">it</span><span class="p">(</span><span class="s2">"test custom matcher"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">your_varaible</span><span class="p">).</span><span class="nx">sample_custom_method</span><span class="p">(</span><span class="nx">expected_varaible_in_custom_method</span><span class="p">);</span>
+    <span class="p">})</span>
+</pre>
+
+
+<h3 id="spy">Spy</h3>
+<p>A <code>spy</code> can stub any function and tracks calls to it and all arguments.</p>
+<p>A spy only exists in the <code>describe</code> or <code>it</code> block it is defined, and will be <strong>removed</strong> after each spec.</p>
+<blockquote>
+<p>When you put spy <code>spyOn()</code> in <code>beforeEach()</code> block, based on how <code>beforeEach()</code> work, your spy call will be called before each spec function run.</p>
+</blockquote>
+<h4 id="tohavebeencalled-and-tohavebeencalledwith">toHaveBeenCalled and toHaveBeenCalledWith</h4>
+<p><code>toHaveBeenCalled</code> will return <code>true</code> if the spy was called.</p>
+<p><code>toHaveBeenCalledWith</code> will return <code>true</code> if the argument list matches any of the <strong>recorded calls</strong> to the spy.</p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span>  <span class="nx">describe</span><span class="p">(</span><span class="s2">"A spy"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">foo</span><span class="p">,</span> <span class="nx">bar</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+  <span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">foo</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="nx">setBar</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">bar</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">};</span>
+    <span class="nx">spyOn</span><span class="p">(</span><span class="nx">foo</span><span class="p">,</span> <span class="s1">'setBar'</span><span class="p">);</span>
+    <span class="nx">foo</span><span class="p">.</span><span class="nx">setBar</span><span class="p">(</span><span class="mi">123</span><span class="p">);</span>
+    <span class="nx">foo</span><span class="p">.</span><span class="nx">setBar</span><span class="p">(</span><span class="mi">456</span><span class="p">,</span> <span class="s1">'another param'</span><span class="p">);</span>
+  <span class="p">});</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s2">"tracks that the spy was called"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">foo</span><span class="p">.</span><span class="nx">setBar</span><span class="p">).</span><span class="nx">toHaveBeenCalled</span><span class="p">();</span> <span class="c1">//this spec will call spy function</span>
+  <span class="p">});</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s2">"tracks all the arguments of its calls"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">foo</span><span class="p">.</span><span class="nx">setBar</span><span class="p">).</span><span class="nx">toHaveBeenCalledWith</span><span class="p">(</span><span class="mi">123</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">foo</span><span class="p">.</span><span class="nx">setBar</span><span class="p">).</span><span class="nx">toHaveBeenCalledWith</span><span class="p">(</span><span class="mi">456</span><span class="p">,</span> <span class="s1">'another param'</span><span class="p">);</span>
+    <span class="c1">//this spec detect if spy function has worked. i.e. if the variables which were spied have been modified</span>
+  <span class="p">});</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s2">"stops all execution on a function"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">bar</span><span class="p">).</span><span class="nx">toBeNull</span><span class="p">();</span>
+    <span class="c1">//this spec make sure spy should be removed after each spec function</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre>
+
+
+<h4 id="callthrough">callThrough</h4>
+<p>You can add <code>and.callThrough()</code> after spy function to make sure spy will <strong>track all spec calls</strong>, instead of being removed after each spec call:</p>
+<pre class="code literal-block"><span></span><span class="nx">spyOn</span><span class="p">(</span><span class="nx">foo</span><span class="p">,</span> <span class="s1">'getBar'</span><span class="p">).</span><span class="nx">and</span><span class="p">.</span><span class="nx">callThrough</span><span class="p">();</span>
+</pre>
+
+
+<h4 id="returnvalue">returnValue</h4>
+<p>You can add <code>and.returnValue(value)</code> after spy function to make sure your desired call in spy function will return a value:</p>
+<pre class="code literal-block"><span></span><span class="nx">spyOn</span><span class="p">(</span><span class="nx">foo</span><span class="p">,</span> <span class="s2">"getBar"</span><span class="p">).</span><span class="nx">and</span><span class="p">.</span><span class="nx">returnValue</span><span class="p">(</span><span class="mi">745</span><span class="p">);</span> <span class="c1">//getBar method for foo object will return value `745`</span>
+</pre>
+
+
+<h4 id="callfake">callFake</h4>
+<p>You can add <code>and.callFake(function(){})</code> to create a fake function which can replace the content of your spied function:</p>
+<pre class="code literal-block"><span></span>  <span class="nx">describe</span><span class="p">(</span><span class="s2">"A spy, when configured with an alternate implementation"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">foo</span><span class="p">,</span> <span class="nx">bar</span><span class="p">,</span> <span class="nx">fetchedBar</span><span class="p">;</span>
+  <span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">foo</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="nx">setBar</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">bar</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+      <span class="p">},</span>
+      <span class="nx">getBar</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">bar</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">};</span>
+    <span class="c1">//force `getBar` to return 1001, but notice `bar` variable is not affected by this fake call</span>
+    <span class="nx">spyOn</span><span class="p">(</span><span class="nx">foo</span><span class="p">,</span> <span class="s2">"getBar"</span><span class="p">).</span><span class="nx">and</span><span class="p">.</span><span class="nx">callFake</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="mi">1001</span><span class="p">;</span>
+    <span class="p">});</span>
+    <span class="nx">foo</span><span class="p">.</span><span class="nx">setBar</span><span class="p">(</span><span class="mi">123</span><span class="p">);</span>
+    <span class="nx">fetchedBar</span> <span class="o">=</span> <span class="nx">foo</span><span class="p">.</span><span class="nx">getBar</span><span class="p">();</span>
+  <span class="p">});</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s2">"tracks that the spy was called"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">foo</span><span class="p">.</span><span class="nx">getBar</span><span class="p">).</span><span class="nx">toHaveBeenCalled</span><span class="p">();</span>
+  <span class="p">});</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s2">"should not effect other functions"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//fake function does not impact other real function</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">bar</span><span class="p">).</span><span class="nx">toEqual</span><span class="p">(</span><span class="mi">123</span><span class="p">);</span>
+  <span class="p">});</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s2">"when called returns the requested value"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//fake function should work</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">fetchedBar</span><span class="p">).</span><span class="nx">toEqual</span><span class="p">(</span><span class="mi">1001</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre>
+
+
+<h4 id="stub">stub</h4>
+<p>To remember the state of any spy calling method above, use <code>and.stub()</code> to get the original stubbing behavior:</p>
+<pre class="code literal-block"><span></span><span class="nx">describe</span><span class="p">(</span><span class="s2">"A spy"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">foo</span><span class="p">,</span> <span class="nx">bar</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+  <span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">foo</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="nx">setBar</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">bar</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">};</span>
+    <span class="nx">spyOn</span><span class="p">(</span><span class="nx">foo</span><span class="p">,</span> <span class="s1">'setBar'</span><span class="p">).</span><span class="nx">and</span><span class="p">.</span><span class="nx">callThrough</span><span class="p">();</span>
+  <span class="p">});</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s2">"can call through and then stub in the same spec"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">foo</span><span class="p">.</span><span class="nx">setBar</span><span class="p">(</span><span class="mi">123</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">bar</span><span class="p">).</span><span class="nx">toEqual</span><span class="p">(</span><span class="mi">123</span><span class="p">);</span>
+    <span class="c1">//use .and.stub() for the spied method</span>
+    <span class="nx">foo</span><span class="p">.</span><span class="nx">setBar</span><span class="p">.</span><span class="nx">and</span><span class="p">.</span><span class="nx">stub</span><span class="p">();</span>
+    <span class="nx">bar</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="c1">//Now bar should always be null</span>
+    <span class="nx">foo</span><span class="p">.</span><span class="nx">setBar</span><span class="p">(</span><span class="mi">123</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">bar</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre>
+
+
+<h4 id="tracking-properties">Tracking Properties</h4>
+<p>After you having <code>spayOn(obj, spied_method)</code>, following tracking properties can be used when you call the spied method in <code>expect</code>:</p>
+<ul>
+<li>
+<p><code>.calls.any()</code>: return <code>false</code> if spy has not been called at all. return <code>true</code> once <strong>at least</strong> one call happens.</p>
+</li>
+<li>
+<p><code>.calls.count()</code>: returns the number of times the spy was called.</p>
+</li>
+<li>
+<p><code>.calls.argsFor(index)</code>: assume you call a method a few times. Use <code>index</code> to get different <code>expect</code> function results:</p>
+</li>
+</ul>
+<blockquote>
+<p>Example:</p>
+</blockquote>
+<pre class="code literal-block"><span></span><span class="nx">it</span><span class="p">(</span><span class="s2">"tracks the arguments of each call"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">foo</span><span class="p">.</span><span class="nx">setBar</span><span class="p">(</span><span class="mi">123</span><span class="p">);</span>
+    <span class="nx">foo</span><span class="p">.</span><span class="nx">setBar</span><span class="p">(</span><span class="mi">456</span><span class="p">,</span> <span class="s2">"baz"</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">foo</span><span class="p">.</span><span class="nx">setBar</span><span class="p">.</span><span class="nx">calls</span><span class="p">.</span><span class="nx">argsFor</span><span class="p">(</span><span class="mi">0</span><span class="p">)).</span><span class="nx">toEqual</span><span class="p">([</span><span class="mi">123</span><span class="p">]);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">foo</span><span class="p">.</span><span class="nx">setBar</span><span class="p">.</span><span class="nx">calls</span><span class="p">.</span><span class="nx">argsFor</span><span class="p">(</span><span class="mi">1</span><span class="p">)).</span><span class="nx">toEqual</span><span class="p">([</span><span class="mi">456</span><span class="p">,</span> <span class="s2">"baz"</span><span class="p">]);</span>
+<span class="p">});</span>
+</pre>
+
+
+<ul>
+<li>
+<code>.calls.allArgs()</code>: assume you call a method a few times, and return all results from these calls in <code>expect</code> functions:</li>
+</ul>
+<blockquote>
+<p>Example:</p>
+</blockquote>
+<pre class="code literal-block"><span></span>    <span class="nx">it</span><span class="p">(</span><span class="s2">"tracks the arguments of all calls"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">foo</span><span class="p">.</span><span class="nx">setBar</span><span class="p">(</span><span class="mi">123</span><span class="p">);</span>
+        <span class="nx">foo</span><span class="p">.</span><span class="nx">setBar</span><span class="p">(</span><span class="mi">456</span><span class="p">,</span> <span class="s2">"baz"</span><span class="p">);</span>
+        <span class="nx">expect</span><span class="p">(</span><span class="nx">foo</span><span class="p">.</span><span class="nx">setBar</span><span class="p">.</span><span class="nx">calls</span><span class="p">.</span><span class="nx">allArgs</span><span class="p">()).</span><span class="nx">toEqual</span><span class="p">([[</span><span class="mi">123</span><span class="p">],[</span><span class="mi">456</span><span class="p">,</span> <span class="s2">"baz"</span><span class="p">]]);</span>
+    <span class="p">});</span>
+</pre>
+
+
+<ul>
+<li>
+<p><code>calls.all()</code>: use this to check all context and argument(i.e. <code>this</code> variable) in <code>expect</code> function: <code>expect(foo.setBar.calls.all()).toEqual([{object: foo, args: [123], returnValue: undefined}]);</code></p>
+</li>
+<li>
+<p><code>.calls.mostRecent()</code>: similar as above, but just return context and arguments for <strong>the most recent call</strong>.</p>
+</li>
+<li>
+<p><code>.calls.first()</code>: similar as above, but just return context and arguments for <strong>the first call</strong>.</p>
+</li>
+<li>
+<p><code>.calls.reset()</code>: clears all tracking for a spy</p>
+</li>
+</ul>
+<h4 id="jasmine-method">jasmine method</h4>
+<h5 id="createspy">createSpy</h5>
+<p><code>jasmine.createSpy()</code> is a function with <strong>no implementation</strong>. It acts as other spies:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">whatAmI</span><span class="p">;</span>
+<span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">whatAmI</span> <span class="o">=</span> <span class="nx">jasmine</span><span class="p">.</span><span class="nx">createSpy</span><span class="p">(</span><span class="s1">'whatAmI'</span><span class="p">);</span>
+    <span class="nx">whatAmI</span><span class="p">(</span><span class="s2">"I"</span><span class="p">,</span> <span class="s2">"am"</span><span class="p">,</span> <span class="s2">"a"</span><span class="p">,</span> <span class="s2">"spy"</span><span class="p">);</span> <span class="c1">//it does not have implementation. Only with arguments</span>
+  <span class="p">});</span>
+  <span class="c1">//expect(whatAmI).toHaveBeenCalledWith("I", "am", "a", "spy");</span>
+  <span class="c1">//expect(whatAmI.calls.mostRecent().args[0]).toEqual("I");</span>
+</pre>
+
+
+<h5 id="createspyobj">createSpyObj</h5>
+<p>Similar as above, <code>jasmine.createSpyObj</code> accept an <strong>array of strings</strong>, and return a object that has a <strong>property</strong> for each string of the spy:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">tape</span><span class="p">;</span>
+ <span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">tape</span> <span class="o">=</span> <span class="nx">jasmine</span><span class="p">.</span><span class="nx">createSpyObj</span><span class="p">(</span><span class="s1">'tape'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'play'</span><span class="p">,</span> <span class="s1">'pause'</span><span class="p">,</span> <span class="s1">'stop'</span><span class="p">,</span> <span class="s1">'rewind'</span><span class="p">]);</span>
+    <span class="nx">tape</span><span class="p">.</span><span class="nx">play</span><span class="p">();</span>
+    <span class="nx">tape</span><span class="p">.</span><span class="nx">pause</span><span class="p">();</span>
+    <span class="nx">tape</span><span class="p">.</span><span class="nx">rewind</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+
+
+<h5 id="anything">anything</h5>
+<p><code>jasmine.anything</code> returns <code>true</code> if the actual value is <strong>not</strong> <code>null</code> or <code>undefined</code>: <code>expect(1).toEqual(jasmine.anything());</code></p>
+<h5 id="objectcontaining">objectContaining</h5>
+<p><code>jasmine.objectContaining</code> tests objects with <strong>key-value</strong> pairs:</p>
+<pre class="code literal-block"><span></span>  <span class="nx">describe</span><span class="p">(</span><span class="s2">"jasmine.objectContaining"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">foo</span><span class="p">;</span>
+  <span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">foo</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="nx">a</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="nx">b</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="nx">bar</span><span class="o">:</span> <span class="s2">"baz"</span>
+    <span class="p">};</span>
+  <span class="p">});</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s2">"matches objects with the expect key/value pairs"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">foo</span><span class="p">).</span><span class="nx">toEqual</span><span class="p">(</span><span class="nx">jasmine</span><span class="p">.</span><span class="nx">objectContaining</span><span class="p">({</span>
+      <span class="nx">bar</span><span class="o">:</span> <span class="s2">"baz"</span>
+    <span class="p">}));</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">foo</span><span class="p">).</span><span class="nx">not</span><span class="p">.</span><span class="nx">toEqual</span><span class="p">(</span><span class="nx">jasmine</span><span class="p">.</span><span class="nx">objectContaining</span><span class="p">({</span>
+      <span class="nx">c</span><span class="o">:</span> <span class="mi">37</span>
+    <span class="p">}));</span>
+  <span class="p">});</span>
+</pre>
+
+
+<h5 id="arraycontaining">arrayContaining</h5>
+<p><code>jasmine.arrayContaining</code> test objects with <strong>values in array</strong>:</p>
+<pre class="code literal-block"><span></span>  <span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">foo</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">];</span>
+  <span class="p">});</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s2">"matches arrays with some of the values"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">foo</span><span class="p">).</span><span class="nx">toEqual</span><span class="p">(</span><span class="nx">jasmine</span><span class="p">.</span><span class="nx">arrayContaining</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]));</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">foo</span><span class="p">).</span><span class="nx">not</span><span class="p">.</span><span class="nx">toEqual</span><span class="p">(</span><span class="nx">jasmine</span><span class="p">.</span><span class="nx">arrayContaining</span><span class="p">([</span><span class="mi">6</span><span class="p">]));</span>
+  <span class="p">});</span>
+</pre>
+
+
+<h5 id="stringmatching">stringMatching</h5>
+<p><code>jasmine.stringMatching()</code> test if you want match <strong>a string in a object</strong> or <strong>regular expression</strong> pattern:</p>
+<pre class="code literal-block"><span></span><span class="nx">describe</span><span class="p">(</span><span class="s1">'jasmine.stringMatching'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s2">"matches as a regexp"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">({</span><span class="nx">foo</span><span class="o">:</span> <span class="s1">'bar'</span><span class="p">}).</span><span class="nx">toEqual</span><span class="p">({</span><span class="nx">foo</span><span class="o">:</span> <span class="nx">jasmine</span><span class="p">.</span><span class="nx">stringMatching</span><span class="p">(</span><span class="sr">/^bar$/</span><span class="p">)});</span>
+    <span class="nx">expect</span><span class="p">({</span><span class="nx">foo</span><span class="o">:</span> <span class="s1">'foobarbaz'</span><span class="p">}).</span><span class="nx">toEqual</span><span class="p">({</span><span class="nx">foo</span><span class="o">:</span> <span class="nx">jasmine</span><span class="p">.</span><span class="nx">stringMatching</span><span class="p">(</span><span class="s1">'bar'</span><span class="p">)});</span>
+<span class="p">});</span>
+</pre>
+
+
+<h4 id="custom-equality-tester">Custom Equality Tester</h4>
+<p>You can create your own equality tester for your test criteria, using <code>asymmetricMatch</code> function name:</p>
+<pre class="code literal-block"><span></span>  <span class="kd">var</span> <span class="nx">tester</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1">//Use asymmetricMatch as function. No returns</span>
+    <span class="nx">asymmetricMatch</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">actual</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">secondValue</span> <span class="o">=</span> <span class="nx">actual</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">','</span><span class="p">)[</span><span class="mi">1</span><span class="p">];</span>
+      <span class="k">return</span> <span class="nx">secondValue</span> <span class="o">===</span> <span class="s1">'bar'</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s2">"dives in deep"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="s2">"foo,bar,baz,quux"</span><span class="p">).</span><span class="nx">toEqual</span><span class="p">(</span><span class="nx">tester</span><span class="p">);</span>
+  <span class="p">});</span>
+</pre>
+
+
+<h3 id="clock">Clock</h3>
+<p><code>jasmine.clock().install()</code> can be used to setup time dependent testing. To do this, you can put <code>jasmine.clock().install</code> in <code>beforeEach()</code> block and <code>jasmine.clock().uninstall()</code> in <code>afterEach()</code> block.</p>
+<h4 id="timeout">Timeout</h4>
+<p>Use <code>jasmine.clock().tick(milliseconds)</code> function to simulate timeout in JavaScript: <code>jasmine.clock().tick(1000)</code>;</p>
+<h4 id="date">Date</h4>
+<p>You can create a <code>Date</code> object in JavaScript, then use <code>jasmine.clock().mockDate(date_object)</code> to simulate date:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">baseTime</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">23</span><span class="p">);</span>
+<span class="nx">jasmine</span><span class="p">.</span><span class="nx">clock</span><span class="p">().</span><span class="nx">mockDate</span><span class="p">(</span><span class="nx">baseTime</span><span class="p">);</span>
+</pre>
+
+
+<blockquote>
+<p>If you don't provide a time object, jasmine will use current Date.</p>
+</blockquote>
+<h3 id="ajax">Ajax</h3>
+<p>You need to include <code>mock-ajax.js</code> from <a href="https://github.com/jasmine/jasmine-ajax">here</a> to test Ajax using jasmine.</p>
+<p>Make sure you have <code>jasmine.Ajax.install()</code> in <code>beforeEach()</code> block and <code>jasmine.Ajax.uninstall()</code> in <code>afterEach()</code> to install and uninstall jasmine-ajax.</p>
+<h4 id="define-mock-response">Define Mock Response</h4>
+<p>You may want to define a mock response to test your Ajax call response. A good place to define this is in <code>spec/javascripts/helpers/test_responses</code>.</p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">TestResponses</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">search</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">success</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">status</span><span class="o">:</span> <span class="mi">200</span><span class="p">,</span>
+      <span class="c1">//Make responseText to be your response data</span>
+      <span class="nx">responseText</span><span class="o">:</span> <span class="s1">'{"response":{"groups":[{"type":"nearby","name":"Nearby","items":[{"id":"4bb9fd9f3db7b7138dbd229a","name":"Pivotal Labs","contact":{"twitter":"pivotalboulder"}'</span><span class="p">}]}]}}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</pre>
+
+
+<h4 id="trigger-request">Trigger Request</h4>
+<p>You need to trigger request before you test your Ajax response. You can set a function call, such as:</p>
+<pre class="code literal-block"><span></span>  <span class="kd">var</span> <span class="nx">xhr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+  <span class="nx">xhr</span><span class="p">.</span><span class="nx">onreadystatechange</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">==</span> <span class="k">this</span><span class="p">.</span><span class="nx">DONE</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">doneFn</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+  <span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">"GET"</span><span class="p">,</span> <span class="s2">"/some/cool/url"</span><span class="p">);</span>
+  <span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+</pre>
+
+
+<p>Or:</p>
+<pre class="code literal-block"><span></span><span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<span class="nx">jasmine</span><span class="p">.</span><span class="nx">Ajax</span><span class="p">.</span><span class="nx">install</span><span class="p">();</span>
+<span class="nx">onSuccess</span> <span class="o">=</span> <span class="nx">jasmine</span><span class="p">.</span><span class="nx">createSpy</span><span class="p">(</span><span class="s1">'onSuccess'</span><span class="p">);</span>
+<span class="nx">onFailure</span> <span class="o">=</span> <span class="nx">jasmine</span><span class="p">.</span><span class="nx">createSpy</span><span class="p">(</span><span class="s1">'onFailure'</span><span class="p">);</span>
+<span class="nx">foursquare</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FoursquareVenueSearch</span><span class="p">();</span>
+<span class="nx">foursquare</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="s1">'40.019461,-105.273296'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="nx">onSuccess</span><span class="o">:</span> <span class="nx">onSuccess</span><span class="p">,</span>
+  <span class="nx">onFailure</span><span class="o">:</span> <span class="nx">onFailure</span>
+<span class="p">});</span>
+<span class="nx">request</span> <span class="o">=</span> <span class="nx">jasmine</span><span class="p">.</span><span class="nx">Ajax</span><span class="p">.</span><span class="nx">requests</span><span class="p">.</span><span class="nx">mostRecent</span><span class="p">();</span>
+<span class="c1">//create a request object. This request will not be triggered until you set response</span>
+<span class="nx">expect</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">'venues/search'</span><span class="p">);</span>
+<span class="nx">expect</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">method</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">);</span>
+<span class="nx">expect</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">data</span><span class="p">()).</span><span class="nx">toEqual</span><span class="p">({</span><span class="nx">latLng</span><span class="o">:</span> <span class="p">[</span><span class="s1">'40.019461, -105.273296'</span><span class="p">]});</span>
+<span class="p">});</span>
+</pre>
+
+
+<h4 id="set-response">Set Response</h4>
+<p>Use <code>.respondWith()</code> to set response. You need to tell jasmine which response you want to test. For example, based on the code in <strong>Define Mock Response</strong> part, you can test <code>success</code> response:</p>
+<pre class="code literal-block"><span></span>  <span class="nx">describe</span><span class="p">(</span><span class="s2">"on success"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">request</span><span class="p">.</span><span class="nx">respondWith</span><span class="p">(</span><span class="nx">TestResponses</span><span class="p">.</span><span class="nx">search</span><span class="p">.</span><span class="nx">success</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre>
+
+
+<p>You can also set the object that you want to have as response:</p>
+<pre class="code literal-block"><span></span><span class="nx">jasmine</span><span class="p">.</span><span class="nx">Ajax</span><span class="p">.</span><span class="nx">requests</span><span class="p">.</span><span class="nx">mostRecend</span><span class="p">().</span><span class="nx">respondWith</span><span class="p">({</span>
+    <span class="s2">"status"</span><span class="o">:</span> <span class="mi">200</span><span class="p">,</span>
+    <span class="s2">"contentType"</span><span class="p">,</span><span class="s1">'text/plain'</span><span class="p">,</span>
+    <span class="s2">"responseText"</span><span class="o">:</span> <span class="s1">'test response'</span>
+    <span class="p">});</span>
+</pre>
+
+
+<h4 id="full-steps">Full Steps</h4>
+<p>After these step, you can create <code>it</code> blocks to test your Ajax call. Here is a full example for <code>post</code> from jasmine-ajax Github repo:</p>
+<pre class="code literal-block"><span></span>  <span class="nx">describe</span><span class="p">(</span><span class="s2">"FoursquareVenueSearch"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">foursquare</span><span class="p">,</span> <span class="nx">request</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">onSuccess</span><span class="p">,</span> <span class="nx">onFailure</span><span class="p">;</span>
+  <span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">jasmine</span><span class="p">.</span><span class="nx">Ajax</span><span class="p">.</span><span class="nx">install</span><span class="p">();</span>
+    <span class="nx">onSuccess</span> <span class="o">=</span> <span class="nx">jasmine</span><span class="p">.</span><span class="nx">createSpy</span><span class="p">(</span><span class="s1">'onSuccess'</span><span class="p">);</span>
+    <span class="nx">onFailure</span> <span class="o">=</span> <span class="nx">jasmine</span><span class="p">.</span><span class="nx">createSpy</span><span class="p">(</span><span class="s1">'onFailure'</span><span class="p">);</span>
+    <span class="nx">foursquare</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FoursquareVenueSearch</span><span class="p">();</span>
+    <span class="nx">foursquare</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="s1">'40.019461,-105.273296'</span><span class="p">,</span> <span class="p">{</span>
+      <span class="nx">onSuccess</span><span class="o">:</span> <span class="nx">onSuccess</span><span class="p">,</span>
+      <span class="nx">onFailure</span><span class="o">:</span> <span class="nx">onFailure</span>
+    <span class="p">});</span>
+    <span class="nx">request</span> <span class="o">=</span> <span class="nx">jasmine</span><span class="p">.</span><span class="nx">Ajax</span><span class="p">.</span><span class="nx">requests</span><span class="p">.</span><span class="nx">mostRecent</span><span class="p">();</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">'venues/search'</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">method</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">data</span><span class="p">()).</span><span class="nx">toEqual</span><span class="p">({</span><span class="nx">latLng</span><span class="o">:</span> <span class="p">[</span><span class="s1">'40.019461, -105.273296'</span><span class="p">]});</span>
+  <span class="p">});</span>
+  <span class="nx">describe</span><span class="p">(</span><span class="s2">"on success"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">request</span><span class="p">.</span><span class="nx">respondWith</span><span class="p">(</span><span class="nx">TestResponses</span><span class="p">.</span><span class="nx">search</span><span class="p">.</span><span class="nx">success</span><span class="p">);</span>
+    <span class="p">});</span>
+    <span class="nx">it</span><span class="p">(</span><span class="s2">"calls onSuccess with an array of Locations"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">onSuccess</span><span class="p">).</span><span class="nx">toHaveBeenCalled</span><span class="p">();</span>
+      <span class="kd">var</span> <span class="nx">successArgs</span> <span class="o">=</span> <span class="nx">onSuccess</span><span class="p">.</span><span class="nx">calls</span><span class="p">.</span><span class="nx">mostRecent</span><span class="p">().</span><span class="nx">args</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">successArgs</span><span class="p">.</span><span class="nx">length</span><span class="p">).</span><span class="nx">toEqual</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">successArgs</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">toEqual</span><span class="p">(</span><span class="nx">jasmine</span><span class="p">.</span><span class="nx">any</span><span class="p">(</span><span class="nx">Venue</span><span class="p">));</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre>
+
+
+<p>Other <code>get</code> Ajax call examples can be found on <a href="http://jasmine.github.io/2.3/ajax.html">jasmine website</a>.</p>
+<h3 id="jasmine-jquery">Jasmine-jQuery</h3>
+<p><a href="https://github.com/velesin/jasmine-jquery">jasmine-jquery</a> is great to combine Jasmine with jQuery. It provides:</p>
+<ul>
+<li>
+<p>a set of <strong>custom matchers</strong> for jQuery framework</p>
+</li>
+<li>
+<p>an API for handling HTML, CSS, and JSON fixtures in your specs</p>
+</li>
+</ul>
+<h4 id="custom-matcher">Custom Matcher</h4>
+<p>You can find a list of useful custom matchers, such as <code>toBeCheck()</code> or <code>toBeSelected()</code> <a href="https://github.com/velesin/jasmine-jquery">here</a>.</p>
+<h4 id="html-fixture">HTML Fixture</h4>
+<p>I'm still trying to figure out the best practice to apply HTML Fixture for my working project. HTML Fixture can be used to load HTML content to be used by your tests.</p>
+<p>You can find more detailed information about HTML Fixture <a href="https://github.com/velesin/jasmine-jquery">here</a>. For most of my working projects, I need to limit the complexity of all my JavaScript test. Also, instead of <code>html</code>, my work is more involved in <code>jsp</code>, which is really hard to be transferred to pure HTML code for fixture content. Personally I prefer not to write too many fixtures for to simplify my test.</p>
+<p>I'll continue to research for the best practice of using HTML Fixture.</p>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../categories/jasmine/" rel="tag">Jasmine</a></li>
+            <li><a class="tag p-category" href="../../../../categories/javascript/" rel="tag">JavaScript</a></li>
+            <li><a class="tag p-category" href="../../../../categories/jquery/" rel="tag">jQuery</a></li>
+            <li><a class="tag p-category" href="../../../../categories/software-testing/" rel="tag">Software Testing</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../../Web%20Development%20Tips/regular-expression/" rel="prev" title="Regular Expression">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../../Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-dynamic-programming/" rel="next" title="Algorithm and Data Structure Basics - Dynamic Programming">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="pengyinsnotes",
+            disqus_url="https://pengyin-shan.com/posts/2015/JavaScript/jasmine-basics/",
+        disqus_title="Jasmine Basics",
+        disqus_identifier="cache/posts/2015/JavaScript/jasmine-basics.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="pengyinsnotes";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+    
+    <div class="footer-wrapper">
+        <footer role="contentinfo"><p>Contents © 2018         <a href="mailto:pengyin.shan@outlook.com">Pengyin(Wendy) Shan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+        </footer>
+</div>
+
+    
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script src="../../../../assets/js/scripts.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,471 @@
+<h2 id="resouce-list">Resouce List</h2>
+<ul>
+<li>
+<p><a href="http://www.tutorialspoint.com/angularjs">AngularJS Tutorial on tutorialspoint.com</a></p>
+</li>
+<li>
+<p><a href="https://docs.angularjs.org">AngularJS Official API Doc</a></p>
+</li>
+</ul>
+<h2 id="core-features">Core Features</h2>
+<ul>
+<li>
+<p><code>Data-binding</code>: Two-way data-binding between model and view components.</p>
+</li>
+<li>
+<p><code>Scope</code>: Objects that refer to the model</p>
+</li>
+<li>
+<p><code>Controller</code>: The controller for a specific scope</p>
+</li>
+<li>
+<p><code>Services</code>: Built-in services for functions such as <code>XMLHttpRequests</code>.</p>
+</li>
+<li>
+<p><code>Filters</code>: Generate a new array from a subset of items in an old array.</p>
+</li>
+<li>
+<p><code>Directives</code>: Create custom HTML tags as new widgets.</p>
+</li>
+<li>
+<p><code>Templates</code>: The "View" part in MV* structure</p>
+</li>
+<li>
+<p><code>Routing</code>: Switching between different views</p>
+</li>
+<li>
+<p><code>MVVM</code>: Instead of purse MVC structure, AngularJS is a <code>MVVM</code> (Model-View-ViewModel) structure.</p>
+</li>
+<li>
+<p><code>Deep Linking</code>: Bookmark current state of application in URL so that this state can be restored later.</p>
+</li>
+<li>
+<p><code>Dependency Injection</code>: The DI system in AngularJS</p>
+</li>
+</ul>
+<p>A description graph from tutorialspoint.com:</p>
+<p>../images/articles/2015/javascript/angularjs_concepts.jpg </p>
+<h2 id="three-major-parts">Three Major Parts</h2>
+<ul>
+<li>
+<p><code>ng-app</code>: Link a AngularJS application to HTML.</p>
+</li>
+<li>
+<p><code>ng-model</code>: Bind the value of AngularJS application data to HTML input controls</p>
+</li>
+<li>
+<p><code>ng-bind</code>: Bind angularJS application to HTML tags.</p>
+</li>
+</ul>
+<h2 id="controller">Controller</h2>
+<p>HTML:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">ng-app</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="na">ng-controller</span><span class="o">=</span><span class="s">&quot;testController&quot;</span><span class="p">&gt;</span>
+    Test Name 1: {{names.name1}}
+    Test Name 2: {{names.name2}}
+    Test Name 3: {{names.name3()}}
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+
+
+<p>JS:</p>
+<pre class="code literal-block"><span></span><span class="kd">function</span> <span class="nx">testController</span><span class="p">(</span><span class="nx">$scope</span><span class="p">){</span>
+    <span class="nx">$scope</span><span class="p">.</span><span class="nx">names</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="nx">name1</span><span class="o">:</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span>
+        <span class="nx">name2</span><span class="o">:</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span>
+        <span class="nx">name3</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+            <span class="k">return</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">name1</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre>
+
+
+<h2 id="type-of-filters">Type of Filters</h2>
+<ul>
+<li>
+<p><code>uppercase</code></p>
+</li>
+<li>
+<p><code>lowercase</code></p>
+</li>
+<li>
+<p><code>currency</code></p>
+</li>
+<li>
+<p><code>filter</code>: example <code>ng-repeat='name in names | filter: firstname'</code></p>
+</li>
+<li>
+<p><code>orderby</code></p>
+</li>
+</ul>
+<h2 id="html-dom-control">HTML DOM Control</h2>
+<ul>
+<li>
+<p><code>ng-disabled</code>: disable a given control.</p>
+</li>
+<li>
+<p><code>ng-show</code>: show a given control.</p>
+</li>
+<li>
+<p><code>ng-hide</code>: hide a give control.</p>
+</li>
+<li>
+<p><code>ng-click</code>: a AngularJS click event.</p>
+</li>
+</ul>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">ng-model</span><span class="o">=</span><span class="s">&quot;checkboxmodel&quot;</span><span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">button</span> <span class="na">ng-disabled</span><span class="o">=</span><span class="s">&#39;checkboxmodel&#39;</span><span class="p">&gt;</span>Disable/Enable this Button<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</pre>
+
+
+<h2 id="module">Module</h2>
+<ul>
+<li>
+<p><code>Application Module</code>: Initialize application with controller</p>
+<ul>
+<li>Example: <code>var myApp = angular.module('myApp, []);</code></li>
+</ul>
+</li>
+<li>
+<p><code>Controller Module</code>: Define the controller. Example is in "Controller" section</p>
+</li>
+</ul>
+<h2 id="ng-events">ng-events</h2>
+<ul>
+<li>
+<p><code>ng-click</code></p>
+</li>
+<li>
+<p><code>ng-dbl-click</code></p>
+</li>
+<li>
+<p><code>ng-mousedown</code></p>
+</li>
+<li>
+<p><code>ng-mouseup</code></p>
+</li>
+<li>
+<p><code>ng-mousenter</code></p>
+</li>
+<li>
+<p><code>ng-mouseleave</code></p>
+</li>
+<li>
+<p><code>ng-mousemove</code></p>
+</li>
+<li>
+<p><code>ng-mouseover</code></p>
+</li>
+<li>
+<p><code>ng-keydown</code></p>
+</li>
+<li>
+<p><code>ng-keyup</code></p>
+</li>
+<li>
+<p><code>ng-keypress</code></p>
+</li>
+<li>
+<p><code>ng-change</code></p>
+</li>
+</ul>
+<h2 id="forms">Forms</h2>
+<h3 id="data-validation">Data Validation</h3>
+<ul>
+<li>
+<p><code>$dirty</code>: Notify when a value is changed</p>
+</li>
+<li>
+<p><code>$invalid</code>: Notify when a value is invalided</p>
+</li>
+<li>
+<p><code>$error</code>: Point out the error</p>
+</li>
+</ul>
+<p>Example from tutorspoint:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Enter last name: <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;lastname&quot;</span>  <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">ng-model</span><span class="o">=</span><span class="s">&quot;lastName&quot;</span> <span class="na">required</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;color:red&quot;</span> <span class="na">ng-show</span><span class="o">=</span><span class="s">&quot;studentForm.lastname.$dirty &amp;&amp; studentForm.lastname.$invalid&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">span</span> <span class="na">ng-show</span><span class="o">=</span><span class="s">&quot;studentForm.lastname.$error.required&quot;</span><span class="p">&gt;</span>Last Name is required.<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+       <span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+</pre>
+
+
+<h2 id="ng-includes">ng-includes</h2>
+<p><code>ng-includes</code> is used to include partial views, which is similar to
+<code>&lt;jsp:include page = "../../test.jsp"/&gt;</code> in JSP page.</p>
+<p>Example from tutorialspoint.com:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">ng-app</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="na">ng-controller</span><span class="o">=</span><span class="s">&quot;studentController&quot;</span><span class="p">&gt;</span>
+   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">ng-include</span><span class="o">=</span><span class="s">&quot;&#39;main.htm&#39;&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">ng-include</span><span class="o">=</span><span class="s">&quot;&#39;subjects.htm&#39;&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+
+
+<h2 id="ajax-in-angularjs">AJAX in AngularJS</h2>
+<p>Similar as jQuery, the format of AJAX is following:</p>
+<pre class="code literal-block"><span></span><span class="nx">$http</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/someUrl&#39;</span><span class="p">).</span>
+  <span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// this callback will be called asynchronously</span>
+    <span class="c1">// when the response is available</span>
+  <span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// called asynchronously if an error occurs</span>
+    <span class="c1">// or server returns response with an error status.</span>
+  <span class="p">});</span>
+
+<span class="o">:::</span><span class="nx">javascript</span>
+<span class="c1">// Simple POST request example (passing data) :</span>
+<span class="nx">$http</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/someUrl&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">msg</span><span class="o">:</span><span class="s1">&#39;hello word!&#39;</span><span class="p">}).</span>
+  <span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// this callback will be called asynchronously</span>
+    <span class="c1">// when the response is available</span>
+  <span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// called asynchronously if an error occurs</span>
+    <span class="c1">// or server returns response with an error status.</span>
+  <span class="p">});</span>
+</pre>
+
+
+<p>Since AngularJS Ajax involves in some other knowledge, I will write extra post about this.</p>
+<h2 id="views">Views</h2>
+<h3 id="ng-view">ng-view</h3>
+<p>Just create a placeholder for easier configuration:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">ng-view</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+
+
+<h3 id="ng-template">ng-template</h3>
+<p>Create a view with <code>id</code>. This view will be map to a controller using <code>$routeProvider</code>.</p>
+<p>Example from tutorialspoint.com:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">ng-app</span><span class="o">=</span><span class="s">&quot;mainApp&quot;</span><span class="p">&gt;</span>
+   <span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/ng-template&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;addStudent.htm&quot;</span><span class="p">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span> <span class="nx">Add</span> <span class="nx">Student</span> <span class="o">&lt;</span><span class="err">/h2&gt;</span>
+         <span class="p">{{</span><span class="nx">message</span><span class="p">}}</span>
+   <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+
+
+<h3 id="routeprovider">$routeProvider</h3>
+<p><code>$routeProvider</code> configure urls and map to corresponding views. The controller for that corresponding view will also be attached. It works similar to <code>@RequestMapping(value='...')</code> function in Spring MVC framework.</p>
+<p>Example from tutorialspoint.com:</p>
+<pre class="code literal-block"><span></span><span class="c1">//You need to add ngRoute to application controller</span>
+<span class="kd">var</span> <span class="nx">mainApp</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s2">&quot;mainApp&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;ngRoute&#39;</span><span class="p">]);</span>
+<span class="c1">//templateUrl maps the id defined in ng-template</span>
+<span class="nx">mainApp</span><span class="p">.</span><span class="nx">config</span><span class="p">([</span><span class="s1">&#39;$routeProvider&#39;</span><span class="p">,</span>
+     <span class="kd">function</span><span class="p">(</span><span class="nx">$routeProvider</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">$routeProvider</span><span class="p">.</span>
+           <span class="nx">when</span><span class="p">(</span><span class="s1">&#39;/addStudent&#39;</span><span class="p">,</span> <span class="p">{</span>
+              <span class="nx">templateUrl</span><span class="o">:</span> <span class="s1">&#39;addStudent.htm&#39;</span><span class="p">,</span>
+              <span class="c1">//addStudent.htm should be the same path as main.htm</span>
+              <span class="nx">controller</span><span class="o">:</span> <span class="s1">&#39;AddStudentController&#39;</span>
+           <span class="p">}).</span>
+           <span class="nx">when</span><span class="p">(</span><span class="s1">&#39;/viewStudents&#39;</span><span class="p">,</span> <span class="p">{</span>
+              <span class="nx">templateUrl</span><span class="o">:</span> <span class="s1">&#39;viewStudents.htm&#39;</span><span class="p">,</span>
+              <span class="nx">controller</span><span class="o">:</span> <span class="s1">&#39;ViewStudentsController&#39;</span>
+           <span class="p">}).</span>
+           <span class="nx">otherwise</span><span class="p">({</span>
+              <span class="c1">//Default View</span>
+              <span class="nx">redirectTo</span><span class="o">:</span> <span class="s1">&#39;/addStudent&#39;</span>
+           <span class="p">});</span>
+<span class="p">}]);</span>
+</pre>
+
+
+<h2 id="scope">Scope</h2>
+<p><code>$scope</code> is passed as first argument to controller during its constructor definition.</p>
+<ul>
+<li>
+<p><strong>Scope is controller specific.</strong></p>
+</li>
+<li>
+<p><strong>Child controller can inherit scope from parent controller.</strong></p>
+</li>
+<li>
+<p><strong>Scope in parent controller can be overwritten by child controller</strong>.</p>
+</li>
+</ul>
+<p>Example from tutorialspoint.com:</p>
+<pre class="code literal-block"><span></span><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+  <span class="kd">var</span> <span class="nx">mainApp</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s2">&quot;mainApp&quot;</span><span class="p">,</span> <span class="p">[]);</span>
+  <span class="nx">mainApp</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s2">&quot;shapeController&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$scope</span><span class="p">)</span> <span class="p">{</span>
+     <span class="nx">$scope</span><span class="p">.</span><span class="nx">message</span> <span class="o">=</span> <span class="s2">&quot;In shape controller&quot;</span><span class="p">;</span>
+     <span class="nx">$scope</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="s2">&quot;Shape&quot;</span><span class="p">;</span>
+  <span class="p">});</span>
+  <span class="nx">mainApp</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s2">&quot;circleController&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$scope</span><span class="p">)</span> <span class="p">{</span>
+     <span class="nx">$scope</span><span class="p">.</span><span class="nx">message</span> <span class="o">=</span> <span class="s2">&quot;In circle controller&quot;</span><span class="p">;</span>  <span class="c1">//Overwritten</span>
+  <span class="p">});</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span>
+</pre>
+
+
+<h2 id="service">Service</h2>
+<p>Services are JavaScript functions and are responsible to do a <strong>specific tasks</strong> **only.</p>
+<p>Services are normally injected using <strong>dependency injection</strong> mechanism of AngularJS.</p>
+<p>There are two types of service.</p>
+<h3 id="factory">Factory</h3>
+<p>Define a factory then assign method to it.</p>
+<p>Example from tutorialspoint.com:</p>
+<pre class="code literal-block"><span></span> <span class="kd">var</span> <span class="nx">mainApp</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s2">&quot;mainApp&quot;</span><span class="p">,</span> <span class="p">[]);</span>
+  <span class="c1">//Define a MathService factory</span>
+  <span class="nx">mainApp</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="s1">&#39;MathService&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+     <span class="kd">var</span> <span class="nx">factory</span> <span class="o">=</span> <span class="p">{};</span>
+     <span class="nx">factory</span><span class="p">.</span><span class="nx">multiply</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">a</span> <span class="o">*</span> <span class="nx">b</span>
+     <span class="p">}</span>
+     <span class="c1">//return factory object</span>
+     <span class="k">return</span> <span class="nx">factory</span><span class="p">;</span>
+  <span class="p">});</span>
+</pre>
+
+
+<h3 id="service_1">Service</h3>
+<p>Call Factory and perform methods defined in Factory:</p>
+<pre class="code literal-block"><span></span><span class="c1">//take MathService factory as a parameter</span>
+<span class="nx">mainApp</span><span class="p">.</span><span class="nx">service</span><span class="p">(</span><span class="s1">&#39;CalcService&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">MathService</span><span class="p">){</span>
+        <span class="c1">//CalService define a squre method</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">square</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">MathService</span><span class="p">.</span><span class="nx">multiply</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">a</span><span class="p">);</span>
+        <span class="c1">//call MathService factory &#39;multiply&#39; method</span>
+     <span class="p">}</span>
+  <span class="p">});</span>
+</pre>
+
+
+<p>Finally, you can call service in your controller method:</p>
+<pre class="code literal-block"><span></span><span class="c1">//take CalcService service as a parameter</span>
+<span class="nx">mainApp</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;CalcController&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">CalcService</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">$scope</span><span class="p">.</span><span class="nx">square</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">$scope</span><span class="p">.</span><span class="nx">result</span> <span class="o">=</span> <span class="nx">CalcService</span><span class="p">.</span><span class="nx">square</span><span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">number</span><span class="p">);</span>
+        <span class="c1">//Call square method from CalcService</span>
+     <span class="p">}</span>
+  <span class="p">});</span>
+</pre>
+
+
+<h2 id="dependency-injection">Dependency Injection</h2>
+<p>Following component of AngulaJS can be injected into other components:</p>
+<ul>
+<li>
+<p><code>value</code></p>
+</li>
+<li>
+<p><code>factory</code>: Example above injecting MathService factory to CalcService service</p>
+</li>
+<li>
+<p><code>service</code></p>
+</li>
+<li>
+<p><code>provider</code>: <code>Provider</code> is a special factory method with a method <code>get()</code>which is used to return the <code>value</code>/<code>service</code>/<code>factory</code>.</p>
+</li>
+<li>
+<p><code>constant</code></p>
+</li>
+</ul>
+<p>Example for value/constnat from tutorialspoint.com:</p>
+<pre class="code literal-block"><span></span><span class="nx">mainApp</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="s2">&quot;defaultInput&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+<span class="nx">mainApp</span><span class="p">.</span><span class="nx">constant</span><span class="p">(</span><span class="s2">&quot;configParam&quot;</span><span class="p">,</span> <span class="s2">&quot;constant value&quot;</span><span class="p">);</span>
+<span class="nx">mainApp</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;CalcController&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">defaultInput</span><span class="p">,</span> <span class="nx">configParam</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//...</span>
+<span class="p">}</span>
+</pre>
+
+
+<p>Example for provider from tutorialspoint.com:</p>
+<pre class="code literal-block"><span></span><span class="c1">//create a service using provider which defines a method square to return square of a number.</span>
+<span class="nx">mainApp</span><span class="p">.</span><span class="nx">config</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$provide</span><span class="p">)</span> <span class="p">{</span>
+   <span class="nx">$provide</span><span class="p">.</span><span class="nx">provider</span><span class="p">(</span><span class="s1">&#39;MathService&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="c1">//This provider gets MathService factory</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">$get</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+         <span class="kd">var</span> <span class="nx">factory</span> <span class="o">=</span> <span class="p">{};</span>
+         <span class="nx">factory</span><span class="p">.</span><span class="nx">multiply</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">a</span> <span class="o">*</span> <span class="nx">b</span><span class="p">;</span>
+         <span class="p">}</span>
+         <span class="k">return</span> <span class="nx">factory</span><span class="p">;</span>
+      <span class="p">};</span>
+   <span class="p">});</span>
+<span class="p">});</span>
+</pre>
+
+
+<h2 id="custom-directives">Custom Directives</h2>
+<p>Custom directives are defined using <code>directive</code> function. <strong>A custom directive simply replaces the element for which it is activated</strong>.</p>
+<p>AngularJS use its <code>compile()</code> method of the custom directive then process the element using <code>link()</code> method of the custom directive based on the scope of the directive.</p>
+<p>You can create custom directives for following type of elements:</p>
+<ul>
+<li>
+<p><code>Element directives</code>: Directive activates when a <strong>matching element</strong> is encountered.</p>
+</li>
+<li>
+<p><code>Attribute</code>: Directive activates when a <strong>matching attribute</strong> is encountered.</p>
+</li>
+<li>
+<p><code>CSS</code>: Directive activates when a <strong>matching css</strong> style is encountered.</p>
+</li>
+<li>
+<p><code>Comment</code>: Directive activates when a <strong>matching comment</strong> is encountered.</p>
+</li>
+</ul>
+<p>Example custom HTML tags from tutorialspoint.com:</p>
+<p>View:</p>
+<pre class="code literal-block"><span></span><span class="c">&lt;!-- This controller includes custom directive necessary information --&gt;</span>
+ <span class="p">&lt;</span><span class="nt">div</span> <span class="na">ng-app</span><span class="o">=</span><span class="s">&quot;mainApp&quot;</span> <span class="na">ng-controller</span><span class="o">=</span><span class="s">&quot;StudentController&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">student</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;Mahesh&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">student</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">student</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;Piyush&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">student</span><span class="p">&gt;</span>
+</pre>
+
+
+</div>
+
+<p>Controller:</p>
+<pre class="code literal-block"><span></span><span class="nx">mainApp</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;StudentController&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$scope</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">$scope</span><span class="p">.</span><span class="nx">Mahesh</span> <span class="o">=</span> <span class="p">{};</span>
+        <span class="nx">$scope</span><span class="p">.</span><span class="nx">Mahesh</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;Mahesh Parashar&quot;</span><span class="p">;</span>
+        <span class="nx">$scope</span><span class="p">.</span><span class="nx">Mahesh</span><span class="p">.</span><span class="nx">rollno</span>  <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="nx">$scope</span><span class="p">.</span><span class="nx">Piyush</span> <span class="o">=</span> <span class="p">{};</span>
+        <span class="nx">$scope</span><span class="p">.</span><span class="nx">Piyush</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;Piyush Parashar&quot;</span><span class="p">;</span>
+        <span class="nx">$scope</span><span class="p">.</span><span class="nx">Piyush</span><span class="p">.</span><span class="nx">rollno</span>  <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="p">});</span>
+</pre>
+
+
+<p>Create Directive:</p>
+<pre class="code literal-block"><span></span><span class="err">/Create a directive, first parameter is the html element to be attached.</span>
+<span class="c1">//This directive will be activated as soon as any student element is encountered in html</span>
+<span class="nx">mainApp</span><span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;student&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+   <span class="c1">//define the directive object</span>
+   <span class="kd">var</span> <span class="nx">directive</span> <span class="o">=</span> <span class="p">{};</span>
+   <span class="c1">//restrict = E, signifies that directive is Element directive</span>
+   <span class="nx">directive</span><span class="p">.</span><span class="nx">restrict</span> <span class="o">=</span> <span class="s1">&#39;E&#39;</span><span class="p">;</span>
+   <span class="c1">//template replaces the complete element with its text.</span>
+   <span class="nx">directive</span><span class="p">.</span><span class="nx">template</span> <span class="o">=</span> <span class="s2">&quot;Student: &lt;b&gt;{{student.name}}&lt;/b&gt; , Roll No: &lt;b&gt;{{student.rollno}}&lt;/b&gt;&quot;</span><span class="p">;</span>
+   <span class="c1">//scope is used to distinguish each student element based on criteria.</span>
+   <span class="nx">directive</span><span class="p">.</span><span class="nx">scope</span> <span class="o">=</span> <span class="p">{</span>
+       <span class="nx">student</span> <span class="o">:</span> <span class="s2">&quot;=name&quot;</span>
+   <span class="p">}</span>
+</pre>
+
+
+<p>Compile:</p>
+<pre class="code literal-block"><span></span>   <span class="c1">//compile is called during application initialization. AngularJS calls it once when html page is loaded.</span>
+   <span class="nx">directive</span><span class="p">.</span><span class="nx">compile</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">element</span><span class="p">,</span> <span class="nx">attributes</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">element</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;border&quot;</span><span class="p">,</span> <span class="s2">&quot;1px solid #cccccc&quot;</span><span class="p">);</span>
+      <span class="c1">//linkFunction is linked with each element with scope to get the element specific data.</span>
+      <span class="kd">var</span> <span class="nx">linkFunction</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">element</span><span class="p">,</span> <span class="nx">attributes</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">element</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="s2">&quot;Student: &lt;b&gt;&quot;</span><span class="o">+</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">student</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span><span class="s2">&quot;&lt;/b&gt; , Roll No: &lt;b&gt;&quot;</span><span class="o">+</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">student</span><span class="p">.</span><span class="nx">rollno</span><span class="o">+</span><span class="s2">&quot;&lt;/b&gt;&lt;br/&gt;&quot;</span><span class="p">);</span>
+          <span class="c1">//You are using the scope from controller. Note StudentController replace &#39;student&#39; to a specific student name</span>
+          <span class="nx">element</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;background-color&quot;</span><span class="p">,</span> <span class="s2">&quot;#ff00ff&quot;</span><span class="p">);</span>
+      <span class="p">}</span>
+      <span class="k">return</span> <span class="nx">linkFunction</span><span class="p">;</span>
+   <span class="p">}</span>
+   <span class="k">return</span> <span class="nx">directive</span><span class="p">;</span>
+<span class="p">});</span>
+</pre>
+
+
+<p>In the example above, you need to create a directive, then create a corresponding compile attribute for it.</p>

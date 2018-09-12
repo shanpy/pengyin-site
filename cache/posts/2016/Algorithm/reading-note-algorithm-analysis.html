@@ -1,0 +1,103 @@
+<p>Although my current work isn't involved in too much algorithms, it's important for me to review and throughly learn the idea in it. This is a reading note of <em>The Algorithm Design Manual 2nd edition written by Steven S. Skiena - Algorithm Analysis</em> part.</p>
+<h1 id="reference-list">Reference List</h1>
+<ul>
+<li>
+<p><a href="http://www.martinkeefe.com/math/mathjax1">A good reference website of MathJax in markdown</a>, from <em>Matin's Stuff</em> blog</p>
+</li>
+<li>
+<p><a href="https://cdn.mathjax.org/mathjax/latest/test/sample-dynamic.html">An online tool to test MathJax</a></p>
+</li>
+<li>
+<p><a href="http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference">Another very good MathJax Quick Reference</a></p>
+</li>
+</ul>
+<hr>
+<blockquote>
+<p>To analyze an algorithm, two important tools are 1) RAM model of computation 2) the asymptotic analysis of worst-case complexity</p>
+</blockquote>
+<hr>
+<h1 id="ram-model-of-computation">RAM Model of Computation</h1>
+<p><code>Random Access Machine (RAM)</code> is a hypothetical computer which has following properties:</p>
+<ul>
+<li>
+<p>Each <em>simple</em> operation(+,*,-,=,if,call) takes exactly <strong>one time step</strong>.</p>
+</li>
+<li>
+<p>Loops are the composition of many single-step operations.</p>
+</li>
+<li>
+<p>Each <em>memory access</em> takes exactly <strong>one time step</strong>. The RAM model takes no notice of whether an item is in cache or on the disk.</p>
+</li>
+</ul>
+<p>Under RAM model, run time is measured by <em>counting up the number of steps</em> an algorithm takes on a given problem instance. If we assume that RAM executes a given number of steps per second, this operation count coverts naturally to the actual running time.</p>
+<hr>
+<h1 id="best-worst-and-average-case-complexity">Best, Worst and Average-Case Complexity</h1>
+<p>The book gave a graph to show three cases:</p>
+<p>img-responsive images/articles/2016/algorithms/complexity1.png </p>
+<p>The graph above shows that we can present each <em>input instance</em> as a point on a graph, where the $x-axis$ represents the <em>size</em> of the input problem and the $y-axis$ denotes the number of <em>steps</em> taken by the algorithm in this instance.</p>
+<p>Three cases are explained as below:</p>
+<ul>
+<li>
+<p><code>worst-case complexity</code>: the function defined by the <em>maximum</em> number of steps taken in any instance of size $n$. This represents the curve passing through the highest point in each column</p>
+</li>
+<li>
+<p><code>best-case complexity</code>: the function defined by the <em>minimum</em> number of steps taken in any instance of size $n$. This represents the curve passing through the lowest point of each column.</p>
+</li>
+<li>
+<p><code>average-case complexity</code>: the function defined by the <em>average</em> number of steps over all instances of size $n$.</p>
+</li>
+</ul>
+<blockquote>
+<p>The worst-case complexity proves to be most useful of these three measures in practice.</p>
+</blockquote>
+<p>Each of these time complexities define a numerical function, representing <strong>time versus problem size</strong>.</p>
+<hr>
+<h1 id="big-o-notation">Big $O$ Notation</h1>
+<p>the functions generating from the parts above have two problems:</p>
+<ul>
+<li>
+<p>Have too many bumps: the <em>exact</em> time complexity function for any algorithm is liable to be very <em>complicated</em>, with little up and down bumps.</p>
+</li>
+<li>
+<p>Require too much detail to specify precisely: A function like $T(n) = 12754n^2 + 4353n + 834\log_{2}n + 13546$ would clearly be very difficult to work, but mainly it tells us 'the time grows quadratically with n'.</p>
+</li>
+</ul>
+<p>So Big $O$ Notation is much simpler with enough information.</p>
+<blockquote>
+<p>The Big Oh notation ignores the difference between multiplicative constants. For example: $f(n) = 2n$ and $g(n) = n$ are identical.</p>
+</blockquote>
+<p>Following definitions are essential in Big $O$ Notation:</p>
+<ul>
+<li>
+<p>$f(n) = O(g(n))$ means $c \cdot g(n)$ is an <strong>upper bound</strong> on $f(n)$. Thus there <strong>exists</strong> some constant $c$ such that $f(n)$ is always $\leq c \cdot g(n)$, for large enough $n$ (i.e., $n \geq n_{0}$ for some constant $n_{0}$).</p>
+</li>
+<li>
+<p>$f(n) = \Omega(g(n))$ means $c \cdot g(n)$ is a <strong>lower bound</strong> on $f(n)$. Thus there <strong>exists</strong> some constant $c$ such taht $f(n)$ is always $\geg c \cdot g(n)$, for all $n \geg n_{0}$.</p>
+</li>
+<li>
+<p>$f(n) = \Theta(g(n))$ means $c_{1} \cdot g(n)$ is an <strong>upper bound</strong> on $f(n)$ and $c_{2} \cdot g(n)$ is a <strong>lower bound</strong> on $f(n)$, for all $n \geq n_{0}$. Thus there <strong>exists</strong> constants $c_{1}$ and $c_{c2}$ such that $f(n) \leq c_{1} \cdot g(n)$ and $f(n) \geq c_{2} \cdot g(n)$. This means that $g(n)$ provides a nice, tight boutnd on $f(n)$.</p>
+</li>
+</ul>
+<blockquote>
+<p>Make sure you notice <code>equal</code> relation between $f(n)$ and $g(n)$ above. For example, $2^(n+1) = \Theta (2^n)$ because if we make $c=2$, both $O$ and $\Omega$ can be satisfied.</p>
+</blockquote>
+<p>See following graphs as example:</p>
+<p>img-responsive images/articles/2016/algorithms/complexity2.png </p>
+<p>img-responsive images/articles/2016/algorithms/complexity3.png </p>
+<blockquote>
+<p>Each of definitions above assumes a constant $n_{0}$ <strong>beyond which</strong> they are always satisfied. We are not concerned about small values of $n$ (i.e. <em>anything to the left of $n_{0}$). It is best to read $=$ here as meaning </em>one of the functions are. For example, $n^2$ is one of the functions that are $O(n^3)$.</p>
+</blockquote>
+<p>We can see following example:</p>
+<p>For $3n^2-100n+6$, we can say $O(n^2)$ and $O(n^3)$, but not $O(n)$. These means for the first two cases, there is always $c$ I can pick to make $g(n) \geq f(n)$ ($c &lt; n$). But for last one, $c * n &lt; 3n^2$ is always true. But I can say $\Omega (n)$ is true in case $n &gt; 100c$.</p>
+<p>Another example is $(x+y)^2 = O(x^2 + y^2)$. If we assume $x \leq y$, then we get $2xy \leq 2y^2 \leg 2(x^2+y^2)$. If we assume $x \geq y$, then we get $2xy \leg 2x^2 \leg 2(x^2 + y^2)$. So we can get $(x+y)^2 \leq c(x^2 + y^2)$.</p>
+<blockquote>
+<p>The Big $O$ annotation enables use to ignore details and focus on the big picture.</p>
+</blockquote>
+<hr>
+<h1 id="growth-rates-and-dominance-relations">Growth Rates and Dominance Relations</h1>
+<blockquote>
+<p>A faster-growing function <strong>dominates</strong> a slower-growing function.</p>
+</blockquote>
+<p>i.e., When $f$ and $g$ belongs to <em>different classes (i.e. $f \ne \Omega (g)$</em>, we say $g dominates f$ when $f(n) = O(g(n))$, sometimes written $g \gg f$.</p>
+<p>Following dominates are true:</p>
+<p>$n! (factorial functions) \gg 2^n (exponential functions) \gg n^3 (cubic functions) \gg n^2 (quadratic functions) \gg n\lg n (superlinear functions) \gg n (linear functions) \gg \log n (logarithmic functions)\gg 1 (constant functions)$</p>

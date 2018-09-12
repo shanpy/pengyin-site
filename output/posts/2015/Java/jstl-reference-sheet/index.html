@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " vocab="http://ogp.me/ns" lang="en">
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]--><!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]--><!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]--><!--[if gt IE 8]><!--><!--<![endif]--><head>
+<meta charset="utf-8">
+<meta name="description" content="This is a reference sheet I created for using JSP-Standard Tage Library/JSTL, based on my learning from &lt;a href=" http:>
+</head>
+<body>
+<p>JSP tutorial on tutorialspoint.com. All code examples and definations are taken from this website."&gt;
+    <!-- http://t.co/dKP3o1e -->
+    <meta name="HandheldFriendly" content="True"><meta name="MobileOptimized" content="320"><meta name="viewport" content="width=device-width, initial-scale=1.0"></p>
+<title>JSTL Reference Sheet | Pengyin's Corner</title>
+<link href="../../../../assets/css/all.css" rel="stylesheet" type="text/css">
+<!-- Webfonts --><link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+<!-- Load Modernizr --><script src="//mmistakes.github.io/hpstr-jekyll-theme/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script><link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../rss.xml">
+<link rel="canonical" href="https://pengyin-shan.com/posts/2015/Java/jstl-reference-sheet/">
+<!--[if lt IE 9]><script src="../../../../assets/js/html5.js"></script><![endif]--><meta name="description" content="This is a reference sheet I created for using JSP-Standard Tage Library/JSTL, based on my learning from &lt;a href=" http:>JSP tutorial on tutorialspoint.com. All code examples and definations are taken from this website."&gt;
+    <meta name="author" content="Pengyin(Wendy) Shan">
+<link rel="prev" href="../key-qas-for-oca-book/" title="Important Q&amp;A for OCA Java SE7 Certification Guide" type="text/html">
+<link rel="next" href="../java-knowledge-hashcode/" title="Java Knowledge: HashCode" type="text/html">
+<meta property="og:site_name" content="Pengyin's Corner">
+<meta property="og:title" content="JSTL Reference Sheet">
+<meta property="og:url" content="https://pengyin-shan.com/posts/2015/Java/jstl-reference-sheet/">
+<meta property="og:description" content='This is a reference sheet I created for using JSP-Standard Tage Library/JSTL, based on my learning from &lt;a href="http://www.tutorialspoint.com/cgi-bin/printpage.cgi"&gt;JSP tutorial on tutorialspoint.com'>
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-01-13T00:00:00-05:00">
+<meta property="article:tag" content="Java">
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    
+
+    <nav id="dl-menu" class="dl-menuwrapper" role="navigation"><button class="dl-trigger">Open Menu</button>
+    <ul class="dl-menu">
+<li><a href="../../../">My Knowledge Base</a></li>
+            <li><a href="https://www.linkedin.com/in/pengyinshan">My LinkedIn</a></li>
+            <li><a href="../../../../categories/">Tags and Categories</a></li>
+            <li><a href="../../../../rss.xml">RSS feed</a></li>
+            <li><a href="../../../../archive.html">Archive</a></li>
+    
+    
+    </ul></nav><div class="entry-header">
+<!-- /.image-credit -->
+    <div class="entry-image">
+      <img src="../../../../bk.JPG" alt="Latest Posts">
+</div>
+<!-- /.entry-image -->
+      
+  <div class="header-title">
+    <div class="header-title-wrap">
+    <h1 id="brand"><a href="https://pengyin-shan.com/" title="Pengyin's Corner" rel="home">
+    Pengyin's Corner</a></h1>
+      <h2>Be Passionate.</h2>
+    </div>
+<!-- /.header-title-wrap -->
+  </div>
+<!-- /.header-title -->
+
+</div>
+<!-- /.entry-header -->
+
+    <div id="main" role="main">
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><div class="entry-meta">
+            <span class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2015-01-13T00:00:00-05:00" itemprop="datePublished" title="2015-01-13">2015-01-13</time></a></span>  ·  
+            <span class="byline author vcard">Pengyin(Wendy) Shan</span>  ·  
+                <span class="commentline">
+        
+    <a href="#disqus_thread" data-disqus-identifier="cache/posts/2015/Java/jstl-reference-sheet.html">Comments</a>
+
+</span>  ·  
+            
+        <span class="sourceline"><a href="index.md" id="sourcelink">Source</a></span>  ·  
+
+                <meta name="description" itemprop="description" content="This is a reference sheet I created for using JSP-Standard Tage Library/JSTL, based on my learning from &lt;a href=" http:>JSP tutorial on tutorialspoint.com. All code examples and definations are taken from this website."&gt;
+        </div>
+        
+
+    
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">JSTL Reference Sheet</a></h1>
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>There are five types of JSTL tag Library:</p>
+<ul>
+<li>
+<p>Core Tags</p>
+</li>
+<li>
+<p>Formatting Tags</p>
+</li>
+<li>
+<p>SQL Tags</p>
+</li>
+<li>
+<p>JSTL Functions</p>
+</li>
+<li>
+<p>XML Tags (I skip this part)</p>
+</li>
+</ul>
+<p>Before you use JSTL library, you need to download it and put it to <code>webapps\ROOT\WEB-INF\lib</code> directoy.</p>
+<h3 id="core-tages">Core Tages</h3>
+<p>Make sure you include core tag library in your JSP file: <code>&lt;%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %&gt;</code></p>
+<p>Following tags are common core tags with an explaination of their usage:</p>
+<p><code>&lt;c:out&gt;</code>: Display the result of an expression. Similar to <code>&lt;%= %&gt;</code> exception you use a <code>.</code> notation to access property now.</p>
+<blockquote>
+<p>Example: <code>&lt;c:out value="person.age"/&gt;</code></p>
+</blockquote>
+<p><code>&lt;c:set&gt;</code>: Evaluates an expression and uses the result to set a value of a <strong>JavaBean</strong> or a <strong>java.util.Map</strong> object.</p>
+<blockquote>
+<p>Example: <code>&lt;c:set var="var_name" value="${person.age}"/&gt;</code></p>
+</blockquote>
+<p><code>&lt;c:remove&gt;</code>: Remove a variable from either a specified scope or the first scope where the variable is found.</p>
+<blockquote>
+<p>Example: <code>&lt;c:remove var="var_name"/&gt;</code></p>
+</blockquote>
+<p><code>&lt;c:catch&gt;</code>: Catches any throwable error and optionally expost it.</p>
+<blockquote>
+<p>You can combine it with <if></if></p>
+</blockquote>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">c:catch</span> <span class="na">var</span><span class="o">=</span><span class="s">"exception"</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>${person.age}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">c:catch</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">c:if</span> <span class="na">test</span><span class="o">=</span><span class="s">"${exception!=null}"</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>The exception is: ${exception}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">c:if</span><span class="p">&gt;</span>
+</pre>
+
+
+<p><code>&lt;c:if&gt;</code>:Display content only if <code>test</code> is passed. <code>&lt;c:choose&gt;</code> ,<code>&lt;c:when&gt;</code> ,<code>c:otherwise&gt;</code> ususally are used together to create (nested) if-else loop</p>
+<blockquote>
+<p>Example: <code>&lt;c:if test="${person.age&gt;20}"&gt;Hello World!&lt;/c:if&gt;</code></p>
+</blockquote>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">c:choose</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">c:when</span> <span class="na">test</span><span class="o">=</span><span class="s">"${person.age&gt;18}"</span><span class="p">&gt;</span>
+        Adult
+    <span class="p">&lt;/</span><span class="nt">c:when</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">c:when</span> <span class="na">test</span><span class="o">=</span><span class="s">"${12&lt;person.age&lt;18}"</span><span class="p">&gt;</span>
+        Junior
+    <span class="p">&lt;/</span><span class="nt">c:when</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">c:otherwise</span><span class="p">&gt;</span>
+        Child
+    <span class="p">&lt;/</span><span class="nt">c:otherwise</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">c:choose</span><span class="p">&gt;</span>
+</pre>
+
+
+<p><code>&lt;c:import&gt;</code>: Work like <code>&lt;include&gt;</code>, takes an url and allows for inclusion of content from a differenet website or an FTP server.</p>
+<blockquote>
+<p>Example: <code>&lt;c:import var="var_name" url="http://pengyin-shan.com"/&gt;</code> fetches complete content from this website and would store in variable data.</p>
+</blockquote>
+<p><code>&lt;c:forEach&gt;</code>: Iterates over a collection of objects. Work like <strong>for</strong>, <strong>while</strong> or <strong>do-while</strong> in Java. Possiable Parameters:</p>
+<ul>
+<li>
+<p><code>begin</code>: Element to start with. 0 means the first item</p>
+</li>
+<li>
+<p><code>end</code>: Element to end with. 0 means the first item</p>
+</li>
+<li>
+<p><code>step</code>: Process every step items. Default is 1.</p>
+</li>
+<li>
+<p><code>var</code>: Name of variable for current item</p>
+</li>
+<li>
+<p><code>varStatus</code>: Name of variable for current loop status. Works like <code>i</code> or <code>count</code> in java.</p>
+</li>
+</ul>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">c:forEach</span> <span class="na">items</span><span class="o">=</span><span class="s">"${people}"</span> <span class="na">var</span><span class="o">=</span><span class="s">"person"</span> <span class="na">varStatus</span><span class="o">=</span><span class="s">"theCount"</span><span class="p">&gt;</span>
+${theCount.index}
+<span class="p">&lt;/</span><span class="nt">c:forEach</span><span class="p">&gt;</span>
+</pre>
+
+
+<p>Note: <code>{varStatus.index}</code> starts from <strong>0</strong>. <code>{varStatus.count}</code> starts from <strong>1</strong>.</p>
+<p><code>&lt;c:forTokens&gt;</code>: Similar as <code>&lt;c:forEach&gt;</code>. It is used to break a string into tokens and iterate through each of the tokens. Requested Parameter: <strong>delims</strong>, define character that is used for division.</p>
+<p><code>&lt;c:url&gt;</code> formats a URL string and optionally put to a variable and print to page</p>
+<p><code>&lt;c:param&gt;</code> allows proper URL request parameter to be specified with URL. Usually work with <code>&lt;c:url&gt;</code></p>
+<p><code>&lt;c:redirect&gt;</code> automatically re-direct page to another URL</p>
+<blockquote>
+<p>Example: <code>&lt;c:forTokens items="a,b,c" delims="," var="charName"&gt;${charName}&lt;/c:forTokens&gt;</code></p>
+</blockquote>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">c:url</span> <span class="na">var</span><span class="o">=</span><span class="s">"testUrl"</span> <span class="na">value</span><span class="o">=</span><span class="s">"/index.jsp"</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">c:param</span> <span class="na">name</span><span class="o">=</span><span class="s">"id"</span> <span class="na">value</span><span class="o">=</span><span class="s">"1234"</span><span class="p">/&gt;</span>
+<span class="p">&lt;/</span><span class="nt">c:url</span><span class="p">&gt;</span>
+#now testUrl is: /index.jsp?id=1234
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"&lt;c:url value=${testUrl}"</span><span class="p">&gt;</span>Test<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">c:redirect</span> <span class="na">url</span><span class="o">=</span><span class="s">"${testUrl}"</span><span class="p">/&gt;</span>
+</pre>
+
+
+<h3 id="formatting-tags">Formatting Tags</h3>
+<p>Make sure you include formatting tag library in your JSP file: <code>&lt;%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %&gt;</code></p>
+<p>Following tags are common formatting tags with an explaination of their usage:</p>
+<p><code>&lt;fmt:formatNumber&gt;</code>: format numbers, percentages and currencies. It has lots of parameters for configuration. You can view <a href="http://www.tutorialspoint.com/jsp/jstl_format_formatnumber_tag.htm">here</a> for detail.</p>
+<blockquote>
+<p>Example: <code>&lt;p&gt;Number is: &lt;fmt:formatNumber value="${balance}" maxIntegerDigits="3" maxFactionDigits="3" pattern="###.###E0"&gt;&lt;/p&gt;</code></p>
+</blockquote>
+<p><code>&lt;fmt:formatDate&gt;</code>: Similarly but just for date. For example, you can set timezone using this tag. You can view detail <a href="http://www.tutorialspoint.com/jsp/jstl_format_formatdate_tag.htm">here</a>.</p>
+<p><code>&lt;fmt:parseNumber&gt;</code>: parse numbers, percentages and currencies. You are given a number and this tag can parse number to certain format. You can view <a href="http://www.tutorialspoint.com/jsp/jstl_format_parsenumber_tag.htm">here</a> for useful parameters.</p>
+<blockquote>
+<p>Example: <code>&lt;fmt:parseNumber var="i" type="number" value="${balance}" integerOnly="true"/&gt;</code></p>
+</blockquote>
+<p><code>&lt;fmt:parseDate&gt;</code>:Similary, but just for Date. For example, you can set date as "YYYY-MM-DD" format. You can view detail <a href="http://www.tutorialspoint.com/jsp/jstl_format_parsedate_tag.htm">here</a>.</p>
+<p><code>&lt;fmt:message&gt;</code> tag maps key to localized message</p>
+<p><code>&lt;fmt:bundle&gt;</code> often being used with <code>&lt;fmt:message&gt;</code>. It will find a java class which extend ListResourceBunder, and use it for message</p>
+<p><code>&lt;fmt:setBundle&gt;</code> is similar to <code>&lt;fmt:bundle&gt;</code> except it not wraps <code>&lt;fmt:message&gt;</code></p>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Example</span> <span class="kd">extends</span> <span class="n">ListResouceBundle</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="n">Object</span><span class="o">[][]</span> <span class="nf">getContents</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="n">contents</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">static</span> <span class="kd">final</span> <span class="n">Object</span><span class="o">[][]</span> <span class="n">contents</span> <span class="o">=</span> <span class="o">{</span>
+        <span class="o">{</span><span class="s">"count.one"</span><span class="o">,</span><span class="s">"One"</span><span class="o">},</span>
+        <span class="o">{</span><span class="s">"count.two"</span><span class="o">,</span><span class="s">"Two"</span><span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="o">:::</span><span class="n">html</span>
+<span class="o">&lt;</span><span class="n">fmt</span><span class="o">:</span><span class="n">bundle</span> <span class="n">basedname</span><span class="o">=</span><span class="s">"com.pengyinshan.Example"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">fmt</span><span class="o">:</span><span class="n">message</span> <span class="n">key</span><span class="o">=</span><span class="s">"count.one"</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">fmt</span><span class="o">:</span><span class="n">message</span> <span class="n">key</span><span class="o">=</span><span class="s">"count.two"</span><span class="o">/&gt;</span>
+        <span class="err">#</span><span class="k">if</span> <span class="n">you</span> <span class="n">use</span> <span class="o">&lt;</span><span class="n">fmt</span><span class="o">:</span><span class="n">setBundle</span><span class="o">&gt;,</span> <span class="o">&lt;</span><span class="n">fmt</span><span class="o">:</span><span class="n">message</span><span class="o">&gt;</span> <span class="n">will</span> <span class="n">be</span> <span class="n">outside</span>
+<span class="o">&lt;/</span><span class="n">fmt</span><span class="o">:</span><span class="n">bundle</span><span class="o">&gt;</span>
+</pre>
+
+
+<p><code>&lt;fmt:setLocale&gt;</code> is similar as <code>&lt;fmt:setBundle&gt;</code>. You need to specify class Name. Tag will find the scale that corresponds to this name
+<code>&lt;fmt:requestCoding&gt;</code> set up encoding. You don't need extra class for it</p>
+<p>Assume we have same example:</p>
+<pre class="code literal-block"><span></span><span class="n">publc</span> <span class="kd">class</span> <span class="nc">Exmple_en_us</span> <span class="kd">extends</span> <span class="n">ListResourceBundle</span><span class="o">{</span>
+    <span class="c1">//...</span>
+<span class="o">}</span>
+
+<span class="o">:::</span><span class="n">html</span>
+<span class="o">&lt;</span><span class="n">fmt</span><span class="o">:</span><span class="n">requestEncoding</span> <span class="n">value</span><span class="o">=</span><span class="s">"en_us"</span><span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="n">fmt</span><span class="o">:</span><span class="n">setLocale</span> <span class="n">value</span><span class="o">=</span><span class="s">"en_us"</span><span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="n">fmt</span><span class="o">:</span><span class="n">bundle</span> <span class="n">basedname</span><span class="o">=</span><span class="s">"com.pengyinshan.Example"</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">fmt</span><span class="o">:</span><span class="n">bundle</span><span class="o">&gt;</span>
+</pre>
+
+
+<p><code>&lt;fmt:timeZone&gt;</code> and <code>&lt;fmt:setTimeZone&gt;</code> are used to specify timezone in body.</p>
+<p>They are oftern used above <code>&lt;fmt:formatDate&gt;</code></p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">fmt:setTimeZone</span> <span class="na">value</span><span class="o">=</span><span class="s">"EST"</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">fmt:formatDate</span> <span class="na">value</span><span class="o">=</span><span class="s">"${now}"</span> <span class="na">timeStyle</span><span class="o">=</span><span class="s">"long"</span> <span class="na">dateStyle</span><span class="o">=</span><span class="s">"long"</span> <span class="na">type</span><span class="o">=</span><span class="s">"both"</span> <span class="p">/&gt;</span>
+<span class="p">&lt;/</span><span class="nt">fmt:setTimeZone</span><span class="p">&gt;</span>
+</pre>
+
+
+<h3 id="sql-tags">SQL Tags</h3>
+<p>Make sure you include sql tag library in your JSP file: <code>&lt;%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %&gt;</code></p>
+<p>Following tags are common sql tags with an explaination of their usage:</p>
+<p><code>&lt;sql:setDateSource&gt;</code>: Takes several parameters and set data source.</p>
+<blockquote>
+<p>For example: <code>&lt;sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/TEST" user="user_id"password="mypassword"/&gt;</code></p>
+</blockquote>
+<p><code>&lt;sql:query&gt;</code>: Take several parameters and run a query. You can put result to a variable and use it as <code>var.id</code>, <code>var.last</code>, <code>var.name</code>, etc. You may want to use <code>&lt;c:forEach&gt;</code> for result.</p>
+<blockquote>
+<p>For example:</p>
+</blockquote>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">sql:query</span> <span class="na">dataSource</span><span class="o">=</span><span class="s">"${snapshot}"</span> <span class="na">var</span><span class="o">=</span><span class="s">"result"</span><span class="p">&gt;</span>
+SELECT * from Employees;
+<span class="p">&lt;/</span><span class="nt">sql:query</span><span class="p">&gt;</span>
+</pre>
+
+
+<p><code>&lt;sql:udpate&gt;</code>: Use for sql query that does not return value, such as <strong>insert</strong>, <strong>update</strong> or <strong>delete</strong>.</p>
+<p>For example:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">sql:update</span> <span class="na">dataSource</span><span class="o">=</span><span class="s">"${snapshot}"</span> <span class="na">var</span><span class="o">=</span><span class="s">"count"</span><span class="p">&gt;</span>
+   INSERT INTO Employees VALUES (104, 2, 'Nuha', 'Ali');
+<span class="p">&lt;/</span><span class="nt">sql:update</span><span class="p">&gt;</span>
+</pre>
+
+
+<p><code>&lt;sql:param&gt;</code>: Use for fill parameter to <code>&lt;sql:update&gt;</code> or <code>&lt;sql:query&gt;</code> if need.</p>
+<p><code>&lt;sql:dateParam&gt;</code>: Similaly but specailly used to modify date/timestamp.</p>
+<p>The sequence of tags corresponding to sequnce of <em>?</em> in query.</p>
+<p>For example:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">sql:update</span> <span class="na">dataSource</span><span class="o">=</span><span class="s">"${snapshot}"</span> <span class="na">var</span><span class="o">=</span><span class="s">"count"</span><span class="p">&gt;</span>
+  Update Employees Set Dob = ? WHERE Id = ?
+  <span class="p">&lt;</span><span class="nt">sql:dateParam</span> <span class="na">value</span><span class="o">=</span><span class="s">"&lt;%=DoB%&gt;"</span> <span class="na">type</span><span class="o">=</span><span class="s">"DATE"</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">sql:param</span> <span class="na">value</span><span class="o">=</span><span class="s">"${empId}"</span> <span class="p">/&gt;</span>
+<span class="p">&lt;/</span><span class="nt">sql:update</span><span class="p">&gt;</span>
+</pre>
+
+
+<p><code>&lt;sql:transaction&gt;</code>: Wrap some <code>&lt;sql:update&gt;</code> and <code>&lt;sql:query&gt;</code> to create transaction.</p>
+<p>For Example:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">sql:transaction</span> <span class="na">dataSource</span><span class="o">=</span><span class="s">"${snapshot}"</span><span class="p">&gt;</span>
+#<span class="p">&lt;</span><span class="nt">sql:update</span><span class="p">&gt;</span>....
+<span class="p">&lt;/</span><span class="nt">sql:transaction</span><span class="p">&gt;</span>
+</pre>
+
+
+<h3 id="jstl-functions">JSTL Functions</h3>
+<p>Make sure you include function tag library in your JSP file: <code>&lt;%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %&gt;</code></p>
+<p>Normally JSTL functions are used within <strong>${}</strong>.</p>
+<p>Following tags are common function tags with an explaination of their usage:</p>
+<p><code>&lt;fn:contains&gt;</code>: Equals to <code>boolean contains(java.lang.String, java.lang.String)</code>.</p>
+<p><code>&lt;fn:containsIgnoreCase&gt;</code>: Similar but just ignore case problem.</p>
+<blockquote>
+<p>Example:</p>
+</blockquote>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">c:if</span> <span class="na">test</span><span class="o">=</span><span class="s">"${fn:contains(var_name,'test')}"</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Found "test" in variable<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">c:if</span><span class="p">&gt;</span>
+</pre>
+
+
+<p><code>&lt;fn:endsWith&gt;</code>: Determines whether an input string ends with a specified suffix. Equals to <code>boolean endsWith(java.lang.String, java.lang.String)</code>.</p>
+<p><code>&lt;fn:startWith&gt;</code>: Similar but it work with prefix.</p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">c:if</span> <span class="na">test</span><span class="o">=</span><span class="s">"${fn:endsWith(var_name, '123')}"</span><span class="p">&gt;</span>
+   <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>String ends with 123<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">c:if</span><span class="p">&gt;</span>
+</pre>
+
+
+<p><code>&lt;fn:indexOf&gt;</code>: Returns the index within a string of a specified substring. Equals to <code>int indexOf(java.lang.String, java.lang.String)</code>.</p>
+<p><code>&lt;fn:length&gt;</code>: Returns the length of a string. Equals to <code>int length(java.lang.Object)</code>.</p>
+<p><code>&lt;fn:split&gt;</code>: splits a string into an array of substrings. Equals to <code>java.lang.String[] split(java.lang.String, java.lang.String)</code>.</p>
+<p><code>&lt;fn:join&gt;</code>: Concatenates all the elements of an array into a string with a specified separator. Equals to <code>String join (java.lang.String[], java.lang.String)</code>.</p>
+<p><code>&lt;fn:replace&gt;</code>: replace <strong>all occurrences</strong> of a string with another string.</p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">c:set</span> <span class="na">var</span><span class="o">=</span><span class="s">"string1"</span> <span class="na">value</span><span class="o">=</span><span class="s">"This is first String."</span><span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">c:set</span> <span class="na">var</span><span class="o">=</span><span class="s">"string2"</span> <span class="na">value</span><span class="o">=</span><span class="s">"${fn:split(string1, ' ')}"</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">c:set</span> <span class="na">var</span><span class="o">=</span><span class="s">"string3"</span> <span class="na">value</span><span class="o">=</span><span class="s">"${fn:join(string2, '-')}"</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">c:set</span> <span class="na">var</span><span class="o">=</span><span class="s">"string4"</span> <span class="na">value</span><span class="o">=</span><span class="s">"${fn:replace(string3, '-' , '+')}"</span> <span class="p">/&gt;</span>
+</pre>
+
+
+<p><code>&lt;fn:substring&gt;</code>: Returns a subset of a string specified by start and end index. Equals to <code>java.lang.String substring(java.lang.String, int, int)</code>.</p>
+<p><code>&lt;fn:substringAfter&gt;</code>: Returns the part of a string after a specified substring. Example: <code>&lt;c:set var="string2" value="${fn:substringAfter(string1, 'is')}" /&gt;</code>. Note <code>is</code> here is <strong>included</strong> in result.</p>
+<p><code>&lt;fn:substringBefore&gt;</code>: Returns the part of a string before a specified substring. Example is similar as above. Note <code>is</code> here is <strong>excluded</strong> in result.</p>
+<p><code>&lt;fn:toLowerCase&gt;</code> and <code>&lt;fn:toUpperCase&gt;</code>:take a string and transfer its case. For example: <code>&lt;c:set var="string2" value="${fn:toLowerCase(string1)}" /&gt;</code>.</p>
+<p><code>&lt;fn:trim&gt;</code>: Removes white space from <strong>both ends</strong> of a string. Example: <code>&lt;c:set var="string1" value="This is first String         "/&gt;</code>.</p>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../categories/java/" rel="tag">Java</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../key-qas-for-oca-book/" rel="prev" title="Important Q&amp;A for OCA Java SE7 Certification Guide">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../java-knowledge-hashcode/" rel="next" title="Java Knowledge: HashCode">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="pengyinsnotes",
+            disqus_url="https://pengyin-shan.com/posts/2015/Java/jstl-reference-sheet/",
+        disqus_title="JSTL Reference Sheet",
+        disqus_identifier="cache/posts/2015/Java/jstl-reference-sheet.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="pengyinsnotes";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+    
+    <div class="footer-wrapper">
+        <footer role="contentinfo"><p>Contents © 2018         <a href="mailto:pengyin.shan@outlook.com">Pengyin(Wendy) Shan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+        </footer>
+</div>
+
+    
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script src="../../../../assets/js/scripts.min.js"></script>
+</body>
+</html>

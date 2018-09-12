@@ -1,0 +1,135 @@
+<p>This post is transferred from my <a href="http://blogpengyin.herokuapp.com/">old Hexo blog site</a>, created on 2014.</p>
+<p>This is a Reading Note for <em>Interactive Data Visualization for the Web - An Introduction to Designing with D3</em> by <em>Scott Murray</em>, pulished by <em>O'Reilly, 2013</em></p>
+<p>This post will contains concepts that I think it's important for me to be familiar with in D3 book.</p>
+<h1 id="chapter-8-axes">Chapter 8 : Axes</h1>
+<p>code example for this chapter is <a href="http://shanpy.github.io/Front-End-Playground/D3/Reading-D3-IV.html"><strong>here</strong></a>. This part involves lots of code practice.</p>
+<p>The axes in D3 are functions with parameters. Differnt from scale, axes function will not return anything. Instead, it will geneate elements such as axes line, axes tags, etc.</p>
+<p>Note: <em>Axes function only apply to SVG</em></p>
+<p>Using <code>d3.svg.axis(scale)</code> to set up axis with certain scale.</p>
+<p>Using <code>axis.orient('bottom/top/left/right')</code> to set up location of tags in axis.</p>
+<p>Using <code>svg.append('g').call(axis)</code> to append axis to svg. <code>g</code> means a <em>group</em> element. This <em>group</em> element includes <code>path</code>,<code>line</code> and <code>text</code> elements for axis.</p>
+<p>You can give style to axis, using <em>css</em>. By using <code>.attr('class','class_name')</code>, you can assign class to <code>g</code> group, then set style in style sheet using <code>.class_name line{}</code> or <code>.class_name text()</code>. <code>path</code> and <code>line</code> can share same rule in stylesheet.</p>
+<p><em>Note: you should use svg attributes in style sheet, instead of css attributes</em></p>
+<p><code>shape-rendering</code> style make sure the number of tags in axis is as clear as pixels.</p>
+<p>You can move axis to bottom/left/right using <code>transform</code> attribute and <code>translate()</code> function. For example:</p>
+<pre class="code literal-block"><span></span><span class="c1">//...</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;transform&#39;</span><span class="p">,</span><span class="s1">&#39;translate(0,10)&#39;</span><span class="p">)</span>
+    <span class="c1">//move axis down in 10. Note positive y means going down</span>
+
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;transform&#39;</span><span class="p">,</span><span class="s1">&#39;translate(10,0)&#39;</span><span class="p">)</span>
+    <span class="c1">//move axis right in 10. This usually apply to y-axis.</span>
+</pre>
+
+
+<p><code>.ticks(number)</code> is to set how many axis tags you want. This is just a suggestion, D3 will <em>automatically</em> adjust to it.</p>
+<p><code>d3.format()</code> can set up a format. For example, <code>d3.format('.1%'')</code> means make a number to keep one decimal point, then add '%' after it. Then you can use <code>axis.tickFormat(d3.format('.1%''))</code> to make this apply to axis tags, if you want.</p>
+<p><em>Code Example for this Chapter</em> <a href="http://shanpy.github.io/Front-End-Playground/D3/Reading-D3-IV.html">You can check result of code here</a></p>
+<pre class="code literal-block"><span></span><span class="c">&lt;!--style after adding axis--&gt;</span>
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/css&quot;</span><span class="p">&gt;</span>
+        <span class="p">.</span><span class="nc">axis</span> <span class="nt">path</span><span class="o">,</span>
+        <span class="p">.</span><span class="nc">axis</span> <span class="nt">line</span> <span class="p">{</span>
+          <span class="n">fill</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+          <span class="n">stroke</span><span class="p">:</span> <span class="kc">green</span><span class="p">;</span>
+          <span class="n">shape-rendering</span><span class="p">:</span> <span class="n">crispEdges</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="p">.</span><span class="nc">axis</span> <span class="nt">text</span><span class="p">{</span>
+            <span class="k">font-size</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
+
+
+    <span class="c1">//set up SVG</span>
+    <span class="kd">var</span> <span class="nx">h</span> <span class="o">=</span> <span class="mi">400</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">padding</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+
+    <span class="c1">//set up random data set</span>
+    <span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="kd">var</span> <span class="nx">numOfPoint</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span> <span class="c1">//we want 10 point</span>
+    <span class="kd">var</span> <span class="nx">xRange</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">yRange</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">count</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">count</span><span class="o">&lt;</span><span class="nx">numOfPoint</span><span class="p">;</span> <span class="nx">count</span><span class="o">++</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">newx</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="nx">xRange</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">newy</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="nx">yRange</span><span class="p">);</span>
+        <span class="nx">dataset</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="nx">newx</span><span class="p">,</span><span class="nx">newy</span><span class="p">]);</span> <span class="c1">//Add array to empty array</span>
+    <span class="p">}</span>
+
+    <span class="kd">var</span> <span class="nx">svg</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;chapter8&#39;</span><span class="p">).</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="s1">&#39;100%&#39;</span><span class="p">)</span> <span class="c1">//This can make svg take full width of div</span>
+                <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span><span class="s1">&#39;400&#39;</span><span class="p">);</span>
+
+    <span class="kd">var</span> <span class="nx">w</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">offsetWidth</span><span class="p">;</span> <span class="c1">//get width of svg, assign it to w variable</span>
+
+    <span class="c1">//set up scatter plot</span>
+    <span class="kd">var</span> <span class="nx">circle</span> <span class="o">=</span> <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+                <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;circle&#39;</span><span class="p">);</span>
+
+    <span class="kd">var</span> <span class="nx">xScale</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">linear</span><span class="p">()</span>
+                    <span class="p">.</span><span class="nx">domain</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">dataset</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span> <span class="k">return</span> <span class="nx">d</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="p">})</span> <span class="o">+</span> <span class="nx">padding</span><span class="p">])</span> <span class="c1">//add extra padding to make sure leftest circle not be cut through middle</span>
+                    <span class="p">.</span><span class="nx">range</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="nx">w</span><span class="o">-</span><span class="nx">padding</span><span class="o">*</span><span class="mi">3</span><span class="p">]);</span>
+    <span class="kd">var</span> <span class="nx">yScale</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">linear</span><span class="p">()</span>
+                    <span class="p">.</span><span class="nx">domain</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">dataset</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span><span class="k">return</span> <span class="nx">d</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="p">})</span><span class="o">+</span><span class="nx">padding</span><span class="p">])</span>
+                    <span class="p">.</span><span class="nx">range</span><span class="p">([</span><span class="nx">h</span><span class="o">-</span><span class="nx">padding</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">]);</span>
+    <span class="kd">var</span> <span class="nx">rScale</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">linear</span><span class="p">()</span>
+                    <span class="p">.</span><span class="nx">domain</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">dataset</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span> <span class="k">return</span> <span class="nx">d</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="p">})])</span>
+                    <span class="p">.</span><span class="nx">range</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span><span class="mi">15</span><span class="p">]);</span>
+
+    <span class="nx">circle</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;cx&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">xScale</span><span class="p">(</span><span class="nx">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+    <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;cy&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+    <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">rScale</span><span class="p">(</span><span class="nx">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+    <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="s1">&#39;pink&#39;</span><span class="p">);</span>
+
+    <span class="c1">//set up tag for scatter plot</span>
+    <span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">)</span>
+                    <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">)</span>
+                    <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+                    <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">);</span>
+    <span class="nx">text</span><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span> <span class="nx">d</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+    <span class="p">});</span>
+    <span class="nx">text</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">xScale</span><span class="p">(</span><span class="nx">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+    <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+    <span class="p">});</span>
+
+    <span class="c1">//Add line betwen these points</span>
+    <span class="kd">var</span> <span class="nx">lineFunction</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">svg</span><span class="p">.</span><span class="nx">line</span><span class="p">()</span>
+                        <span class="p">.</span><span class="nx">x</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">xScale</span><span class="p">(</span><span class="nx">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="p">})</span>
+                        <span class="p">.</span><span class="nx">y</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span> <span class="p">})</span>
+                        <span class="p">.</span><span class="nx">interpolate</span><span class="p">(</span><span class="s2">&quot;linear&quot;</span><span class="p">);</span>
+    <span class="nx">svg</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="nx">lineFunction</span><span class="p">(</span><span class="nx">dataset</span><span class="p">))</span>
+                    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;stroke&#39;</span><span class="p">,</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+                    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;stroke-width&#39;</span><span class="p">,</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+                    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="s1">&#39;none&#39;</span><span class="p">);</span>
+
+    <span class="c1">//set up axis</span>
+    <span class="kd">var</span> <span class="nx">xAxis</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">svg</span><span class="p">.</span><span class="nx">axis</span><span class="p">()</span>
+                    <span class="p">.</span><span class="nx">scale</span><span class="p">(</span><span class="nx">xScale</span><span class="p">)</span> <span class="c1">//use scale</span>
+                    <span class="p">.</span><span class="nx">orient</span><span class="p">(</span><span class="s1">&#39;bottom&#39;</span><span class="p">)</span> <span class="c1">//make axis at bottom</span>
+                    <span class="p">.</span><span class="nx">ticks</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span><span class="c1">//make only 5 tags for axis</span>
+    <span class="kd">var</span> <span class="nx">yAxis</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">svg</span><span class="p">.</span><span class="nx">axis</span><span class="p">()</span>
+                    <span class="p">.</span><span class="nx">scale</span><span class="p">(</span><span class="nx">yScale</span><span class="p">)</span>
+                    <span class="p">.</span><span class="nx">orient</span><span class="p">(</span><span class="s1">&#39;right&#39;</span><span class="p">)</span> <span class="c1">//make axis on left</span>
+                    <span class="p">.</span><span class="nx">ticks</span><span class="p">(</span><span class="mi">7</span><span class="p">);</span><span class="c1">//make only 7 tags for axis</span>
+
+    <span class="c1">//Append axis to svg</span>
+    <span class="nx">svg</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;class&#39;</span><span class="p">,</span><span class="s1">&#39;axis&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;transform&#39;</span><span class="p">,</span><span class="s1">&#39;translate(0,&#39;</span><span class="o">+</span><span class="p">(</span><span class="nx">h</span><span class="o">-</span><span class="nx">padding</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">)</span> <span class="c1">//make x axis move down, with the distance of h-padding*2</span>
+        <span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">xAxis</span><span class="p">);</span> <span class="c1">//add axis</span>
+    <span class="nx">svg</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;class&#39;</span><span class="p">,</span><span class="s1">&#39;axis&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;transform&#39;</span><span class="p">,</span><span class="s1">&#39;translate(&#39;</span> <span class="o">+</span> <span class="nx">padding</span><span class="o">*</span><span class="mi">4</span> <span class="o">+</span> <span class="s1">&#39;,0)&#39;</span><span class="p">)</span> <span class="c1">//make y axis move right, with the distance of padding</span>
+        <span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">yAxis</span><span class="p">);</span>
+
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre>

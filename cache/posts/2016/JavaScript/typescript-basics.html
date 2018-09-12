@@ -1,0 +1,175 @@
+<p><em>This is a brief reading note for TypeScript <a href="http://www.typescriptlang.org/docs/handbook">official handbook</a></em>.</p>
+<h1 id="gulp-setup">Gulp Setup</h1>
+<p><code>Gulp</code> can be used with TypeScript to provide powerful compiling process. See <a href="http://www.typescriptlang.org/docs/handbook/gulp.html">here</a> for a detailed description.</p>
+<p>My new project requires Typescript, Jade and SASS. Here is a sample <code>gulpfile.js</code>:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">gulp</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;gulp&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;gulp-typescript&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">tsProject</span> <span class="o">=</span> <span class="nx">ts</span><span class="p">.</span><span class="nx">createProject</span><span class="p">(</span><span class="s2">&quot;tsconfig.json&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">jade</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;gulp-jade&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">sass</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;gulp-sass&quot;</span><span class="p">);</span>
+
+<span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s2">&quot;sass&quot;</span><span class="p">,</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">gulp</span><span class="p">.</span><span class="nx">src</span><span class="p">(</span><span class="s1">&#39;src/styles/*.scss&#39;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">sass</span><span class="p">().</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span><span class="nx">sass</span><span class="p">.</span><span class="nx">logError</span><span class="p">))</span>
+    <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">gulp</span><span class="p">.</span><span class="nx">dest</span><span class="p">(</span><span class="s1">&#39;dist/styles&#39;</span><span class="p">));</span>
+<span class="p">})</span>
+
+<span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s2">&quot;typescript&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">tsProject</span><span class="p">.</span><span class="nx">src</span><span class="p">(</span><span class="s1">&#39;src/scripts/*.ts&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">ts</span><span class="p">(</span><span class="nx">tsProject</span><span class="p">))</span>
+        <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">gulp</span><span class="p">.</span><span class="nx">dest</span><span class="p">(</span><span class="s2">&quot;dist/scripts&quot;</span><span class="p">));</span>
+<span class="p">});</span>
+
+<span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s2">&quot;jade&quot;</span><span class="p">,</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">gulp</span><span class="p">.</span><span class="nx">src</span><span class="p">(</span><span class="s1">&#39;src/templates/*.jade&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">jade</span><span class="p">())</span>
+        <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">gulp</span><span class="p">.</span><span class="nx">dest</span><span class="p">(</span><span class="s2">&quot;./dist&quot;</span><span class="p">));</span>
+<span class="p">})</span>
+
+<span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">,[</span><span class="s1">&#39;sass&#39;</span><span class="p">,</span><span class="s1">&#39;typescript&#39;</span><span class="p">,</span><span class="s1">&#39;jade&#39;</span><span class="p">]);</span>
+</pre>
+
+
+<p>And the <code>tsconfile.json</code>, just for future reference:</p>
+<pre class="code literal-block"><span></span><span class="p">{</span>
+    <span class="nt">&quot;files&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;src/scripts/main.ts&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;src/scripts/test.ts&quot;</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;compilerOptions&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;noImplicitAny&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nt">&quot;target&quot;</span><span class="p">:</span> <span class="s2">&quot;es5&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre>
+
+
+<h1 id="types-and-variables">Types and Variables</h1>
+<h2 id="number">Number</h2>
+<p>Integer, Floating Point, Hexadecimal and Decimal Literals can all be declared as <code>number</code> type.</p>
+<pre class="code literal-block"><span></span><span class="kd">let</span> <span class="nx">decimal</span>: <span class="kt">number</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span> <span class="c1">//declare a variable called &#39;decimal&#39;, with value equaling to 6</span>
+</pre>
+
+
+<h2 id="string">String</h2>
+<p><code>Template Strings</code> can be used to span multiple lines and have embedded expressions. Also <code>+</code> can be used to concatenate strings with variables.</p>
+<p><em>Remember to use lower case <code>string</code>.</em></p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Using `` to provide break line effect</span>
+<span class="kd">let</span> <span class="nx">fullName</span>: <span class="kt">string</span> <span class="o">=</span> <span class="sb">`Bob`</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">age</span>: <span class="kt">number</span> <span class="o">=</span> <span class="mi">37</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">sentence</span>: <span class="kt">string</span> <span class="o">=</span> <span class="sb">`Hello, my name is </span><span class="si">${</span><span class="nx">fullName</span><span class="si">}</span><span class="sb">.</span>
+
+<span class="sb">I&#39;ll be </span><span class="si">${</span><span class="nx">age</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="sb"> years old next month.`</span>
+<span class="kd">let</span> <span class="nx">sentence</span>: <span class="kt">string</span> <span class="o">=</span> <span class="s2">&quot;Hello, my name is &quot;</span> <span class="o">+</span> <span class="nx">fullName</span> <span class="o">+</span> <span class="s2">&quot;.\n\n&quot;</span> <span class="o">+</span> <span class="s2">&quot;I&#39;ll be &quot;</span> <span class="o">+</span> <span class="p">(</span><span class="nx">age</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; years old next month.&quot;</span>
+</pre>
+
+
+<p>Above code generates following js code. Notice the result of <code>\n\n</code>:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">fullName</span> <span class="o">=</span> <span class="s2">&quot;Bob&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">age</span> <span class="o">=</span> <span class="mi">37</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">sentence</span> <span class="o">=</span> <span class="s2">&quot;Hello, my name is &quot;</span> <span class="o">+</span> <span class="nx">fullName</span> <span class="o">+</span> <span class="s2">&quot;.\n\nI&#39;ll be &quot;</span> <span class="o">+</span> <span class="p">(</span><span class="nx">age</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; years old next month.&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">sentence2</span> <span class="o">=</span> <span class="s2">&quot;Hello, my name is &quot;</span> <span class="o">+</span> <span class="nx">fullName</span> <span class="o">+</span> <span class="s2">&quot;.\n\n&quot;</span> <span class="o">+</span> <span class="s2">&quot;I&#39;ll be &quot;</span> <span class="o">+</span> <span class="p">(</span><span class="nx">age</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; years old next month.&quot;</span><span class="p">;</span>
+</pre>
+
+
+<h2 id="array-tuple">Array &amp; Tuple</h2>
+<p>To create an array, just use <code>[]</code> to construct array, or use <code>Array&lt;elemType&gt;</code> to do so: <code>let list: number[] = [1,2,3]</code></p>
+<p>To create a tuple (mixed type of variables), declare it first, then insert element to it:</p>
+<pre class="code literal-block"><span></span><span class="kd">let</span> <span class="nx">x</span><span class="o">:</span> <span class="p">[</span><span class="kt">string</span><span class="p">,</span> <span class="kt">number</span><span class="p">];</span>
+<span class="nx">x</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">];</span> <span class="c1">//type must match</span>
+<span class="nx">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="c1">//OK to insert element to each position</span>
+</pre>
+
+
+<h2 id="enum">Enum</h2>
+<p>In <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html">Java</a>, <code>Enum</code> is a special data type that enables for a variable to be a set of <strong>predefined constants</strong>. The variable must be equal to one of the values that have been predefined for it. Java example is below:</p>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="kd">enum</span> <span class="n">Day</span><span class="o">{</span>
+    <span class="n">SUNDAY</span><span class="o">,</span> <span class="n">MONDAY</span><span class="o">,</span> <span class="n">TUESDAY</span><span class="o">,</span> <span class="n">WEDNESDAY</span><span class="o">,</span> <span class="n">THURSDAY</span><span class="o">,</span> <span class="n">FRIDAY</span><span class="o">,</span> <span class="n">SATURDAY</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>Similarly in typescript, an enum is defined by a group of constants (number, string, key-value pair, etc) using <code>enum {}</code>. User can create an instance with one constant from an enum constructor.</p>
+<p><em>enum begin numbering elements starting from <code>0</code>, It's ok to manually set corresponding number</em></p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="kr">enum</span> <span class="nx">Color</span><span class="p">{</span><span class="nx">Read</span><span class="p">,</span> <span class="nx">Green</span><span class="p">,</span> <span class="nx">Blue</span><span class="p">};</span>
+<span class="kd">let</span> <span class="nx">c</span>: <span class="kt">Color</span> <span class="o">=</span> <span class="nx">Color</span><span class="p">.</span><span class="nx">Green</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">c</span><span class="p">);</span>
+</pre>
+
+
+<p>Code above will generate following JS code:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">Color</span><span class="p">;</span>
+<span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">Color</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">Color</span><span class="p">[</span><span class="nx">Color</span><span class="p">[</span><span class="s2">&quot;Read&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Read&quot;</span><span class="p">;</span>
+    <span class="nx">Color</span><span class="p">[</span><span class="nx">Color</span><span class="p">[</span><span class="s2">&quot;Green&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Green&quot;</span><span class="p">;</span>
+    <span class="nx">Color</span><span class="p">[</span><span class="nx">Color</span><span class="p">[</span><span class="s2">&quot;Blue&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Blue&quot;</span><span class="p">;</span>
+<span class="p">})(</span><span class="nx">Color</span> <span class="o">||</span> <span class="p">(</span><span class="nx">Color</span> <span class="o">=</span> <span class="p">{}));</span>
+<span class="p">;</span>
+<span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">Color</span><span class="p">.</span><span class="nx">Green</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">c</span><span class="p">);</span>
+</pre>
+
+
+<p>Example with Assigned Index:</p>
+<pre class="code literal-block"><span></span><span class="kr">enum</span> <span class="nx">Color</span><span class="p">{</span><span class="nx">Read</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="nx">Green</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="nx">Blue</span><span class="o">=</span><span class="mi">10</span><span class="p">};</span>
+<span class="kd">let</span> <span class="nx">c</span>: <span class="kt">Color</span> <span class="o">=</span> <span class="nx">Color</span><span class="p">.</span><span class="nx">Green</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">cname</span>: <span class="kt">string</span> <span class="o">=</span> <span class="nx">Color</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">c</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">cname</span><span class="p">)</span>
+</pre>
+
+
+<p>Code above will generate:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">Color</span><span class="p">;</span>
+<span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">Color</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">Color</span><span class="p">[</span><span class="nx">Color</span><span class="p">[</span><span class="s2">&quot;Read&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Read&quot;</span><span class="p">;</span>
+    <span class="nx">Color</span><span class="p">[</span><span class="nx">Color</span><span class="p">[</span><span class="s2">&quot;Green&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">8</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Green&quot;</span><span class="p">;</span>
+    <span class="nx">Color</span><span class="p">[</span><span class="nx">Color</span><span class="p">[</span><span class="s2">&quot;Blue&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Blue&quot;</span><span class="p">;</span>
+<span class="p">})(</span><span class="nx">Color</span> <span class="o">||</span> <span class="p">(</span><span class="nx">Color</span> <span class="o">=</span> <span class="p">{}));</span>
+<span class="p">;</span>
+<span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">Color</span><span class="p">.</span><span class="nx">Green</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">cname</span> <span class="o">=</span> <span class="nx">Color</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">c</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">cname</span><span class="p">);</span>
+</pre>
+
+
+<h2 id="any-void">Any &amp; Void</h2>
+<p><code>Any</code> is used to describe the variables with unknown type, like data from user or 3rd party. Use <code>any</code> to let variable passing compiler's type-checking:</p>
+<pre class="code literal-block"><span></span><span class="kd">let</span> <span class="nx">notSure</span>: <span class="kt">any</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">notSure2</span>: <span class="kt">any</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">]</span>
+<span class="c1">//Following two methods can pass compiler but will getting error in running time, if methods actually do not exist</span>
+<span class="nx">notSure</span><span class="p">.</span><span class="nx">ifItExists</span><span class="p">();</span>
+<span class="nx">notSure</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">();</span>
+<span class="nx">notSure2</span><span class="p">.</span><span class="nx">isItExists</span><span class="p">();</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">notSure2</span><span class="p">);</span>
+
+<span class="kd">let</span> <span class="nx">Sure</span>: <span class="kt">Object</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="nx">Sure</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">();</span>
+</pre>
+
+
+<p>In code above, first part of code can work without error reported from compiler. That's because <code>any</code> can pass any type-checking from compiler. However, second part of code will get compiler error <code>error TS2339: Property 'toFixed' does not exist on type 'Object'</code>(And you can see error reported in VSCode if you use it). That's because <code>Object</code> only allow you to assign any value to variable, but <strong>you can't call method on them, even though variable has that method</strong>.</p>
+<p><code>Void</code> is similar as the one in Java: if a function has <code>void</code> keyword, this function will not return anything. You can only assign <code>null</code> or <code>undefined</code> to <code>void</code> variable, otherwise you will get compiler error:</p>
+<pre class="code literal-block"><span></span><span class="cm">/*</span>
+<span class="cm">If you don&#39;t user null or undefined, you will get following error in compiler:</span>
+<span class="cm">error TS2322: Type &#39;number&#39; is not assignable to type &#39;void&#39;.</span>
+<span class="cm">*/</span>
+<span class="kd">let</span> <span class="nx">unusable</span>: <span class="kt">void</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">voidtest</span><span class="p">()</span><span class="o">:</span> <span class="k">void</span><span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;this is a void test&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre>
+
+
+<h2 id="type-assertion">Type Assertion</h2>
+<p>Similar as <code>cast</code> in other languages, type assertion can be used to pass compiler's type checking. It should be used when certain type checking has been down and there is a guarantee of correct type.</p>
+<p><code>&lt;type&gt;variable</code> and <code>variable as type</code> can all be used to do type assertion. <code>JSX</code> only use <code>variable as type</code> style:</p>
+<pre class="code literal-block"><span></span><span class="kd">let</span> <span class="nx">typeassertion</span>: <span class="kt">string</span> <span class="o">=</span> <span class="s2">&quot;test type assertion string&quot;</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">strlength</span>: <span class="kt">number</span> <span class="o">=</span> <span class="p">(</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="nx">typeassertion</span><span class="p">).</span><span class="nx">length</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">strlength2</span>: <span class="kt">number</span> <span class="o">=</span> <span class="p">(</span><span class="nx">typeassertion</span> <span class="kr">as</span> <span class="kt">string</span><span class="p">).</span><span class="nx">length</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">strlength</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">strlength2</span><span class="p">);</span>
+</pre>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Pengyin's Corner (Posts about Web Worker)</title><link>https://pengyin-shan.com/</link><description></description><atom:link type="application/rss+xml" href="https://pengyin-shan.com/categories/web-worker.xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Tue, 11 Sep 2018 20:57:13 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Web Worker Study Note</title><link>https://pengyin-shan.com/posts/2016/JavaScript/web-worker-study-note/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;h2 id="reference-list"&gt;Reference List&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.html5rocks.com/en/tutorials/workers/basics/"&gt;The Basics with Web Workers&lt;/a&gt; written by &lt;em&gt;Eric Bidelman&lt;/em&gt;, &lt;em&gt;www.html5rocks.com&lt;/em&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers"&gt;Using Web Workers&lt;/a&gt; by &lt;em&gt;MDN&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="basics"&gt;Basics&lt;/h2&gt;
+&lt;p&gt;Web worker create a extra thread. The JS file running by this work will run through this thread.&lt;/p&gt;
+&lt;p&gt;There are some special things to be noticed when using web worker:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Instead of &lt;code&gt;window&lt;/code&gt;, the JS file will run in another global context. So make sure using &lt;code&gt;self&lt;/code&gt; to get current gloabl context in a worker.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;You cannot directly manipulate DOM inside a web worker. However some items are still available, like &lt;code&gt;WebSockets&lt;/code&gt; or &lt;code&gt;IndexedDB&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The way to communicate between main thread and web worker thread is using &lt;code&gt;messages&lt;/code&gt;. To send message, use &lt;code&gt;postMessage()&lt;/code&gt; method. &lt;code&gt;onmessage&lt;/code&gt; event handler or &lt;code&gt;message&lt;/code&gt; event listener is used to receive message. Workers may use &lt;code&gt;XMLHttpRequest&lt;/code&gt; for network I/O.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;During this process, the data passed between main thread and web worker is &lt;strong&gt;copied&lt;/strong&gt; instead of shared.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;There are two workers: &lt;code&gt;dedicated worker&lt;/code&gt; and &lt;code&gt;shared worker&lt;/code&gt;. Dedicated worker is only accessible from the script that first spawned it. Shared worker can be accessed from multiple scripts.&lt;/p&gt;
+&lt;h2 id="dedicated-worker"&gt;Dedicated Worker&lt;/h2&gt;
+&lt;p&gt;The best practice is to wrap web worker code in following if loop:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Worker&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+    &lt;span class="c1"&gt;//Add Web Worker Code&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Message being sent/received can be a &lt;code&gt;string/array&lt;/code&gt; or &lt;code&gt;JSON&lt;/code&gt; object. &lt;code&gt;JSON&lt;/code&gt; is supported by most modern browers.&lt;/p&gt;
+&lt;h3 id="basics_1"&gt;Basics&lt;/h3&gt;
+&lt;p&gt;Basic operations are: &lt;strong&gt;create&lt;/strong&gt;, &lt;strong&gt;post and receive message&lt;/strong&gt;, &lt;strong&gt;handler errors&lt;/strong&gt; and &lt;strong&gt;terminate works&lt;/strong&gt;. see code below:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//main thread&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;myWorker&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;Worker&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'worker.js'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;//Declare new web worker&lt;/span&gt;
+
+&lt;span class="nx"&gt;myWorker&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;addEventListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'message'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'onError'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+    &lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;//main thread response to message from worker.js&lt;/span&gt;
+&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="nx"&gt;worker&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;postMessage&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s1"&gt;'Hello World'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;'hello'&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt; &lt;span class="c1"&gt;//main thread pass data to worker&lt;/span&gt;
+
+&lt;span class="nx"&gt;worker&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;terminate&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt; &lt;span class="c1"&gt;//Terminate worker from main thread&lt;/span&gt;
+
+&lt;span class="c1"&gt;//Error Handle Function. Notice three attributes for error event&lt;/span&gt;
+&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;onError&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+    &lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;message&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;filename&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;lineno&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="o"&gt;:::&lt;/span&gt;&lt;span class="nx"&gt;javascript&lt;/span&gt;
+&lt;span class="c1"&gt;//worker.js&lt;/span&gt;
+&lt;span class="nx"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;addEventListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'message'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+    &lt;span class="nx"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;postMessage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;
+    &lt;span class="c1"&gt;//worker receive data from main thread and return it back. Notice self is used here&lt;/span&gt;
+&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="nx"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;close&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt; &lt;span class="c1"&gt;//Stop this work from worker thread&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Workers can import scripts and use them:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nx"&gt;importScripts&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'one.js'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'two.js'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;blockquote&gt;
+&lt;p&gt;If execution fails, &lt;code&gt;NETWORK_ERROR&lt;/code&gt; will be thrown out. However, function declarations after &lt;code&gt;importScripts()&lt;/code&gt; will still work because they are hoisted.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="data-passing"&gt;Data Passing&lt;/h3&gt;
+&lt;p&gt;When web worker passing data, the data is always serialized on one hand and de-serialized on the other hand.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Main thread and worker thread &lt;strong&gt;do not share the same instance&lt;/strong&gt;, so the end result is &lt;strong&gt;duplicated&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="shared-worker"&gt;Shared Worker&lt;/h2&gt;
+&lt;h3 id="basics_2"&gt;Basics&lt;/h3&gt;
+&lt;p&gt;Shared worker is accessible by multiple scripts.&lt;/p&gt;
+&lt;p&gt;Similar to dedicated worker, shared work can be declared by statement like &lt;code&gt;var myWorker = new SharedWorker("worker.js");&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id="port"&gt;Port&lt;/h3&gt;
+&lt;p&gt;Shared worker communicate via a &lt;code&gt;port&lt;/code&gt; object. Scripts can communicate with workers in a opened port.&lt;/p&gt;
+&lt;p&gt;Port can be started by:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Use a &lt;code&gt;onmessage&lt;/code&gt; event handler&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Instead above if you have a &lt;code&gt;message&lt;/code&gt; event listener, then use &lt;code&gt;start()&lt;/code&gt; function to start explicitly.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nx"&gt;myWorker&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;port&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;start&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt; &lt;span class="c1"&gt;//main thread&lt;/span&gt;
+&lt;span class="nx"&gt;port&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;start&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="c1"&gt;//If a worker thread has port variable, call this line in worker&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3 id="message"&gt;Message&lt;/h3&gt;
+&lt;p&gt;For shared worker, &lt;code&gt;postMessage()&lt;/code&gt; should be used from &lt;code&gt;port&lt;/code&gt; object:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//main.js&lt;/span&gt;
+&lt;span class="nx"&gt;testpart&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;onchange&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
+    &lt;span class="nx"&gt;myWorker&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;port&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;postMessage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'hello world'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="nx"&gt;myWorker&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;port&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;onmessage&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+    &lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;//worker.js&lt;/span&gt;
+&lt;span class="nx"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;addEventListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'connect'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+    &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;port&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;ports&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt; &lt;span class="c1"&gt;//Get first port&lt;/span&gt;
+    &lt;span class="nx"&gt;port&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;onmessage&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+        &lt;span class="nx"&gt;port&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;postMessage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'hello world back'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="c1"&gt;//port.start();&lt;/span&gt;
+    &lt;span class="c1"&gt;//If onmessage event listener is not used, needs to start port here&lt;/span&gt;
+&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h2 id="examples"&gt;Examples&lt;/h2&gt;
+&lt;h3 id="compute-in-background"&gt;Compute in Background&lt;/h3&gt;
+&lt;p&gt;This example is from MDN, counting fibonacii in worker thread:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//main.js&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;worker&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;Worker&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"fibonacci.js"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="nx"&gt;worker&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;onmessage&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;event&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getElementById&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"result"&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;textContent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="nx"&gt;dump&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"Got: "&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;data&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;"\n"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
+
+&lt;span class="nx"&gt;worker&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;onerror&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;error&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nx"&gt;dump&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"Worker error: "&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;error&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;message&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;"\n"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="k"&gt;throw&lt;/span&gt; &lt;span class="nx"&gt;error&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
+
+&lt;span class="nx"&gt;worker&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;postMessage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"5"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="cm"&gt;/********************/&lt;/span&gt;
+
+&lt;span class="c1"&gt;//fobonacii.js&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;results&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[];&lt;/span&gt;
+
+&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;resultReceiver&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;event&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nx"&gt;results&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;push&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;parseInt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+  &lt;span class="c1"&gt;//After result returned, push to results array. This array has two elements: previous result and newly returned item&lt;/span&gt;
+  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;results&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;length&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;postMessage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;results&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;results&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;errorReceiver&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;event&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;throw&lt;/span&gt; &lt;span class="nx"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="nx"&gt;onmessage&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;event&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;parseInt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;n&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="nx"&gt;n&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;postMessage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;n&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+
+  &lt;span class="cm"&gt;/*Recursively create new worker thread and counting 4, 3, 2, 1, then return back to previous worker */&lt;/span&gt;
+  &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;worker&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;Worker&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"fibonacci.js"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="nx"&gt;worker&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;onmessage&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;resultReceiver&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="nx"&gt;worker&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;onerror&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;errorReceiver&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3 id="a-very-cleansimple-example-from-html5rockscom"&gt;A very clean/simple example from html5rocks.com&lt;/h3&gt;
+&lt;p&gt;This example cerate clean function to handle difference cases. Functions can be added to attribute of an object to be more organized.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//main.js&lt;/span&gt;
+&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;sayHI&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;worker&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;postMessage&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="s1"&gt;'cmd'&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'start'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'msg'&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'Hi'&lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+
+  &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;stop&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;// Calling worker.terminate() from this script would also stop the worker.&lt;/span&gt;
+    &lt;span class="nx"&gt;worker&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;postMessage&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="s1"&gt;'cmd'&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'stop'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'msg'&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'Bye'&lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+
+  &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;unknownCmd&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;worker&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;postMessage&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="s1"&gt;'cmd'&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'foobard'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'msg'&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'???'&lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+
+  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;worker&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;Worker&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'doWork2.js'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+  &lt;span class="nx"&gt;worker&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;addEventListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'message'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getElementById&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'result'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;textContent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+  &lt;span class="c1"&gt;//worker.js&lt;/span&gt;
+  &lt;span class="nx"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;addEventListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'message'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="k"&gt;switch&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;cmd&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s1"&gt;'start'&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+          &lt;span class="nx"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;postMessage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'WORKER STARTED: '&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+          &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s1"&gt;'stop'&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+          &lt;span class="nx"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;postMessage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'WORKER STOPPED: '&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;msg&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s1"&gt;'. (buttons will no longer work)'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+          &lt;span class="nx"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;close&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt; &lt;span class="c1"&gt;// Terminates the worker.&lt;/span&gt;
+          &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;default&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+          &lt;span class="nx"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;postMessage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Unknown command: '&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+      &lt;span class="p"&gt;};&lt;/span&gt;
+    &lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><category>Web Worker</category><guid>https://pengyin-shan.com/posts/2016/JavaScript/web-worker-study-note/</guid><pubDate>Wed, 17 Aug 2016 04:00:00 GMT</pubDate></item></channel></rss>

@@ -1,0 +1,21 @@
+<h3 id="java_home-errors">JAVA_HOME Errors</h3>
+<p>When you final setting up <code>JAVA_HOME</code>, you are supposed to set its path in two different places:</p>
+<ol>
+<li>
+<p><code>~/.bashrc</code>: You will see something like <code>export JAVA_HOME="/usr/lib/jvm/java-8-oracle"</code>. Note <em>there are double quote sign in path, and there is no space between JAVA_HOME and path.</em></p>
+</li>
+<li>
+<p><code>/etc/environment</code> (Read Only): You will see something like <code>JAVA_HOME="/usr/lib/jvm/java-8-oracle". Note: *there is double quote for path, and there is no space between JAVA_HOME and path*.</code> This is a read-only file and you need to be admin if you want to modify it.</p>
+</li>
+</ol>
+<p>If your <code>JAVA_HOME</code> is not correctly set up, you may get following error in you Ubuntu:</p>
+<h4 id="cannot-updateremove-software">Cannot Update/Remove Software</h4>
+<p>You can find a official forum <a href="https://bugs.launchpad.net/ubuntu/+source/texinfo/+bug/993407">here</a>.</p>
+<p>One of my application, <code>xpad</code>, cannot be removed because of this. When I run <code>sudo apt-get remove xpad</code>, a error message <em>install-info can fail to install due to syntax errors in /etc/environment</em> appears.</p>
+<p>I check my <code>/etc/environment</code> file. It turns out I had extra spaces in my JAVA_HOME, which cause the problem.</p>
+<p>Also, if your <code>software updater</code> in Ubuntu failed to download necessary packages, you may have a wrong setup of <code>JAVA_HOME</code>.</p>
+<h4 id="reminder-in-terminal">Reminder in Terminal</h4>
+<p>When you open terminal, you may get some error message such as <code>bash: export: ``/usr/lib/jvm/java-8-oracle': not a valid identifier</code>. In this case, you need to check your ~/.bashrc file to make sure your JAVA_HOME format is correct.</p>
+<blockquote>
+<p>If you forget extact format of JAVA_HOME, you can open ~/.bashrc file using gedit, then following the format of other variables. You can varify by checking the color highlight of your JAVA_HOME line should be the same as all lines above.</p>
+</blockquote>

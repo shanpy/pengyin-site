@@ -1,0 +1,37 @@
+<p>I touched re-write <code>equal()</code> when I was doing work in Java Developement, then I learned these exists a <code>hashCode()</code> method that I must implement if I re-write <code>equal()</code> for objects.</p>
+<p>I found very useful posts: <a href="http://tutorials.jenkov.com/java-collections/hashcode-equals.html">Java Collections - hasCode() and equals()</a>, and <a href="http://eclipsesource.com/blogs/2012/09/04/the-3-things-you-should-know-about-hashcode/">The 3 things you should know about hashCode()</a>.</p>
+<p>Also refer to <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html#hashCode()">Oracle API</a> for <code>hashCode()</code>.</p>
+<p><strong>Try to avoid change hashCode() unless you are writing hash-related application.</strong></p>
+<h3 id="basic-usage">Basic Usage</h3>
+<p>When you insert <strong>objects</strong> to <code>HashTable</code>, <code>HashMap</code> or <code>HashSet</code>, <code>hashCode()</code> is called, together with <code>equal()</code>. For example, in <code>hashMap.put("A",a);</code>, both <code>equal()</code> and <code>hasCode()</code> are called.</p>
+<p>To insert stuff to hash table, you need a hascode to calculate the key for this object. Later you will need hashCode to search the object: hash code <strong>pointing to some area, where you may found the key.</strong></p>
+<p>From Oracle API, <code>hashCode</code> returns a hash code, which is a <code>int</code> value for the object.</p>
+<p>You can use same way you add <code>getter</code> and <code>setter</code> in <code>Eclipse</code> to auto-generate <code>hashCode()</code>: <em>RightClick -&gt; Source -&gt; Generate hashCode() and equals()</em>.</p>
+<p>Code Example:</p>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Employee</span> <span class="o">{</span>
+  <span class="kd">protected</span> <span class="kt">long</span>   <span class="n">employeeId</span><span class="o">;</span>
+  <span class="kd">protected</span> <span class="n">String</span> <span class="n">firstName</span><span class="o">;</span>
+  <span class="kd">protected</span> <span class="n">String</span> <span class="n">lastName</span><span class="o">;</span>
+
+  <span class="kd">public</span> <span class="kt">int</span> <span class="nf">hashCode</span><span class="o">(){</span>
+    <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="k">this</span><span class="o">.</span><span class="na">employeeId</span><span class="o">;</span> <span class="c1">//Edit hashCode</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+<span class="cm">/***OR**/</span>
+  <span class="kd">public</span> <span class="kt">int</span> <span class="nf">hashCode</span><span class="o">(</span><span class="n">Object</span> <span class="n">o</span><span class="o">){</span>
+     <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span><span class="k">this</span><span class="o">.</span><span class="na">employeeId</span> <span class="o">*</span>
+                <span class="n">firstName</span><span class="o">.</span><span class="na">hashCode</span><span class="o">()</span> <span class="o">*</span>
+                <span class="n">lastName</span><span class="o">.</span><span class="na">hashCode</span><span class="o">();</span>
+   <span class="o">}</span>
+</pre>
+
+
+<h3 id="important-notes">Important Notes</h3>
+<p>If two objects are equal, based on <code>equal()</code>, they must also have the <strong>same hash code</strong>.</p>
+<p>If two objects have the same hash code, they <strong>may not be equal</strong>.</p>
+<p>Above means two different objects can pointing to the same grid in a hash code grid table.</p>
+<blockquote>
+<p>You must implement <code>hashCode()</code> when you implement <code>equal()</code></p>
+<p>If you don't implement both, original <code>hashCode()</code> will treat your new two objects unequal, which you have re-defined <code>equal()</code> to make them equal. I.E. Now we have two objects are equal but with different hash code. This violate first rule.</p>
+</blockquote>
+<p>Since <code>hashCode()</code> can change <strong>from one java class library (e.x.String v.s. StringBuilder) to another, or from one version to another</strong>,be careful and you cannot use them in <code>distributed</code> applications.</p>

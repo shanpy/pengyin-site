@@ -1,0 +1,52 @@
+.. title: Quick Note about Box-Sizing/Box-Shadow
+.. date: 2016-07-27
+.. category: Front End
+.. tags: CSS3
+.. slug: quick-note-about-box-box-shadow
+.. authors: Pengyin Shan
+.. description: This is a quick reference note about box-sizing/box-shadow in CSS3
+
+
+
+#`box-sizing`
+
+`box-sizing` is used to tell the browser what the sizing properties (`width` and `height`) should include.
+
+It has following properties:
+
+- `content-box`: Default. `border`, `padding` and `margin` is **not** included in counting `width`/`height` (include `min-/max-`) properties.
+
+- `border-box`: the `width`/`height` properties **includes** content, `padding` and `border`, but **not include** `margin`
+
+- `initial`/`inherit`: set to default value/inherit from its parent
+
+#`box-shadow`
+
+The website <a href="http://www.cssmatic.com/box-shadow">cssmatic</a> contains a very good box-shadow generator to generate/understand `box-shadow` better.
+
+
+`box-shadow` has six parameters with optional ones. Its syntax is:
+
+    :::css
+    /*Option 1*/
+    box-shadow: none;
+
+    /*Option 2*/
+    box-shadow: (inset) h-shadow v-shadow blur spread color
+
+    /*Option 3*/
+    box-shadow: initial/inherit
+
+Here is a list of properties in Option 2:
+
+- `inset`: *Optional*. Shadow is towards inside of box. If ommited, shadows is expand towards out.
+
+- `h-shadow`: *Required*. The position of *horizonal* shadow. Negative values means the whold shadow box is moving towards left. Positive values means the box moving towards right.
+
+- `v-shadow`: *Required*. the position of *vertical* shadow. Negative values means the whole shadow box is moving towards top. Positive values means the box moving towards down.
+
+- `blur`: *Optional*. represents how much 'transition' effect this shadow have (i.e. the transition process from box color to container color). `0` means shadow box is all real color/no transition.
+
+- `spread`: *Optional*. from **center** of shadow, how large the shadow can be (can be understand as shadow area). `0` meas same size as box item. Negative value means smaller than box item area.
+
+- `color`: *Optional*. Any color code. `rgba` is a good option to includes opacity for shadow. Such as `rgba(0,0,0,0.75);`.

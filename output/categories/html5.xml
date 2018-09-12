@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Pengyin's Corner (Posts about HTML5)</title><link>https://pengyin-shan.com/</link><description></description><atom:link type="application/rss+xml" href="https://pengyin-shan.com/categories/html5.xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Tue, 11 Sep 2018 20:57:12 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Frond End Data Storage</title><link>https://pengyin-shan.com/posts/2016/Front%20End/front-end-data-storage/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;h2 id="reference-list"&gt;Reference List&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.w3schools.com/html/html5_webstorage.asp"&gt;HTML Local Storage&lt;/a&gt; from &lt;em&gt;w3schools.com&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage"&gt;Window.localStorage&lt;/a&gt; and &lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage"&gt;Window.sessionStorage&lt;/a&gt; from MDN&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/javascript/javascript_cookies.htm"&gt;JavaScript and Cookies&lt;/a&gt; from &lt;em&gt;Tutorialspoint.com&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/html5/html5_web_storage.htm"&gt;HTML5 - Web Storage&lt;/a&gt; from &lt;em&gt;Tutorialspoint.com&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="cookie"&gt;Cookie&lt;/h2&gt;
+&lt;p&gt;Cookie is the most efficient method of remembering and tracking small amount of information in client side.&lt;/p&gt;
+&lt;h2 id="web-storage"&gt;Web Storage&lt;/h2&gt;
+&lt;p&gt;Web storage is for large amount of data.&lt;/p&gt;
+&lt;p&gt;So far, Web storage is widely supported by most browsers, from IE8 to most of mobile browser(except Opera Mini). So when I needs to store a large amount of data with capability requirement for most browsers, this is currently my best choice.&lt;/p&gt;
+&lt;p&gt;There are two parts of web storage: &lt;strong&gt;local storage&lt;/strong&gt; and &lt;strong&gt;session storage&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Data for web storage are passed by &lt;code&gt;key-value&lt;/code&gt; pair.&lt;/p&gt;
+&lt;h3 id="local-storage"&gt;Local Storage&lt;/h3&gt;
+&lt;p&gt;Compared to session storage, local storage has &lt;strong&gt;no expiration time&lt;/strong&gt;.&lt;/p&gt;
+&lt;h4 id="usage"&gt;Usage&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;localStorage&lt;/code&gt; object can be used directly. Like &lt;code&gt;window.localStorage&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;To remove a key-value pair, use &lt;code&gt;remove('key')&lt;/code&gt;, like &lt;code&gt;localStorage.remove('lastname')&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;to clear all key-value pair, use &lt;code&gt;localStorage.clear()&lt;/code&gt;.&lt;/p&gt;
+&lt;h5 id="getitem-and-setitem"&gt;&lt;code&gt;getItem&lt;/code&gt; and &lt;code&gt;setItem&lt;/code&gt;&lt;/h5&gt;
+&lt;p&gt;&lt;code&gt;getItem('key','value') and setItem('key','value')&lt;/code&gt; is used to get/set data item.&lt;/p&gt;
+&lt;p&gt;Here is an example from W3CSchool:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;// Store&lt;/span&gt;
+&lt;span class="nx"&gt;localStorage&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;setItem&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"lastname"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"Smith"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;// Retrieve&lt;/span&gt;
+&lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getElementById&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"result"&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;innerHTML&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;localStorage&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getItem&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"lastname"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h5 id="use-direct-attribute"&gt;Use direct attribute&lt;/h5&gt;
+&lt;p&gt;Another way is to assign attribute to &lt;code&gt;localStorage&lt;/code&gt; object:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;// Store&lt;/span&gt;
+&lt;span class="nx"&gt;localStorage&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;lastname&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"Smith"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="c1"&gt;// Retrieve&lt;/span&gt;
+&lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getElementById&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"result"&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;innerHTML&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;localStorage&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;lastname&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3 id="session-storage"&gt;Session Storage&lt;/h3&gt;
+&lt;p&gt;Following a difference between local storage and session storage:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;For session storage, data are lost after &lt;strong&gt;session end&lt;/strong&gt;. i.e. data are delete after use close a browser window/tab.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;For session storage, opening a page in &lt;em&gt;new tab or window&lt;/em&gt; will cause a new session to be &lt;strong&gt;initiated&lt;/strong&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="usage_1"&gt;Usage&lt;/h4&gt;
+&lt;p&gt;The way to use session storage is the same as the way to use local storage, except the object is now &lt;code&gt;window.sessionStorage&lt;/code&gt;.&lt;/p&gt;&lt;/div&gt;</description><category>HTML5</category><category>JavaScript</category><guid>https://pengyin-shan.com/posts/2016/Front%20End/front-end-data-storage/</guid><pubDate>Tue, 16 Aug 2016 04:00:00 GMT</pubDate></item><item><title>Bootstrap 3 Sticky Footer by Martin Bean and Ryan Fait</title><link>https://pengyin-shan.com/posts/2015/Front%20End/bootstrap3_sticky_footer/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;p&gt;You can view introduction page &lt;a href="http://getbootstrap.com/2.3.2/examples/sticky-footer.html"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Generally A sticky footer is created just like the &lt;code&gt;fixed-nav&lt;/code&gt; bar in Bootstrap3. This footer will always stay at the bottom of page, even though there isn't enough content.&lt;/p&gt;
+&lt;p&gt;Martin Bean and Ryan Fait also have a Sticky Footer with Fixed Nav Bar page &lt;a href="http://getbootstrap.com/2.3.2/examples/sticky-footer-navbar.html"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Following is part of basic code for Sticky Nav bar with my analysis (You need Bootstrap3 css library):&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;In HTML, You have two big divs: &lt;code&gt;#wrap&lt;/code&gt; and &lt;code&gt;#footer&lt;/code&gt;. &lt;code&gt;#footer&lt;/code&gt; contains everything you want to put in footer.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;#wrap&lt;/code&gt; has two small divs: &lt;code&gt;.container&lt;/code&gt; and &lt;code&gt;#push&lt;/code&gt;. You put all main content in &lt;code&gt;.container&lt;/code&gt; and nothing in &lt;code&gt;push&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;  &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="c"&gt;&amp;lt;!-- Part 1: Wrap all page content here --&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"wrap"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class="c"&gt;&amp;lt;!-- Begin page content --&amp;gt;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"container"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="c"&gt;&amp;lt;!-- Content --&amp;gt;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"push"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="c"&gt;&amp;lt;!-- Park 2: Footer --&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"footer"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class="c"&gt;&amp;lt;!-- Footer --&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+   &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;#wrap&lt;/code&gt; takes full height of page. You set this by using &lt;code&gt;min-height&lt;/code&gt;. Set &lt;code&gt;height&lt;/code&gt; to &lt;code&gt;auto&lt;/code&gt; to make sure small amount of content will not shrink &lt;code&gt;#wrap&lt;/code&gt;. &lt;code&gt;#wrap&lt;/code&gt; has a bottom margin &lt;code&gt;-60px&lt;/code&gt;. This number can be changed, but it must be the same height as &lt;code&gt;#push&lt;/code&gt; and &lt;code&gt;#footer&lt;/code&gt;. This negative margin can allow &lt;code&gt;#footer&lt;/code&gt; always stick to bottom of &lt;code&gt;#wrap&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;#push&lt;/code&gt; is used as a placeholder for &lt;code&gt;#footer&lt;/code&gt;. &lt;code&gt;#footer&lt;/code&gt; has same height as &lt;code&gt;#push&lt;/code&gt;, so it &lt;strong&gt;covers&lt;/strong&gt; &lt;code&gt;#push&lt;/code&gt; because of the negative margin in &lt;code&gt;#wrap&lt;/code&gt;. Items above &lt;code&gt;#push&lt;/code&gt; will stay in distance from &lt;code&gt;#footer&lt;/code&gt;, because since they have bottom margin to &lt;code&gt;#push&lt;/code&gt;, they now have bottom margin to &lt;code&gt;#footer&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;  &lt;span class="c"&gt;/* Sticky footer styles&lt;/span&gt;
+&lt;span class="c"&gt;  -------------------------------------------------- */&lt;/span&gt;
+  &lt;span class="nt"&gt;html&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+  &lt;span class="nt"&gt;body&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;height&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="kt"&gt;%&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="c"&gt;/* The html and body elements cannot have any padding or margin. */&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="c"&gt;/* Wrapper for page content to push down footer */&lt;/span&gt;
+  &lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="nn"&gt;wrap&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;min-height&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="kt"&gt;%&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;height&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;auto&lt;/span&gt; &lt;span class="cp"&gt;!important&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="c"&gt;/* Negative indent footer by it's height */&lt;/span&gt;
+    &lt;span class="k"&gt;margin&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="kc"&gt;auto&lt;/span&gt; &lt;span class="mi"&gt;-60&lt;/span&gt;&lt;span class="kt"&gt;px&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="c"&gt;/**In th&lt;/span&gt;
+&lt;span class="c"&gt;  }&lt;/span&gt;
+&lt;span class="c"&gt;  /* Set the fixed height of the footer here */&lt;/span&gt;
+  &lt;span class="err"&gt;#push,&lt;/span&gt;
+  &lt;span class="err"&gt;#footer&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;height&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;60&lt;/span&gt;&lt;span class="kt"&gt;px&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><category>Bootstrap3</category><category>CSS</category><category>HTML5</category><category>JavaScript</category><guid>https://pengyin-shan.com/posts/2015/Front%20End/bootstrap3_sticky_footer/</guid><pubDate>Thu, 09 Jul 2015 04:00:00 GMT</pubDate></item><item><title>Collection of Tips for Creating/Controlling Dropdown on Web Page</title><link>https://pengyin-shan.com/posts/2015/JavaScript/create-controll-dropdown/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;p&gt;In my job, I always counter problem of creating dropdowns for web development project. Sometimes I can use Bootstrap, jQuery. Sometimes I have to use pure JavaScript. I also need to perform control options to dropdowns ocationally.&lt;/p&gt;
+&lt;p&gt;I want to write this post to record all ways and tips for creating dropdown, for future reference.&lt;/p&gt;
+&lt;h2 id="pure-javascript"&gt;Pure JavaScript&lt;/h2&gt;
+&lt;h3 id="simpliest-dropdown-option"&gt;Simpliest Dropdown Option&lt;/h3&gt;
+&lt;p&gt;The simplest dropdown is just created by &lt;code&gt;&amp;lt;select&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;option&amp;gt;&lt;/code&gt; tag. Usually you wrap a few &lt;code&gt;&amp;lt;option&amp;gt;&lt;/code&gt; blocks in a &lt;code&gt;&amp;lt;select&amp;gt;&lt;/code&gt; block.&lt;/p&gt;
+&lt;p&gt;For each &lt;code&gt;&amp;lt;option&amp;gt;&lt;/code&gt;, You can assign &lt;code&gt;value&lt;/code&gt; attribute to it. There are other attributes such as &lt;code&gt;selected&lt;/code&gt; or &lt;code&gt;label&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;For &lt;code&gt;&amp;lt;select&amp;gt;&lt;/code&gt;, you can also set attributes such as &lt;code&gt;size&lt;/code&gt; or &lt;code&gt;name&lt;/code&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;autofocus&lt;/code&gt;, &lt;code&gt;form&lt;/code&gt; and &lt;code&gt;required&lt;/code&gt; are attributes for HTML5. Please check browser support setting before use them.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Example from W3Schools:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;select&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;option&lt;/span&gt; &lt;span class="na"&gt;value&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"1"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;A&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;option&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;option&lt;/span&gt; &lt;span class="na"&gt;value&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"2"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;B&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;option&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;option&lt;/span&gt; &lt;span class="na"&gt;value&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"3"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;C&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;option&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;select&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3 id="dropdown-menu-one-or-multiple-level"&gt;Dropdown Menu (One or Multiple Level)&lt;/h3&gt;
+&lt;p&gt;I found this &lt;a href="http://javascript-array.com/scripts/simple_drop_down_menu/#"&gt;post&lt;/a&gt; and this &lt;a href="http://javascript-array.com/scripts/multi_level_drop_down_menu/?st"&gt;post&lt;/a&gt; from &lt;a href="http://javascript-array.com/"&gt;JavaScript Array&lt;/a&gt; website are very classical. I've tested them and I highly recommend using them for pure dropdown menu.&lt;/p&gt;
+&lt;h4 id="single-level"&gt;Single Level&lt;/h4&gt;
+&lt;p&gt;I have read through the code. Here are my explanations. You are free to add font or hover effects in real world.&lt;/p&gt;
+&lt;p&gt;HTML Structure:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;&amp;lt;!--Container of Many First Level Menus--&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;ul&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;li&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="c"&gt;&amp;lt;!--First Level Menu 1 --&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"#"&lt;/span&gt; &lt;span class="na"&gt;onmouseover&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"mopen('m1')"&lt;/span&gt; &lt;span class="na"&gt;onmouseout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"mclosetime()"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;First Level Menu 1&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+
+        &lt;span class="c"&gt;&amp;lt;!--Links of First Level Menu 1 --&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"m1"&lt;/span&gt; &lt;span class="na"&gt;onmouseover&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"mcancelclosetime()"&lt;/span&gt; &lt;span class="na"&gt;onmouseout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"mclosetime()"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;'#'&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Link1&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;'#'&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Link1&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;li&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;li&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="c"&gt;&amp;lt;!--First Level Menu 2 --&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"#"&lt;/span&gt; &lt;span class="na"&gt;onmouseover&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"mopen('m2')"&lt;/span&gt; &lt;span class="na"&gt;onmouseout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"mclosetime()"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;First Level Menu 2&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+
+        &lt;span class="c"&gt;&amp;lt;!--Links of First Level Menu 2 --&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"m2"&lt;/span&gt; &lt;span class="na"&gt;onmouseover&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"mcancelclosetime()"&lt;/span&gt; &lt;span class="na"&gt;onmouseout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"mclosetime()"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;'#'&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Link2&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;'#'&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Link2&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;li&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;ul&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;CSS Structure (You may need to some tags to id in real world):&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;/* Outside Container */&lt;/span&gt;
+&lt;span class="nt"&gt;ul&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;   &lt;span class="k"&gt;margin&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;padding&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;z-index&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;30&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="nt"&gt;ul&lt;/span&gt; &lt;span class="nt"&gt;li&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;   &lt;span class="k"&gt;margin&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;padding&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;list-style&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;none&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;float&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;left&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="c"&gt;/* First Leval Menu */&lt;/span&gt;
+&lt;span class="nt"&gt;ul&lt;/span&gt; &lt;span class="nt"&gt;li&lt;/span&gt; &lt;span class="nt"&gt;a&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;   &lt;span class="k"&gt;display&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;block&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;margin&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="kt"&gt;px&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c"&gt;/* adjust as you need */&lt;/span&gt;
+    &lt;span class="k"&gt;padding&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="kt"&gt;px&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="kt"&gt;px&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c"&gt;/* adjust as you need */&lt;/span&gt;
+    &lt;span class="k"&gt;width&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;60&lt;/span&gt;&lt;span class="kt"&gt;px&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;text-align&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;center&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;text-decoration&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;none&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="nt"&gt;ul&lt;/span&gt; &lt;span class="nt"&gt;li&lt;/span&gt; &lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;hover&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="nt"&gt;ul&lt;/span&gt; &lt;span class="nt"&gt;div&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;   &lt;span class="k"&gt;position&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;absolute&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;visibility&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;hidden&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;margin&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;padding&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="nt"&gt;ul&lt;/span&gt; &lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="nt"&gt;a&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;   &lt;span class="k"&gt;position&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;relative&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;display&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;block&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;margin&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;padding&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="kt"&gt;px&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="kt"&gt;px&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c"&gt;/* adjust as you need */&lt;/span&gt;
+        &lt;span class="k"&gt;width&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;auto&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;white-space&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;nowrap&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c"&gt;/* Specify that the text in &amp;lt;p&amp;gt; elements will never wrap */&lt;/span&gt;
+        &lt;span class="k"&gt;text-align&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;left&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c"&gt;/* adjust as you need */&lt;/span&gt;
+        &lt;span class="k"&gt;text-decoration&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;none&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="nt"&gt;ul&lt;/span&gt; &lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;hover&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;JavaScript Structure:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;// Copyright 2006-2007 javascript-array.com&lt;/span&gt;
+
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;timeout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;500&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;closetimer&lt;/span&gt;  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;ddmenuitem&lt;/span&gt;  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="c1"&gt;// open hidden layer&lt;/span&gt;
+&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;mopen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;// cancel close timer&lt;/span&gt;
+    &lt;span class="nx"&gt;mcancelclosetime&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+
+    &lt;span class="c1"&gt;// close old layer&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;ddmenuitem&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nx"&gt;ddmenuitem&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;style&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;visibility&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'hidden'&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="c1"&gt;// get new layer and show it&lt;/span&gt;
+    &lt;span class="nx"&gt;ddmenuitem&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getElementById&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;id&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="nx"&gt;ddmenuitem&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;style&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;visibility&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'visible'&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="c1"&gt;// close showed layer&lt;/span&gt;
+&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;mclose&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;ddmenuitem&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nx"&gt;ddmenuitem&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;style&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;visibility&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'hidden'&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;// go close timer&lt;/span&gt;
+&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;mclosetime&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;closetimer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;setTimeout&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;mclose&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;timeout&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;// cancel close timer&lt;/span&gt;
+&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;mcancelclosetime&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;closetimer&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nb"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;clearTimeout&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;closetimer&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="nx"&gt;closetimer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;// close layer when click-out&lt;/span&gt;
+&lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;onclick&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;mclose&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="mutiple-level"&gt;Mutiple Level&lt;/h4&gt;
+&lt;h2 id="with-jquery"&gt;With jQuery&lt;/h2&gt;
+&lt;p&gt;update coming soon...&lt;/p&gt;
+&lt;h2 id="with-bootstrap3-and-jquery"&gt;With Bootstrap3 and jQuery&lt;/h2&gt;
+&lt;p&gt;update coming soon...&lt;/p&gt;&lt;/div&gt;</description><category>Bootstrap3</category><category>CSS</category><category>Dropdown</category><category>HTML5</category><category>JavaScript</category><category>jQuery</category><guid>https://pengyin-shan.com/posts/2015/JavaScript/create-controll-dropdown/</guid><pubDate>Thu, 04 Jun 2015 04:00:00 GMT</pubDate></item><item><title>HTML5 Tips</title><link>https://pengyin-shan.com/posts/2015/Front%20End/html5-tips/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;h2 id="canvas"&gt;Canvas&lt;/h2&gt;
+&lt;h4 id="html"&gt;HTML&lt;/h4&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;canvas&lt;/span&gt; &lt;span class="na"&gt;style&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"width:1000px; height:1000px;"&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"thecanvas"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;canvas&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="javascript-operation"&gt;JavaScript Operation&lt;/h4&gt;
+&lt;h5 id="get-context-2d"&gt;Get Context (2d)&lt;/h5&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;oCanvas&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getElementById&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"thecanvas"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;oCtx&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;oCanvas&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getContext&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"2d"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h5 id="add-text-and-edit-text-style"&gt;Add Text and Edit Text Style&lt;/h5&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//Example of Text Shadow. If you make them to 0, you can remove text shadow&lt;/span&gt;
+&lt;span class="nx"&gt;oCtx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;shadowColor&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"#000000"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nx"&gt;oCtx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;shadowOffsetX&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nx"&gt;oCtx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;shadowOffsetY&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nx"&gt;oCtx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;shadowBlur&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="c1"&gt;//Example of Text Style&lt;/span&gt;
+&lt;span class="nx"&gt;oCtx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;font&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"normal 18px Arial"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nx"&gt;oCtx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;fillStyle&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"#ccc"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="c1"&gt;//Draw Text&lt;/span&gt;
+&lt;span class="nx"&gt;oCtx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;fillText&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"Hello World"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;//x-axis and y-axis&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h5 id="draw-existing-image-to-canvas"&gt;Draw Existing Image to Canvas&lt;/h5&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;imageObj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;Image&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="c1"&gt;//get src of existing image&lt;/span&gt;
+&lt;span class="nx"&gt;imageObj&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;src&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getElementById&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'existing_image'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;src&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nx"&gt;oCtx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;drawImage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;imageObj&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;//x-axis and y-axis&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h5 id="download-canvas-as-image"&gt;Download Canvas as Image&lt;/h5&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/**Create a (hidden) image to hold canvas data:&lt;/span&gt;
+&lt;span class="cm"&gt;&amp;lt;img hidden src="" id="downloadCanvas" /&amp;gt;&lt;/span&gt;
+&lt;span class="cm"&gt;**/&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;dataURL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;oCanvas&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;toDataURL&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'image/png'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getElementById&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'downloadCanvas'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;width&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;oCanvas&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;width&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getElementById&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'downloadCanvas'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;height&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;oCanvas&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;height&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getElementById&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'downloadCanvas'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;src&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;dataURL&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="cm"&gt;/**&lt;/span&gt;
+&lt;span class="cm"&gt;If you want to have a download link to download canvas image, make sure you have HTML such as:&lt;/span&gt;
+&lt;span class="cm"&gt;&amp;lt;a id="downloadBanner" href="#" class="button" download="banner_result.png"&amp;gt;Download&amp;lt;/a&amp;gt;&lt;/span&gt;
+&lt;span class="cm"&gt;Note "download" attribute is able to re-name the downloadable image.&lt;/span&gt;
+&lt;span class="cm"&gt;**/&lt;/span&gt;
+&lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getElementById&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'downloadBanner'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;href&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;dataURL&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h5 id="clear-canvas"&gt;Clear Canvas&lt;/h5&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//You may want to do this to remove unwanted elements from canvas&lt;/span&gt;
+&lt;span class="nx"&gt;oCtx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;clearRect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;oCanvas&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;width&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;oCanvas&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;height&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h2 id="drag-and-drop"&gt;Drag and Drop&lt;/h2&gt;
+&lt;p&gt;Examples are taken from &lt;a href="https://pengyin-shan.com/posts/2015/Front%20End/html5-tips/www.w3schools.com/html/html5_draganddrop.asp"&gt;w3schools.com&lt;/a&gt;.&lt;/p&gt;
+&lt;h4 id="general-process"&gt;General Process&lt;/h4&gt;
+&lt;p&gt;Draable stuff has &lt;code&gt;draggable = 'true'&lt;/code&gt; attribute; has &lt;code&gt;ondragstart&lt;/code&gt; attribute, which takes a method.&lt;/p&gt;
+&lt;p&gt;Destination stuff has &lt;code&gt;ondrop&lt;/code&gt; and &lt;code&gt;ondragover&lt;/code&gt; attribute. Both of them take method.&lt;/p&gt;
+&lt;h4 id="ondragstart"&gt;ondragstart&lt;/h4&gt;
+&lt;p&gt;This attribute takes a JavaScript method. This method takes a &lt;code&gt;event&lt;/code&gt; parameter and describe what will happen when you start to drag.&lt;/p&gt;
+&lt;p&gt;You need to set the data to drag by using &lt;code&gt;event.dataTransfer.setData(format, event.target.id)&lt;/code&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;format&lt;/code&gt; above can be &lt;code&gt;text&lt;/code&gt;, &lt;code&gt;text/plain&lt;/code&gt;, &lt;code&gt;text/html&lt;/code&gt; etc, or &lt;code&gt;URL&lt;/code&gt; format.&lt;/p&gt;
+&lt;p&gt;This function set up the data that is take via &lt;code&gt;event.target.id&lt;/code&gt;, which is the &lt;code&gt;id&lt;/code&gt; for draggable stuff, and temparary store it. Note &lt;code&gt;event.target&lt;/code&gt; now pointing to draggable stuff.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id="ondragover"&gt;ondragover&lt;/h4&gt;
+&lt;p&gt;This attribute takes a JavaScript method. This method takes a &lt;code&gt;event&lt;/code&gt; parameter and describe what will happen when you drag stuff over elements without drop the stuff.&lt;/p&gt;
+&lt;p&gt;Basic set up is &lt;code&gt;event.preventDefault()&lt;/code&gt;, which prevents browser asking elements doing default behavior.&lt;/p&gt;
+&lt;h4 id="ondrop"&gt;ondrop&lt;/h4&gt;
+&lt;p&gt;This attribute takes a JavaScript method. This method takes a &lt;code&gt;event&lt;/code&gt; parameter and describe what will happen when you drop the draggable stuff.&lt;/p&gt;
+&lt;p&gt;First, you should do &lt;code&gt;event.preventDefault()&lt;/code&gt;, which prevents browser asking elements doing default behavior.&lt;/p&gt;
+&lt;p&gt;Then, you need to get the data that you dragged by using &lt;code&gt;event.dataTransfer.getData(format)&lt;/code&gt;. The format should corresponding what you had in &lt;code&gt;event.dataTransfer.setData()&lt;/code&gt; method.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The method will return all data that has same format.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;You can get current dropdown container by using &lt;code&gt;event.target&lt;/code&gt; (instead of draggable element). You can choose to append your draggable stuff by using&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nx"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;target&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;appendChild&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getElementById&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;dataTransfer&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getData&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;format&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;if you passed &lt;code&gt;id&lt;/code&gt; in &lt;code&gt;ondragstart&lt;/code&gt;'s method. Or you can do whatever you want.&lt;/p&gt;&lt;/div&gt;</description><category>HTML5</category><category>JavaScript</category><category>jQuery</category><guid>https://pengyin-shan.com/posts/2015/Front%20End/html5-tips/</guid><pubDate>Tue, 13 Jan 2015 05:00:00 GMT</pubDate></item></channel></rss>

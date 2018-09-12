@@ -1,0 +1,152 @@
+<p>A JavaScript Regex Cheatsheet <a href="https://www.debuggex.com/cheatsheet/regex/javascript">online</a>.</p>
+<h2 id="javascript-regular-expression">JavaScript Regular Expression</h2>
+<h3 id="method">Method</h3>
+<h4 id="search">search</h4>
+<p><code>search()</code> uses an expression to search for a match, and returns the position of the match. Return <code>-1</code> if regular expression not match:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="s2">&quot;test&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">n</span> <span class="o">=</span> <span class="nx">str</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="sr">/^(test)+$/i</span><span class="p">);</span> <span class="c1">//n=0</span>
+</pre>
+
+
+<h4 id="replace">replace</h4>
+<p><code>replace</code>: search pattern and replace it</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="s2">&quot;test&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">str</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/test/i</span><span class="p">,</span> <span class="s2">&quot;new-test&quot;</span><span class="p">);</span>
+</pre>
+
+
+<h4 id="test">test</h4>
+<p><code>test()</code> searches a string for a pattern, and returns <code>true</code> or <code>false</code>, depending on the result.</p>
+<p>Example code from w3cschool:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">patt</span> <span class="o">=</span> <span class="sr">/e/</span><span class="p">;</span>
+<span class="nx">patt</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s2">&quot;The best things in life are free!&quot;</span><span class="p">);</span> <span class="c1">//true</span>
+</pre>
+
+
+<h4 id="exec">exec</h4>
+<p><code>exec()</code> searches a string for a specified pattern, and returns <strong>the found text</strong>. If nothing is founded, return <code>null</code>.</p>
+<p>Example code from w3cschool:</p>
+<pre class="code literal-block"><span></span><span class="sr">/e/</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="s2">&quot;The best things in life are free!&quot;</span><span class="p">);</span> <span class="c1">//e</span>
+</pre>
+
+
+<h3 id="modifiers">Modifiers</h3>
+<ul>
+<li>
+<p><code>i</code>: Perform case-insensitive matching</p>
+</li>
+<li>
+<p><code>g</code>: Perform a global match (find all matches rather than stopping after the first match)</p>
+</li>
+<li>
+<p><code>m</code>: Perform a mutiline matching</p>
+</li>
+</ul>
+<h3 id="escape">Escape</h3>
+<p>Use <code>\</code> to <strong>escape</strong> to following items in regular expression: <code>^</code>, <code>$</code>, <code>.</code>, <code>*</code>, <code>+</code>, <code>?</code>, <code>=</code>, <code>!</code>, <code>:</code>, <code>|</code>, <code>\</code>, <code>/</code>, <code>(</code>, <code>)</code>, <code>[</code>, <code>]</code>, <code>{</code>, <code>}</code></p>
+<h3 id="or">OR</h3>
+<p><code>[]</code>: <code>/[abc]/</code> means <code>a</code> or <code>b</code> or <code>c</code></p>
+<h3 id="except">Except</h3>
+<p><code>[^]</code>: <code>/[^abc]/</code> anything except <code>a</code> or <code>b</code> or <code>c</code></p>
+<h3 id="character">Character</h3>
+<p><code>.</code>: any single character <em>except next-line and white-space</em>. i.e. <code>[^\n\r]</code></p>
+<p><code>\w</code>: any ASCII single character. i.e. <code>[a-zA-Z0-9]</code></p>
+<p><code>\W</code>: any non-ASCII single character. i.e. <code>[^a-zA-Z0-9]</code></p>
+<p><code>\d</code>: any digital singe character. i.e. <code>[0-9]</code></p>
+<p><code>\D</code>: any non-digital single character. i.e.e <code>[^0-9]</code></p>
+<p><code>\s</code>: white-space</p>
+<p><code>\S</code>: non-white-space</p>
+<h3 id="meta-character">Meta Character</h3>
+<p><code>\r</code>: Assume you hit <code>Enter</code> key</p>
+<p><code>\t</code>: Tab</p>
+<p><code>\n</code>: change new line</p>
+<p><code>\f</code>: change page</p>
+<p><code>\0</code>: empty character</p>
+<h3 id="repeat">Repeat</h3>
+<p><code>{min, max}</code>: Repeat from min times to max times. Example: <code>/[test]{4,6}/</code> means 't' or <code>e</code> or <code>s</code> or <code>t</code> should be repeated at least 4 times and as most 6 times.</p>
+<p><code>{min,}</code> or <code>{,max}</code>: Repeat at least <code>min</code> or at most <code>max</code> times. Example: <code>/[test]{4,}</code> means 't' or <code>e</code> or <code>s</code> or <code>t</code> should be repeated at least 4 times. No maximum times.</p>
+<p><code>{n}</code>: Repeat exactly n times.</p>
+<p><code>?</code>: Repeat 0 or 1 times</p>
+<p><code>+</code>: Repeat 1 or more times</p>
+<p><code>*</code>: Repeat 0 or more times</p>
+<blockquote>
+<p>when we use <code>{min,max}</code>, we may fine more than one corresponding pattern in string. By default result string should be as long as possible. If you want result to be shortest case, add <code>?</code> after <code>{min,max}</code></p>
+</blockquote>
+<p>Example from: http://www.cnblogs.com/dolphinX/p/3486214.html:</p>
+<pre class="code literal-block"><span></span><span class="s1">&#39;123456789&#39;</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/\d{3,5}/g</span><span class="p">);</span> <span class="c1">//[&quot;12345&quot;, &quot;6789&quot;]</span>
+<span class="s1">&#39;123456789&#39;</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/\d{3,5}?/g</span><span class="p">);</span> <span class="c1">//[&quot;123&quot;, &quot;456&quot;, &quot;789&quot;]</span>
+</pre>
+
+
+<h3 id="group-and-border">Group and Border</h3>
+<p><code>^</code>: Mark start point</p>
+<p><code>$</code>: Mark end point</p>
+<p><code>\b</code>: all characters except <code>[a-zA-Z0-9]</code></p>
+<p>Example from http://www.cnblogs.com/dolphinX/p/3486214.html:</p>
+<pre class="code literal-block"><span></span><span class="p">(</span><span class="sr">/\w+\b Byron/</span><span class="p">).</span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;Hi Byron&#39;</span><span class="p">);</span> <span class="c1">//true</span>
+<span class="p">(</span><span class="sr">/\w+\b Byron/</span><span class="p">).</span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;Welcome Byron&#39;</span><span class="p">);</span> <span class="c1">//true</span>
+<span class="p">(</span><span class="sr">/\w+\b Byron/</span><span class="p">).</span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;HiByron&#39;</span><span class="p">);</span> <span class="c1">//false</span>
+</pre>
+
+
+<p><code>\B</code>: opposite from above</p>
+<p><code>()</code>: AND. Example: <code>/(abc)+/</code> means <code>abc</code> or <code>abcabc</code> or more.</p>
+<p><code>|</code>: OR. Example: <code>/a|b/</code> means <code>a</code> or <code>b</code></p>
+<h3 id="frequently-used-regular-expressions">Frequently Used Regular Expressions</h3>
+<p>Examples below are taken from <a href="http://kb.cnblogs.com/page/80965/">this post</a>:</p>
+<ul>
+<li>
+<p>Non-negative Integer: <code>^\d+$</code></p>
+</li>
+<li>
+<p>Positive Integer: <code>^[0-9]*[1-9][0-9]*$</code></p>
+</li>
+<li>
+<p>Non-positive Integer: <code>^((-\d+)|(0+))$</code></p>
+</li>
+<li>
+<p>Negative Integer: <code>^-[0-9]*[1-9][0-9]*$</code></p>
+</li>
+<li>
+<p>Integer: <code>^-?\d+$</code></p>
+</li>
+<li>
+<p>Non-negative Float: <code>^\d+(\.\d+)?$</code></p>
+</li>
+<li>
+<p>Positive Float: <code>^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$</code></p>
+</li>
+<li>
+<p>Non-positive Float: <code>^((-\d+(\.\d+)?)|(0+(\.0+)?))$</code></p>
+</li>
+<li>
+<p>Negative Float: <code>^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$</code></p>
+</li>
+<li>
+<p>Float: <code>^(-?\d+)(\.\d+)?$</code></p>
+</li>
+<li>
+<p>String with all letters: <code>^[A-Za-z]+$</code></p>
+</li>
+<li>
+<p>String with all upper case letters: <code>^[A-Z]+$</code></p>
+</li>
+<li>
+<p>String with all lower case letters: <code>^[a-z]+$</code></p>
+</li>
+<li>
+<p>String with number and letters: <code>^[A-Za-z0-9]+$</code></p>
+</li>
+<li>
+<p>String with number, letters and underline: <code>^\w+$</code></p>
+</li>
+<li>
+<p><strong>Email Address</strong> validation: <code>^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$</code></p>
+</li>
+<li>
+<p><strong>URL</strong> Validation: <code>^[a-zA-z]+://</code> <code>(\w+(-\w+)*)(\.(\w+(-\w+)*))*(\?\S*)?$</code></p>
+</li>
+<li>
+<p><strong>HTML Tag</strong>: <code>&lt;\s*(\S+)(\s[^&gt;]*)?&gt;(.*?)&lt;\s*\/\1\s*&gt;</code></p>
+</li>
+</ul>

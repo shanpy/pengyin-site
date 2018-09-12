@@ -1,0 +1,63 @@
+<h2 id="ubuntu-1510">Ubuntu 15.10</h2>
+<p>If you want to setup your RoR environment on Ubuntu 14/15, <a href="https://gorails.com/setup/ubuntu/15.04">this post</a> is the best choice for you. I used <code>rvm</code> to install Ruby on my two Ubuntu 15.10 machine, and it worked like a charm.</p>
+<h3 id="problem">Problem</h3>
+<p>When I tried to run <code>\curl -L https://get.rvm.io | bash -s stable --ruby</code> in terminal to install both RVM and Ruby, I got following error message:</p>
+<pre class="code literal-block"><span></span><span class="nv">Error</span> <span class="s s-Atom">running</span> <span class="s s-Atom">&#39;requirements_debian_update_system ruby-2.2.1&#39;</span><span class="p">,</span>
+<span class="s s-Atom">showing</span> <span class="s s-Atom">last</span> <span class="mi">15</span> <span class="s s-Atom">lines</span> <span class="s s-Atom">of</span> <span class="o">/</span><span class="s s-Atom">usr</span><span class="o">/</span><span class="s s-Atom">local</span><span class="o">/</span><span class="s s-Atom">rvm</span><span class="o">/</span><span class="s s-Atom">log</span><span class="o">/</span><span class="mi">1439385591</span><span class="k">_</span><span class="s s-Atom">ruby</span><span class="o">-</span><span class="mf">2.2.1</span><span class="o">/</span><span class="s s-Atom">update_system</span><span class="p">.</span><span class="s s-Atom">log</span>
+<span class="s s-Atom">++</span> <span class="o">/</span><span class="s s-Atom">scripts</span><span class="o">/</span><span class="s s-Atom">functions</span><span class="o">/</span><span class="s s-Atom">logging</span> <span class="s s-Atom">:</span> <span class="nf">rvm_pretty_print</span><span class="p">()</span>  <span class="mi">78</span> <span class="o">&gt;</span> <span class="s s-Atom">case</span> <span class="s2">&quot;${TERM:-dumb}&quot;</span> <span class="s s-Atom">in</span>
+<span class="s s-Atom">++</span> <span class="o">/</span><span class="s s-Atom">scripts</span><span class="o">/</span><span class="s s-Atom">functions</span><span class="o">/</span><span class="s s-Atom">logging</span> <span class="s s-Atom">:</span> <span class="nf">rvm_pretty_print</span><span class="p">()</span>  <span class="mi">81</span> <span class="o">&gt;</span> <span class="s s-Atom">case</span> <span class="s2">&quot;$1&quot;</span> <span class="s s-Atom">in</span>
+<span class="s s-Atom">++</span> <span class="o">/</span><span class="s s-Atom">scripts</span><span class="o">/</span><span class="s s-Atom">functions</span><span class="o">/</span><span class="s s-Atom">logging</span> <span class="s s-Atom">:</span> <span class="nf">rvm_pretty_print</span><span class="p">()</span>  <span class="mi">83</span> <span class="o">&gt;</span> <span class="p">[[</span> <span class="o">-</span><span class="s s-Atom">t</span> <span class="mi">2</span> <span class="p">]]</span>
+<span class="s s-Atom">++</span> <span class="o">/</span><span class="s s-Atom">scripts</span><span class="o">/</span><span class="s s-Atom">functions</span><span class="o">/</span><span class="s s-Atom">logging</span> <span class="s s-Atom">:</span> <span class="nf">rvm_pretty_print</span><span class="p">()</span>  <span class="mi">83</span> <span class="o">&gt;</span> <span class="s s-Atom">return</span> <span class="mi">1</span>
+<span class="s s-Atom">++</span> <span class="o">/</span><span class="s s-Atom">scripts</span><span class="o">/</span><span class="s s-Atom">functions</span><span class="o">/</span><span class="s s-Atom">logging</span> <span class="s s-Atom">:</span> <span class="nf">rvm_error</span><span class="p">()</span>  <span class="mi">117</span> <span class="o">&gt;</span> <span class="s s-Atom">printf</span> <span class="c1">%b &#39;There has been error while updating &#39;\&#39;&#39;apt-get&#39;\&#39;&#39;, please give it some time and try again later.</span>
+<span class="mi">404</span> <span class="s s-Atom">errors</span> <span class="s s-Atom">should</span> <span class="s s-Atom">be</span> <span class="s s-Atom">fixed</span> <span class="s s-Atom">for</span> <span class="s s-Atom">rvm</span> <span class="s s-Atom">to</span> <span class="s s-Atom">proceed</span><span class="p">.</span> <span class="nv">Check</span> <span class="s s-Atom">your</span> <span class="s s-Atom">sources</span> <span class="s s-Atom">configured</span> <span class="nn">in</span><span class="p">:</span>
+    <span class="o">/</span><span class="s s-Atom">etc</span><span class="o">/</span><span class="s s-Atom">apt</span><span class="o">/</span><span class="s s-Atom">sources</span><span class="p">.</span><span class="s s-Atom">list</span>
+    <span class="o">/</span><span class="s s-Atom">etc</span><span class="o">/</span><span class="s s-Atom">apt</span><span class="o">/</span><span class="s s-Atom">sources</span><span class="p">.</span><span class="s s-Atom">list</span><span class="p">.</span><span class="s s-Atom">d</span><span class="cm">/*.list</span>
+<span class="cm">\n&#39;</span>
+<span class="cm">There has been error while updating &#39;apt-get&#39;, please give it some time and try again later.</span>
+<span class="cm">404 errors should be fixed for rvm to proceed. Check your sources configured in:</span>
+<span class="cm">    /etc/apt/sources.list</span>
+<span class="cm">    /etc/apt/sources.list.d/*.list</span>
+<span class="cm">++ /scripts/functions/requirements/ubuntu : requirements_debian_update_system()  53 &gt; return 100</span>
+<span class="cm">Requirements installation failed with status: 100.</span>
+</pre>
+
+
+<p>The reason of this error is because RVM will bring error if my Ubuntu machine's <code>apt-get update</code> has error in it. I used to install Ninja-IDE through <code>apt-get</code> and I had PPA error when I do <code>apt-get update</code>. You can view <a href="http://stackoverflow.com/questions/23650992/ruby-rvm-apt-get-update-error">this stackoverflow post</a>.</p>
+<h3 id="solution">Solution</h3>
+<p>A user <strong>Avinash Raj</strong> posted a great solution in <a href="http://askubuntu.com/questions/65911/how-can-i-fix-a-404-error-when-using-a-ppa-or-updating-my-package-lists">Ubuntu community</a> for removing PPA with errors.</p>
+<p>The detail of solution is: create a file called <code>ppa-remove</code> (no <code>.sh</code> extension) as following:</p>
+<pre class="code literal-block"><span></span><span class="ch">#!/bin/bash</span>
+sudo rm /tmp/update.txt<span class="p">;</span> tput setaf <span class="m">6</span><span class="p">;</span> <span class="nb">echo</span> <span class="s2">&quot;Initializing.. Please Wait&quot;</span>
+sudo apt-get update &gt;&gt; /tmp/update.txt <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="p">;</span> awk <span class="s1">&#39;( /W:/ &amp;&amp; /launchpad/ &amp;&amp; /404/ ) { print substr($5,26) }&#39;</span> /tmp/update.txt &gt; /tmp/awk.txt<span class="p">;</span> awk -F <span class="s1">&#39;/&#39;</span> <span class="s1">&#39;{ print $1&quot;/&quot;$2 }&#39;</span> /tmp/awk.txt &gt; /tmp/awk1.txt<span class="p">;</span> sort -u /tmp/awk1.txt &gt; /tmp/awk2.txt
+tput sgr0
+<span class="k">if</span> <span class="o">[</span> -s /tmp/awk2.txt <span class="o">]</span>
+<span class="k">then</span>
+  tput setaf <span class="m">1</span>
+  <span class="nb">printf</span> <span class="s2">&quot;PPA&#39;s going to be removed\n%s\n&quot;</span> <span class="s2">&quot;</span><span class="k">$(</span>cat /tmp/awk2.txt<span class="k">)</span><span class="s2">&quot;</span>
+  tput sgr0
+  <span class="k">while</span> <span class="nb">read</span> -r line<span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="s2">&quot;sudo add-apt-repository -r ppa:</span><span class="nv">$line</span><span class="s2">&quot;</span><span class="p">;</span> <span class="k">done</span> &lt; /tmp/awk2.txt &gt; out
+  bash out
+<span class="k">else</span>
+  tput setaf <span class="m">1</span>
+  <span class="nb">echo</span> <span class="s2">&quot;No PPA&#39;s to be removed&quot;</span>
+  tput sgr0
+<span class="k">fi</span>
+</pre>
+
+
+<p>Run <code>sudo chmod +x ppa-remove</code> after you create this file, then move this file to <code>/usr/bin</code>. Run <code>sudo ppa-remove</code>. Your PPA with errors will be removed and you can then re-run <code>\curl -L https://get.rvm.io | bash -s stable</code> or <code>\curl -L https://get.rvm.io | bash -s stable --ruby</code> to install RVM.</p>
+<p><em>Note: Till Aug 2015, If you run <code>\curl -L https://get.rvm.io | bash -s stable --ruby</code>, you will automatically get Ruby 2.2.1 installed. If you run <code>\curl -L https://get.rvm.io | bash -s stable</code> then install Ruby, you can choose Ruby 2.2.2. These two versions do not have conflict.</em></p>
+<h2 id="mac-os-yoemite">Mac OS Yoemite</h2>
+<p>RoR installation process for Mac OS Yosemite is almost the same as Ubuntu. Make sure you have <code>xcode</code> and <code>Homebrew</code> installed first. This <a href="http://railsapps.github.io/installrubyonrails-mac.html">post</a> has very detailed description that you can follow.</p>
+<h2 id="project-hydra">Project Hydra</h2>
+<p>I had a <a href="http://pengyin-shan.com/blog/dive-into-hydra-and-my-thoughts">post</a> describing my thoughts about Hydra. In this post I will include detail of installation part.</p>
+<p>After you finish RoR setting (make sure you have <code>Bundle</code> installed by <code>RubyGem</code>), you want to generate a basic rails app, then add <code>gem 'hydra', '9.1.0.rc1'</code> to your <code>Gemfile</code>. you can re-run <code>Bundle install</code> to install all necessary ruby gems for Hydra.</p>
+<blockquote>
+<p>If you are creating Hydra head for the first time, run <code>rails generate hydra:install</code> to use Hydra generator. If you done this once and you want to setup this project in a new machine, you should skip this step because your old blacklight files will be overwritten.</p>
+</blockquote>
+<p>You can use same Gemfile to set up Hydra environment in different machines, but <strong>make sure you run <code>rake jetty:config</code> and <code>rake db:migrate</code></strong> to prevent possible problem.</p>
+<p>You can run <code>Rails.env</code> in rails console to check your current environment.</p>
+<h3 id="problem-data-immigration-for-existing-project">Problem: Data Immigration for Existing Project</h3>
+<p>How to transfer previous data (Fedora files, Solr documents and indexes) to your new environment?</p>
+<h3 id="solution_1">Solution</h3>
+<p>Well, I'm working on solution now :) To figure out a way I did lots of experiments (and made a big mess) in my Hydra project. I started a new post about it <a href="http://pengyin-shan.com/blog/play-with-hydra-data">here</a>.</p>

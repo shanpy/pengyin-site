@@ -1,0 +1,470 @@
+<p>This is a post that I moved from <a href="blogpengyin.herokuapp.com">my old blog site</a>. This is the reading note for <strong>OCA Java SE 7 Certification Guide</strong> from <strong>Manning</strong>. <em>Please note that all definations and examples in this post are taken from the book.</em></p>
+<h1 id="chapter-6-working-with-inheritance">Chapter 6 Working with Inheritance</h1>
+<p>This chapter main talks about:</p>
+<ul>
+<li>
+<p>Understanding and implementing <code>inheritance</code></p>
+</li>
+<li>
+<p>Developing code that demonstrates the use of <code>polymorphism</code></p>
+</li>
+<li>
+<p>Differentiating between the type of a <code>reference</code> and an <code>object</code></p>
+</li>
+<li>
+<p>Determining when <code>casting</code> is required</p>
+</li>
+<li>
+<p>Using <code>super</code> and <code>this</code> to access objects and constructors</p>
+</li>
+<li>
+<p>Using <code>abstract classe</code>s and <code>interface</code>s</p>
+</li>
+</ul>
+<h2 id="inheritance-with-classes">Inheritance with Classes</h2>
+<p>a class can <strong>inherit</strong> the <code>propertie</code>s and <code>behavior</code> of another class. The class that inherits from another class can also define additional properties and behaviors.</p>
+<p><strong>A class uses the keyword <code>extends</code> to inherit a class</strong>:</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">Employee</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">address</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">phoneNumber</span><span class="o">;</span>
+    <span class="kt">float</span> <span class="n">experience</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Programmer</span> <span class="kd">extends</span> <span class="n">Employee</span> <span class="o">{</span>
+    <span class="n">String</span><span class="o">[]</span> <span class="n">programmingLanguages</span><span class="o">;</span>
+    <span class="kt">void</span> <span class="nf">writeCode</span><span class="o">()</span> <span class="o">{}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Manager</span> <span class="kd">extends</span> <span class="n">Employee</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">teamSize</span><span class="o">;</span>
+    <span class="kt">void</span> <span class="nf">reportProjectStatus</span><span class="o">()</span> <span class="o">{}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>Inheriting a class is also referred to as <strong>subclassing</strong>.</p>
+<p>Inherited class <code>Employee</code> is also referred to as the <strong>superclass</strong>, <strong>base class</strong>, or <strong>parent class</strong>.</p>
+<p>The classes <code>Programmer</code> and <code>Manager</code> that inherit the class <code>Employee</code> are called <strong>subclasses</strong>, <strong>derived classes</strong>, <strong>extended classes</strong>, or <strong>child classes</strong>.</p>
+<p>Code that works with the base class in a <strong>hierarchy tree</strong> can work with all classes that are added using inheritance later.</p>
+<p>When multiple classes inherit a base class, it creates a <strong>logical group</strong>.</p>
+<p>Inheritance enables you to <strong>reuse</strong> code that has already been
+defined by a class. Inheritance can be implemented by extending a class.</p>
+<h3 id="derived-class">Derived Class</h3>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">Employee</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">address</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">phoneNumber</span><span class="o">;</span>
+    <span class="kt">float</span> <span class="n">experience</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Manager</span> <span class="kd">extends</span> <span class="n">Employee</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">teamSize</span><span class="o">;</span>
+    <span class="kt">void</span> <span class="nf">reportProjectStatus</span><span class="o">()</span> <span class="o">{}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Programmer</span> <span class="kd">extends</span> <span class="n">Employee</span> <span class="o">{</span>
+    <span class="n">String</span><span class="o">[]</span> <span class="n">programmingLanguages</span><span class="o">;</span>
+    <span class="kt">void</span> <span class="nf">writeCode</span><span class="o">()</span> <span class="o">{}</span>
+    <span class="kt">void</span> <span class="nf">accessBaseClassMembers</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Programmer&quot;</span><span class="o">;</span>
+        <span class="c1">//Derived class Programmer can directly access members of its base class.</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>When a class inherits another class, it encloses within it an object of the inherited class.</p>
+<p>For example, for the code above, the <code>Programer</code> is a large circle, enclosing a small circle of <code>Employee</code></p>
+<h3 id="a-derived-class-cant-inherit-all-the-members-of-its-base-class">A derived class can't inherit all the members of its base class</h3>
+<p>Based on <strong>access modifiers</strong>:</p>
+<ul>
+<li>
+<p><code>default</code>— Members with <code>default</code> access can be accessed in a derived class only if base and derived classes reside <strong>in the same package</strong>.</p>
+</li>
+<li>
+<p><code>protected</code> — Members with protected access are accessible to <strong>all the derived classes, regardless of the packages</strong> in which the base and derived classes are defined.</p>
+</li>
+<li>
+<p><code>public</code> — Members with public access are <strong>visible to all</strong> the other classes.</p>
+</li>
+</ul>
+<p>A derived class <strong>can't inherite</strong> following members:</p>
+<ul>
+<li>
+<p><code>private</code> members of the base class.</p>
+</li>
+<li>
+<p>Base class members with <code>default access</code>, if the base class and derived classes exist in <strong>separate packages</strong>.</p>
+</li>
+<li>
+<p><strong><code>Constructor</code>s of the base class</strong>. A derived class <strong>can call a base class’s constructors, but it doesn’t inherit them</strong>.</p>
+</li>
+</ul>
+<p>Derived classes <strong>can define</strong> additional properties and behaviors.</p>
+<p>Derived classes can also <strong>define their own <code>constructor</code>s and <code>static</code> methods and variables</strong>.</p>
+<p>A derived class can also <strong>hide or override its <code>base</code> class’s members</strong>.</p>
+<p>When a derived class defines an <code>instance</code> or <code>class variable</code> with <strong>the same name</strong> as one defined from its base class, <strong>only these new variables and methods are visible to code using the derived class</strong>.</p>
+<p>When a derived class defines different code for a <code>method</code> inherited from a base class by defining the method again, <strong>this method is treated as a special method—an <code>overridden</code> method</strong>.</p>
+<p>You can implement inheritance by using either a <code>concrete</code> class or an <code>abstract</code> class as a <code>base</code> class</p>
+<h3 id="abstract-base-class-vs-concreate-base-class">Abstract Base Class v.s Concreate Base Class</h3>
+<p><strong>Abstract Class</strong></p>
+<p>It groups the common properties and behavior of its derived classes, but it <strong>prevents itself from being instantiated</strong>.</p>
+<p>An <code>abstract class</code> can <strong>force</strong> all its derived classes to <strong>define their own implementations</strong> for a behavior by defining it as an <code>abstract method</code> (<strong>a method without a body</strong>)</p>
+<p>A <code>abstract class</code> <strong>may or may not define any <code>abstract methods</code></strong>. - If an abstract base class <strong>defines one or more <code>abstract method</code>s, the class must be marked as <code>abstract</code> and the abstract methods must be implemented in all its derived classes</strong>.</p>
+<p>If a <code>derived class</code> <strong>doesn’t implement</strong> all the abstract methods defined by its base class, then <strong>it also needs to be an <code>abstract class</code></strong>.</p>
+<p><strong>Important Notes about Abstract Class</strong></p>
+<ul>
+<li>
+<p>You can <strong>never create objects</strong> of an <code>abstract class</code>.</p>
+</li>
+<li>
+<p><strong>A base class can be defined as an abstract class, even if it doesn’t define any abstract methods</strong>.</p>
+</li>
+<li>
+<p>A derived class should <strong>implement all the abstract methods of its base class. If it doesn’t, it must be defined as an abstract derived class</strong>.</p>
+</li>
+<li>
+<p>You can use variables of an abstract base class to refer to objects of its derived class.</p>
+</li>
+</ul>
+<h3 id="important-term-and-defination">Important Term and Defination</h3>
+<ul>
+<li>
+<p><code>Base class</code>— A class inherited by another class. The class <code>Employee</code> is a base class for the classes <code>Programmer</code> and <code>Manager</code> in the previous examples.</p>
+</li>
+<li>
+<p><code>Superclass</code> — A base class is also known as a superclass.</p>
+</li>
+<li>
+<p><code>Parent class</code> — A base class is also known as a parent class.</p>
+</li>
+<li>
+<p><code>Derived class</code> — A class that inherits from another class. The classes Programmer and Manager are derived classes in the previous example.</p>
+</li>
+<li>
+<p><code>Subclass</code> — A derived class is also known as a subclass.</p>
+</li>
+<li>
+<p><code>Extended class</code> — A derived class is also known as an extended class.</p>
+</li>
+</ul>
+<h2 id="inteface">Inteface</h2>
+<p>An <code>interface</code> can define <strong>only <code>abstract methods</code> and <code>constants</code></strong>.</p>
+<p>All the members of an interface are <strong>implicitly <code>public</code></strong> .</p>
+<p><code>interface</code> <strong>can't have <code>constructor</code></strong>.</p>
+<p><strong>Java doesn't allow a class to inherit multiple classes</strong>.</p>
+<p>However, it <strong>allows a class to implement multiple interfaces</strong>.</p>
+<p>A class uses the keyword <code>implements</code> to implement an interface.</p>
+<p>Each class can implement these methods in <strong>its own particular manner</strong>.</p>
+<p>If the <strong>signature</strong> of a method is changed in an interface, all classes that implement the interface will fail to compile.</p>
+<p><strong>An interface can only define <code>constant</code>s.</strong></p>
+<p>Once it’s assigned, you can’t change the value of a constant.</p>
+<p><strong>The variables of an interface are implicitly <code>public</code> , <code>final</code> , and <code>static</code> .</strong></p>
+<blockquote>
+<p>i.e.:</p>
+</blockquote>
+<pre class="code literal-block"><span></span><span class="kd">interface</span> <span class="nc">MyInterface</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">AGE</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span> <span class="c1">//equal to int AGE = 10; No compile error here</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>When you implement an interface, you <strong>must implement all its methods</strong> by using the access modifier <code>public</code> .</p>
+<p>A class that implements an interface <strong>can’t make the interface’s methods more restrictive</strong>.</p>
+<blockquote>
+<p>i.e.</p>
+</blockquote>
+<pre class="code literal-block"><span></span><span class="kd">interface</span> <span class="nc">Relocatable</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">move</span><span class="o">();</span> <span class="c1">//implicitly public</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">CEO</span> <span class="kd">implements</span> <span class="n">Relocatable</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">move</span><span class="o">()</span> <span class="o">{}</span> <span class="c1">//Won&#39;t compile</span>
+<span class="o">}</span>
+<span class="cm">/*********************/</span>
+<span class="kd">interface</span> <span class="nc">Relocatable</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">move</span><span class="o">();</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">CEO</span> <span class="kd">implements</span> <span class="n">Relocatable</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">move</span><span class="o">()</span> <span class="o">{}</span> <span class="c1">//Compile fine</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>A class can’t inherit multiple classes, but a class <strong>can implement multiple interfaces</strong>.</p>
+<p><strong>An interface can extend multiple interfaces</strong>.</p>
+<p><strong>POINTS TO NOTE ABOUT CLASS AND INTERFACE INHERITANCE</strong> :</p>
+<ul>
+<li>
+<p>A <code>class</code> can inherit <strong>zero or one class</strong>.</p>
+</li>
+<li>
+<p>A <code>class</code> uses the keyword <code>extends</code> to inherit a class.</p>
+</li>
+<li>
+<p>A <code>class</code> can implement <strong>multiple interfaces</strong>.</p>
+</li>
+<li>
+<p>A <code>class</code> uses the keyword <code>implements</code> to implement an interface.</p>
+</li>
+<li>
+<p>An <code>interface</code> can’t implement any class.</p>
+</li>
+<li>
+<p>An <code>interface</code> can inherit <strong>zero or more interfaces</strong>.</p>
+</li>
+<li>
+<p>An <code>interface</code> uses the keyword <code>extends</code> to inherit interfaces.</p>
+</li>
+<li>
+<p>An <code>abstract class</code> can extend a concrete class and vice versa.</p>
+</li>
+<li>
+<p>An <code>abstract class</code> can implement interfaces.</p>
+</li>
+<li>
+<p>An <code>abstract class</code> can extend another abstract class.</p>
+</li>
+<li>
+<p>The <strong>first</strong> <code>concrete class</code> in the hierarchy must <strong>supply actual method implementations for all abstract methods</strong>.</p>
+</li>
+</ul>
+<h2 id="reference-variable-and-object-type">Reference Variable and Object Type</h2>
+<p>objects of derived classes can be referred to using a <strong>reference
+variable of either of the following types</strong>:</p>
+<ul>
+<li>
+<p><strong>Its own type</strong> — An object of a class <code>HRExecutive</code> can be referred to using an object reference variable of type <code>HRExecutive</code> .</p>
+</li>
+<li>
+<p><strong>Its base class</strong> — If the class <code>HRExecutive</code> <strong>inherits</strong> the class <code>Employee</code>, an object of the class <code>HRExecutive</code> can be referred to using a variable of type <code>Employee</code> .</p>
+</li>
+<li>
+<p><strong>Implemented interfaces</strong> — If the class <code>HRExecutive</code> implements the interface <code>Interviewer</code> , an object of the class <code>HRExecutive</code> can be referred using a variable of type <code>Interviewer</code> .</p>
+</li>
+</ul>
+<p><strong>Imporant</strong></p>
+<ul>
+<li>
+<p>If a reference type is <code>based class</code>, it <strong>cannot</strong> access member in <code>derviced class</code>.</p>
+</li>
+<li>
+<p>If a reference type is <code>base class</code>, it <strong>cannot</strong> access memeber in <code>interface</code> if derived class also implement interface. Same idea, if a reference type is <code>interface</code>, it <strong>cannot</strong> access memeber is <code>base class</code>.</p>
+</li>
+<li>
+<p>If a reference tyope is <code>own type</code>, it can access everything.</p>
+</li>
+</ul>
+<blockquote>
+<p>Example:</p>
+</blockquote>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">Employee</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">address</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">phoneNumber</span><span class="o">;</span>
+    <span class="kt">float</span> <span class="n">experience</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="kd">interface</span> <span class="nc">Interviewer</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">conductInterview</span><span class="o">();</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">HRExecutive</span> <span class="kd">extends</span> <span class="n">Employee</span> <span class="kd">implements</span> <span class="n">Interviewer</span> <span class="o">{</span>
+    <span class="n">String</span><span class="o">[]</span> <span class="n">specialization</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">conductInterview</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;HRExecutive - conducting interview&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="cm">/************/</span>
+<span class="kd">class</span> <span class="nc">Office</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+        <span class="n">Employee</span> <span class="n">emp</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HRExecutive</span><span class="o">();</span>
+        <span class="c1">//not compile. Cannot access</span>
+        <span class="n">emp</span><span class="o">.</span><span class="na">specialization</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">[]</span> <span class="o">{</span><span class="s">&quot;Staffing&quot;</span><span class="o">};</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">emp</span><span class="o">.</span><span class="na">specialization</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+        <span class="c1">//Works fine</span>
+        <span class="n">emp</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="s">&quot;Pavni Gupta&quot;</span><span class="o">;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">emp</span><span class="o">.</span><span class="na">name</span><span class="o">);</span>
+        <span class="c1">//not compile. Cannot access</span>
+        <span class="n">emp</span><span class="o">.</span><span class="na">conductInterview</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>The reason we want to do above is <strong>you might not be interested in all the members of a derived class</strong>.</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">OfficeInheritanceList</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+        <span class="n">Interviewer</span><span class="o">[]</span> <span class="n">interviewers</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Interviewer</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span>
+      <span class="c1">//Following compile fine. Manager/HRExectuive implements interviewers</span>
+        <span class="n">interviewers</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Manager</span><span class="o">();</span>
+        <span class="n">interviewers</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HRExecutive</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Interviewer</span> <span class="n">interviewer</span> <span class="o">:</span> <span class="n">interviewers</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">interviewer</span><span class="o">.</span><span class="na">conductInterview</span><span class="o">();</span>
+        <span class="o">}</span>
+      <span class="c1">//Won&#39;t compile. You cannot initiate interface</span>
+        <span class="n">HRExecutive</span> <span class="n">hr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Interviewer</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h2 id="casting">Casting</h2>
+<p><code>Casting</code> is the process of forcefully making a variable behave as a variable of another type.</p>
+<p>If a <code>class</code> shares an <code>IS-A</code> or <code>inheritance</code> relationship with another <code>class</code> or <code>interface</code>, their variables can be cast to each other’s type.</p>
+<p>Example: <code>((HRExecutive)interviewer).specialization = new String[] {"Staffing"};</code></p>
+<h2 id="use-this-and-super-to-access-objects-and-constructors">Use this and super to access objects and constructors</h2>
+<h3 id="this">this</h3>
+<p>The <code>this</code> reference always points to an <strong>object’s own instance</strong>.</p>
+<p>Any object can use the this reference to refer to its own instance.</p>
+<p>You can use the keyword <code>this</code> to refer to all methods and variables that are <strong>accessible to a class</strong>.</p>
+<p><code>this</code> is often being used to differentiate between <code>local</code> and <code>nstance variable</code>s name:</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">Employee</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="n">Employee</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p><code>this</code> is often being used to <strong>access <code>onstructor</code>s</strong>:</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">Employee</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">address</span><span class="o">;</span>
+    <span class="n">Employee</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="n">Employee</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">String</span> <span class="n">address</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">(</span><span class="n">name</span><span class="o">);</span> <span class="c1">//Call contructor that only accept name</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">address</span> <span class="o">=</span> <span class="n">address</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p><code>this()</code> is used to call <strong>default <code>contructor</code></strong> :</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">Employee</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">address</span><span class="o">;</span>
+    <span class="n">Employee</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;NoName&quot;</span><span class="o">;</span>
+        <span class="n">address</span> <span class="o">=</span> <span class="s">&quot;NoAddress&quot;</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="n">Employee</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">String</span> <span class="n">address</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">();</span> <span class="c1">//Must be first statement in this method!</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">name</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">address</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="k">this</span><span class="o">.</span><span class="na">address</span> <span class="o">=</span> <span class="n">address</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p><strong>If present, a call to a constructorfrom another constructor must be done on the first line of code of the calling constructor</strong>.</p>
+<h3 id="super">super</h3>
+<p><code>super</code> is also an object reference, but <code>super</code> refers to the <strong>parent or base class of a class</strong>.</p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="kt">void</span> <span class="nf">printNames</span><span class="o">()</span> <span class="o">{</span>
+    <span class="c1">//Can print difference value if two class have different setting</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="kd">super</span><span class="o">.</span><span class="na">name</span><span class="o">);</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">name</span><span class="o">);</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>The reference variable <code>super</code> can also be used to refer to the <strong>constructors of the base class</strong> in a</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">Employee</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">address</span><span class="o">;</span>
+    <span class="n">Employee</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">String</span> <span class="n">address</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">address</span> <span class="o">=</span> <span class="n">address</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Programmer</span> <span class="kd">extends</span> <span class="n">Employee</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">progLanguage</span><span class="o">;</span>
+    <span class="n">Programmer</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">String</span> <span class="n">address</span><span class="o">,</span> <span class="n">String</span> <span class="n">progLang</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//Contructor in base class which accepts two parameter</span>
+        <span class="c1">//First statement in dervied class constructor</span>
+        <span class="kd">super</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">address</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">progLanguage</span> <span class="o">=</span> <span class="n">progLang</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p><strong>If present, a call to a superclass’s constructor must be the <em>first
+statement in a derived class’s constructor</em>. Otherwise, a call to <code>super();</code> (the no-arg constructor) is inserted automatically by the compiler.</strong></p>
+<p>Because <code>static method</code>s belong to a class, not to objects of a class, <strong>you can’t use <code>this</code> and <code>super</code> in <code>static method</code>s.</strong></p>
+<h2 id="polymorphism">Polymorphism</h2>
+<h3 id="polymorphism-with-classes">Polymorphism with classes</h3>
+<p><code>Polymorphism</code></p>
+<ul>
+<li>
+<p>a class <strong>inherit</strong>s another class</p>
+</li>
+<li>
+<p>both the base and the derived classes define methods with the <strong>same method signature</strong> (the same method <code>name</code> and method <code>parameters</code>)</p>
+</li>
+</ul>
+<p><code>Polymorphic method</code>s are also called <code>overridden method</code>s.</p>
+<p><strong>Important Note about Overriden Method</strong></p>
+<ul>
+<li>
+<p>Overridden methods are defined by <code>classe</code>s and <code>interface</code>s that share inheritance relationships.</p>
+</li>
+<li>
+<p>The <strong>name</strong> of the overridden method must be the <strong>same</strong> in both the <code>base class</code> and the <code>derived class</code>.</p>
+</li>
+<li>
+<p>The <strong>argument list</strong> passed to the overridden method must be the <strong>same</strong> in both the <code>base class</code> and <code>derived class</code>.</p>
+</li>
+<li>
+<p>The <strong>return type</strong> of an overriding method in the derived class <strong>can be the <code>same</code>, or a <code>subclass</code> of the return type of the overridden method in the <code>base class</code></strong>.</p>
+</li>
+<li>
+<p>When the overriding method returns a <code>subclass</code> of the return type of the overridden method, it is known as a <code>covariant return type</code>.</p>
+</li>
+<li>
+<p>An overridden method defined in the <code>base class</code> can be an <code>abstract method</code> or a <code>non-abstract method</code>.</p>
+</li>
+<li>
+<p><strong>Access modifier</strong>s for an overriding method can be the <strong>same or less restrictive</strong> than the method being overridden, but they <strong>can’t be more restrictive</strong>.</p>
+</li>
+</ul>
+<p>Polymorphic methods <strong>don’t always have to be <code>abstract</code></strong></p>
+<p>Polymorphism works only with <code>overridden method</code>s.</p>
+<p>Polymorphism cannot work with <code>overload method</code>s.</p>
+<p>Review: <code>overloaded method</code>s define a method argument list with <strong>either a different number or type of method parameters</strong>.</p>
+<p><strong><code>Overloaded method</code>s only share the same name</strong>; the <code>JRE</code> treats them like <strong>different methods</strong>.</p>
+<p>In the case of <code>overridden method</code>s, <strong>the <code>JRE</code> decides at <code>runtime</code> which method should be called based on <em>the exact type of the object on which it’s called</em>.</strong></p>
+<h3 id="binding-of-variables-and-methods-at-compile-time-and-runtime">Binding of variables and methods at compile time and runtime</h3>
+<p>With inheritance, the <code>instance variable</code>s bind at <strong>compile time</strong></p>
+<p><code>Method</code>s bind at <strong>runtime</strong>.</p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">Employee</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Employee&quot;</span><span class="o">;</span>
+    <span class="kt">void</span> <span class="nf">printName</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Programmer</span> <span class="kd">extends</span> <span class="n">Employee</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Programmer&quot;</span><span class="o">;</span>
+    <span class="kt">void</span> <span class="nf">printName</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Office1</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Employee</span> <span class="n">emp</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Employee</span><span class="o">();</span>
+        <span class="n">Employee</span> <span class="n">programmer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Programmer</span><span class="o">();</span> <span class="c1">//Type is Programmer</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">emp</span><span class="o">.</span><span class="na">name</span><span class="o">);</span> <span class="c1">//Employee. Instance Variable</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">programmer</span><span class="o">.</span><span class="na">name</span><span class="o">);</span> <span class="c1">//Employee</span>
+        <span class="n">emp</span><span class="o">.</span><span class="na">printName</span><span class="o">();</span> <span class="c1">//Employee. Method</span>
+        <span class="n">programmer</span><span class="o">.</span><span class="na">printName</span><span class="o">();</span> <span class="c1">//Programmer. Decide at run time</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3 id="polymorphism-with-interfaces">Polymorphism with Interfaces</h3>
+<p>Polymorphism can also be implemented using <code>interfaces</code>.</p>
+<p>Polymorphism with interfaces requires a <code>class</code> to <strong>implement</strong> an interface.</p>
+<p>Polymorphism with interfaces <strong>always involves <code>abstract method</code>s from the implemented interface</strong> because interfaces can define only abstract methods.</p>
+<p>Review: all the methods defined in an <code>interface</code> are implicitly <code>abstract</code> and <code>public</code></p>
+<p>If a <code>base class</code> implement an <code>interface</code>, its <code>derviced class</code> don't need to implement again. They can just <code>extend</code> base class.</p>
+<p>Only <code>overridden method</code>s — methods with the same method <code>signatures</code> participate in <code>polymorphism</code>.</p>

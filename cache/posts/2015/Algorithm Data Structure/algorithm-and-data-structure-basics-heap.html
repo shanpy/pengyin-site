@@ -1,0 +1,130 @@
+<h3 id="reference-list">Reference List</h3>
+<ul>
+<li><em>Data Structures and Algorithms in Java (Second Edition)</em>, written by <em>Robert Lafore</em>, Chinese Version</li>
+</ul>
+<h3 id="basic-information">Basic Information</h3>
+<p>Heap is a type of tree. If you create a <strong>priority queue</strong> from heap. The time complexity for insertion and deletion is <code>O(logN)</code>. However, heap doesn't support traversal and search by value, because all path in heap is following descending/ascending order.</p>
+<p>Heap has following features:</p>
+<ul>
+<li>
+<p>It is a <strong>complete binary tree</strong>. A complete binary tree means every layer except leaf layer has full nodes.</p>
+</li>
+<li>
+<p>Heap is normally implemented by a array</p>
+</li>
+<li>
+<p>For each node in heap, the value of this node is larger or equal to the value of its child nodes (Maximum Heap). If current node is smaller or equal to its child nodes, the heap is Minimum Heap.</p>
+</li>
+</ul>
+<p>Following is the graph for array implementation of heap, taken from <em>Data Structures and Algorithms in Java (Second Edition)</em>:</p>
+<p>../images/articles/2015/algorithm/heap_array.PNG </p>
+<blockquote>
+<p>As you can see, if the index of a random element in array is <code>x</code>, then the index of its parent node is <code>(x-1)/2</code>. The index of its left child node is <code>2*x+1</code>. The index of its right child node is <code>2*x+2</code></p>
+</blockquote>
+<p><em>In Java, <code>/</code> will get floor integer value</em>.</p>
+<blockquote>
+<p>All nodes which have index larger than <code>n/2</code> are leaf nodes, assuming there are n elements in array.</p>
+</blockquote>
+<h3 id="remove">Remove</h3>
+<p>In heap, remove means removing the root of the heap. This root is always the largest/smallest value of all elements. For the heap array, root always has index <code>0</code>.</p>
+<p>You need two steps to find removing process:</p>
+<ol>
+<li>
+<p>Take root of heap out</p>
+</li>
+<li>
+<p>Fill the root hold by move the last element to root, then reverse and change nodes until heap is correct.</p>
+</li>
+</ol>
+<p>Detail of steps:</p>
+<ol>
+<li>
+<p>Remove root by using <code>max = heapArray[o];</code></p>
+</li>
+<li>
+<p>Move last element to root by using <code>heapArray[0] = heapArray[N-1]; N--;</code></p>
+</li>
+<li>
+<p>Move this new root to bottom, until it's smaller than its parent node and larger than its child nodes. To do this, check if root is smaller than it's <strong>larger child</strong>. If so, swap root and its larger child. Repeat this.</p>
+</li>
+</ol>
+<h4 id="code">Code</h4>
+<pre class="code literal-block"><span></span><span class="c1">//We assume each node has a attribute &#39;key&#39;, which determine the value/priority of this node</span>
+<span class="kd">public</span> <span class="n">Node</span> <span class="nf">remove</span><span class="o">(){</span>
+    <span class="n">Node</span> <span class="n">root</span> <span class="o">=</span> <span class="n">heapArray</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+    <span class="n">heapArray</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">heapArray</span><span class="o">[--</span><span class="n">currentSize</span><span class="o">];</span> <span class="c1">//Move last element to root position</span>
+    <span class="n">trickleDown</span><span class="o">[</span><span class="n">o</span><span class="o">];</span> <span class="c1">//trickleDown new root</span>
+    <span class="k">return</span> <span class="n">root</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">trackleDown</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">){</span>
+    <span class="kt">int</span> <span class="n">largetChild</span><span class="o">;</span>
+    <span class="n">Node</span> <span class="n">current</span> <span class="o">=</span> <span class="n">heapArray</span><span class="o">[</span><span class="n">index</span><span class="o">];</span> <span class="c1">//current Node</span>
+
+    <span class="c1">//while index is not on leaf node</span>
+    <span class="k">while</span><span class="o">(</span><span class="n">index</span> <span class="o">&lt;</span> <span class="n">currentSize</span><span class="o">/</span><span class="mi">2</span><span class="o">){</span>
+        <span class="kt">int</span> <span class="n">leftChild</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">rightChild</span> <span class="o">=</span> <span class="n">leftChild</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+
+        <span class="c1">//Get larger child</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">rightChild</span> <span class="o">&lt;</span> <span class="n">currentSize</span> <span class="o">&amp;&amp;</span> <span class="n">heapArray</span><span class="o">[</span><span class="n">leftChild</span><span class="o">].</span><span class="na">getKey</span><span class="o">()</span> <span class="o">&lt;</span> <span class="n">heapArray</span><span class="o">[</span><span class="n">rightChild</span><span class="o">].</span><span class="na">getKey</span><span class="o">()){</span>
+            <span class="n">largerChild</span> <span class="o">=</span> <span class="n">rightChild</span><span class="o">;</span>
+        <span class="o">}</span><span class="k">else</span>
+            <span class="n">largerChild</span> <span class="o">=</span> <span class="n">leftChild</span><span class="o">;</span>
+
+        <span class="c1">//Break while loop when current value is larger than larger child value</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">getKey</span><span class="o">()</span> <span class="o">&gt;=</span> <span class="n">heapArray</span><span class="o">[</span><span class="n">largerChild</span><span class="o">].</span><span class="na">getKey</span><span class="o">())</span>
+            <span class="k">break</span><span class="o">;</span>
+        <span class="cm">/*</span>
+<span class="cm">        If not break loop, move child to current position.</span>
+<span class="cm">        Go to another loop starting from larger child position.</span>
+<span class="cm">        current keeps the same</span>
+<span class="cm">        */</span>
+        <span class="n">heapArray</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">=</span> <span class="n">heapArray</span><span class="o">[</span><span class="n">largerChild</span><span class="o">];</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">largerChild</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="n">heapArray</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">=</span> <span class="n">current</span><span class="o">;</span> <span class="c1">//After loop, assign new root to proper position</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3 id="insert">Insert</h3>
+<p>Insertion can by down by following step:</p>
+<ol>
+<li>
+<p>Put the new element to end of array(i.e. end of heap): <code>heapArray[N] = insertNode; N++;</code></p>
+</li>
+<li>
+<p>Recursively moving this node so that it will be larger than its child elements and smaller than its parent node. i.e. if node is smaller larger than its parent node, swap this node and its parent node.</p>
+</li>
+</ol>
+<h4 id="code_1">Code</h4>
+<pre class="code literal-block"><span></span><span class="c1">//We assume each node has a attribute &#39;key&#39;, which determine the value/priority of this node</span>
+<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">insert</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span><span class="o">){</span>
+    <span class="k">if</span><span class="o">(</span><span class="n">currentSize</span> <span class="o">==</span> <span class="n">maxSize</span><span class="o">)</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">//no more room for insertion</span>
+    <span class="n">Node</span> <span class="n">newNode</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+    <span class="n">heapArray</span><span class="o">[</span><span class="n">currentSize</span><span class="o">]</span> <span class="o">=</span> <span class="n">newNode</span><span class="o">;</span>
+    <span class="n">currentSize</span><span class="o">++;</span>
+    <span class="n">trickleUp</span><span class="o">(</span><span class="n">currentSize</span><span class="o">);</span>
+    <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">trickleUp</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">){</span>
+    <span class="kt">int</span> <span class="n">parent</span> <span class="o">=</span> <span class="o">(</span><span class="n">index</span><span class="o">-</span><span class="mi">1</span><span class="o">)/</span><span class="mi">2</span><span class="o">;</span> <span class="c1">//get parent index</span>
+    <span class="n">Node</span> <span class="n">current</span> <span class="o">=</span> <span class="n">heapArray</span><span class="o">[</span><span class="n">index</span><span class="o">];</span> <span class="c1">//get current node</span>
+
+    <span class="k">while</span><span class="o">(</span><span class="n">index</span><span class="o">&gt;</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">heapArray</span><span class="o">[</span><span class="n">parent</span><span class="o">].</span><span class="na">getKey</span><span class="o">()&lt;</span><span class="n">bottom</span><span class="o">.</span><span class="na">getKey</span><span class="o">()){</span>
+        <span class="n">heapArray</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">=</span> <span class="n">heapArray</span><span class="o">[</span><span class="n">parent</span><span class="o">];</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">parent</span><span class="o">;</span> <span class="c1">//Now parent index should be current index</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="o">(</span><span class="n">parent</span><span class="o">-</span><span class="mi">1</span><span class="o">)/</span><span class="mi">2</span><span class="o">;</span> <span class="c1">//Get new parent index</span>
+    <span class="o">}</span>
+
+    <span class="n">heapArray</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">=</span> <span class="n">current</span><span class="o">;</span> <span class="c1">//after while loop, assign current node to final place</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3 id="change-value">Change Value</h3>
+<p>Working in process...</p>

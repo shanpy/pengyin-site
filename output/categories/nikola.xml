@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Pengyin's Corner (Posts about Nikola)</title><link>https://pengyin-shan.com/</link><description></description><atom:link type="application/rss+xml" href="https://pengyin-shan.com/categories/nikola.xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Tue, 11 Sep 2018 20:57:16 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>How to Build A Basic Nikola Blog and Deploy to Github Page</title><link>https://pengyin-shan.com/posts/2015/Data%20Science/how-to-build-a-basic-nikola-blog-and-deloy-to-github-page/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;p&gt;One of my goal for 2015 is to learn Python. To prepare for this, I decided to create a new blog site, based on Python.&lt;/p&gt;
+&lt;p&gt;After doing some research, I decide to use &lt;a href="http://getnikola.com/"&gt;&lt;strong&gt;Nikola&lt;/strong&gt;&lt;/a&gt; to build my blog. One of the reason I choose Nikola is that it has great support to &lt;strong&gt;IPython Notebook&lt;/strong&gt;.&lt;/p&gt;
+&lt;h5 id="lots-of-thanks-to-damian-avila-your-blog-is-so-useful-and-great-for-nikola-beginners-like-me"&gt;Lots of Thanks to &lt;a href="http://www.damian.oquanta.info/"&gt;Damian Avila&lt;/a&gt;! Your blog is so useful and great for Nikola beginners like me!&lt;/h5&gt;
+&lt;p&gt;&lt;strong&gt;1. Create Virtual Environment&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Before you install Nikola, a good practice is to build a virual environment. You can install &lt;strong&gt;Virtualenv&lt;/strong&gt; and use it. Since I had &lt;strong&gt;Anaconda&lt;/strong&gt; installed, I just type &lt;code&gt;conda create -n techblog python=3.4 anaconda&lt;/code&gt; to create a virtual environment called "techblog" with python 3.4. You can define your own name and python version.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. Install Nikola and Necessary Component&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;First, make sure you use your virtual enviorment. command is:&lt;/em&gt; &lt;code&gt;source activate name_of_environment&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;I suggest you to use &lt;strong&gt;pip&lt;/strong&gt; to install followiing components:
+- nikola
+- requests
+- sphinx
+- pyzmq
+- tornado(?)
+- jinja2
+- webassets (if you want to use USE_BUNDLES)
+- markdown (if you want to use markdown)
+- ipython (if you want to use ipython notebook)&lt;/p&gt;
+&lt;p&gt;For example, you type follwing command in your terminal: &lt;code&gt;pip install nikola requests sphinx markdown ipython pyzmq tornado jinja2 webasset&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;In the next following steps, make sure you are under your virtual environment.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3. Initialize Nikola&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Type &lt;code&gt;nikola init&lt;/code&gt; in your terminal, where you want to build your site in a &lt;em&gt;subfolder&lt;/em&gt; of current location.&lt;/p&gt;
+&lt;p&gt;You will be asked following questions:
+- Destination: Name of the folder your site will be
+- Site Title
+- Site Author
+- Author's Email
+- Site Description
+- Site URL: This is the url that when you click header of your site, the page will jump to. You can set this later in &lt;strong&gt;conf.py&lt;/strong&gt; file. If you type one, make sure it ends with a &lt;em&gt;/&lt;/em&gt;.
+- Default Language: I use &lt;strong&gt;en&lt;/strong&gt; but you can refer Nikola website for more option.
+- Time Zone: Short name for your time zone. I use &lt;strong&gt;EST&lt;/strong&gt;. For example.
+- Comment System: Nikola support popular comment system such as &lt;em&gt;Disqus&lt;/em&gt;, &lt;em&gt;Google+&lt;/em&gt; and &lt;em&gt;Facebook&lt;/em&gt;. You will be asked to enter &lt;em&gt;comment system site identifier&lt;/em&gt; if required.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. Change Theme (Optional)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;If you want to change theme of your website, You can find a list of themes from &lt;a href="http://themes.getnikola.com/"&gt;Nikiola Website&lt;/a&gt;. Note any theme that has &lt;em&gt;ipython&lt;/em&gt; in its name supports IPython Notebook.&lt;/p&gt;
+&lt;p&gt;Then, do &lt;code&gt;cd your_folder&lt;/code&gt; to get to the folder that Nikola just created for you.&lt;/p&gt;
+&lt;p&gt;Type &lt;code&gt;nikola install_theme name_of_theme&lt;/code&gt; to install theme.&lt;/p&gt;
+&lt;p&gt;You may need to change some setting in &lt;strong&gt;conf.py&lt;/strong&gt; file, so read instructions in your terminal carefully.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;5. Configure and Build Site&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;First, open &lt;strong&gt;conf.py&lt;/strong&gt; file and configure it as your requests:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;If you didn't do some setup in step 3 in terminal, you can found them here. For example, you can re-edit &lt;strong&gt;SITE_URL&lt;/strong&gt; if you haven't done so.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If you have installed new theme and want to change to it, change &lt;strong&gt;THEME=&lt;/strong&gt; option to your installed theme. Some theme may also want you to change &lt;strong&gt;NAVIGATION_LINKS&lt;/strong&gt; or other settings.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If you want to use IPython Notebook or Markdown, find &lt;strong&gt;POSTS =&lt;/strong&gt; option and add &lt;code&gt;("posts/*.md", "posts", "post.tmpl"),("posts/*.ipynb", "posts", "post.tmpl"),&lt;/code&gt;. &lt;em&gt;If you don't need lots of new pages, I suggest you not change PAGES setting.&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Set &lt;strong&gt;INDEX_TEASERS = &lt;/strong&gt; to &lt;strong&gt;True&lt;/strong&gt; to enable teaser. Now you can just put &lt;code&gt;.. TEASER_END&lt;/code&gt; or &lt;code&gt;&amp;lt;!--TEASER_END--&amp;gt;&lt;/code&gt; in your post to make index page only show first part of your post&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If you have installed &lt;strong&gt;webassets&lt;/strong&gt;, you can set &lt;strong&gt;USE_BUNDLES=&lt;/strong&gt; to &lt;strong&gt;True&lt;/strong&gt; to speed up your site.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;I skip the process of creating new post. Note if you create a IPython Notebook post, you can edit information such as slugs, dates, tags in &lt;strong&gt;.meta&lt;/strong&gt; file, which is automatically generated with &lt;strong&gt;.ipynb&lt;/strong&gt; file.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Now you can type &lt;code&gt;nikola build&lt;/code&gt; to build your site. A list of rendered file will appear.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;What user can see from your website is in &lt;strong&gt;output&lt;/strong&gt; folder.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If you have any external file, such as &lt;strong&gt;PDF&lt;/strong&gt; or &lt;strong&gt;IMAGE&lt;/strong&gt;, you can put it in &lt;strong&gt;files&lt;/strong&gt; folder.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;After building, you can type &lt;code&gt;nikola serve&lt;/code&gt; to host your site locally. By default, you site can be open from &lt;code&gt;http://localhost:8000/&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;6. Deploy Site to Github Pages&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I find great help from &lt;a href="http://www.damian.oquanta.info/posts/one-line-deployment-of-your-site-to-gh-pages.html"&gt;solution of Damian's blog&lt;/a&gt;. I used his method to deploy this site to one of my Github page.&lt;/p&gt;
+&lt;p&gt;Please make sure you do follwing steps except git initiate every time you want to make change:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;First, create a repository. You can use default "user.github.io" repo, but since I prefer a &lt;strong&gt;project Github Page&lt;/strong&gt;, so I create a repo called "techblog".&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;After installed &lt;strong&gt;Git&lt;/strong&gt; to your machine, &lt;code&gt;cd&lt;/code&gt; to your site folder, then type &lt;code&gt;git init&lt;/code&gt; to initiate.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Do &lt;code&gt;git remote add origin https://github.com/your_user_name/your_repo.git&lt;/code&gt; to add repo, with a name &lt;em&gt;origin&lt;/em&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Push all of your content to &lt;strong&gt;master&lt;/strong&gt; branch first&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Do &lt;code&gt;git checkout -b gh-pages&lt;/code&gt; to create and swich to gh-pages. You can skip &lt;code&gt;-b&lt;/code&gt; after you do this once.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Do &lt;code&gt;git rm -rf .&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Do &lt;code&gt;git commit -am "Your Commit"&lt;/code&gt; to commit for gh-pages&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Do &lt;code&gt;git push origin gh-pages&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Do &lt;code&gt;git checkout master&lt;/code&gt; to switch back to master branch&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Do &lt;code&gt;git branch -D gh-pages&lt;/code&gt; first to avoid commit error. (I tried to skip this step before but I got a git commit error, so I suggest you do this step first)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Do &lt;code&gt;git subtree split --prefix output -b gh-pages&lt;/code&gt; to only transfer content in &lt;strong&gt;output&lt;/strong&gt; folder from master to gh-pages&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Do &lt;code&gt;git push -f origin gh-pages:gh-pages&lt;/code&gt; to force push&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Do &lt;code&gt;git branch -D gh-pages&lt;/code&gt; again to delete local gh-pages branch&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;7. Add Custom Domain to Your Github Page (Optional)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;You may want to add custom domain to your Github page. Github has a tutorial &lt;a href="https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages/"&gt;here&lt;/a&gt;. Since I'm hosting my domain (pengyin-shan.com) on GoDaddy, I followed instructions &lt;a href="http://captainwhippet.com/blog/2014/05/11/blog-setup-details.html"&gt;in this blog&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;A few things I want to mention:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;CNAME&lt;/strong&gt; file should be put to your &lt;strong&gt;files&lt;/strong&gt; folder so that when you following steps above to push to Github, this file will show in gh-pages branch.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The content of &lt;strong&gt;CNAME&lt;/strong&gt; file should be bare subdomain of your custom domain, which means you &lt;em&gt;can not&lt;/em&gt; use &lt;code&gt;http://test.com&lt;/code&gt; or &lt;code&gt;http:test.com/blog&lt;/code&gt;. You can only have one custdom domain.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;I think based on Github's role, even though you are hosting project Github pages, your custom domain has to be "test.com" instead of "test.com/name_of_repo"&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;On Jan 1st, 2015, the IP address of &lt;strong&gt;Github Project Page&lt;/strong&gt; are &lt;code&gt;192.30.252.153&lt;/code&gt; and &lt;code&gt;192.30.152.154&lt;/code&gt;. If you have A (Host), make sure your &lt;code&gt;@&lt;/code&gt; is pointing to these two IPs.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you finish these settings, you should be able to host your Nikola blog on Github Page. Please feel free to let me know if you have any comments.&lt;/p&gt;&lt;/div&gt;</description><category>Github</category><category>Nikola</category><category>Python</category><guid>https://pengyin-shan.com/posts/2015/Data%20Science/how-to-build-a-basic-nikola-blog-and-deloy-to-github-page/</guid><pubDate>Tue, 13 Jan 2015 05:00:00 GMT</pubDate></item></channel></rss>

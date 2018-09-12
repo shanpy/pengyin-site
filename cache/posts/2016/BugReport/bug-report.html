@@ -1,0 +1,73 @@
+<p>Recently I read a <a href="https://henrikwarne.com/2016/04/28/learning-from-your-bugs/">post aout Learning from Your Bugs</a>, written by <em>Henrik Warne</em>. This post mentions the importance of record and learning from the bug. I would like to follow it.</p>
+<!-- TEASER_END -->
+
+<h1 id="template">Template</h1>
+<pre class="code literal-block"><span></span>Date:
+2004-08-17
+
+Symptom:
+Infinite loop when decoding Q.931 message
+
+Cause:
+When an unknown element id is found in a Q.931 message, we try
+to skip it by reading the length, and advancing the pos pointer
+that many bytes. However, in this case the length was zero,
+causing us to try to skip the same element id over and over.
+
+How found:
+This happened during parsing of a setup message taken from an
+Ethereal trace from Nortel. Their message was 1016 bytes long
+(it included a lot of fast start elements), but our MSG_MAX_LEN
+was 1000. Normally we then receive a truncated message from
+common/Communication.cxx, but now, when fed directly in to be
+parsed, memory past the end of the array was accessed, and it
+happened to be zero, exposing this problem.
+To find it, I just added a few print outs in the q931 parsing
+code. But it was lucky that the data happened to be zero.
+
+Fix:
+If the length given is zero, set it to one. This way we always
+move forward.
+
+Fixed in file(s):
+callh/q931_msg.cxx
+
+Caused by me:
+Yes
+
+Time taken to resolve bug:
+1 hour
+
+Lessons:
+Trusted the data received in an incoming message. It&#39;s not
+just giving huge numbers that can cause problems. Indicating
+a length of zero could be just as bad.
+</pre>
+
+
+<h1 id="2016-06-30">2016-06-30</h1>
+<h2 id="symption">Symption</h2>
+<p>In cascade server, I don't know how to refer to another file in
+distinct javascript file.</p>
+<h2 id="cause">Cause</h2>
+<p>When using <code>sass.sync.js</code>, I need to refer external <code>scss</code> file in a distinct JavaScript file</p>
+<h2 id="how-found">How Found</h2>
+<p>When I tried to learn <code>sass.js</code> to write a simple SASS compile inside cascade server, with Apache Velocity involved in.</p>
+<p>Problem code part:</p>
+<pre class="code literal-block"><span></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">location</span><span class="p">.</span><span class="nx">pathname</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">basic</span> <span class="o">=</span> <span class="s2">&quot;../../../sass&quot;</span><span class="p">;</span> <span class="c1">//How to refer this in cascade?</span>
+    <span class="kd">var</span> <span class="nx">directory</span> <span class="o">=</span> <span class="s2">&quot;../../../css&quot;</span><span class="p">;</span> <span class="c1">//There is always a `sass` directory at the beginning of referencing directory</span>
+    <span class="kd">var</span> <span class="nx">files</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;_basics.scss&#39;</span>
+        <span class="p">];</span>
+    <span class="nx">Sass</span><span class="p">.</span><span class="nx">preloadFiles</span><span class="p">(</span><span class="nx">basic</span><span class="p">,</span> <span class="nx">directory</span><span class="p">,</span> <span class="nx">files</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;files loaded&#39;</span><span class="p">)</span> <span class="p">});</span>
+</pre>
+
+
+<h2 id="fix">Fix</h2>
+<h2 id="fix-in-files">Fix in file(s)</h2>
+<h2 id="caused-by-me">Caused by me</h2>
+<p>Yes</p>
+<h2 id="time-taken-to-resolve-bug">Time taken to resolve bug</h2>
+<p>Around 1 day</p>
+<h2 id="lessons">Lessons</h2>

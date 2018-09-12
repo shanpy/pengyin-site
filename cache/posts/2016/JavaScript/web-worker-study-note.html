@@ -1,0 +1,208 @@
+<h1 id="reference-list">Reference List</h1>
+<ul>
+<li>
+<p><a href="http://www.html5rocks.com/en/tutorials/workers/basics/">The Basics with Web Workers</a> written by <em>Eric Bidelman</em>, <em>www.html5rocks.com</em>.</p>
+</li>
+<li>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers">Using Web Workers</a> by <em>MDN</em></p>
+</li>
+</ul>
+<h1 id="basics">Basics</h1>
+<p>Web worker create a extra thread. The JS file running by this work will run through this thread.</p>
+<p>There are some special things to be noticed when using web worker:</p>
+<ol>
+<li>
+<p>Instead of <code>window</code>, the JS file will run in another global context. So make sure using <code>self</code> to get current gloabl context in a worker.</p>
+</li>
+<li>
+<p>You cannot directly manipulate DOM inside a web worker. However some items are still available, like <code>WebSockets</code> or <code>IndexedDB</code>.</p>
+</li>
+</ol>
+<p>The way to communicate between main thread and web worker thread is using <code>messages</code>. To send message, use <code>postMessage()</code> method. <code>onmessage</code> event handler or <code>message</code> event listener is used to receive message. Workers may use <code>XMLHttpRequest</code> for network I/O.</p>
+<blockquote>
+<p>During this process, the data passed between main thread and web worker is <strong>copied</strong> instead of shared.</p>
+</blockquote>
+<p>There are two workers: <code>dedicated worker</code> and <code>shared worker</code>. Dedicated worker is only accessible from the script that first spawned it. Shared worker can be accessed from multiple scripts.</p>
+<h1 id="dedicated-worker">Dedicated Worker</h1>
+<p>The best practice is to wrap web worker code in following if loop:</p>
+<pre class="code literal-block"><span></span><span class="k">if</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">Worker</span><span class="p">){</span>
+    <span class="c1">//Add Web Worker Code</span>
+<span class="p">}</span>
+</pre>
+
+
+<p>Message being sent/received can be a <code>string/array</code> or <code>JSON</code> object. <code>JSON</code> is supported by most modern browers.</p>
+<h2 id="basics_1">Basics</h2>
+<p>Basic operations are: <strong>create</strong>, <strong>post and receive message</strong>, <strong>handler errors</strong> and <strong>terminate works</strong>. see code below:</p>
+<pre class="code literal-block"><span></span><span class="c1">//main thread</span>
+<span class="kd">var</span> <span class="nx">myWorker</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Worker</span><span class="p">(</span><span class="s1">&#39;worker.js&#39;</span><span class="p">);</span> <span class="c1">//Declare new web worker</span>
+
+<span class="nx">myWorker</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="s1">&#39;onError&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span> <span class="c1">//main thread response to message from worker.js</span>
+<span class="p">},</span> <span class="kc">false</span><span class="p">);</span>
+
+<span class="nx">worker</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">([</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span><span class="s1">&#39;hello&#39;</span><span class="p">]);</span> <span class="c1">//main thread pass data to worker</span>
+
+<span class="nx">worker</span><span class="p">.</span><span class="nx">terminate</span><span class="p">();</span> <span class="c1">//Terminate worker from main thread</span>
+
+<span class="c1">//Error Handle Function. Notice three attributes for error event</span>
+<span class="kd">function</span> <span class="nx">onError</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">message</span> <span class="o">+</span> <span class="nx">e</span><span class="p">.</span><span class="nx">filename</span> <span class="o">+</span> <span class="nx">e</span><span class="p">.</span><span class="nx">lineno</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="o">:::</span><span class="nx">javascript</span>
+<span class="c1">//worker.js</span>
+<span class="nx">self</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+    <span class="nx">self</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+    <span class="c1">//worker receive data from main thread and return it back. Notice self is used here</span>
+<span class="p">},</span> <span class="kc">false</span><span class="p">);</span>
+
+<span class="nx">self</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span> <span class="c1">//Stop this work from worker thread</span>
+</pre>
+
+
+<p>Workers can import scripts and use them:</p>
+<pre class="code literal-block"><span></span><span class="nx">importScripts</span><span class="p">(</span><span class="s1">&#39;one.js&#39;</span><span class="p">,</span> <span class="s1">&#39;two.js&#39;</span><span class="p">);</span>
+</pre>
+
+
+<blockquote>
+<p>If execution fails, <code>NETWORK_ERROR</code> will be thrown out. However, function declarations after <code>importScripts()</code> will still work because they are hoisted.</p>
+</blockquote>
+<h2 id="data-passing">Data Passing</h2>
+<p>When web worker passing data, the data is always serialized on one hand and de-serialized on the other hand.</p>
+<blockquote>
+<p>Main thread and worker thread <strong>do not share the same instance</strong>, so the end result is <strong>duplicated</strong>.</p>
+</blockquote>
+<h1 id="shared-worker">Shared Worker</h1>
+<h2 id="basics_2">Basics</h2>
+<p>Shared worker is accessible by multiple scripts.</p>
+<p>Similar to dedicated worker, shared work can be declared by statement like <code>var myWorker = new SharedWorker("worker.js");</code>.</p>
+<h2 id="port">Port</h2>
+<p>Shared worker communicate via a <code>port</code> object. Scripts can communicate with workers in a opened port.</p>
+<p>Port can be started by:</p>
+<ol>
+<li>
+<p>Use a <code>onmessage</code> event handler</p>
+</li>
+<li>
+<p>Instead above if you have a <code>message</code> event listener, then use <code>start()</code> function to start explicitly.</p>
+</li>
+</ol>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="nx">myWorker</span><span class="p">.</span><span class="nx">port</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span> <span class="c1">//main thread</span>
+<span class="nx">port</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span><span class="c1">//If a worker thread has port variable, call this line in worker</span>
+</pre>
+
+
+<h2 id="message">Message</h2>
+<p>For shared worker, <code>postMessage()</code> should be used from <code>port</code> object:</p>
+<pre class="code literal-block"><span></span><span class="c1">//main.js</span>
+<span class="nx">testpart</span><span class="p">.</span><span class="nx">onchange</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">myWorker</span><span class="p">.</span><span class="nx">port</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="s1">&#39;hello world&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">myWorker</span><span class="p">.</span><span class="nx">port</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">//worker.js</span>
+<span class="nx">self</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;connect&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">port</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">ports</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="c1">//Get first port</span>
+    <span class="nx">port</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+        <span class="nx">port</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="s1">&#39;hello world back&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="c1">//port.start();</span>
+    <span class="c1">//If onmessage event listener is not used, needs to start port here</span>
+<span class="p">});</span>
+</pre>
+
+
+<h1 id="examples">Examples</h1>
+<h2 id="compute-in-background">Compute in Background</h2>
+<p>This example is from MDN, counting fibonacii in worker thread:</p>
+<pre class="code literal-block"><span></span><span class="c1">//main.js</span>
+<span class="kd">var</span> <span class="nx">worker</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Worker</span><span class="p">(</span><span class="s2">&quot;fibonacci.js&quot;</span><span class="p">);</span>
+
+<span class="nx">worker</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;result&quot;</span><span class="p">).</span><span class="nx">textContent</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+  <span class="nx">dump</span><span class="p">(</span><span class="s2">&quot;Got: &quot;</span> <span class="o">+</span> <span class="nx">event</span><span class="p">.</span><span class="nx">data</span> <span class="o">+</span> <span class="s2">&quot;\n&quot;</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="nx">worker</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">dump</span><span class="p">(</span><span class="s2">&quot;Worker error: &quot;</span> <span class="o">+</span> <span class="nx">error</span><span class="p">.</span><span class="nx">message</span> <span class="o">+</span> <span class="s2">&quot;\n&quot;</span><span class="p">);</span>
+  <span class="k">throw</span> <span class="nx">error</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="nx">worker</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="s2">&quot;5&quot;</span><span class="p">);</span>
+
+<span class="cm">/********************/</span>
+
+<span class="c1">//fobonacii.js</span>
+<span class="kd">var</span> <span class="nx">results</span> <span class="o">=</span> <span class="p">[];</span>
+
+<span class="kd">function</span> <span class="nx">resultReceiver</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">results</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">));</span>
+  <span class="c1">//After result returned, push to results array. This array has two elements: previous result and newly returned item</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">results</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">postMessage</span><span class="p">(</span><span class="nx">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nx">results</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">errorReceiver</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">throw</span> <span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">onmessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">n</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nx">n</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">postMessage</span><span class="p">(</span><span class="nx">n</span><span class="p">);</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="cm">/*Recursively create new worker thread and counting 4, 3, 2, 1, then return back to previous worker */</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">worker</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Worker</span><span class="p">(</span><span class="s2">&quot;fibonacci.js&quot;</span><span class="p">);</span>
+    <span class="nx">worker</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="nx">resultReceiver</span><span class="p">;</span>
+    <span class="nx">worker</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="nx">errorReceiver</span><span class="p">;</span>
+</pre>
+
+
+<h2 id="a-very-cleansimple-example-from-html5rockscom">A very clean/simple example from html5rocks.com</h2>
+<p>This example cerate clean function to handle difference cases. Functions can be added to attribute of an object to be more organized.</p>
+<pre class="code literal-block"><span></span><span class="c1">//main.js</span>
+<span class="kd">function</span> <span class="nx">sayHI</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">worker</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">({</span><span class="s1">&#39;cmd&#39;</span><span class="o">:</span> <span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="s1">&#39;msg&#39;</span><span class="o">:</span> <span class="s1">&#39;Hi&#39;</span><span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="kd">function</span> <span class="nx">stop</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Calling worker.terminate() from this script would also stop the worker.</span>
+    <span class="nx">worker</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">({</span><span class="s1">&#39;cmd&#39;</span><span class="o">:</span> <span class="s1">&#39;stop&#39;</span><span class="p">,</span> <span class="s1">&#39;msg&#39;</span><span class="o">:</span> <span class="s1">&#39;Bye&#39;</span><span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="kd">function</span> <span class="nx">unknownCmd</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">worker</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">({</span><span class="s1">&#39;cmd&#39;</span><span class="o">:</span> <span class="s1">&#39;foobard&#39;</span><span class="p">,</span> <span class="s1">&#39;msg&#39;</span><span class="o">:</span> <span class="s1">&#39;???&#39;</span><span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="kd">var</span> <span class="nx">worker</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Worker</span><span class="p">(</span><span class="s1">&#39;doWork2.js&#39;</span><span class="p">);</span>
+
+  <span class="nx">worker</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;result&#39;</span><span class="p">).</span><span class="nx">textContent</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+  <span class="p">},</span> <span class="kc">false</span><span class="p">);</span>
+
+  <span class="c1">//worker.js</span>
+  <span class="nx">self</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+      <span class="k">switch</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">cmd</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="s1">&#39;start&#39;</span><span class="o">:</span>
+          <span class="nx">self</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="s1">&#39;WORKER STARTED: &#39;</span> <span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">msg</span><span class="p">);</span>
+          <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="s1">&#39;stop&#39;</span><span class="o">:</span>
+          <span class="nx">self</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="s1">&#39;WORKER STOPPED: &#39;</span> <span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">msg</span> <span class="o">+</span> <span class="s1">&#39;. (buttons will no longer work)&#39;</span><span class="p">);</span>
+          <span class="nx">self</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span> <span class="c1">// Terminates the worker.</span>
+          <span class="k">break</span><span class="p">;</span>
+        <span class="k">default</span><span class="o">:</span>
+          <span class="nx">self</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="s1">&#39;Unknown command: &#39;</span> <span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">msg</span><span class="p">);</span>
+      <span class="p">};</span>
+    <span class="p">},</span> <span class="kc">false</span><span class="p">);</span>
+</pre>

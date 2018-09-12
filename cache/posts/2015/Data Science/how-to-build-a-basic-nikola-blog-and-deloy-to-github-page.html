@@ -1,0 +1,130 @@
+<p>One of my goal for 2015 is to learn Python. To prepare for this, I decided to create a new blog site, based on Python.</p>
+<p>After doing some research, I decide to use <a href="http://getnikola.com/"><strong>Nikola</strong></a> to build my blog. One of the reason I choose Nikola is that it has great support to <strong>IPython Notebook</strong>.</p>
+<h4 id="lots-of-thanks-to-damian-avila-your-blog-is-so-useful-and-great-for-nikola-beginners-like-me">Lots of Thanks to <a href="http://www.damian.oquanta.info/">Damian Avila</a>! Your blog is so useful and great for Nikola beginners like me!</h4>
+<p><strong>1. Create Virtual Environment</strong></p>
+<p>Before you install Nikola, a good practice is to build a virual environment. You can install <strong>Virtualenv</strong> and use it. Since I had <strong>Anaconda</strong> installed, I just type <code>conda create -n techblog python=3.4 anaconda</code> to create a virtual environment called "techblog" with python 3.4. You can define your own name and python version.</p>
+<p><strong>2. Install Nikola and Necessary Component</strong></p>
+<p><em>First, make sure you use your virtual enviorment. command is:</em> <code>source activate name_of_environment</code></p>
+<p>I suggest you to use <strong>pip</strong> to install followiing components:
+- nikola
+- requests
+- sphinx
+- pyzmq
+- tornado(?)
+- jinja2
+- webassets (if you want to use USE_BUNDLES)
+- markdown (if you want to use markdown)
+- ipython (if you want to use ipython notebook)</p>
+<p>For example, you type follwing command in your terminal: <code>pip install nikola requests sphinx markdown ipython pyzmq tornado jinja2 webasset</code></p>
+<p><em>In the next following steps, make sure you are under your virtual environment.</em></p>
+<p><strong>3. Initialize Nikola</strong></p>
+<p>Type <code>nikola init</code> in your terminal, where you want to build your site in a <em>subfolder</em> of current location.</p>
+<p>You will be asked following questions:
+- Destination: Name of the folder your site will be
+- Site Title
+- Site Author
+- Author's Email
+- Site Description
+- Site URL: This is the url that when you click header of your site, the page will jump to. You can set this later in <strong>conf.py</strong> file. If you type one, make sure it ends with a <em>/</em>.
+- Default Language: I use <strong>en</strong> but you can refer Nikola website for more option.
+- Time Zone: Short name for your time zone. I use <strong>EST</strong>. For example.
+- Comment System: Nikola support popular comment system such as <em>Disqus</em>, <em>Google+</em> and <em>Facebook</em>. You will be asked to enter <em>comment system site identifier</em> if required.</p>
+<p><strong>4. Change Theme (Optional)</strong></p>
+<p>If you want to change theme of your website, You can find a list of themes from <a href="http://themes.getnikola.com/">Nikiola Website</a>. Note any theme that has <em>ipython</em> in its name supports IPython Notebook.</p>
+<p>Then, do <code>cd your_folder</code> to get to the folder that Nikola just created for you.</p>
+<p>Type <code>nikola install_theme name_of_theme</code> to install theme.</p>
+<p>You may need to change some setting in <strong>conf.py</strong> file, so read instructions in your terminal carefully.</p>
+<p><strong>5. Configure and Build Site</strong></p>
+<p>First, open <strong>conf.py</strong> file and configure it as your requests:</p>
+<ul>
+<li>
+<p>If you didn't do some setup in step 3 in terminal, you can found them here. For example, you can re-edit <strong>SITE_URL</strong> if you haven't done so.</p>
+</li>
+<li>
+<p>If you have installed new theme and want to change to it, change <strong>THEME=</strong> option to your installed theme. Some theme may also want you to change <strong>NAVIGATION_LINKS</strong> or other settings.</p>
+</li>
+<li>
+<p>If you want to use IPython Notebook or Markdown, find <strong>POSTS =</strong> option and add <code>("posts/*.md", "posts", "post.tmpl"),("posts/*.ipynb", "posts", "post.tmpl"),</code>. <em>If you don't need lots of new pages, I suggest you not change PAGES setting.</em></p>
+</li>
+<li>
+<p>Set <strong>INDEX_TEASERS = </strong> to <strong>True</strong> to enable teaser. Now you can just put <code>.. TEASER_END</code> or <code>&lt;!--TEASER_END--&gt;</code> in your post to make index page only show first part of your post</p>
+</li>
+<li>
+<p>If you have installed <strong>webassets</strong>, you can set <strong>USE_BUNDLES=</strong> to <strong>True</strong> to speed up your site.</p>
+</li>
+<li>
+<p>I skip the process of creating new post. Note if you create a IPython Notebook post, you can edit information such as slugs, dates, tags in <strong>.meta</strong> file, which is automatically generated with <strong>.ipynb</strong> file.</p>
+</li>
+</ul>
+<p>Now you can type <code>nikola build</code> to build your site. A list of rendered file will appear.</p>
+<ul>
+<li>
+<p>What user can see from your website is in <strong>output</strong> folder.</p>
+</li>
+<li>
+<p>If you have any external file, such as <strong>PDF</strong> or <strong>IMAGE</strong>, you can put it in <strong>files</strong> folder.</p>
+</li>
+</ul>
+<p>After building, you can type <code>nikola serve</code> to host your site locally. By default, you site can be open from <code>http://localhost:8000/</code></p>
+<p><strong>6. Deploy Site to Github Pages</strong></p>
+<p>I find great help from <a href="http://www.damian.oquanta.info/posts/one-line-deployment-of-your-site-to-gh-pages.html">solution of Damian's blog</a>. I used his method to deploy this site to one of my Github page.</p>
+<p>Please make sure you do follwing steps except git initiate every time you want to make change:</p>
+<ul>
+<li>
+<p>First, create a repository. You can use default "user.github.io" repo, but since I prefer a <strong>project Github Page</strong>, so I create a repo called "techblog".</p>
+</li>
+<li>
+<p>After installed <strong>Git</strong> to your machine, <code>cd</code> to your site folder, then type <code>git init</code> to initiate.</p>
+</li>
+<li>
+<p>Do <code>git remote add origin https://github.com/your_user_name/your_repo.git</code> to add repo, with a name <em>origin</em>.</p>
+</li>
+<li>
+<p>Push all of your content to <strong>master</strong> branch first</p>
+</li>
+<li>
+<p>Do <code>git checkout -b gh-pages</code> to create and swich to gh-pages. You can skip <code>-b</code> after you do this once.</p>
+</li>
+<li>
+<p>Do <code>git rm -rf .</code></p>
+</li>
+<li>
+<p>Do <code>git commit -am "Your Commit"</code> to commit for gh-pages</p>
+</li>
+<li>
+<p>Do <code>git push origin gh-pages</code></p>
+</li>
+<li>
+<p>Do <code>git checkout master</code> to switch back to master branch</p>
+</li>
+<li>
+<p>Do <code>git branch -D gh-pages</code> first to avoid commit error. (I tried to skip this step before but I got a git commit error, so I suggest you do this step first)</p>
+</li>
+<li>
+<p>Do <code>git subtree split --prefix output -b gh-pages</code> to only transfer content in <strong>output</strong> folder from master to gh-pages</p>
+</li>
+<li>
+<p>Do <code>git push -f origin gh-pages:gh-pages</code> to force push</p>
+</li>
+<li>
+<p>Do <code>git branch -D gh-pages</code> again to delete local gh-pages branch</p>
+</li>
+</ul>
+<p><strong>7. Add Custom Domain to Your Github Page (Optional)</strong></p>
+<p>You may want to add custom domain to your Github page. Github has a tutorial <a href="https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages/">here</a>. Since I'm hosting my domain (pengyin-shan.com) on GoDaddy, I followed instructions <a href="http://captainwhippet.com/blog/2014/05/11/blog-setup-details.html">in this blog</a>.</p>
+<p>A few things I want to mention:</p>
+<ul>
+<li>
+<p><strong>CNAME</strong> file should be put to your <strong>files</strong> folder so that when you following steps above to push to Github, this file will show in gh-pages branch.</p>
+</li>
+<li>
+<p>The content of <strong>CNAME</strong> file should be bare subdomain of your custom domain, which means you <em>can not</em> use <code>http://test.com</code> or <code>http:test.com/blog</code>. You can only have one custdom domain.</p>
+</li>
+<li>
+<p>I think based on Github's role, even though you are hosting project Github pages, your custom domain has to be "test.com" instead of "test.com/name_of_repo"</p>
+</li>
+<li>
+<p>On Jan 1st, 2015, the IP address of <strong>Github Project Page</strong> are <code>192.30.252.153</code> and <code>192.30.152.154</code>. If you have A (Host), make sure your <code>@</code> is pointing to these two IPs.</p>
+</li>
+</ul>
+<p>If you finish these settings, you should be able to host your Nikola blog on Github Page. Please feel free to let me know if you have any comments.</p>

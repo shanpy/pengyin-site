@@ -1,0 +1,27 @@
+<h2 id="400-bad-request">400 (Bad Request)</h2>
+<ul>
+<li>
+<p>In jQuery, no <code>JSON.stringify()</code> is used to parse JavaScript object to JSON object</p>
+</li>
+<li>
+<p>Use <code>$.ajax()</code> but doesn't include <code>type: "GET/POST/etc"</code> in AJAX body</p>
+</li>
+</ul>
+<h2 id="406-not-acceptable-response">406 (Not Acceptable Response)</h2>
+<ul>
+<li>Check your authority setting. One of my Spring MVC project has requirement:  user group 1 can only access sub-URL of <code>/test/user1</code>. So if I make a URL mapping to <code>/test/</code>, AJAX call will fail and give me a <code>406</code> error</li>
+</ul>
+<h2 id="404-not-found-errors">404 (Not Found Errors)</h2>
+<p>Very common error. Can have different reasons:</p>
+<ul>
+<li>
+<p><code>dataType</code>, <code>contentType</code>, <code>mimeType</code> may not corresponding to correct type.</p>
+</li>
+<li>
+<p>In Spring MVC, no <code>@ResponseBody</code> or <code>@RequestBody</code> is added in controller. For example: <code>public @ResponseBody String test(@RequestBody final String id)</code> is good. But <code>public String test(@RequestBody final String id)</code> can generate a 404 error in client side.</p>
+</li>
+</ul>
+<h2 id="no-response-back-end-finsih-processing-but-front-end-give-no-response">No response (Back-end finsih processing but front-end give no response)</h2>
+<ul>
+<li>Check your jQuery version and check if you are using <code>$.ajax({done: function(data../){}, fail: function(jqXHR...){}});</code>. If so, try to check your jQuery to later version, or replace with <code>$.ajax({success: function(data...){}, error: function(jqXHR...) })</code></li>
+</ul>

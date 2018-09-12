@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Pengyin's Corner (Posts about TypeScript)</title><link>https://pengyin-shan.com/</link><description></description><atom:link type="application/rss+xml" href="https://pengyin-shan.com/categories/typescript.xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Tue, 11 Sep 2018 20:57:16 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>TypeScript Basics</title><link>https://pengyin-shan.com/posts/2016/JavaScript/typescript-basics/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;p&gt;&lt;em&gt;This is a brief reading note for TypeScript &lt;a href="http://www.typescriptlang.org/docs/handbook"&gt;official handbook&lt;/a&gt;&lt;/em&gt;.&lt;/p&gt;
+&lt;h2 id="gulp-setup"&gt;Gulp Setup&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Gulp&lt;/code&gt; can be used with TypeScript to provide powerful compiling process. See &lt;a href="http://www.typescriptlang.org/docs/handbook/gulp.html"&gt;here&lt;/a&gt; for a detailed description.&lt;/p&gt;
+&lt;p&gt;My new project requires Typescript, Jade and SASS. Here is a sample &lt;code&gt;gulpfile.js&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;gulp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;require&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"gulp"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;ts&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;require&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"gulp-typescript"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;tsProject&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;ts&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;createProject&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"tsconfig.json"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;jade&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;require&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"gulp-jade"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;sass&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;require&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"gulp-sass"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="nx"&gt;gulp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;task&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"sass"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;gulp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;src&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'src/styles/*.scss'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pipe&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;sass&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="nx"&gt;on&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'error'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nx"&gt;sass&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;logError&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pipe&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;gulp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'dist/styles'&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;span class="p"&gt;})&lt;/span&gt;
+
+&lt;span class="nx"&gt;gulp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;task&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"typescript"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;tsProject&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;src&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'src/scripts/*.ts'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pipe&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;ts&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;tsProject&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+        &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pipe&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;gulp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"dist/scripts"&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;span class="p"&gt;});&lt;/span&gt;
+
+&lt;span class="nx"&gt;gulp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;task&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"jade"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;gulp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;src&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'src/templates/*.jade'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pipe&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;jade&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+        &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pipe&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;gulp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"./dist"&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;span class="p"&gt;})&lt;/span&gt;
+
+&lt;span class="nx"&gt;gulp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;task&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'default'&lt;/span&gt;&lt;span class="p"&gt;,[&lt;/span&gt;&lt;span class="s1"&gt;'sass'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;'typescript'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;'jade'&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;And the &lt;code&gt;tsconfile.json&lt;/code&gt;, just for future reference:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nt"&gt;"files"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+        &lt;span class="s2"&gt;"src/scripts/main.ts"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s2"&gt;"src/scripts/test.ts"&lt;/span&gt;
+    &lt;span class="p"&gt;],&lt;/span&gt;
+    &lt;span class="nt"&gt;"compilerOptions"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nt"&gt;"noImplicitAny"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="nt"&gt;"target"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;"es5"&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h2 id="types-and-variables"&gt;Types and Variables&lt;/h2&gt;
+&lt;h3 id="number"&gt;Number&lt;/h3&gt;
+&lt;p&gt;Integer, Floating Point, Hexadecimal and Decimal Literals can all be declared as &lt;code&gt;number&lt;/code&gt; type.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;decimal&lt;/span&gt;: &lt;span class="kt"&gt;number&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;//declare a variable called 'decimal', with value equaling to 6&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3 id="string"&gt;String&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;Template Strings&lt;/code&gt; can be used to span multiple lines and have embedded expressions. Also &lt;code&gt;+&lt;/code&gt; can be used to concatenate strings with variables.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Remember to use lower case &lt;code&gt;string&lt;/code&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//Using `` to provide break line effect&lt;/span&gt;
+&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;fullName&lt;/span&gt;: &lt;span class="kt"&gt;string&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="sb"&gt;`Bob`&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;age&lt;/span&gt;: &lt;span class="kt"&gt;number&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;37&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;sentence&lt;/span&gt;: &lt;span class="kt"&gt;string&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="sb"&gt;`Hello, my name is &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nx"&gt;fullName&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="sb"&gt;.&lt;/span&gt;
+
+&lt;span class="sb"&gt;I'll be &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nx"&gt;age&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="sb"&gt; years old next month.`&lt;/span&gt;
+&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;sentence&lt;/span&gt;: &lt;span class="kt"&gt;string&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"Hello, my name is "&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;fullName&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;".\n\n"&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;"I'll be "&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;age&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;" years old next month."&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Above code generates following js code. Notice the result of &lt;code&gt;\n\n&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;fullName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"Bob"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;age&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;37&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;sentence&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"Hello, my name is "&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;fullName&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;".\n\nI'll be "&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;age&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;" years old next month."&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;sentence2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"Hello, my name is "&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;fullName&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;".\n\n"&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;"I'll be "&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;age&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;" years old next month."&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3 id="array-tuple"&gt;Array &amp;amp; Tuple&lt;/h3&gt;
+&lt;p&gt;To create an array, just use &lt;code&gt;[]&lt;/code&gt; to construct array, or use &lt;code&gt;Array&amp;lt;elemType&amp;gt;&lt;/code&gt; to do so: &lt;code&gt;let list: number[] = [1,2,3]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;To create a tuple (mixed type of variables), declare it first, then insert element to it:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;x&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;number&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="nx"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'hello'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt; &lt;span class="c1"&gt;//type must match&lt;/span&gt;
+&lt;span class="nx"&gt;x&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;//OK to insert element to each position&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3 id="enum"&gt;Enum&lt;/h3&gt;
+&lt;p&gt;In &lt;a href="https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html"&gt;Java&lt;/a&gt;, &lt;code&gt;Enum&lt;/code&gt; is a special data type that enables for a variable to be a set of &lt;strong&gt;predefined constants&lt;/strong&gt;. The variable must be equal to one of the values that have been predefined for it. Java example is below:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;enum&lt;/span&gt; &lt;span class="n"&gt;Day&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;SUNDAY&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;MONDAY&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;TUESDAY&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;WEDNESDAY&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;THURSDAY&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;FRIDAY&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;SATURDAY&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Similarly in typescript, an enum is defined by a group of constants (number, string, key-value pair, etc) using &lt;code&gt;enum {}&lt;/code&gt;. User can create an instance with one constant from an enum constructor.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;enum begin numbering elements starting from &lt;code&gt;0&lt;/code&gt;, It's ok to manually set corresponding number&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kr"&gt;enum&lt;/span&gt; &lt;span class="nx"&gt;Color&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nx"&gt;Read&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;Green&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;Blue&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;c&lt;/span&gt;: &lt;span class="kt"&gt;Color&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Color&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Green&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;c&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Code above will generate following JS code:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;Color&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;Color&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;Color&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;Color&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"Read"&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"Read"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="nx"&gt;Color&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;Color&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"Green"&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"Green"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="nx"&gt;Color&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;Color&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"Blue"&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"Blue"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;})(&lt;/span&gt;&lt;span class="nx"&gt;Color&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;Color&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{}));&lt;/span&gt;
+&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Color&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Green&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;c&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Example with Assigned Index:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kr"&gt;enum&lt;/span&gt; &lt;span class="nx"&gt;Color&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nx"&gt;Read&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;Green&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;Blue&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;c&lt;/span&gt;: &lt;span class="kt"&gt;Color&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Color&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Green&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;cname&lt;/span&gt;: &lt;span class="kt"&gt;string&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Color&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;c&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;cname&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Code above will generate:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;Color&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;Color&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;Color&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;Color&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"Read"&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"Read"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="nx"&gt;Color&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;Color&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"Green"&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"Green"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="nx"&gt;Color&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;Color&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"Blue"&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"Blue"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;})(&lt;/span&gt;&lt;span class="nx"&gt;Color&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;Color&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{}));&lt;/span&gt;
+&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Color&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Green&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;cname&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Color&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;c&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;cname&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3 id="any-void"&gt;Any &amp;amp; Void&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;Any&lt;/code&gt; is used to describe the variables with unknown type, like data from user or 3rd party. Use &lt;code&gt;any&lt;/code&gt; to let variable passing compiler's type-checking:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;notSure&lt;/span&gt;: &lt;span class="kt"&gt;any&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;notSure2&lt;/span&gt;: &lt;span class="kt"&gt;any&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'test'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="c1"&gt;//Following two methods can pass compiler but will getting error in running time, if methods actually do not exist&lt;/span&gt;
+&lt;span class="nx"&gt;notSure&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;ifItExists&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="nx"&gt;notSure&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;toFixed&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="nx"&gt;notSure2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;isItExists&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;notSure2&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;Sure&lt;/span&gt;: &lt;span class="kt"&gt;Object&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nx"&gt;Sure&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;toFixed&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;In code above, first part of code can work without error reported from compiler. That's because &lt;code&gt;any&lt;/code&gt; can pass any type-checking from compiler. However, second part of code will get compiler error &lt;code&gt;error TS2339: Property 'toFixed' does not exist on type 'Object'&lt;/code&gt;(And you can see error reported in VSCode if you use it). That's because &lt;code&gt;Object&lt;/code&gt; only allow you to assign any value to variable, but &lt;strong&gt;you can't call method on them, even though variable has that method&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Void&lt;/code&gt; is similar as the one in Java: if a function has &lt;code&gt;void&lt;/code&gt; keyword, this function will not return anything. You can only assign &lt;code&gt;null&lt;/code&gt; or &lt;code&gt;undefined&lt;/code&gt; to &lt;code&gt;void&lt;/code&gt; variable, otherwise you will get compiler error:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/*&lt;/span&gt;
+&lt;span class="cm"&gt;If you don't user null or undefined, you will get following error in compiler:&lt;/span&gt;
+&lt;span class="cm"&gt;error TS2322: Type 'number' is not assignable to type 'void'.&lt;/span&gt;
+&lt;span class="cm"&gt;*/&lt;/span&gt;
+&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;unusable&lt;/span&gt;: &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;voidtest&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="k"&gt;void&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'this is a void test'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3 id="type-assertion"&gt;Type Assertion&lt;/h3&gt;
+&lt;p&gt;Similar as &lt;code&gt;cast&lt;/code&gt; in other languages, type assertion can be used to pass compiler's type checking. It should be used when certain type checking has been down and there is a guarantee of correct type.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;&amp;lt;type&amp;gt;variable&lt;/code&gt; and &lt;code&gt;variable as type&lt;/code&gt; can all be used to do type assertion. &lt;code&gt;JSX&lt;/code&gt; only use &lt;code&gt;variable as type&lt;/code&gt; style:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;typeassertion&lt;/span&gt;: &lt;span class="kt"&gt;string&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"test type assertion string"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;strlength&lt;/span&gt;: &lt;span class="kt"&gt;number&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nx"&gt;typeassertion&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;strlength2&lt;/span&gt;: &lt;span class="kt"&gt;number&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;typeassertion&lt;/span&gt; &lt;span class="kr"&gt;as&lt;/span&gt; &lt;span class="kt"&gt;string&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;strlength&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;strlength2&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><category>TypeScript</category><guid>https://pengyin-shan.com/posts/2016/JavaScript/typescript-basics/</guid><pubDate>Tue, 21 Jun 2016 04:00:00 GMT</pubDate></item></channel></rss>

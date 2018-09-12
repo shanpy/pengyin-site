@@ -1,0 +1,386 @@
+<p>This post is transferred from my <a href="http://blogpengyin.herokuapp.com/">old Hexo blog site</a>, created on 2014.</p>
+<p>This is a Reading Note for <em>Interactive Data Visualization for the Web - An Introduction to Designing with D3</em> by <em>Scott Murray</em>, pulished by <em>O'Reilly, 2013</em></p>
+<p>This post will contains concepts that I think it's important for me to be familiar with in D3 book.</p>
+<h1 id="chapter-9-animation">Chapter 9 : Animation</h1>
+<p>code example for this chapter is <a href="http://shanpy.github.io/Front-End-Playground/D3/Reading-D3-V.html"><strong>here</strong></a>. This part involves lots of code practice.</p>
+<h2 id="transition-and-animation">Transition and Animation</h2>
+<p>When we <code>refresh</code> a d3 chart, we can use <code>transition</code> to add <code>animation</code> to this chart, so it looks better.</p>
+<p><code>ordinal scale</code> can show the <code>discreate</code> domain, such as a set of names or categoires. These names or categories will be shown by a set of sequence, from left to right, equally.</p>
+<p>You only need an <code>array</code> that contais name of categories to set of <code>range</code> of an <code>oridinal scale</code>. For example, <code>.domain([1,4,22,44)</code>.</p>
+<p><code>d3.range()</code> can automatically generate continous array, normally we can use <code>d3.range(dataset.length)</code> for <code>x</code> position of each bar in chart.</p>
+<p><code>range()</code> or <code>rangeBands()</code> can be used to do automatically <code>banding</code>. For example, <code>.rangeBands([0,w])</code> can automatically divide <code>0</code> to <code>w</code> to several parts. All parts have same width. <code>.rangeBands([0,w], 0.2)</code> means to set the <code>gap</code> between each part to be <code>20%</code> of each part's width.</p>
+<p><code>rangeRoundBands()</code> is similar to <code>rangeBands()</code>. It will round the output to <code>integer</code>.</p>
+<p><code>function(d,i){...}</code> can automatically get <code>i</code>, which is the <em>index</em> for <code>d</code> value. For example, <code>attr('x',function(d,i){ return xScale(i); }</code> will autotically set position for each <code>d</code> value.</p>
+<p>Steps to update a d3 chart :</p>
+<ul>
+<li>
+<p>Change value of dataset</p>
+</li>
+<li>
+<p>Re-binding new value to existing elements</p>
+</li>
+<li>
+<p>Re-set attribution so that new elements can be visible</p>
+</li>
+</ul>
+<p>To add a <code>event listener</code>, you can do <code>d3.select('p').on('click',functon(){...})</code></p>
+<p><code>.transition()</code> is used to add animation when you refresh your chart. This function needs to be inserted <em>before</em> changing of any attribute, and <em>after</em> select new elements. For example, <code>.data(dataset).transition().attr(...)</code>. D3 will automatically add transition value after you call this function.</p>
+<p>Default duration for a <code>transition</code> is <code>1000</code>, which is 1000ms or 1s. <code>.duration()</code> can be used to set up duration. You must push this function <em>after</em> calling <code>.transition()</code>. For example, <code>.transition().duration(2000)</code> can change duration to 2s.</p>
+<p>It is more proper to set small transition(such as <code>click</code>) to <code>150ms</code>. Long transition, such as refresh all chart, should be set to <code>1000ms</code>.</p>
+<p>To change the animation of transiton, you can use <code>ease()</code>. Default value is <code>cubic-in-out</code>. It is proper to add this function <em>after</em> <code>transition()</code>. Other animations are:</p>
+<ul>
+<li>
+<p><code>linear</code>: <code>ease('linear')</code></p>
+</li>
+<li>
+<p><code>circle</code></p>
+</li>
+<li>
+<p><code>elastic</code></p>
+</li>
+<li>
+<p><code>bounce</code></p>
+</li>
+</ul>
+<p><code>delay()</code> can be set to define when to start transition. You can pass a certain value, or a function to it, such as <code>.delay(function(d,i){ return i*1000;});</code>. This will make the animation of last element later than previous element, by 1s.</p>
+<pre class="code literal-block"><span></span><span class="c1">//...</span>
+<span class="p">.</span><span class="nx">transition</span><span class="p">()</span>
+<span class="p">.</span><span class="nx">delay</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">i</span><span class="o">/</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">lenght</span><span class="o">*</span><span class="mi">1000</span><span class="p">;</span>
+    <span class="c1">//This will make i ratioly to dataset, then times 1000. Total time not change, time for each element is different.</span>
+<span class="p">})</span>
+</pre>
+
+
+<p><code>each()</code> can be used to add opeartion when transition start or end. each accepts two parameters:</p>
+<ul>
+<li>
+<p><code>start</code> or <code>end</code>. You can use <code>this</code> to get current element.</p>
+</li>
+<li>
+<p>a function that will run when start or end transition</p>
+</li>
+</ul>
+<p>Element can only have <em>one</em> transition animation at any time. So you <em>can not</em> add more <code>transition()</code> in a <code>each('start',function(){...})</code>. But you <em>can</em> do this in <code>each('end',function(){...}</code>.</p>
+<pre class="code literal-block"><span></span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="s1">&#39;end&#39;</span><span class="p">,</span><span class="nx">fucntion</span><span class="p">(){</span>
+    <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="c1">//Select current single element</span>
+        <span class="p">.</span><span class="nx">transition</span><span class="p">()</span> <span class="c1">//You can not add this in start function</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="nx">red</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">//you can also do .each(function(d,i){...})</span>
+</pre>
+
+
+<p>You can do continues transition in 3.0 version:</p>
+<pre class="code literal-block"><span></span><span class="c1">//...</span>
+<span class="p">.</span><span class="nx">transition</span><span class="p">()</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;cx&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">xScale</span><span class="p">(</span><span class="nx">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;cy&#39;</span><span class="p">,</span><span class="nx">fuction</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">yScle</span><span class="p">(</span><span class="nx">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">transition</span><span class="p">()</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
+</pre>
+
+
+<h2 id="clip-path">Clip-Path</h2>
+<p><code>clipPath()</code> can create an <code>area</code>, so that only when element's part is <em>inside</em> this area, this part can be seen. Steps are:</p>
+<ul>
+<li>
+<p>Define <code>clipPath</code> and give it an id.</p>
+</li>
+<li>
+<p>Put a visible element in <code>clipPath</code>, such as <code>rect</code> or <code>circle</code></p>
+</li>
+<li>
+<p>Add a reference to <code>clipPath</code> on the element that use <code>clipPath</code></p>
+</li>
+</ul>
+<blockquote>
+<pre class="code literal-block"><span></span><span class="c1">//Define clipPath</span>
+<span class="nx">svg</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;clipPath&#39;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;chart-area&#39;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;rect&#39;</span><span class="p">)</span> <span class="c1">//Make this clipPath to a rectange</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="nx">padding</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="nx">padding</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span><span class="nx">w</span><span class="o">-</span><span class="nx">padding</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span><span class="nx">h</span><span class="o">-</span><span class="nx">padding</span><span class="o">*</span><span class="mi">2</span><span class="p">);</span>
+</pre>
+
+
+</blockquote>
+<pre class="code literal-block"><span></span>//Create circle
+svg.append(&#39;g&#39;) //create new g element and set id
+    .attr(&#39;id&#39;,&#39;circles&#39;)
+    .attr(&#39;clip-path&#39;,&#39;url(#chare-area)&#39;) //add reference to clipPath
+    .selectAll(&#39;circle&#39;)
+    .data(dataset)
+    .enter()
+    .append(&#39;circle&#39;)
+    ...
+
+//Now all circle elements has been wrapped in a group, this group has a reference to a rectange that has size of all svg.
+//If any circle is out of this rectangle, the out part will be cut.
+</pre>
+
+
+<h2 id="add-or-remove-element">Add or Remove Element</h2>
+<p>To <em>add new</em> rectangle(or other elments), re-select and re-append <code>rects</code>, then after <code>enter()</code>, use <code>attr('x',w)</code> to make the new bar to right most right of svg, so no one can see it. The use <code>transition().attr('x',...).attr('y',...).attr('width',...).attr('height',...)</code> to make it in with animation. Now new element will be on <em>right</em> of old elements.</p>
+<p>To <em>delete</em> existing element, using <code>exit()</code>. You can firstly remove <em>first</em> element from dataset by using <code>dataset.shift()</code>, then do:</p>
+<pre class="code literal-block"><span></span><span class="nx">bars</span><span class="p">.</span><span class="nx">exit</span><span class="p">().</span><span class="nx">transition</span><span class="p">()</span>
+            <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="nx">w</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">remove</span><span class="p">();</span> <span class="c1">//remove last element from DOM</span>
+
+<span class="c1">//You should update tags if you have any</span>
+</pre>
+
+
+<h2 id="key-value-pair-dataset">Key-Value Pair Dataset</h2>
+<p>D3 has <code>index</code> with each value in dataset automatically. However, you may needs to define your own <code>key</code> when you need. You can define <code>key-value</code> pair in dataset if you need:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[{</span><span class="nx">key</span><span class="o">:</span><span class="s1">&#39;apple&#39;</span><span class="p">,</span><span class="nx">value</span><span class="o">:</span><span class="mi">1</span><span class="p">},</span>
+                <span class="p">{</span><span class="nx">key</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="mi">200</span><span class="p">}];</span>
+<span class="c1">// {} define object</span>
+<span class="c1">// [] define array</span>
+</pre>
+
+
+<p>Now you need to use <code>d3.value</code> to access value. You can set <code>var key = function(d){ return d.key;}</code> for future usage, the use <code>.data(dataset,key)</code> to assign dataset.</p>
+<p>Now to let the <em>left most</em> bar remove from <em>left</em>, use <code>.exit().transition().attr('x',-xScale.rangeBand()</code>.</p>
+<h2 id="code-example-for-this-chapter">Code Example For This Chapter</h2>
+<p>You can check the interative version from <a href="http://shanpy.github.io/Front-End-Playground/D3/Reading-D3-V.html"><strong>here</strong></a>.</p>
+<pre class="code literal-block"><span></span><span class="c1">//Code Part I: Transition Animation</span>
+
+<span class="c1">//set up random data set</span>
+<span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="kd">var</span> <span class="nx">maxValue</span> <span class="o">=</span> <span class="mi">80</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">count</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span> <span class="nx">count</span><span class="o">++</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="o">*</span><span class="nx">maxValue</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="o">*</span><span class="nx">count</span><span class="o">*</span><span class="mi">10</span><span class="p">);;</span>
+        <span class="kd">var</span> <span class="nx">pair</span> <span class="o">=</span> <span class="p">{};</span>
+        <span class="nx">pair</span><span class="p">.</span><span class="nx">key</span> <span class="o">=</span> <span class="nx">key</span><span class="p">;</span>
+        <span class="nx">pair</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+        <span class="nx">dataset</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">pair</span><span class="p">);</span>
+    <span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">key</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">//set up svg</span>
+<span class="kd">var</span> <span class="nx">h</span> <span class="o">=</span> <span class="mi">400</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">padding</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">svg</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;chapter9&#39;</span><span class="p">).</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span><span class="s1">&#39;100%&#39;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span><span class="nx">h</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">w</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">offsetWidth</span><span class="p">;</span>
+
+<span class="c1">//set up ordinal scale</span>
+<span class="kd">var</span> <span class="nx">xScale</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">ordinal</span><span class="p">()</span>
+            <span class="p">.</span><span class="nx">domain</span><span class="p">(</span><span class="nx">d3</span><span class="p">.</span><span class="nx">range</span><span class="p">(</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">))</span>
+            <span class="c1">//return an array that has same length as dataset. Here should be 0,1,...,9</span>
+            <span class="p">.</span><span class="nx">rangeRoundBands</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="nx">w</span><span class="p">],</span><span class="mf">0.05</span><span class="p">);</span>
+            <span class="c1">//Banding: d3 will calculate from 0 to w, how many bands it can be divided. And we set the gap between each band is 5%. We use rangRoundBands to get integer value.</span>
+
+<span class="kd">var</span> <span class="nx">yScale</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">linear</span><span class="p">()</span>
+                <span class="p">.</span><span class="nx">domain</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">dataset</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span><span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">;})])</span>
+                <span class="p">.</span><span class="nx">range</span><span class="p">([</span><span class="nx">h</span><span class="o">-</span><span class="nx">padding</span><span class="p">,</span><span class="mi">0</span><span class="p">]);</span>
+
+<span class="c1">//Create Ractangular</span>
+<span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;rect&#39;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">).</span><span class="nx">enter</span><span class="p">().</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;rect&#39;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">xScale</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span> <span class="c1">//using x scale, set up i, which is the corresonding index 0,1,...10 for d.</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span> <span class="c1">//y&#39;s position should be the same as before</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="nx">xScale</span><span class="p">.</span><span class="nx">rangeBand</span><span class="p">())</span><span class="c1">//now d3 will automatically set up width of each bar, based on xScale</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">h</span><span class="o">-</span><span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span> <span class="c1">//height needs to following scale first, then using height minus</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+    <span class="k">return</span> <span class="s1">&#39;rgb(120,233,&#39;</span> <span class="o">+</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="o">/</span><span class="mi">8</span><span class="o">*</span><span class="mi">50</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="c1">//Add Tag</span>
+<span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">).</span><span class="nx">enter</span><span class="p">().</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">);</span>
+<span class="nx">text</span><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+<span class="p">});</span>
+<span class="nx">text</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">xScale</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span><span class="o">+</span><span class="nx">xScale</span><span class="p">.</span><span class="nx">rangeBand</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+<span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span> <span class="o">+</span> <span class="nx">padding</span><span class="o">*</span><span class="mi">3</span><span class="p">;</span>
+<span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span> <span class="s1">&#39;pink&#39;</span><span class="p">);</span>
+
+<span class="c1">//set up axis</span>
+<span class="kd">var</span> <span class="nx">xAxis</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">svg</span><span class="p">.</span><span class="nx">axis</span><span class="p">()</span>
+                <span class="p">.</span><span class="nx">scale</span><span class="p">(</span><span class="nx">xScale</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">orient</span><span class="p">(</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">ticks</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nx">yAxis</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">svg</span><span class="p">.</span><span class="nx">axis</span><span class="p">()</span>
+                <span class="p">.</span><span class="nx">scale</span><span class="p">(</span><span class="nx">yScale</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">orient</span><span class="p">(</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">ticks</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+
+<span class="nx">svg</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;class&#39;</span><span class="p">,</span><span class="s1">&#39;axis xaxis&#39;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;transform&#39;</span><span class="p">,</span><span class="s1">&#39;translate(0,&#39;</span><span class="o">+</span><span class="p">(</span><span class="nx">h</span><span class="o">-</span><span class="nx">padding</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">xAxis</span><span class="p">);</span>
+<span class="nx">svg</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;class&#39;</span><span class="p">,</span><span class="s1">&#39;axis yaxis&#39;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;transform&#39;</span><span class="p">,</span><span class="s1">&#39;translate(&#39;</span> <span class="o">+</span> <span class="nx">padding</span> <span class="o">+</span> <span class="s1">&#39;,0)&#39;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">yAxis</span><span class="p">);</span>
+
+
+<span class="c1">//Add Trigger Event for Button</span>
+<span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;btn&#39;</span><span class="p">)).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="c1">//Note: we now have new dataset</span>
+    <span class="kd">var</span> <span class="nx">dataset2</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="kd">var</span> <span class="nx">maxValue</span> <span class="o">=</span> <span class="mi">80</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">count</span><span class="o">&lt;</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">count</span><span class="o">++</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="o">*</span><span class="nx">maxValue</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="nx">count</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">pair</span> <span class="o">=</span> <span class="p">{};</span>
+        <span class="nx">pair</span><span class="p">.</span><span class="nx">key</span> <span class="o">=</span> <span class="nx">key</span><span class="p">;</span>
+        <span class="nx">pair</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+        <span class="nx">dataset2</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">pair</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">//update yScale to make sure y axis will change. If you change size of new dataset, you need to update x scale also!</span>
+    <span class="nx">yScale</span><span class="p">.</span><span class="nx">domain</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">dataset2</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span><span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">})]);</span>
+
+    <span class="c1">//update rectange</span>
+    <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;rect&#39;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset2</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">transition</span><span class="p">()</span> <span class="c1">//add transition animation</span>
+        <span class="p">.</span><span class="nx">delay</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+            <span class="k">return</span> <span class="nx">i</span><span class="o">/</span><span class="nx">dataset2</span><span class="p">.</span><span class="nx">length</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">;</span>  <span class="c1">//delay time: make each bar&#39;s animation later than previous one, proporationaly. So last one will delay 1000ms, last two will delay less than 1000ms, etc</span>
+        <span class="p">})</span>
+        <span class="p">.</span><span class="nx">duration</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="c1">//add duration of anitmation: 1000 ms</span>
+        <span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="s1">&#39;start&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+            <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;stroke&#39;</span><span class="p">,</span><span class="s1">&#39;black&#39;</span><span class="p">);</span> <span class="c1">//for each item, do this at the start of animation. Note you can not add another transition() here. If so current transition will be interrupt</span>
+        <span class="p">})</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+            <span class="k">return</span> <span class="nx">xScale</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+        <span class="p">})</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+            <span class="k">return</span> <span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+        <span class="p">})</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+            <span class="k">return</span> <span class="nx">h</span><span class="o">-</span><span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+        <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+            <span class="k">return</span> <span class="s1">&#39;rgb(120,100,&#39;</span> <span class="o">+</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="o">*</span><span class="mi">10</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">;</span>
+        <span class="p">})</span>
+        <span class="p">.</span><span class="nx">transition</span><span class="p">()</span>
+        <span class="p">.</span><span class="nx">duration</span><span class="p">(</span><span class="mi">2000</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="s1">&#39;grey&#39;</span><span class="p">);</span> <span class="c1">//Since previous transition has done, You can add another transition() here.This one will not interrupt privous transition</span>
+
+
+    <span class="c1">//update tag</span>
+    <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset2</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">transition</span><span class="p">()</span> <span class="c1">//add transition animation</span>
+        <span class="p">.</span><span class="nx">duration</span><span class="p">(</span><span class="mi">2500</span><span class="p">)</span> <span class="c1">//add duration of anitmation: 5000 ms</span>
+            <span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+                <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+            <span class="p">})</span>
+            <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+            <span class="k">return</span> <span class="nx">xScale</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span><span class="o">+</span><span class="nx">xScale</span><span class="p">.</span><span class="nx">rangeBand</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+            <span class="p">})</span>
+            <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+            <span class="k">return</span> <span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span> <span class="o">+</span> <span class="nx">padding</span><span class="o">*</span><span class="mi">3</span><span class="p">;</span> <span class="c1">//in y axis. if you add a position number, it will go down.</span>
+            <span class="p">});</span>
+
+    <span class="c1">//Update Axis</span>
+    <span class="nx">svg</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s2">&quot;.xaxis&quot;</span><span class="p">).</span><span class="nx">transition</span><span class="p">().</span><span class="nx">duration</span><span class="p">(</span><span class="mi">1000</span><span class="p">).</span><span class="nx">call</span><span class="p">(</span><span class="nx">xAxis</span><span class="p">);</span>
+    <span class="nx">svg</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s1">&#39;.yaxis&#39;</span><span class="p">).</span><span class="nx">transition</span><span class="p">().</span><span class="nx">duration</span><span class="p">(</span><span class="mi">1000</span><span class="p">).</span><span class="nx">call</span><span class="p">(</span><span class="nx">yAxis</span><span class="p">);</span>
+
+<span class="p">});</span>
+
+    <span class="c1">//Code Part II: Add Or Remove Element</span>
+
+    <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;add&#39;</span><span class="p">)).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+
+    <span class="cm">/*add a new element to dataset</span>
+<span class="cm">    var maxValue = 50;</span>
+<span class="cm">    var newNumber = Math.round(Math.random() * maxValue);</span>
+<span class="cm">    dataset.push(newNumber);</span>
+<span class="cm">    */</span>
+
+    <span class="kd">var</span> <span class="nx">maxValue</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">minValue</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">pair</span> <span class="o">=</span> <span class="p">{};</span>
+        <span class="nx">pair</span><span class="p">.</span><span class="nx">key</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="o">*</span><span class="nx">minValue</span><span class="p">);</span>
+        <span class="nx">pair</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="o">*</span><span class="nx">maxValue</span><span class="p">);</span>
+        <span class="nx">dataset</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">pair</span><span class="p">);</span>
+
+    <span class="c1">//Update xScale since dataset change its length and max may need to change</span>
+    <span class="kd">var</span> <span class="nx">xScale</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">ordinal</span><span class="p">()</span>
+            <span class="p">.</span><span class="nx">domain</span><span class="p">(</span><span class="nx">d3</span><span class="p">.</span><span class="nx">range</span><span class="p">(</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">))</span>
+            <span class="p">.</span><span class="nx">rangeRoundBands</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="nx">w</span><span class="p">],</span><span class="mf">0.05</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">yScale</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">linear</span><span class="p">()</span>
+                <span class="p">.</span><span class="nx">domain</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">dataset</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span><span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">;})])</span>
+                <span class="p">.</span><span class="nx">range</span><span class="p">([</span><span class="nx">h</span><span class="o">-</span><span class="nx">padding</span><span class="p">,</span><span class="mi">0</span><span class="p">]);</span>
+
+    <span class="c1">//re-select all rectangulars and create new bar element</span>
+    <span class="kd">var</span> <span class="nx">bars</span> <span class="o">=</span> <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;rect&#39;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">);</span>
+    <span class="nx">bars</span><span class="p">.</span><span class="nx">enter</span><span class="p">()</span> <span class="c1">//get new elements. Note: add transition() here will cause error</span>
+        <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;rect&#39;</span><span class="p">)</span> <span class="c1">//use append() to create this new element</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="nx">w</span><span class="p">)</span> <span class="c1">//re-define width</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+            <span class="k">return</span> <span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+        <span class="p">})</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span><span class="nx">xScale</span><span class="p">.</span><span class="nx">rangeBand</span><span class="p">())</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+            <span class="k">return</span> <span class="nx">h</span><span class="o">-</span><span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+        <span class="p">})</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+            <span class="k">return</span> <span class="s1">&#39;rgb(50,150,&#39;</span> <span class="o">+</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="o">*</span><span class="mi">20</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">;</span>
+        <span class="p">});</span>
+
+    <span class="c1">//Update attributes of new bar element</span>
+    <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;rect&#39;</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+            <span class="k">return</span> <span class="nx">xScale</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+        <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+            <span class="k">return</span> <span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span> <span class="o">+</span> <span class="nx">padding</span><span class="o">*</span><span class="mi">3</span><span class="p">;</span>
+        <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="nx">xScale</span><span class="p">.</span><span class="nx">rangeBand</span><span class="p">())</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+            <span class="k">return</span> <span class="nx">h</span><span class="o">-</span><span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+        <span class="p">});</span>
+
+   <span class="c1">//re-update tags</span>
+   <span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">,</span><span class="nx">key</span><span class="p">).</span><span class="nx">transition</span><span class="p">();</span> <span class="c1">//note we don&#39;t need enter() and append() here because there is no new element</span>
+   <span class="nx">text</span><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+   <span class="p">});</span>
+   <span class="nx">text</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">xScale</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="o">+</span> <span class="nx">xScale</span><span class="p">.</span><span class="nx">rangeBand</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+   <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span> <span class="o">+</span> <span class="nx">padding</span><span class="o">*</span><span class="mi">3</span><span class="p">;</span>
+   <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="s1">&#39;black&#39;</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">//Remove a Bar from right</span>
+<span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;remove&#39;</span><span class="p">)).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">dataset</span><span class="p">.</span><span class="nx">shift</span><span class="p">();</span><span class="c1">//remove the first element from dataset.</span>
+
+    <span class="kd">var</span> <span class="nx">bars</span> <span class="o">=</span> <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;rect&#39;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">,</span><span class="nx">key</span><span class="p">);</span> <span class="c1">//note you add key here to make sure key is self-defined, instead of default index</span>
+    <span class="nx">bars</span><span class="p">.</span><span class="nx">exit</span><span class="p">()</span> <span class="c1">//Returns the exit selection: existing DOM elements in the current selection for which no new data element was found</span>
+        <span class="p">.</span><span class="nx">transition</span><span class="p">()</span>
+        <span class="p">.</span><span class="nx">duration</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="o">-</span><span class="nx">xScale</span><span class="p">.</span><span class="nx">rangeBand</span><span class="p">())</span> <span class="c1">//remove from left</span>
+        <span class="p">.</span><span class="nx">remove</span><span class="p">();</span> <span class="c1">//remove the elements in the current selection fromt the current document</span>
+
+    <span class="c1">//update tags</span>
+    <span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">,</span><span class="nx">key</span><span class="p">);</span>
+              <span class="nx">text</span><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+                <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+               <span class="p">});</span>
+               <span class="nx">text</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+                <span class="k">return</span> <span class="nx">xScale</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="o">+</span> <span class="nx">xScale</span><span class="p">.</span><span class="nx">rangeBand</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span> <span class="c1">//after remove, i still start from 0. However the key now start from second element</span>
+               <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+                <span class="k">return</span> <span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span> <span class="o">+</span> <span class="nx">padding</span><span class="o">*</span><span class="mi">3</span><span class="p">;</span>
+               <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="s1">&#39;orange&#39;</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " vocab="http://ogp.me/ns" lang="en">
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]--><!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]--><!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]--><!--[if gt IE 8]><!--><!--<![endif]--><head>
+<meta charset="utf-8">
+<meta name="description" content="This is an old blog I created when I wanted to be more familiar with jQuery library, in late 2014. This is a reading note for &lt;a href=" http:>
+</head>
+<body>
+<p>jQuery Tutorial on TutorialsPoint.com, including useful functions/concepts for web development using jQuery. Please note I only pick parts of core concept which I will use most often."&gt;
+    <!-- http://t.co/dKP3o1e -->
+    <meta name="HandheldFriendly" content="True"><meta name="MobileOptimized" content="320"><meta name="viewport" content="width=device-width, initial-scale=1.0"></p>
+<title>jQuery Tutorial Reading Notes | Pengyin's Corner</title>
+<link href="../../../assets/css/all.css" rel="stylesheet" type="text/css">
+<!-- Webfonts --><link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+<!-- Load Modernizr --><script src="//mmistakes.github.io/hpstr-jekyll-theme/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script><link rel="alternate" type="application/rss+xml" title="RSS" href="../../../rss.xml">
+<link rel="canonical" href="https://pengyin-shan.com/posts/2014/jquery-tutorial-reading-notes/">
+<!--[if lt IE 9]><script src="../../../assets/js/html5.js"></script><![endif]--><meta name="description" content="This is an old blog I created when I wanted to be more familiar with jQuery library, in late 2014. This is a reading note for &lt;a href=" http:>jQuery Tutorial on TutorialsPoint.com, including useful functions/concepts for web development using jQuery. Please note I only pick parts of core concept which I will use most often."&gt;
+    <meta name="author" content="Pengyin(Wendy) Shan">
+<link rel="prev" href="../reading-d3-1-to-5/" title="Reading Notes for D3.js Part I (Chapter 1 to Chapter 5)" type="text/html">
+<link rel="next" href="../bootstrap3-api-reading-notes/" title="Bootstrap3 API Reading Notes" type="text/html">
+<meta property="og:site_name" content="Pengyin's Corner">
+<meta property="og:title" content="jQuery Tutorial Reading Notes">
+<meta property="og:url" content="https://pengyin-shan.com/posts/2014/jquery-tutorial-reading-notes/">
+<meta property="og:description" content='This is an old blog I created when I wanted to be more familiar with jQuery library, in late 2014. This is a reading note for &lt;a href="http://www.tutorialspoint.com/jquery"&gt;jQuery Tutorial on Tutorial'>
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2014-12-10T00:00:00-05:00">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="jQuery">
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    
+
+    <nav id="dl-menu" class="dl-menuwrapper" role="navigation"><button class="dl-trigger">Open Menu</button>
+    <ul class="dl-menu">
+<li><a href="../../">My Knowledge Base</a></li>
+            <li><a href="https://www.linkedin.com/in/pengyinshan">My LinkedIn</a></li>
+            <li><a href="../../../categories/">Tags and Categories</a></li>
+            <li><a href="../../../rss.xml">RSS feed</a></li>
+            <li><a href="../../../archive.html">Archive</a></li>
+    
+    
+    </ul></nav><div class="entry-header">
+<!-- /.image-credit -->
+    <div class="entry-image">
+      <img src="../../../bk.JPG" alt="Latest Posts">
+</div>
+<!-- /.entry-image -->
+      
+  <div class="header-title">
+    <div class="header-title-wrap">
+    <h1 id="brand"><a href="https://pengyin-shan.com/" title="Pengyin's Corner" rel="home">
+    Pengyin's Corner</a></h1>
+      <h2>Be Passionate.</h2>
+    </div>
+<!-- /.header-title-wrap -->
+  </div>
+<!-- /.header-title -->
+
+</div>
+<!-- /.entry-header -->
+
+    <div id="main" role="main">
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><div class="entry-meta">
+            <span class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2014-12-10T00:00:00-05:00" itemprop="datePublished" title="2014-12-10">2014-12-10</time></a></span>  ·  
+            <span class="byline author vcard">Pengyin(Wendy) Shan</span>  ·  
+                <span class="commentline">
+        
+    <a href="#disqus_thread" data-disqus-identifier="cache/posts/2014/jquery-tutorial-reading-notes.html">Comments</a>
+
+</span>  ·  
+            
+        <span class="sourceline"><a href="index.md" id="sourcelink">Source</a></span>  ·  
+
+                <meta name="description" itemprop="description" content="This is an old blog I created when I wanted to be more familiar with jQuery library, in late 2014. This is a reading note for &lt;a href=" http:>jQuery Tutorial on TutorialsPoint.com, including useful functions/concepts for web development using jQuery. Please note I only pick parts of core concept which I will use most often."&gt;
+        </div>
+        
+
+    
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">jQuery Tutorial Reading Notes</a></h1>
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>This post is transferred from my <a href="http://blogpengyin.herokuapp.com/">old Hexo blog site</a>, created on 2014.</p>
+<p>If you want to find specific topic, feel free to use <code>ctrl + F</code> to search for keyword.</p>
+<p>This is a reading note for <a href="http://www.tutorialspoint.com/jquery">jQuery Tutorial on TutorialsPoint.com</a>, including useful functions/concepts for web development using jQuery. Please note I only pick parts of core concept which I will use most often.</p>
+<p>This reading note is based on <code>jQuery 1.3.2</code>.</p>
+<h2 id="part-i-selectors-attributes-traversing">Part I : Selectors, Attributes, Traversing</h2>
+<h3 id="selectors">Selectors</h3>
+<h4 id="jquery-function">$()/jQuery() function</h4>
+<p><code>$()</code> or <code>jQuery()</code> is the format for all selectors in jQuery. It can be applied to:</p>
+<ul>
+<li>
+<p><em>Tag</em>: <code>$('p')</code> selects all paragraphs in document</p>
+</li>
+<li>
+<p><em>#ID</em>: <code>$('#test')</code> select element with ID as test</p>
+</li>
+<li>
+<p><em>.Class</em>: <code>$('.test')</code> select element with ClassName as test</p>
+</li>
+<li>
+<p><em>*</em>: star means universal. This means all DOM elements have been selected</p>
+</li>
+<li>
+<p><em>Mutiple Selectors</em>: results from mutiple selectors can be selected at the same time. For example, <code>$('a#IDs.Classes')</code> means an element with <code>&lt;a&gt;</code> <em>and</em> <code>ID</code> as id <em>and</em> <code>Classes</code> as class name.</p>
+</li>
+</ul>
+<h4 id="important-notes">Important Notes</h4>
+<ul>
+<li>
+<p><code>$(XX:not(YY))</code>: select XX elements without YY elements</p>
+</li>
+<li>
+<p><code>$(XX YY)</code>: this means select YY elements which are <em>descendants</em> of XX elements. i.e, inside XX elements</p>
+</li>
+<li>
+<p><code>$(XX YY:first)</code>: select first YY elements which is inside XX</p>
+</li>
+<li>
+<p><code>$(XX &gt; YY)</code>: select YY elements which are children of XX elements</p>
+</li>
+<li>
+<p><code>$(XX + YY)</code>: select YY elements that is the <em>connected</em> following sibling of XX elements.</p>
+</li>
+<li>
+<p><code>$(XX ~ YY)</code>: select YY elements that is the following siblings of XX elements</p>
+</li>
+<li>
+<p><code>$(XX,YY)</code>: select elements that match XX <em>or</em> YY</p>
+</li>
+<li>
+<p><code>$(':empty')</code>:select elements that have no child elements</p>
+</li>
+<li>
+<p><code>$('XX:empty')</code>:select all XX elements that have no child elements</p>
+</li>
+<li>
+<p><code>$('XX[YY]')</code>: select all XX elements that <em>contains</em> an element with attribute YY</p>
+</li>
+<li>
+<p><code>$('XX[@YY]')</code>: select all XX elements that has a YY attribute</p>
+</li>
+<li>
+<p><code>$('XX[@YY=ZZ]')</code>: select all XX elements that has a YY attribute, and attribute value is ZZ</p>
+</li>
+<li>
+<p><code>$('XX[@YY^=ZZ]')</code>: select all XX elements that has a YY attribute, and attribute value <em>begin with</em> ZZ</p>
+</li>
+<li>
+<p><code>$('XX[@YY$=ZZ]')</code>: select all XX elements that has a YY attribute, and attribute value <em>end with</em> ZZ</p>
+</li>
+<li>
+<p><code>$('XX[@YY*=ZZ]')</code>: select all XX elements that has a YY attribute, and attribute value <em>containing</em> ZZ</p>
+</li>
+<li>
+<p><code>$("XX:YY")</code>: YY here can be: <code>even</code>, <code>odd</code>, <code>first</code>, <code>last</code>, <code>visible</code>, <code>hidden</code>, <code>radio</code>, <code>checked</code>, <code>input</code>, <code>text</code>, <code>eq(n)</code> (This mean nth element), <code>li(n)</code> (This means the first nth element), <code>ge(n)</code> (This means after n+1 element), <code>first-child</code>, <code>last-child</code>, <code>contains(YY)</code> (This means contain text YY)</p>
+</li>
+<li>
+<p><code>$(XX/YY)</code>: select YY elements that are child of an element XX</p>
+</li>
+<li>
+<p><code>$(XX//YY)</code> or <code>$(//XX//YY)</code>: select YY elements that are descendants of an element XX</p>
+</li>
+<li>
+<p><code>$(:parent)</code>:all elements that are <em>parents</em> of another element, including <code>text</code></p>
+</li>
+</ul>
+<h3 id="dom-attributes">DOM Attributes</h3>
+<p>Some of most import DOM attributes are: <code>className</code>, <code>tagName</code>, <code>id</code>, <code>href</code>, <code>title</code>, <code>rel</code>, <code>src</code></p>
+<p><em>Get Attribute Value</em>: <code>.attr()</code>. For example: <code>var title = $(#testId).attr('title');</code>. Element testId should be <code>&lt;XX titile="..."/&gt;</code></p>
+<p><em>Set Attribute Value</em>: <code>.attr(name,value)</code>. For example, <code>$("#testId").attr('src','/image.jpg');</code></p>
+<p><em>Set Mutiple Attribute Value</em>: <code>.attr({key:value, key:value})</code>:</p>
+<pre class="code literal-block"><span></span><span class="nx">$</span><span class="p">(</span><span class="s1">'#testId'</span><span class="p">).</span><span class="nx">attr</span><span class="p">({</span>
+    <span class="nx">src</span><span class="o">:</span> <span class="sb">`/image.png`</span><span class="p">,</span>
+    <span class="nx">alt</span><span class="o">:</span> <span class="s1">'images'</span><span class="p">,</span>
+    <span class="nx">style</span><span class="o">:</span> <span class="sb">`display:auto;`</span>
+<span class="p">});</span>
+</pre>
+
+
+<p><em>Set Attribbute with Function</em>: <code>.attr(key, function(){...});</code></p>
+<p><em>Remove Attribute</em>: <code>.removeAttr(Attr_Name);</code></p>
+<p><em>Set Class</em>: <code>.addClass()</code>. You may want to define the style for this class first in style sheet. For example, <code>$(#testId).addClass('main');</code></p>
+<p><em>Remove Class</em>: <code>.removeClass(Class_Name);</code></p>
+<p><em>Judge if Exists Class</em>: <code>XX.hasClass(Class_Name)</code>. Return true if as least one of XX element has this specific class</p>
+<p><em>Add/Remove Class</em>: <em>.toggleClass(Class_name)</em>. Add class if not exist. Remove class if it exists.</p>
+<p><em>Get Content</em>: <code>.html()</code>. Get html content of the <em>first</em> matched element. Equals to <code>xx.getInnerHTML();</code></p>
+<p><em>Set Context</em>: <code>.html(val)</code>. For example: <code>var test = "&lt;p&gt;Test&lt;/p&gt;. $('#testId').html(test)"</code> means assign content in test to element testId.</p>
+<p><em>Get All Text Content</em>: <code>.text()</code>. Get the <em>combined</em> text contents of all matched elements.</p>
+<p><em>Set Text Contents to All</em>: <code>.text(val)</code>. Set the text contents of all matched elements.</p>
+<p><em>Get Value</em>: <code>.val()</code> get the input value of the first matched element</p>
+<p><em>Set Value</em>: <code>val(val)</code>. If applied to <code>input</code>, set the value of all input field. If applied to <code>select</code> and passign <code>option</code> value, that option is selected. If applied to <code>checkbox</code> or <code>radiobutton</code>, all match checkbox or radiobutton are selected.</p>
+<h3 id="dom-traversing">DOM Traversing</h3>
+<h4 id="for-table-lists">For Table Lists</h4>
+<p><code>.eq(index)</code>: find the <em>index+1</em>th element, since we count staring from 0.</p>
+<p><code>.filter(selector)</code>: remove all elements which not match to selector</p>
+<p><code>.filter(function)</code>: remove all elements which not match to function</p>
+<p><code>XX.is(selector)</code>: return true if at least one element of XX fits the selector</p>
+<p><code>XX.map(callback)</code>: transfer XX to a jQuery array, following callback</p>
+<p><code>.not(selector)</code>: remove all elements which match to the selector</p>
+<p><code>.slice(start, [end])</code>: select a subset of matched elements. Starting for <em>0</em>.</p>
+<p><em>End is exclusive</em>. If using nagative number, it means starting from the end of selection.</p>
+<h4 id="others">Others</h4>
+<p><code>XX.add(selector)</code>: add more elements to XX, which matches the selector.</p>
+<p><code>XX.selector.andSelf().Do-something</code>: Do something to elements in selector, and XX itself:</p>
+<pre class="code literal-block"><span></span><span class="nx">$</span><span class="p">(</span><span class="s1">'div'</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="nx">p</span><span class="p">).</span><span class="nx">andSelf</span><span class="p">().</span><span class="nx">addClass</span><span class="p">(</span><span class="s2">"border"</span><span class="p">);</span>
+<span class="c1">//Add border to all paragraphs, and all divs themselves</span>
+</pre>
+
+
+<p><code>XX.children(selector)</code>: select <em>sons</em> of XX which matches selector</p>
+<p><code>XX.closest(selector)</code>: First check if XX matches selector, if so return XX. Otherwise find XX's cloest <em>parent</em> element which matches the selector, and return this element.</p>
+<p><code>.contents()</code>: Applies to <code>iframe</code>. Get all contents (i.e. child nodes) of iframe.</p>
+<p><code>XX.end()</code>: revert XX to its previous state.</p>
+<p><code>.find(selector)</code>: find all <em>descedent</em> elements that match selector</p>
+<p><code>.next(selector)</code>: find first <em>sibling</em> which match the selector</p>
+<p><code>.nextAll()/.nextAll(selector)</code>: find all <em>siblings</em>. Can add selector as parameter</p>
+<p><code>XX.offsetParent()</code>: return the <em>first</em> parent of XX elements.</p>
+<p><code>parent()/parent(selector)</code>: reutrn the direct parent of element. Can add selector as parameter</p>
+<p><code>prev()/prev(selector)</code>: return <em>closest</em> previous sibling (which matches the selector).</p>
+<p><code>prevAll()/prevAll(selector)</code>: return previous siblings (which matches the selector).</p>
+<p><code>siblings()/siblings(selector)</code>: return siblings (which matches the selector).</p>
+<h2 id="part-ii-css-dom-events">Part II : CSS, DOM, Events</h2>
+<h3 id="css-methods">CSS Methods</h3>
+<p><em>Apply CSS Properties</em>: <code>XX.css(PropertyName, PropertyValue);</code>. For example, <code>$("#testId").css("display","none");</code></p>
+<p><em>Apply Multiple CSS Properties</em>: <code>.css({key:value, key:value...})</code>:</p>
+<pre class="code literal-block"><span></span><span class="nx">$</span><span class="p">(</span><span class="s1">'#testId'</span><span class="p">).</span><span class="nx">css</span><span class="p">({</span>
+    <span class="s2">"color"</span> <span class="o">:</span> <span class="s2">"red"</span><span class="p">,</span>
+    <span class="s2">"background-color"</span><span class="o">:</span> <span class="s2">"blue"</span>
+<span class="p">});</span>
+</pre>
+
+
+<p><em>Apply Width and Height</em>: <code>.width(Number)</code> and <code>.height(Number)</code> can be used directly</p>
+<h3 id="dom-manipulation-methods">DOM Manipulation Methods</h3>
+<p><em>Content Manipulation</em>: <code>.html()</code>. Please refer <a href="../../../jquery-reading-note-I">Reading Note I</a> for usage.</p>
+<p><em>DOM Element Replacement</em>: <code>XXX.replaceWith(content)</code>. XXX DOM element is replaced by content.</p>
+<p><em>DOM Remove</em>: <code>XXX.empty()</code> remove all child elements from XXX elements. <code>XXX.remove(selector)</code> remove all matched elemetns from DOM.</p>
+<p><em>DOM Insert</em>: <code>XXX.before(content)</code> or <code>XXX.after(content)</code>.</p>
+<h3 id="event-handling">Event Handling</h3>
+<h4 id="binding-event-handlers">Binding Event Handlers</h4>
+<p><code>selector.bind(eventType, handler)</code> or <code>selector.bind(eventTpe, eventData, handler)</code></p>
+<p><code>eventType</code> is the action, such as <code>click</code> or <code>submit</code></p>
+<p><code>eventData</code> is <em>optional</em>.</p>
+<p><code>handler</code> is the function trriger for this event.</p>
+<h4 id="remove-event-handlers">Remove Event Handlers</h4>
+<p><code>selector.unbind(eventType, handler)</code> or <code>selector.unbind(eventType)</code></p>
+<p><code>eventType</code>: same as above</p>
+<p><code>handler</code>: the handler that you want to remove</p>
+<h4 id="event-object-and-attributes">Event Object and Attributes</h4>
+<p><code>event</code> can be used as a parameter in handler callback function. There are several attributes that can be retrived by using <code>event.attributeName</code>. These attribute name returns useful values.</p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="nx">$</span><span class="p">(</span><span class="s1">'#testId'</span><span class="p">).</span><span class="nx">bind</span><span class="p">(</span><span class="s1">'click'</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">type</span><span class="p">);</span> <span class="c1">//here event parameter means the 'click' object</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">pageX</span><span class="p">);</span> <span class="c1">//type and pageX are attributes for event object</span>
+<span class="p">});</span>
+</pre>
+
+
+<p>List of Attributes:
+images/posts/event-attributes.png </p>
+<h4 id="event-methods">Event Methods</h4>
+<p><code>event</code> parameter can also run some methods to perform specific function. To use it, just do <code>event.XXX();</code> in callback function. Here is a list of event methods:
+images/posts/event-methods.png </p>
+<p>Please note <code>preventDefault()</code> is to prevent current function function working on current element, but <code>stopPropagation()</code> is to prevent <em>parent element's function</em> working on current element.</p>
+<h4 id="event-helper-methods">Event Helper Methods</h4>
+<p>To trigger an event function YY on XX element, just use <code>XX.YY();</code></p>
+<p>There are some already defined methods that you can use <code>XX.YY()</code> format to add event to XX element. For example, <code>$("#testId").click(function(){ ... });</code>. Here is a list:
+images/posts/binding-methods.png </p>
+<h2 id="part-iii-ajax-effects">Part III : Ajax, Effects</h2>
+<h3 id="ajax">Ajax</h3>
+<p>AJAX means <em>Asynchromous JavaScript and XML</em>. It can help load data from server without having to refresh whole page.</p>
+<p><code>XX.load(URL, Optional:data, Optional:callback)</code> is used to load data:</p>
+<ul>
+<li>
+<p>URL: can be <code>CGI</code>, <code>ASP</code>, <code>JSP</code> or <code>PHP</code> script which generate data from database.</p>
+</li>
+<li>
+<p>data: <em>Optional</em>. if this is ommitted, <code>GET</code> method is used. If specified, <code>POST</code> method is used.</p>
+</li>
+<li>
+<p>callback: callback function to deal with data after loading. The first parameter passed to this function is the <em>response text</em> received from the server and second parameter is <em>status code</em>.</p>
+</li>
+</ul>
+<h4 id="get-json-data">Get JSON Data</h4>
+<p><code>XXX.getJSON(URL, Optional:data, Optional:callback)</code> is used to get JSON string:</p>
+<ul>
+<li>
+<p>URL: the server-side source which can be reach via <code>GET</code> method.</p>
+</li>
+<li>
+<p>data: <em>Optional</em>. You can pass <code>name/value</code> pair to do sring query.</p>
+</li>
+<li>
+<p>callback: <em>Optional</em>. Call back function to deal with data after loading. The first parameter is the <em>JSON string</em> which is passed back based on request. The second parameter is the <em>status code</em>.</p>
+</li>
+</ul>
+<h4 id="pass-data-to-server">Pass Data to Server</h4>
+<p>You can use <code>data</code> parameter to pass data to server via any ajax call. For example:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#name'</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">'#stage'</span><span class="p">).</span><span class="nx">load</span><span class="p">(</span><span class="s1">'/jquery/result.php'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'name'</span><span class="o">:</span><span class="nx">name</span><span class="p">});</span>
+</pre>
+
+
+<h4 id="jquery-ajax-methods-and-events">jQuery Ajax Methods and Events</h4>
+<p>images/posts/ajax_methods_events.png </p>
+<h3 id="events">Events</h3>
+<h4 id="show-or-hiding-or-toggle-elements">Show or Hiding or Toggle Elements</h4>
+<p><code>XXX.show(speed,Optional:callback)</code> is used to show the elements. <code>speed</code> can be <code>slow</code>, <code>normal</code>, <code>fast</code> or any milliseconds. <code>callback</code> is optional. You run this function after the animation completes.</p>
+<p><code>XXX.hide(speed,Optional:callback)</code> is the same as above:</p>
+<pre class="code literal-block"><span></span><span class="nx">$</span><span class="p">(</span><span class="s1">'#testDIV'</span><span class="p">).</span><span class="nx">hide</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+</pre>
+
+
+<p><code>XXX.toggle(Optional:speed, Optional: callback)</code> is used to toggel elements.</p>
+<h4 id="other-jquery-events">Other jQuery Events</h4>
+<p>images/posts/jquery_events.png </p>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../categories/javascript/" rel="tag">JavaScript</a></li>
+            <li><a class="tag p-category" href="../../../categories/jquery/" rel="tag">jQuery</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../reading-d3-1-to-5/" rel="prev" title="Reading Notes for D3.js Part I (Chapter 1 to Chapter 5)">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../bootstrap3-api-reading-notes/" rel="next" title="Bootstrap3 API Reading Notes">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="pengyinsnotes",
+            disqus_url="https://pengyin-shan.com/posts/2014/jquery-tutorial-reading-notes/",
+        disqus_title="jQuery Tutorial Reading Notes",
+        disqus_identifier="cache/posts/2014/jquery-tutorial-reading-notes.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="pengyinsnotes";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+    
+    <div class="footer-wrapper">
+        <footer role="contentinfo"><p>Contents © 2018         <a href="mailto:pengyin.shan@outlook.com">Pengyin(Wendy) Shan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+        </footer>
+</div>
+
+    
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script src="../../../assets/js/scripts.min.js"></script>
+</body>
+</html>

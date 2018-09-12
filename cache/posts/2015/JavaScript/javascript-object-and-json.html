@@ -1,0 +1,82 @@
+<p>Full information about following notes is on <a href="http://www.w3schools.com/js/js_objects.asp">www3school</a>.</p>
+<h2 id="javascript-object">JavaScript Object</h2>
+<p>A JavaScript is wrapped by <code>{}</code> or created by <code>new</code>. Components inside are like <em>key:value</em> pairs.</p>
+<blockquote>
+<p>i.e. JavaScript objects are containers for named values.</p>
+</blockquote>
+<p>An example of JavaScript Object:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">car</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;Fiat&quot;</span><span class="p">,</span>
+            <span class="nx">model</span><span class="o">:</span> <span class="mi">500</span><span class="p">,</span>
+            <span class="nx">color</span><span class="o">:</span> <span class="s2">&quot;silver&quot;</span><span class="p">,</span>
+            <span class="nx">buycar</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">money</span><span class="p">){</span>
+                <span class="k">return</span> <span class="nx">money</span> <span class="o">*</span> <span class="mi">115</span><span class="o">%</span><span class="p">;</span>
+                <span class="p">}</span>
+           <span class="p">};</span>
+</pre>
+
+
+<p>Each JavaScript has <strong>properties</strong> and <strong>methods</strong>.</p>
+<h3 id="properties">Properties</h3>
+<p>In the example above, <code>type</code>, <code>model</code> and <code>color</code> are properties. You can access properties by using <code>object_name.property_name</code> to get value of certain property.</p>
+<pre class="code literal-block"><span></span><span class="nx">car</span><span class="p">.</span><span class="nx">type</span> <span class="c1">//&#39;Fiat&#39;</span>
+<span class="c1">//Or</span>
+<span class="nx">car</span><span class="p">[</span><span class="nx">type</span><span class="p">]</span><span class="c1">//&#39;Fiat&#39;</span>
+</pre>
+
+
+<p>A JavaScript object has two build-in properties: <code>length</code> and <code>prototype</code></p>
+<h3 id="methods">Methods</h3>
+<p>You can create methods in a JavaScript object. In code above, <code>butcar</code> is a method. A method can be defined by a function.</p>
+<blockquote>
+<p>A method may or may not have parameters
+A method may or may not have return values</p>
+</blockquote>
+<pre class="code literal-block"><span></span><span class="nx">car</span><span class="p">.</span><span class="nx">buycar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="c1">//115</span>
+</pre>
+
+
+<p>A JavaScript object has a list of build-in method. You can view them <a href="http://www.tutorialspoint.com/javascript/javascript_builtin_functions.htm">here</a>.</p>
+<h3 id="tips">Tips</h3>
+<ol>
+<li>
+<p>To change JSON to JavaScript object, you can use <code>JSON.parse(json_object)</code> or jQuery method: <code>$.parseJSON(json_object)</code></p>
+</li>
+<li>
+<p><code>String</code>, <code>Number</code> and <code>Boolean</code> should not be declared as objects, which means code like <code>var x = new String()</code> is not recommended.</p>
+</li>
+</ol>
+<h2 id="json">JSON</h2>
+<p><strong>JSON</strong> means <strong>JavaScript Object Notation</strong>. It has following rules:</p>
+<ul>
+<li>
+<p>Data is in name/value pairs</p>
+</li>
+<li>
+<p>Data is separated by commas <code>,</code></p>
+</li>
+<li>
+<p>Curly braces <code>{}</code> hold <em>objects</em></p>
+</li>
+<li>
+<p>Square brackets <code>[]</code> hold <em>arrays</em></p>
+</li>
+</ul>
+<p>To operate JSON, you can change a JSON to a JavaScript object, then use properties and methods of that JavaScript object.</p>
+<p>Example of JSON:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span>  <span class="s1">&#39;{ &quot;employees&quot; : [&#39;</span> <span class="o">+</span>
+            <span class="s1">&#39;{ &quot;firstName&quot;:&quot;John&quot; , &quot;lastName&quot;:&quot;Doe&quot; },&#39;</span> <span class="o">+</span>
+            <span class="s1">&#39;{ &quot;firstName&quot;:&quot;Anna&quot; , &quot;lastName&quot;:&quot;Smith&quot; },&#39;</span> <span class="o">+</span>
+            <span class="s1">&#39;{ &quot;firstName&quot;:&quot;Peter&quot; , &quot;lastName&quot;:&quot;Jones&quot; } ]}&#39;</span><span class="p">;</span>
+<span class="cm">/*</span>
+<span class="cm">* 1. This JSON has a large JavaScript object, which has a property: &#39;employees&#39;</span>
+<span class="cm">* 2. The value of the &#39;employees&#39; property is an JavaScript objects array.</span>
+<span class="cm">* 3. The array has four JavaScript objects, each object has two properties: &#39;firstName&#39; and &#39;lastName&#39;, with property values.</span>
+<span class="cm">*/</span>
+</pre>
+
+
+<h3 id="tips_1">Tips</h3>
+<ol>
+<li>To change a JavaScript objec to JSON, using <code>JSON.stringify(js_object)</code></li>
+</ol>

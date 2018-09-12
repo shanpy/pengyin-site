@@ -1,0 +1,47 @@
+<h3 id="using-sqlprocessor-in-java">Using SQLProcessor in Java</h3>
+<p>My current job requires me to work on some old Java web application, which involves in connecting to Oracle SQL database using <code>SQLProcesoor</code>.</p>
+<h4 id="basic-syntax">Basic Syntax</h4>
+<pre class="code literal-block"><span></span><span class="c1">//Assume you want to return an ArrayList of &#39;Course&#39; objects</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SQLProcessorExample</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Course</span><span class="o">&gt;</span> <span class="nf">selectSQLExample</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">anyParameter</span><span class="o">){</span>
+        <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Course</span><span class="o">&gt;</span> <span class="n">courses</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Course</span><span class="o">&gt;;</span>
+        <span class="k">try</span><span class="o">{</span>
+            <span class="n">SQLProcessor</span> <span class="n">sProc</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SQLProcessor</span><span class="o">();</span>
+            <span class="n">PreparedStatementGenerator</span> <span class="n">coursePSG</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PreparedStatementGenerator</span><span class="o">()</span> <span class="o">{</span>
+                    <span class="kd">public</span> <span class="n">PreparedStatement</span> <span class="nf">generatePrepareStatement</span><span class="o">(</span><span class="n">Connection</span> <span class="n">conn</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+                        <span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">&quot;select * from test_table where test_para = ?&quot;</span><span class="o">;</span>
+                        <span class="n">PreparedStatement</span> <span class="n">ps</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+                        <span class="c1">//Note: Index starting from 1. You can also use setInt or other setting methods</span>
+                        <span class="n">ps</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">anyParameter</span><span class="o">);</span>
+                        <span class="k">return</span> <span class="n">ps</span><span class="o">;</span>
+                    <span class="o">}</span>
+            <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">[]&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">[]&gt;();</span>
+            <span class="c1">//Use MultiResultListReader if you have mutiple rows returned</span>
+            <span class="n">MultiResultListReader</span> <span class="n">reader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MultiResultListReader</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>
+            <span class="n">sProc</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="n">coursePSG</span><span class="o">,</span> <span class="n">database_connection</span><span class="o">,</span> <span class="n">reader</span><span class="o">);</span>
+            <span class="c1">//Deal with your results</span>
+            <span class="k">for</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">row</span> <span class="o">:</span> <span class="n">result</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">Course</span> <span class="n">result_c</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Course</span><span class="o">();</span>
+                <span class="n">result_c</span><span class="o">.</span><span class="na">setCourseNumber</span><span class="o">(</span><span class="n">row</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+                <span class="n">result_c</span><span class="o">.</span><span class="na">setSectionNumber</span><span class="o">(</span><span class="n">row</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span>
+                <span class="c1">//Process results...</span>
+                <span class="n">courses</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">result_c</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">catch</span><span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span>
+            <span class="c1">//Handle exceptions</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h4 id="important-tips">Important Tips</h4>
+<p>If you have any trouble in your query and have no idea after checking with error message, try run this query in your <strong>DB workbench</strong> first. This may help with possible syntax error.</p>
+<p>If you run query sucessfully in your DB workbench, but you get a <code>Invalid Indentifer</code> or <code>Invalid Keyword</code> exception in your Java app. <strong>Make sure you check your query in code with all necessary white spaces. You may have muliple lines of query code and you forget spaces at the end of one line.</strong></p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span>```java
+String sql = &quot;select * from table_test a, table_test2 b&quot; +
+            &quot;where id = 1&quot;;
+//Notice this sql doesn&#39;t have white_space between &#39;b&#39; and &#39;where&#39;, which will cause trouble
+</pre>

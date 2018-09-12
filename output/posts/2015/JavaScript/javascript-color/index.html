@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " vocab="http://ogp.me/ns" lang="en">
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]--><!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]--><!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]--><!--[if gt IE 8]><!--><!--<![endif]--><head>
+<meta charset="utf-8">
+<meta name="description" content="This post is used to record useful tips of controlling color using JavaScript">
+<!-- http://t.co/dKP3o1e --><meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript and Color | Pengyin's Corner</title>
+<link href="../../../../assets/css/all.css" rel="stylesheet" type="text/css">
+<!-- Webfonts --><link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+<!-- Load Modernizr --><script src="//mmistakes.github.io/hpstr-jekyll-theme/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script><link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../rss.xml">
+<link rel="canonical" href="https://pengyin-shan.com/posts/2015/JavaScript/javascript-color/">
+<!--[if lt IE 9]><script src="../../../../assets/js/html5.js"></script><![endif]--><meta name="description" content="This post is used to record useful tips of controlling color using JavaScript">
+<meta name="author" content="Pengyin(Wendy) Shan">
+<link rel="prev" href="../../Data%20Science/sql-basics/" title="SQL Basics" type="text/html">
+<link rel="next" href="../../Front%20End/bootstrap3_sticky_footer/" title="Bootstrap 3 Sticky Footer by Martin Bean and Ryan Fait" type="text/html">
+<meta property="og:site_name" content="Pengyin's Corner">
+<meta property="og:title" content="JavaScript and Color">
+<meta property="og:url" content="https://pengyin-shan.com/posts/2015/JavaScript/javascript-color/">
+<meta property="og:description" content="This post is used to record useful tips of controlling color using JavaScript">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-07-02T00:00:00-04:00">
+<meta property="article:tag" content="JavaScript">
+</head>
+<body id="post-index" class="feature">
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    
+
+    <nav id="dl-menu" class="dl-menuwrapper" role="navigation"><button class="dl-trigger">Open Menu</button>
+    <ul class="dl-menu">
+<li><a href="../../../">My Knowledge Base</a></li>
+            <li><a href="https://www.linkedin.com/in/pengyinshan">My LinkedIn</a></li>
+            <li><a href="../../../../categories/">Tags and Categories</a></li>
+            <li><a href="../../../../rss.xml">RSS feed</a></li>
+            <li><a href="../../../../archive.html">Archive</a></li>
+    
+    
+    </ul></nav><div class="entry-header">
+<!-- /.image-credit -->
+    <div class="entry-image">
+      <img src="../../../../bk.JPG" alt="Latest Posts">
+</div>
+<!-- /.entry-image -->
+      
+  <div class="header-title">
+    <div class="header-title-wrap">
+    <h1 id="brand"><a href="https://pengyin-shan.com/" title="Pengyin's Corner" rel="home">
+    Pengyin's Corner</a></h1>
+      <h2>Be Passionate.</h2>
+    </div>
+<!-- /.header-title-wrap -->
+  </div>
+<!-- /.header-title -->
+
+</div>
+<!-- /.entry-header -->
+
+    <div id="main" role="main">
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><div class="entry-meta">
+            <span class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2015-07-02T00:00:00-04:00" itemprop="datePublished" title="2015-07-02">2015-07-02</time></a></span>  ·  
+            <span class="byline author vcard">Pengyin(Wendy) Shan</span>  ·  
+                <span class="commentline">
+        
+    <a href="#disqus_thread" data-disqus-identifier="cache/posts/2015/JavaScript/javascript-color.html">Comments</a>
+
+</span>  ·  
+            
+        <span class="sourceline"><a href="index.md" id="sourcelink">Source</a></span>  ·  
+
+                <meta name="description" itemprop="description" content="This post is used to record useful tips of controlling color using JavaScript">
+</div>
+        
+
+    
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">JavaScript and Color</a></h1>
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<h3 id="javascript-supporting-color-names">JavaScript Supporting Color Names</h3>
+<p>In JavaScript, there is a list of SAFE color name that you can use directly:</p>
+<ol>
+<li>
+<code>#00FFFF</code> aqua</li>
+<li>
+<code>#000000</code> black</li>
+<li>
+<code>#0000FF</code> blue</li>
+<li>
+<code>#FF00FF</code> fuchsia</li>
+<li>
+<code>#808080</code> gray</li>
+<li>
+<code>#008000</code> green</li>
+<li>
+<code>#00FF00</code> lime</li>
+<li>
+<code>#800000</code> maroon</li>
+<li>
+<code>#000080</code> navy</li>
+<li>
+<code>#808000</code> olive</li>
+<li>
+<code>#800080</code> purple</li>
+<li>
+<code>#FF0000</code> red</li>
+<li>
+<code>#C0C0C0</code> silver</li>
+<li>
+<code>#008080</code> teal</li>
+<li>
+<code>#FFFFFF</code> white</li>
+<li>
+<code>#FFFF00</code> yellow</li>
+</ol>
+<p>All the colors above can be set or retrive directly, using their name. For example:</p>
+<pre class="code literal-block"><span></span><span class="k">if</span><span class="p">(</span><span class="nx">value</span> <span class="o">==</span> <span class="s1">'teal'</span><span class="p">)</span>
+    <span class="nx">value</span> <span class="o">=</span> <span class="s1">'yellow'</span>
+<span class="k">else</span>
+    <span class="nx">value</span> <span class="o">=</span> <span class="s1">'purple'</span>
+</pre>
+
+
+<p>For other colors, you may need to use RBG value in JavaScript, such as 'rgb(0,2,2)'.</p>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../categories/javascript/" rel="tag">JavaScript</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../../Data%20Science/sql-basics/" rel="prev" title="SQL Basics">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../../Front%20End/bootstrap3_sticky_footer/" rel="next" title="Bootstrap 3 Sticky Footer by Martin Bean and Ryan Fait">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="pengyinsnotes",
+            disqus_url="https://pengyin-shan.com/posts/2015/JavaScript/javascript-color/",
+        disqus_title="JavaScript and Color",
+        disqus_identifier="cache/posts/2015/JavaScript/javascript-color.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="pengyinsnotes";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+    
+    <div class="footer-wrapper">
+        <footer role="contentinfo"><p>Contents © 2018         <a href="mailto:pengyin.shan@outlook.com">Pengyin(Wendy) Shan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+        </footer>
+</div>
+
+    
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script src="../../../../assets/js/scripts.min.js"></script>
+</body>
+</html>

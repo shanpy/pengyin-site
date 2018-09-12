@@ -1,0 +1,66 @@
+<h2 id="usage">Usage</h2>
+<p>You can try a sandbox <a href="http://eternicode.github.io/bootstrap-datepicker/?markup=input&format=&weekStart=&startDate=&endDate=&startView=0&minViewMode=0&todayBtn=false&clearBtn=false&language=en&orientation=auto&multidate=&multidateSeparator=&keyboardNavigation=on&forceParse=on#sandbox">here</a> to expore more about bootstrap-datepicker.</p>
+<h3 id="general-usage">General Usage</h3>
+<p>Generally everything is easy. After you refer source file (stylesheet and js) in code, create a <code>&lt;input type="input"&gt;</code> element. Then write following JavaScript code:</p>
+<pre class="code literal-block"><span></span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#your_container input&quot;</span><span class="p">).</span><span class="nx">datepicker</span><span class="p">();</span>
+</pre>
+
+
+<p>Now when you click input box, a calendar will appear.</p>
+<h3 id="embeded-full-calander">Embeded Full Calander</h3>
+<p>You may want a full calender instead of a input box. First you make a <code>&lt;div&gt;</code> with id/className, The do same JavaScript code as above:</p>
+<pre class="code literal-block"><span></span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#your_div&quot;</span><span class="p">).</span><span class="nx">datepicker</span><span class="p">();</span>
+</pre>
+
+
+<h3 id="disable-special-dates">Disable Special Dates</h3>
+<p>One of the function I use very often is to disable some dates (Or only make a few dates available). You need <code>beforeShowDay</code> option to do this:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">avialableDates</span><span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">20</span><span class="p">];</span>
+<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#date_picker&quot;</span><span class="p">).</span><span class="nx">datepicker</span><span class="p">({</span>
+    <span class="nx">beforeShowDay</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">date</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span> <span class="o">==</span> <span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">()).</span><span class="nx">getMonth</span><span class="p">())</span>
+        <span class="c1">//This means date apply to any month, you can also set specific month if you need</span>
+
+        <span class="k">switch</span><span class="p">(</span><span class="kc">true</span><span class="p">){</span>
+            <span class="k">case</span><span class="p">(</span><span class="nx">availableDates</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getDate</span><span class="p">())</span><span class="o">==-</span><span class="mi">1</span><span class="p">)</span><span class="o">:</span>
+                <span class="c1">//Do something to unavailable date</span>
+                <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+
+                <span class="c1">//You can also set opearation to available date</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre>
+
+
+<h3 id="do-something-after-user-choose-date">Do Something after User Choose Date</h3>
+<p>You may want to perform something after user click on a date. Use <code>.change()</code> and <code>.on</code> to detect user's selection and assign function to it:</p>
+<pre class="code literal-block"><span></span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#your_div&quot;</span><span class="p">).</span><span class="nx">datepicker</span><span class="p">({</span>
+  <span class="c1">//assign options, such as beforeShowDay</span>
+<span class="p">}).</span><span class="nx">change</span><span class="p">(</span><span class="nx">changeEvent</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;changeDate&#39;</span><span class="p">,</span><span class="nx">changeEvent</span><span class="p">);</span>
+
+
+<span class="kd">function</span> <span class="nx">changeEvent</span><span class="p">(</span><span class="nx">ev</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">nowDate</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">ev</span><span class="p">.</span><span class="nb">Date</span><span class="p">).</span><span class="nx">getDate</span><span class="p">();</span>
+    <span class="c1">//This is the date that user choose. You are free to use .getFullYear(), .getMonth(), etc</span>
+
+    <span class="c1">//Do whatever you want to do</span>
+<span class="p">}</span>
+</pre>
+
+
+<h2 id="problems-and-solutions">Problems and Solutions</h2>
+<h3 id="p1-cannot-call-method-split-of-undefined-error">P1: "cannot call method 'split' of undefined" error</h3>
+<p>S1: I find following steps to solve this problem:</p>
+<ul>
+<li>
+<p>First, check if there is any repeat id/class name as the one that you are calling</p>
+</li>
+<li>
+<p>Second, try to add "format: 'dd.mm.yyyy'" in option list</p>
+</li>
+<li>
+<p>Third, check if your version is right: you can download a zip with both production version and full version <a href="http://eternicode.github.io/bootstrap-datepicker/?markup=input&format=&weekStart=&startDate=&endDate=&startView=0&minViewMode=0&todayBtn=false&clearBtn=false&language=en&orientation=auto&multidate=&multidateSeparator=&keyboardNavigation=on&forceParse=on#sandbox">here</a>. Try to replace your javascript file with another version, and check if problem disappears.</p>
+</li>
+</ul>

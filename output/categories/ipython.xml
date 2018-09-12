@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Pengyin's Corner (Posts about IPython)</title><link>https://pengyin-shan.com/</link><description></description><atom:link type="application/rss+xml" href="https://pengyin-shan.com/categories/ipython.xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Tue, 11 Sep 2018 20:57:15 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Install Apache Spark with IPython Notebook Configuration on Ubuntu 15</title><link>https://pengyin-shan.com/posts/2015/Data%20Science/ipython-notebook-pyspark/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;p&gt;After reading a few useful posts and some debugging time, I successfully installed &lt;strong&gt;Apache Spark&lt;/strong&gt; on my Ubuntu 15 machine. I also add &lt;strong&gt;PySpark&lt;/strong&gt; in &lt;strong&gt;IPython Notebook&lt;/strong&gt; for development purpose.&lt;/p&gt;
+&lt;p&gt;Many thanks to author of these articles:&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blog.cloudera.com/blog/2014/08/how-to-use-ipython-notebook-with-apache-spark/"&gt;How-to: Use IPython Notebook with Apache Spark&lt;/a&gt;, written by Uri Laserson.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://ramhiser.com/2015/02/01/configuring-ipython-notebook-support-for-pyspark/"&gt;Configuring IPython Notebook Support for PySpark&lt;/a&gt;, written by John Ramey.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://beingzy.github.io/tutorial/2014/10/13/spark-tutorial-Part-I-setting-up-spark-and-ipython-notebook-within-10-minutes.html"&gt;Spark Tutorial (Part I): Setting Up Spark and IPython Notebook within 10 minutes&lt;/a&gt;, written by Yi Zhang.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://ipython.org/ipython-doc/dev/config/intro.html"&gt;Introduction to IPython Configuration&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="install-python-and-ipython-notebook"&gt;Install Python and IPython Notebook&lt;/h3&gt;
+&lt;p&gt;I highly recommend you using &lt;a href="https://virtualenv.pypa.io/en/latest/"&gt;Virtualenv&lt;/a&gt; or &lt;a href="https://store.continuum.io/cshop/anaconda/"&gt;Anacona&lt;/a&gt; for Python package control.&lt;/p&gt;
+&lt;p&gt;You need to install &lt;strong&gt;Python&lt;/strong&gt; and &lt;strong&gt;pip&lt;/strong&gt; first (You can find installation documents through Google Search). Then in terminal, type following:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt;pip install &lt;span class="s2"&gt;"ipython[notebook]"&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;If you want to install everything for IPython, including Notebook, type following in terminal:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt;pip install &lt;span class="s2"&gt;"ipython[all]"&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;You can test your installation by type following command in terminal (Make sure you are in right environment):&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt;ipython notebook
+&lt;/pre&gt;
+
+
+&lt;p&gt;Your default browser should open a window with IPython Notebook interface.&lt;/p&gt;
+&lt;h3 id="install-spark-and-pyspark"&gt;Install Spark and PySpark&lt;/h3&gt;
+&lt;p&gt;You can download Spark from &lt;a href="https://spark.apache.org/downloads.html"&gt;here&lt;/a&gt;. You can install either source code package, or a pre-build package. All packages can be installed and configured for IPython Notebook.&lt;/p&gt;
+&lt;p&gt;Pre-build package can be extracted and being used directly. If you download source package, you need to do this after extracting:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; your_spark_source_folder
+&lt;span class="gp"&gt;$&lt;/span&gt;sbt/sbt assembly
+&lt;/pre&gt;
+
+
+&lt;blockquote&gt;
+&lt;p&gt;This process may take a while :)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;You may need to install &lt;strong&gt;sbt&lt;/strong&gt; first. For Linux user, please refer to this article: &lt;a href="http://www.scala-sbt.org/0.13/tutorial/Installing-sbt-on-Linux.html"&gt;Installing sbt on Linux&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You can test your installation by doing following:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; your_spark_folder
+&lt;span class="gp"&gt;$&lt;/span&gt;./bin/pyspark
+&lt;/pre&gt;
+
+
+&lt;blockquote&gt;
+&lt;p&gt;You need java jdk installed on your machine and JAVA_HOME has been set, otherwise PySpark will throw error for that, such as:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;../images/articles/2015/python/hadoop2.6_java_home_dir_problem.png &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Make sure your JAVA_HOME pointing to home folder of your desired JDK. For example, I want to use Oracle JDK 8. So I type &lt;code&gt;sudo update-alternatives --config java&lt;/code&gt; in terminal to find preferred JDK path (JDK 8 in my case), then add&lt;code&gt;export JAVA_HOME=/usr/lib/jvm/java-8-oracle&lt;/code&gt; in &lt;code&gt;.bashrc&lt;/code&gt; file.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;You should see following in your terminal. Type &lt;code&gt;sc&lt;/code&gt; and you should see output as &lt;code&gt;SparkContext&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;../images/articles/2015/python/test_pyspark.png &lt;/p&gt;
+&lt;h3 id="configure-pyspark-and-ipython-notebook"&gt;Configure PySpark and IPython Notebook&lt;/h3&gt;
+&lt;p&gt;Based on my experience, PySpark has good support for Python 2.7, but not Python 3. I recommend you use &lt;strong&gt;Python 2.7&lt;/strong&gt; in this step.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://ramhiser.com/2015/02/01/configuring-ipython-notebook-support-for-pyspark/"&gt;Configuring IPython Notebook Support for PySpark&lt;/a&gt;, written by John Ramey, gave a very good description of steps you need to follow. However, you need to remember doing following:&lt;/p&gt;
+&lt;p&gt;In &lt;code&gt;.bashrc&lt;/code&gt; and &lt;code&gt;00-pyspark-setup.py&lt;/code&gt;, make sure you have your own Spark folder name. Check your &lt;code&gt;your_spark_folder/python/lib&lt;/code&gt; for py4j version.&lt;/p&gt;
+&lt;p&gt;After you do &lt;code&gt;ipython notebook --profile=pyspark&lt;/code&gt;, you will open Jupyter web interface in your default browser, using the &lt;code&gt;c.NotebookApp.port&lt;/code&gt; in your &lt;code&gt;.bashrc&lt;/code&gt; file.&lt;/p&gt;
+&lt;p&gt;In Jupyter interface, You can upload one existing IPython Notebook to test your configuration by clicking &lt;code&gt;Upload&lt;/code&gt; button, Or create a new IPython Notebook by clicking &lt;code&gt;new&lt;/code&gt; button, then select &lt;code&gt;Python 2&lt;/code&gt; or &lt;code&gt;Python 3&lt;/code&gt; in drop-down menu.&lt;/p&gt;
+&lt;p&gt;In IPython Notebook interface, create a new cell and type &lt;code&gt;sc&lt;/code&gt;. When you run this cell, you should see &lt;code&gt;SparkContext&lt;/code&gt; object, same as following:&lt;/p&gt;
+&lt;p&gt;../images/articles/2015/python/test_pyspark_notebook.png &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Now, if your IPython Notebook show message: &lt;code&gt;NameError: name 'sc' is not defined&lt;/code&gt;, which means your IPython Notebook doesn't use PySpark profile. You can try typing &lt;code&gt;ipython --profile=pyspark&lt;/code&gt; in terminal to make PySpark as default IPython profile, then try &lt;code&gt;ipython notebook --profile=pyspark&lt;/code&gt; again. PySpark should be available now.&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/div&gt;</description><category>Data Science</category><category>IPython</category><category>Python</category><category>Spark</category><guid>https://pengyin-shan.com/posts/2015/Data%20Science/ipython-notebook-pyspark/</guid><pubDate>Wed, 10 Jun 2015 04:00:00 GMT</pubDate></item></channel></rss>

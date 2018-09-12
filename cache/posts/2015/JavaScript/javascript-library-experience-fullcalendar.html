@@ -1,0 +1,62 @@
+<h2 id="first-impression-and-basic-usage">First Impression and Basic Usage</h2>
+<p>I got a request in my work, asking me to research a open source JavaScript calendar library. The calendar should be able to do following:</p>
+<blockquote>
+<p>Add/Load/Delete Events, which needs a commucation with back-end. Event content can be configured, which means developer can over write event trigger function. Also developer can set up event time plot.</p>
+<p>Different views, as least have day,week,month view. Also user should have a way to view details in other years.</p>
+</blockquote>
+<p>So I check FullCalendar and the demo looks ok for me. I decide to try it. Official website gave a simple piece of code for basic usage:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#39;stylesheet&#39;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#39;fullcalendar/fullcalendar.css&#39;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#39;lib/jquery.min.js&#39;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#39;lib/moment.min.js&#39;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#39;fullcalendar/fullcalendar.js&#39;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+$(document).ready(function() {
+    $(&#39;#calendar&#39;).fullCalendar({
+    })
+});
+</pre>
+
+
+<p>It looks simple, but I encourted following problems and it takes a while to figure out solution:</p>
+<h2 id="problem-1">Problem 1</h2>
+<p><strong>The confusion of CDNJS source</strong></p>
+<p>FullCalendar official website gives out <code>CDN</code> host source for <code>css</code> file and <code>javascript</code> file, which is the way I preferred, comparing to use local file. However, only three files are given with <code>CDN</code> url, which misleading me to thought <em>I only need these three files to run FullCalendar</em>, which is <strong>wrong</strong>.</p>
+<p>After I run code in browser, I got error message in console, telling that <strong>moment is not defined as function</strong>. This error remind me that I need other JavaScript file to provide basic functionality.</p>
+<h2 id="answer-1">Answer 1</h2>
+<p>Make sure you have <code>fullcalendar.css</code>, <code>jquery.js</code>, <code>moment.js</code>, <code>fullcalendar.js</code> for basic setup.** <code>moment.js</code> needs to be put before <code>fullcalendar.js</code>.</p>
+<h2 id="problem-2">Problem 2</h2>
+<p><strong>CSS Style Problem (Cause my headache :)</strong></p>
+<p>After I solve the problem above, I was able to see calendar data in browser, but <strong>no style has been applied</strong>. To solve the problem, I first try following solution:</p>
+<blockquote>
+<p>User console to compare my code and demo code. It turns out that we had same code/classes. The only problem is my classes in code didn't have style applied on.</p>
+<p>Change browser. <em>This is not a browser problem</em>.</p>
+<p>Re-check code to make sure if I miss any necessary stylesheet.<em>No</em></p>
+<p>First check if all <code>CDN</code>
+resources loading successfully. Then replace all <code>CDN</code> resource to local resource, and make sure all resources are in same version. <em>Not Work</em></p>
+<p>Use a old stable version for FullCalender. <em>Not Work</em></p>
+<p>Back to demo code and demo source code, make sure we have same JavaScript setting. <em>No difference between two codes.</em></p>
+<ul>
+<li>So I have to seek help on Google. A <a href="http://stackoverflow.com/questions/25178565/fullcalendar-layout-broken-because-css-loading-after-javascript-layout-calculati">post</a> in <em>StackOverflow</em> helps with this problem.</li>
+</ul>
+</blockquote>
+<h2 id="answer2">Answer2</h2>
+<p><strong>Load Stylesheet in JavaScript</strong></p>
+<p>I should adjust code as following:</p>
+<pre class="code literal-block"><span></span><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;ready&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//This is the code to load stylesheet</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;&lt;link rel=&#39;stylesheet&#39; type=&#39;text/css&#39; href=&#39;fullcalendar.css&#39; /&gt;&quot;</span><span class="p">).</span><span class="nx">appendTo</span><span class="p">(</span><span class="s2">&quot;head&quot;</span><span class="p">);</span>
+    <span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;load&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#calendar&#39;</span><span class="p">).</span><span class="nx">fullCalendar</span><span class="p">({</span>
+        <span class="p">});</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+</pre>
+
+
+<p>It turns out that different from normal file loading process in front-end development, I need to <strong>load source javascript file first, then after DOM is ready, loading stylesheet.</strong></p>
+<blockquote>
+<p>In this case, when <code>DOM</code> is ready, stylesheet is appending. The after DOM finish loading style sheet and begin to load <code>window</code>, my javascript code trigger.</p>
+</blockquote>
+<p><strong>Important Notes</strong>
+- <code>$(document).ready</code> triggers after <code>HTML</code> elements has been loaded.
+- <code>onload</code> event occurs later, after all content elements, such as <code>image</code>, has been loaded.
+- Next time I get this probelm, I should try to load stylesheet later, using <code>"&lt;link/&gt;".appendTo("head")</code>.</p>

@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " vocab="http://ogp.me/ns" lang="en">
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]--><!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]--><!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]--><!--[if gt IE 8]><!--><!--<![endif]--><head>
+<meta charset="utf-8">
+<meta name="description" content="I wrote this post to record some basic knowledge about dynamic programming algorithm for future reference. Code is written mainly in Java.">
+<!-- http://t.co/dKP3o1e --><meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algorithm and Data Structure Basics - Dynamic Programming | Pengyin's Corner</title>
+<link href="../../../../assets/css/all.css" rel="stylesheet" type="text/css">
+<!-- Webfonts --><link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+<!-- Load Modernizr --><script src="//mmistakes.github.io/hpstr-jekyll-theme/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script><link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../rss.xml">
+<link rel="canonical" href="https://pengyin-shan.com/posts/2015/Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-dynamic-programming/">
+<!--[if lt IE 9]><script src="../../../../assets/js/html5.js"></script><![endif]--><meta name="description" content="I wrote this post to record some basic knowledge about dynamic programming algorithm for future reference. Code is written mainly in Java.">
+<meta name="author" content="Pengyin(Wendy) Shan">
+<link rel="prev" href="../../JavaScript/jasmine-basics/" title="Jasmine Basics" type="text/html">
+<link rel="next" href="../../Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-recursion/" title="Algorithm and Data Structure Basics - Recursion" type="text/html">
+<meta property="og:site_name" content="Pengyin's Corner">
+<meta property="og:title" content="Algorithm and Data Structure Basics - Dynamic Programming">
+<meta property="og:url" content="https://pengyin-shan.com/posts/2015/Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-dynamic-programming/">
+<meta property="og:description" content="I wrote this post to record some basic knowledge about dynamic programming algorithm for future reference. Code is written mainly in Java.">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-09-01T00:00:00-04:00">
+<meta property="article:tag" content="Algorithm">
+<meta property="article:tag" content="Data Structure">
+<meta property="article:tag" content="Dynamic Programming">
+<meta property="article:tag" content="Java">
+</head>
+<body id="post-index" class="feature">
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    
+
+    <nav id="dl-menu" class="dl-menuwrapper" role="navigation"><button class="dl-trigger">Open Menu</button>
+    <ul class="dl-menu">
+<li><a href="../../../">My Knowledge Base</a></li>
+            <li><a href="https://www.linkedin.com/in/pengyinshan">My LinkedIn</a></li>
+            <li><a href="../../../../categories/">Tags and Categories</a></li>
+            <li><a href="../../../../rss.xml">RSS feed</a></li>
+            <li><a href="../../../../archive.html">Archive</a></li>
+    
+    
+    </ul></nav><div class="entry-header">
+<!-- /.image-credit -->
+    <div class="entry-image">
+      <img src="../../../../bk.JPG" alt="Latest Posts">
+</div>
+<!-- /.entry-image -->
+      
+  <div class="header-title">
+    <div class="header-title-wrap">
+    <h1 id="brand"><a href="https://pengyin-shan.com/" title="Pengyin's Corner" rel="home">
+    Pengyin's Corner</a></h1>
+      <h2>Be Passionate.</h2>
+    </div>
+<!-- /.header-title-wrap -->
+  </div>
+<!-- /.header-title -->
+
+</div>
+<!-- /.entry-header -->
+
+    <div id="main" role="main">
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><div class="entry-meta">
+            <span class="dateline"><a href="../../Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-dynamic-programming/" rel="bookmark"><time class="published dt-published" datetime="2015-09-01T00:00:00-04:00" itemprop="datePublished" title="2015-09-01">2015-09-01</time></a></span>  ·  
+            <span class="byline author vcard">Pengyin(Wendy) Shan</span>  ·  
+                <span class="commentline">
+        
+    <a href="../../Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-dynamic-programming/#disqus_thread" data-disqus-identifier="cache/posts/2015/Algorithm Data Structure/algorithm-and-data-structure-basics-dynamic-programming.html">Comments</a>
+
+</span>  ·  
+            
+        <span class="sourceline"><a href="../../Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-dynamic-programming/index.md" id="sourcelink">Source</a></span>  ·  
+
+                <meta name="description" itemprop="description" content="I wrote this post to record some basic knowledge about dynamic programming algorithm for future reference. Code is written mainly in Java.">
+</div>
+        
+
+    
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="../../Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-dynamic-programming/" class="u-url">Algorithm and Data Structure Basics - Dynamic Programming</a></h1>
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<h4 id="reference-list">Reference List</h4>
+<ul>
+<li>
+<p><a href="http://www.th7.cn/Program/java/2011-07-07/29801.shtml">Dynamic Programming (Chinese)</a></p>
+</li>
+<li>
+<p><a href="http://www.cnblogs.com/pengyingh/articles/2396427.html">Dynamic Programming (Chinese)</a></p>
+</li>
+<li>
+<p><a href="http://blog.csdn.net/biangren/article/details/8038605">Java Dynamic Programming: Longest Common Sequence (Chinese)</a></p>
+</li>
+<li>
+<p><a href="http://www.programcreek.com/2013/02/leetcode-maximum-subarray-java/">LeetCode - Maximum Subarray (Java)</a></p>
+</li>
+</ul>
+<h4 id="basic-idea">Basic Idea</h4>
+<p><strong>Dynamic Programming (DP)</strong> is used to get the <strong>best result</strong> in the process of making decisions. It is for a problem with <strong>multiple stages</strong> of decision making.</p>
+<p>For one problem, A decision of <strong>best solution</strong> may depend on the best solutions in smaller problems.</p>
+<p>In this case, DP suggests to get the best solution for <strong>all</strong> small stages <strong>only once</strong>, and <strong>store</strong> these solutions, no matter if they'll be useful in the future or not.</p>
+<p>Finally, user can combine small best solutions to get the final solution. <em>Never repeat the process of getting same small solution.</em></p>
+<h5 id="four-steps-of-dynamic-programming">Four Steps of Dynamic Programming</h5>
+<ol>
+<li>
+<p>Describe the structure of the best solution.</p>
+</li>
+<li>
+<p>Use <strong>recursion</strong> to define the value of best solution</p>
+</li>
+<li>
+<p><strong>From bottom to top</strong>, calculate the value of best solution</p>
+</li>
+<li>
+<p>Combine all results to get the final solution</p>
+</li>
+</ol>
+<h4 id="longest-common-sequence-lcs">Longest Common Sequence, LCS</h4>
+<blockquote>
+<p>Assume you have two strings. Output their longest common sub-string. Sub-string has two cases: continuous from origin string or non-continuous from original string.
+For example, you have two string: <code>BDCABA</code> and <code>ABCBDAB</code>. You can output BCBA or BDAB for non-continuous longest sub-string, with length of 4.</p>
+</blockquote>
+<h5 id="idea">Idea</h5>
+<p>Assume we have two input strings: <code>A="a0,a1,...,am-1"</code>, <code>B="b0,b1,...bn-1"</code>.</p>
+<p>Assume we have a LCS <code>Z="z0,z1,...zk-1"</code>.</p>
+<p>There are three possibilities for this assumption:</p>
+<ol>
+<li>
+<p>if <code>am-1 = bn-1</code>, we can conclude <code>zk-1 = am-1 = bn-1</code> (Otherwise Z cannot be LCS). And we can conclude <code>z0,z1...zk-2</code> is the LCS for <code>a0,a1,...am-2</code> and <code>b0,b1,...bn-2</code></p>
+</li>
+<li>
+<p>if <code>am-1 != bn-1</code>, we can conclude <em>if <code>zk-1 != am-1</code></em>, then <code>z0,z1,...zk-2</code> is the LCS for <code>a0,a1,...am-2</code> and <code>b0,b1,...bn-1</code>.</p>
+</li>
+<li>
+<p>if <code>am-1 != bn-1</code>, we can conclude <em>if <code>zk-2 != bn-1</code></em>, then <code>z0,z1,...zk-2</code> is the LCS for <code>a0,a1,...am-1</code> and <code>b0,b1,...bn-2</code></p>
+</li>
+</ol>
+<p>Based on rules above, we can divide this problem to many smaller problem. For example, if we want to get LCS for <code>a0,a1,...am-2</code> and <code>b0,b1,...bn-2</code>, then we need to apply rules above to get <code>z0,z1z...zk-3</code> for <code>a0,a1,...am-3</code> and <code>b0,b1,...bn-3</code>, assuming <code>am-2 = bm-2</code>.</p>
+<h5 id="create-array-to-store-solutions">Create Array to Store Solutions</h5>
+<p>We want to create a two-dimensional array <code>c[i][j]</code>. It is used to record the length of LCS for <code>X[i]</code> and <code>Y[j]</code>.</p>
+<blockquote>
+<p>Since we are calculating <strong>from bottom to top</strong>, we already get <code>c[i-1][j-1]</code>, <code>c[i-1][j]</code> and <code>c[i][j-1]</code> before we get <code>c[i][j]</code>. Since we can know if <code>X[i]=Y[j]</code> or not, we can calculate the value of <code>c[i][j]</code> based on three rules above.</p>
+</blockquote>
+<p>The graph below is from <a href="http://blog.csdn.net/biangren/article/details/8038605">this post</a>, expressing the math idea and calculation process for this problem:</p>
+<p>../images/articles/2015/algorithm/lcs_math.png </p>
+<p>Using two input string <code>BDCABA</code> and <code>ABCBDAB</code>:</p>
+<p>../images/articles/2015/algorithm/lcs_graph.png </p>
+<blockquote>
+<p>You may notice only when we move to left-top direction, we can find a character for LCS. So we need to create another two-dimensional array to record moving direction</p>
+</blockquote>
+<h5 id="code-for-non-continuous-lcs">Code for Non-continuous LCS</h5>
+<p>Following code is from <a href="http://blog.sina.com.cn/s/blog_5d4646fd0100qitg.html">this post</a>, written by <em>BirdMan</em>:</p>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LCS</span><span class="o">{</span>
+
+    <span class="kt">int</span><span class="o">[][]</span> <span class="nf">lcsLength</span><span class="o">(</span><span class="kt">char</span><span class="o">[]</span> <span class="n">x</span><span class="o">,</span><span class="kt">char</span><span class="o">[]</span> <span class="n">y</span><span class="o">){</span>
+        <span class="kt">int</span> <span class="n">m</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">i</span><span class="o">,</span><span class="n">j</span><span class="o">;</span>
+
+        <span class="kt">int</span><span class="o">[][]</span> <span class="n">c</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">m</span><span class="o">][</span><span class="n">n</span><span class="o">];</span>
+        <span class="kt">int</span><span class="o">[][]</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">m</span><span class="o">][</span><span class="n">n</span><span class="o">];</span>
+        <span class="k">for</span><span class="o">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">m</span><span class="o">;</span><span class="n">i</span><span class="o">++)</span>
+            <span class="n">c</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="k">for</span><span class="o">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span><span class="n">j</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">;</span><span class="n">j</span><span class="o">++)</span>
+            <span class="n">c</span><span class="o">[</span><span class="mi">0</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+
+        <span class="k">for</span><span class="o">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">m</span><span class="o">;</span><span class="n">i</span><span class="o">++){</span>
+            <span class="k">for</span><span class="o">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span><span class="n">j</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">;</span><span class="n">j</span><span class="o">++){</span>
+                <span class="c1">//Case with same character</span>
+                <span class="k">if</span><span class="o">(</span><span class="n">x</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">==</span> <span class="n">y</span><span class="o">[</span><span class="n">j</span><span class="o">]){</span>
+                    <span class="n">c</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">c</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">]</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+                    <span class="n">b</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="c1">//in graph, this means going to left-top</span>
+                <span class="o">}</span>
+                <span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">c</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">&gt;=</span> <span class="n">c</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">]){</span>
+                    <span class="n">c</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">c</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">][</span><span class="n">j</span><span class="o">];</span>
+                    <span class="n">b</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span> <span class="c1">//in graph, this means going to top</span>
+                <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+                    <span class="n">c</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">c</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">];</span>
+                    <span class="n">b</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span> <span class="c1">//in graph, this means going to left</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">b</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kt">void</span> <span class="nf">printLCS</span><span class="o">(</span><span class="kt">int</span><span class="o">[][]</span> <span class="n">b</span><span class="o">,</span><span class="kt">char</span><span class="o">[]</span> <span class="n">x</span><span class="o">,</span><span class="kt">int</span> <span class="n">i</span><span class="o">,</span><span class="kt">int</span> <span class="n">j</span><span class="o">){</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">b</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">==</span> <span class="mi">1</span><span class="o">){</span>
+            <span class="c1">//Only want the left-top direction. i.e. b[i][j]=1</span>
+            <span class="n">printLCS</span><span class="o">(</span><span class="n">b</span><span class="o">,</span><span class="n">x</span><span class="o">,</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">,</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="s">":"</span> <span class="o">+</span> <span class="n">x</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">+</span> <span class="s">"\t"</span><span class="o">);</span>
+        <span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">b</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">==</span> <span class="mi">2</span><span class="o">)</span>
+            <span class="n">printLCS</span><span class="o">(</span><span class="n">b</span><span class="o">,</span><span class="n">x</span><span class="o">,</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">,</span><span class="n">j</span><span class="o">);</span>
+        <span class="k">else</span>
+            <span class="n">printLCS</span><span class="o">(</span><span class="n">b</span><span class="o">,</span><span class="n">x</span><span class="o">,</span><span class="n">i</span><span class="o">,</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="cm">/*Important: here we need a empty string/char at the beginning of each input, because if you check the graph, position (0,0) has no character. Out matrix with character start from position 1.</span>
+<span class="cm">        */</span>
+        <span class="kt">char</span><span class="o">[]</span> <span class="n">x</span> <span class="o">=</span> <span class="o">{</span><span class="sc">' '</span><span class="o">,</span><span class="sc">'A'</span><span class="o">,</span><span class="sc">'B'</span><span class="o">};</span>
+        <span class="kt">char</span><span class="o">[]</span> <span class="n">y</span> <span class="o">=</span> <span class="o">{</span><span class="sc">' '</span><span class="o">,</span><span class="sc">'B'</span><span class="o">,</span><span class="sc">'D'</span><span class="o">};</span>
+        <span class="n">LCS</span> <span class="n">lcs</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LCS</span><span class="o">();</span>
+        <span class="n">lcs</span><span class="o">.</span><span class="na">printLCS</span><span class="o">(</span><span class="n">lcs</span><span class="o">.</span><span class="na">lcsLength</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">),</span> <span class="n">x</span><span class="o">,</span> <span class="n">x</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="n">y</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="mi">1</span><span class="o">);</span>
+    <span class="o">}</span>
+</pre>
+
+
+<p>}</p>
+<h4 id="maximum-subarray">Maximum Subarray</h4>
+<p>I learned this problem main from <a href="http://www.programcreek.com/2013/02/leetcode-maximum-subarray-java/">LeetCode - Maximum Subarray (Java)</a>.</p>
+<blockquote>
+<p>You have a array of integers(may include negative number). You want to find a continuous subarray so that the sum of subarray is maximized. For example, assume you have <code>{-12, 1, -3, 4, -1, 2, 1, -5, 4}</code>. The maximum subarray is <code>6</code>.</p>
+</blockquote>
+<p>Rules we need to follow:</p>
+<ul>
+<li>We should ignore the sum of the previous <code>n-1</code> elements if <code>nth</code> element is greater than the sum.</li>
+</ul>
+<p>Code from same post:</p>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MaxSubarray</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">test</span> <span class="o">=</span> <span class="o">{</span> <span class="o">-</span><span class="mi">2</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="o">-</span><span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="o">-</span><span class="mi">5</span><span class="o">,</span> <span class="mi">4</span><span class="o">};</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"result: "</span> <span class="o">+</span> <span class="n">maxSubArray</span><span class="o">(</span><span class="n">test</span><span class="o">));</span>
+
+    <span class="o">}</span>
+
+    <span class="kd">static</span> <span class="kt">int</span> <span class="nf">maxSubArray</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="n">A</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">sum</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
+        <span class="n">sum</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">A</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="cm">/*Compare current value with the sum of previous sum and this value.</span>
+<span class="cm">            Two cases:</span>
+<span class="cm">            1. Assume current value is non-negative.</span>
+<span class="cm">                1.1 If the new sum of previous sum and current value is larger than current value, previous sum must be non-negative. In this case, take the new sum.</span>
+<span class="cm">                1.2 If the new sum of previous sum and current value is smaller than current value, previous sum must be negative value. In this case, drop previous sum and re-start from current value (because current value is larger).</span>
+<span class="cm">            2. if current value is negative, we still want to keep previous sum because new sum must be smaller than previous sum</span>
+<span class="cm">            */</span>
+            <span class="n">sum</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">sum</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">]</span> <span class="o">+</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+            <span class="c1">//max is the maximum subarray value</span>
+            <span class="n">max</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">max</span><span class="o">,</span> <span class="n">sum</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+        <span class="o">}</span>
+
+        <span class="k">return</span> <span class="n">max</span><span class="o">;</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</pre>
+
+
+<p>There can be a similar solution, using a <code>temp</code> variable. Following code is my full solution on <a href="https://www.hackerrank.com/challenges/maxsubarray">HackerRank</a> :</p>
+<pre class="code literal-block"><span></span><span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.text.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.math.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.regex.*</span><span class="o">;</span>
+
+<span class="cm">/*</span>
+<span class="cm">test case input:</span>
+<span class="cm">6</span>
+<span class="cm">1</span>
+<span class="cm">1</span>
+<span class="cm">6</span>
+<span class="cm">-1 -2 -3 -4 -5 -6</span>
+<span class="cm">2</span>
+<span class="cm">1 -2</span>
+<span class="cm">3</span>
+<span class="cm">1 2 3</span>
+<span class="cm">1</span>
+<span class="cm">-10</span>
+<span class="cm">6</span>
+<span class="cm">1 -1 -1 -1 -1 5</span>
+
+<span class="cm">test case output:</span>
+
+<span class="cm">1 1</span>
+<span class="cm">-1 -1</span>
+<span class="cm">1 1</span>
+<span class="cm">6 6</span>
+<span class="cm">-10 -10</span>
+<span class="cm">5 6</span>
+<span class="cm">*/</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">{</span>
+        <span class="n">BufferedReader</span> <span class="n">bd</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">InputStreamReader</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">));</span>
+        <span class="kt">int</span> <span class="n">cases</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">bd</span><span class="o">.</span><span class="na">readLine</span><span class="o">());</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">cases</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+            <span class="n">String</span> <span class="n">line</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="na">readLine</span><span class="o">();</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">line</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+                <span class="kt">int</span> <span class="n">howmany</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">line</span><span class="o">);</span>
+                <span class="kt">float</span><span class="o">[]</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">float</span><span class="o">[</span><span class="n">howmany</span><span class="o">];</span>
+                <span class="n">String</span> <span class="n">nums</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="na">readLine</span><span class="o">();</span>
+                <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">j</span><span class="o">++){</span>
+                    <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="n">nums</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="s">" "</span><span class="o">);</span>
+                    <span class="k">if</span><span class="o">(</span><span class="n">index</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">index</span><span class="o">&lt;</span><span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">){</span>
+                        <span class="c1">//Use parseFloat for passing negative numbers</span>
+                        <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">Float</span><span class="o">.</span><span class="na">parseFloat</span><span class="o">(</span><span class="n">nums</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="n">index</span><span class="o">));</span>
+                        <span class="n">nums</span> <span class="o">=</span> <span class="n">nums</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="o">,</span> <span class="n">nums</span><span class="o">.</span><span class="na">length</span><span class="o">());</span>
+                    <span class="o">}</span>
+                    <span class="k">else</span>
+                        <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">Float</span><span class="o">.</span><span class="na">parseFloat</span><span class="o">(</span><span class="n">nums</span><span class="o">);</span>
+                <span class="o">}</span>
+                <span class="kt">int</span> <span class="n">first</span> <span class="o">=</span> <span class="n">getMaxCon</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+                <span class="kt">int</span> <span class="n">second</span> <span class="o">=</span> <span class="n">getMaxNonCon</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">first</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="n">second</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">""</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">static</span> <span class="kt">int</span> <span class="nf">getMaxCon</span><span class="o">(</span><span class="kt">float</span><span class="o">[]</span> <span class="n">a</span><span class="o">){</span>
+        <span class="kt">float</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+        <span class="kt">float</span> <span class="n">max</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">temp</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+            <span class="k">else</span><span class="o">{</span>
+                <span class="n">temp</span> <span class="o">+=</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+            <span class="o">}</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">temp</span> <span class="o">&gt;</span> <span class="n">max</span><span class="o">){</span>
+                <span class="n">max</span> <span class="o">=</span> <span class="n">temp</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span><span class="n">max</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">static</span> <span class="kt">int</span> <span class="nf">getMaxNonCon</span><span class="o">(</span><span class="kt">float</span><span class="o">[]</span> <span class="n">a</span><span class="o">){</span>
+        <span class="c1">//For non-continous option, no need to add replace part</span>
+        <span class="kt">float</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">+</span> <span class="n">temp</span> <span class="o">&gt;</span> <span class="n">temp</span><span class="o">)</span>
+                <span class="n">temp</span> <span class="o">+=</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span><span class="n">temp</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<blockquote>
+<p>My current problem is both methods above has time complexity of O(n), which is not very efficient if there exists lot of numbers. Is there any way to improve it?</p>
+</blockquote>
+<h4 id="stock-problem">Stock Problem</h4>
+<p><em>This problem can be done by DP or Non-DP method.</em></p>
+<p>Stock problem can be concluded to a <strong>finding maximum sum of array elements' differences</strong>, with different constrains.</p>
+<p>Following problems assume you cannot sell and buy stock on the same day:</p>
+<h5 id="what-if-you-can-sellmaintainbuy-stocks-with-unlimited-time">What if you can sell/maintain/buy stocks with unlimited time?</h5>
+<p>I met this problem on <a href="https://www.hackerrank.com/challenges/stockmax">hackerank.com</a>. In this problem, you can only buy one stock once per day, but you can choose to sell all your current stocks in one day.</p>
+<p>So far I figured a solution with <code>O(n)</code> runtime complexity:</p>
+<pre class="code literal-block"><span></span><span class="cm">/*</span>
+<span class="cm">Example Input:</span>
+<span class="cm">3</span>
+<span class="cm">3</span>
+<span class="cm">5 3 2</span>
+<span class="cm">3</span>
+<span class="cm">1 2 100</span>
+<span class="cm">4</span>
+<span class="cm">1 3 1 2</span>
+<span class="cm">Example Output:</span>
+<span class="cm">0</span>
+<span class="cm">197</span>
+<span class="cm">3</span>
+<span class="cm">*/</span>
+
+<span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.text.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.math.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.regex.*</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">{</span>
+            <span class="n">BufferedReader</span> <span class="n">bd</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">InputStreamReader</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">));</span>
+            <span class="kt">int</span> <span class="n">cases</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">bd</span><span class="o">.</span><span class="na">readLine</span><span class="o">());</span>
+            <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">cases</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+                <span class="n">String</span> <span class="n">line</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="na">readLine</span><span class="o">();</span>
+                <span class="k">if</span><span class="o">(</span><span class="n">line</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+                    <span class="kt">int</span> <span class="n">howmany</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">line</span><span class="o">);</span>
+                    <span class="kt">int</span><span class="o">[]</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">howmany</span><span class="o">];</span>
+                    <span class="n">String</span> <span class="n">nums</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="na">readLine</span><span class="o">();</span>
+                    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">j</span><span class="o">++){</span>
+                        <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="n">nums</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="s">" "</span><span class="o">);</span>
+                        <span class="k">if</span><span class="o">(</span><span class="n">index</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">index</span><span class="o">&lt;</span><span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">){</span>
+                            <span class="c1">//Use parseFloat for passing negative numbers</span>
+                            <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">nums</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="n">index</span><span class="o">));</span>
+                            <span class="n">nums</span> <span class="o">=</span> <span class="n">nums</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="o">,</span> <span class="n">nums</span><span class="o">.</span><span class="na">length</span><span class="o">());</span>
+                        <span class="o">}</span>
+                        <span class="k">else</span>
+                            <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">nums</span><span class="o">);</span>
+                    <span class="o">}</span>
+                    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">countStock</span><span class="o">(</span><span class="n">a</span><span class="o">));</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/*</span>
+<span class="cm">    This solution assume two pointers from the end of array.</span>
+<span class="cm">    Last pointer try to find positive benefit, counting difference with the value of first pointer.</span>
+<span class="cm">    O(n) running time</span>
+<span class="cm">    */</span>
+    <span class="kd">static</span> <span class="kt">int</span> <span class="nf">countStock</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">a</span><span class="o">){</span>
+        <span class="kt">int</span> <span class="n">last</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">first</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="mi">2</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="k">while</span><span class="o">(</span><span class="n">first</span><span class="o">&gt;=</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">last</span><span class="o">&gt;=</span><span class="mi">0</span><span class="o">){</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">last</span><span class="o">]-</span><span class="n">a</span><span class="o">[</span><span class="n">first</span><span class="o">]&gt;</span><span class="mi">0</span><span class="o">){</span>
+                <span class="n">sum</span> <span class="o">+=</span> <span class="n">a</span><span class="o">[</span><span class="n">last</span><span class="o">]-</span><span class="n">a</span><span class="o">[</span><span class="n">first</span><span class="o">];</span>
+                <span class="n">first</span> <span class="o">--;</span>
+            <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+                <span class="n">first</span> <span class="o">--;</span>
+                <span class="n">last</span> <span class="o">=</span> <span class="n">first</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">sum</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">)</span>
+            <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">sum</span><span class="o">;</span>
+    <span class="o">}</span>
+</pre>
+
+
+<h5 id="what-if-you-can-only-buy-stock-once-and-sell-stock-once">What if you can only buy stock once and sell stock once?</h5>
+<p>Then the problem is turning to <em>finding out the largest different between two elements in array</em>. i.e.Find smallest and largest elements in array, while smallest element should in the front of the largest element. Following is my code:</p>
+<pre class="code literal-block"><span></span><span class="kd">static</span> <span class="kt">int</span> <span class="nf">countStock</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">a</span><span class="o">){</span>
+    <span class="kt">int</span> <span class="n">smallest</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+    <span class="kt">int</span> <span class="n">largest</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+    <span class="kt">int</span> <span class="n">diff</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+
+    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+
+        <span class="c1">//Count diff. Reset smallest and largest if a[i]&lt;a[i-1]</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">]&gt;</span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]){</span>
+            <span class="n">diff</span> <span class="o">=</span> <span class="n">max</span><span class="o">(</span><span class="n">diff</span><span class="o">,</span> <span class="n">largest</span> <span class="o">-</span> <span class="n">smallest</span><span class="o">);</span>
+            <span class="n">smallest</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+            <span class="n">largest</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+        <span class="o">}</span>
+        <span class="k">else</span><span class="o">{</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]&lt;</span><span class="n">smallest</span><span class="o">){</span>
+                <span class="n">smallest</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+            <span class="o">}</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]&gt;</span><span class="n">largest</span><span class="o">){</span>
+                <span class="n">largest</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="k">if</span><span class="o">(</span><span class="n">diff</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">)</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="n">diff</span><span class="o">;</span>
+<span class="o">}</span>
+</pre>
+
+
+<h5 id="what-if-you-can-only-trade-stock-with-a-maximum-of-n-times">What if you can only trade stock with a maximum of n times?</h5>
+<p>My idea is that we can use same idea as the first stock problem (2 pointers). Since we can only count <code>n</code> times of benefits, we can store all benefits in a sorted array (in descending order), then get the sum of first <code>n</code> elements.</p>
+<pre class="code literal-block"><span></span> <span class="c1">//O(mn): m is the size of input array, n is the size of times</span>
+ <span class="kd">static</span> <span class="kt">int</span> <span class="nf">countStockNTimes</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">n</span><span class="o">){</span>
+        <span class="kt">int</span> <span class="n">last</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">first</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="mi">2</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">sums</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">n</span><span class="o">];</span>
+        <span class="k">while</span><span class="o">(</span><span class="n">first</span><span class="o">&gt;=</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">last</span><span class="o">&gt;=</span><span class="mi">0</span><span class="o">){</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">last</span><span class="o">]-</span><span class="n">a</span><span class="o">[</span><span class="n">first</span><span class="o">]&gt;</span><span class="mi">0</span><span class="o">){</span>
+                <span class="n">addToSortedArray</span><span class="o">(</span><span class="n">sum</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">last</span><span class="o">]-</span><span class="n">a</span><span class="o">[</span><span class="n">first</span><span class="o">]);</span>
+                <span class="n">first</span> <span class="o">--;</span>
+            <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+                <span class="n">first</span> <span class="o">--;</span>
+                <span class="n">last</span> <span class="o">=</span> <span class="n">first</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+            <span class="n">max</span> <span class="o">+=</span> <span class="n">sum</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+        <span class="o">}</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">max</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">)</span>
+            <span class="n">max</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">max</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">//O(n) time complexity</span>
+<span class="kt">void</span> <span class="nf">addToSortedArray</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">sum</span><span class="o">,</span> <span class="kt">int</span> <span class="n">diff</span><span class="o">){</span>
+    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">sum</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">diff</span><span class="o">&lt;</span><span class="n">sum</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="n">diff</span><span class="o">&gt;</span><span class="n">sum</span><span class="o">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">])</span>
+            <span class="n">sum</span><span class="o">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">diff</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../categories/algorithm/" rel="tag">Algorithm</a></li>
+            <li><a class="tag p-category" href="../../../../categories/data-structure/" rel="tag">Data Structure</a></li>
+            <li><a class="tag p-category" href="../../../../categories/dynamic-programming/" rel="tag">Dynamic Programming</a></li>
+            <li><a class="tag p-category" href="../../../../categories/java/" rel="tag">Java</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../../JavaScript/jasmine-basics/" rel="prev" title="Jasmine Basics">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../../Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-recursion/" rel="next" title="Algorithm and Data Structure Basics - Recursion">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="pengyinsnotes",
+            disqus_url="https://pengyin-shan.com/posts/2015/Algorithm%20Data%20Structure/algorithm-and-data-structure-basics-dynamic-programming/",
+        disqus_title="Algorithm and Data Structure Basics - Dynamic Programming",
+        disqus_identifier="cache/posts/2015/Algorithm Data Structure/algorithm-and-data-structure-basics-dynamic-programming.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="pengyinsnotes";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+    
+    <div class="footer-wrapper">
+        <footer role="contentinfo"><p>Contents © 2018         <a href="mailto:pengyin.shan@outlook.com">Pengyin(Wendy) Shan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+        </footer>
+</div>
+
+    
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script src="../../../../assets/js/scripts.min.js"></script>
+</body>
+</html>

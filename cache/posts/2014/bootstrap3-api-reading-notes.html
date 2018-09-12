@@ -1,0 +1,588 @@
+<p>This post is transferred from my <a href="http://blogpengyin.herokuapp.com/">old Hexo blog site</a>, created on 2014.</p>
+<h1 id="css-part">CSS Part</h1>
+<p>This is a reading note for Bootstrap 3 Official API CSS part, including everything I think that will be useful for future web development.</p>
+<p>Bootstrap3 needs to have <code>&lt;!DOCTYPE html&gt;</code> on top for html5 recogization purpose.</p>
+<p>Bootstrap3 has "Mobile first" principle, so <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code> should be added in <code>&lt;head&gt;</code> tag.</p>
+<p>Bootstrap3 <strong>requires</strong> a container to hold all codes. so make sure add it before insert any more codes. Containers can not be nested:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;container&quot;</span><span class="p">&gt;</span>
+...
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+<span class="c">&lt;!--Or use this for a full width of device--&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;container-fluid&quot;</span><span class="p">&gt;</span>
+...
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+
+
+<h2 id="grid-system">Grid System</h2>
+<p>In Aug 2014, I read a very good tutorial about grid system in bootstrap3 from http://www.tutorialrepublic.com/twitter-bootstrap-tutorial and wrote some notes:</p>
+<ul>
+<li>
+<p>12 content boxes in all devices</p>
+</li>
+<li>
+<p>mobile deivce has 1 column and 12 rows; tablet has 2 column and 6 rows</p>
+</li>
+<li>
+<p>desktop has 3 column and 4 rows</p>
+</li>
+<li>
+<p>large desktop has 4 column and 3 rows</p>
+</li>
+<li>
+<p>if col-md-* is different for each column, <code>.clearfix</code> help with reduce visible block to make sure 12 column grid</p>
+<p>:::html
+<!--First two lines has total grid of 6X2 = 12 grids, so use clearfix for next line. This row will have two equal width column-->
+<div class="row">
+<div class="col-md-6"><p>Box</p></div>
+<div class="col-md-6"><p>Box</p></div>
+<div class="clearfix visible-md-block"></div>
+</div></p>
+<p><!--First two lines has total grid of 4X3 = 12 grids, so use clearfix for next line. This row will have three equal width column-->
+<div class="row">
+<div class="col-md-4"><p>Box</p></div>
+<div class="col-md-4"><p>Box</p></div>
+<div class="col-md-4"><p>Box</p></div>
+<div class="clearfix visible-md-block"></div>
+</div></p>
+</li>
+</ul>
+<p>Responsive utility class <code>.visible-md/xs/sm/lg-block</code> make <code>.clearfix</code> effectly only in special scale device. For example, if <code>.visible-xs-block</code>, this block will only be viewed on xs device(phone)</p>
+<p>As a conclution, The way <code>clearfix visilbel-xs/sm/md/lg</code> work is everytime when a 12 grid appears, a <code>clearfix visible-XX-block</code> without any content <em>needs to appear</em>. For example:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;row&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;col-sm-6 col-md-4 col-lg-3&quot;</span><span class="p">&gt;&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Box 1<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;col-sm-6 col-md-4 col-lg-3&quot;</span><span class="p">&gt;&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Box 2<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;clearfix visible-sm-block&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="c">&lt;!--There are 6*2=12 grids already, insert a clearfix with sm--&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;row&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;col-sm-6 col-md-4 col-lg-3&quot;</span><span class="p">&gt;&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Box 3<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;clearfix visible-md-block&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="c">&lt;!--There are 4*3=12 grids already, insert a clearfix with md --&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;row&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;col-sm-6 col-md-4 col-lg-3&quot;</span><span class="p">&gt;&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Box 4<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;clearfix visible-sm-block&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="c">&lt;!--Another 6*2 appears, so insert another clearfix with sm--&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;row&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;clearfix visible-lg-block&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="c">&lt;!--There are 3*4 grid, so use clearfix with large--&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+
+
+<p><code>xs</code>: less than 768px; sm: 768 to 992; md: 992 to 1200; lg: larger than 1200</p>
+<p>Similar as visible, there are <code>.hiddle-xs</code>, <code>.hidden-sm</code> <code>.hidden-md</code> and <code>.hidden-lg</code>, hide in special scale</p>
+<p>Similarly there is print class: <code>.visible-print-block</code>: when print, hide block elements; <code>.visilble-print-inline/.visible-print-block</code>: hide inline/inline-block in print; <code>.hiddle-print</code>: hide elements in print</p>
+<p>Other useful things that I got from Bootstrap offical API about Grid System is:</p>
+<ul>
+<li>
+<p>The gap between columns is adjusted by <strong>padding</strong>.</p>
+</li>
+<li>
+<p>If more than 12 columns in a row, extra columns will be put to new line as one unit.</p>
+</li>
+<li>
+<p>If there is no <code>col-lg-</code>, then styles that apply to <code>col-md-</code> will also affect page on large device.</p>
+</li>
+</ul>
+<p>Place grid columns in any <code>class="row"</code>:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;container-fluid&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;row&quot;</span><span class="p">&gt;</span>
+    ...
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+<span class="c">&lt;!-- `.col-md-offset-*` can be used to move columns to the right. `*` is how many columns this column moves: --&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;row&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;col-md-4&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;col-md-4 col-md-offset-4&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="c">&lt;!-- last column will move to right, starting from the 9th column --&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+
+
+<p>It is safe to use <strong>nested column</strong>. But make sure <code>class="row"</code> is added to nested part.</p>
+<h1 id="components-part">Components Part</h1>
+<h2 id="pannels">Pannels*</h2>
+<p>Table or List can be added in panel body for format.</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;panel panel-default&quot;</span><span class="p">&gt;</span>
+<span class="c">&lt;!--panel-default can be changed to panel-primary, panel-success, etc--&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;panel-heading&quot;</span><span class="p">&gt;</span>This page is disabled<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="c">&lt;!--The way to define pannel heading--&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;panel-body&quot;</span><span class="p">&gt;</span>
+    TextTest
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;panel-footer clearfix&quot;</span><span class="p">&gt;</span>
+    <span class="c">&lt;!--add panel footer--&gt;</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;pull-right&quot;</span><span class="p">&gt;</span>
+        <span class="c">&lt;!--This will make footer to the right of the panel--&gt;</span>
+            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-primary&quot;</span><span class="p">&gt;</span>Learn More<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+
+
+<p>It is useful to put pannel with tables or list-groups. Just make <code>.panel</code> class wrap <code>.panel-heading</code>, <code>.panel-body</code>, and <code>.table</code>or<code>.list-group</code>.</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;panel panel-default&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;panel-heading&quot;</span><span class="p">&gt;</span>Panel Heading<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;panel-body&quot;</span><span class="p">&gt;</span>Panel Body<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;list-group&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;list-group-item&quot;</span><span class="p">&gt;</span>Item One<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+
+
+<h2 id="breadcrumb">Breadcrumb</h2>
+<p>A breadcrumb is a navigation scheme that indicates the user's location in a website or web application. For example: <code>Home/Library/Data</code>.</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;breadcrumb&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>Products<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;active&quot;</span><span class="p">&gt;</span>Accessories<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</pre>
+
+
+<h2 id="pagination-page-number-indicator">Pagination (Page Number Indicator)</h2>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;pagination pagination-sm&quot;</span><span class="p">&gt;</span>
+<span class="c">&lt;!--&#39;pagination-sm&#39; can be skipped or change to -xs/-lg, etc. This is used to define size of pagination--&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span><span class="ni">&amp;laquo;</span><span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="c">&lt;!-- Left page arrow--&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;disabled&quot;</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>1<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="c">&lt;!--item can be disabled--&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;active&quot;</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>2<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="c">&lt;!--Active Page Number--&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span><span class="ni">&amp;raquo;</span><span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span> <span class="err">&lt;</span>
+    !-- Right page arrow--&gt;
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</pre>
+
+
+<p>Bootstrap3 also have <em>previous/next</em> indicator, which is called <em>Pager</em></p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;pager&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;previous&quot;</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span><span class="ni">&amp;larr;</span> Previous<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="c">&lt;!-- two class can make button aligned to left and right of window. &amp;larr is a left arrow --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;next disabled&quot;</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>Next <span class="err">&amp;</span>rarr<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="c">&lt;!-- pager can be disabled --&gt;</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</pre>
+
+
+<h2 id="labels-and-badges">Labels and Badges</h2>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Bootstrap heading
+<span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;label label-default&quot;</span><span class="p">&gt;</span>New<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+<span class="c">&lt;!-- create inline label &#39;new&#39; for heading. &#39;label-default&#39; can be replaced with label-success, etc --&gt;</span>
+<span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>Notification <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;badge&quot;</span><span class="p">&gt;</span>5<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="c">&lt;!-- badge is the number indicator for email or notification button. For example, a 5 will show if there are 5 notifications --&gt;</span>
+</pre>
+
+
+<h2 id="progress-bar">Progress Bar</h2>
+<pre class="code literal-block"><span></span><span class="c">&lt;!-- .progress-stripped is a class to make colorful effect. .active is a class to make animate effect --&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;progress progress-stripped active&quot;</span><span class="p">&gt;</span>
+    <span class="c">&lt;!-- process-bar-success can be replaced by process-bar-warning, etc --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;progress-bar process-bar-success&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;width: 60%&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;sr-only&quot;</span><span class="p">&gt;</span>20% Complete<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+
+
+<p>Process bar can also add label to indicate the numbered process. Reference: http://getbootstrap.com/components/#progress-label.</p>
+<h2 id="jumbotron">Jumbotron</h2>
+<p>Jumbotron is used as a header panel with important content, that can be put on top of homepage. For example, a Header combined with a paragraph and a read-more button</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;jumbotron&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Welcome to Website<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Key Notes: XXX...<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#39;#&#39;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-primary&quot;</span><span class="p">&gt;</span>LearnMore<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+
+
+<h2 id="wells">Wells</h2>
+<p>Wells componet make a part of content like sink in well. Used for static text.</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;well well-large/well-small&quot;</span><span class="p">&gt;</span>
+In a well...
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+
+
+<h2 id="close-icons">Close icons</h2>
+<p>A X icon on right of panel so that user can close this panel after read it</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;alert alert-warning&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;close&quot;</span> <span class="na">data-dismiss</span><span class="o">=</span><span class="s">&quot;alert&quot;</span><span class="p">&gt;</span> <span class="ni">&amp;times;</span><span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>Warning!<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span> There is a problem
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+
+
+<h2 id="bootstarp3-help-class">Bootstarp3 Help Class</h2>
+<p><code>.pull-left/.pull-right</code> will floats an element to left or right</p>
+<p><code>.text-muted</code> make a element grayed out by change its color value</p>
+<p><code>.clearfix</code> clear the float of any element</p>
+<h2 id="buttons">Buttons</h2>
+<h3 id="available-classes">Available Classes:</h3>
+<p><code>btn-default/primary/info/success/warning/danger/link</code>: define attributes of button</p>
+<p><code>btn-lg/sm/xs</code>: define size of button</p>
+<p><code>btn-block</code>: define a button that covers full width of parent element</p>
+<p><code>diabled</code>: disable a button</p>
+<p><code>data-loading-text="Loading..."</code>: can be add when a button is in loading state (automatically turn off in firefox)</p>
+<p>Toggle Button (hover effect): <code>data-toggle="button"</code></p>
+<h3 id="button-group">Button group:</h3>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn-group/btn-group-vertical btn-group-lg/sm/xs&quot;</span><span class="p">&gt;</span>
+<span class="c">&lt;!-- Can add btn-group-justified to make group buttons alignment justified --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-primary&quot;</span><span class="p">&gt;</span>Left<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-primary&quot;</span><span class="p">&gt;</span>Right<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn-group&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-default dropdown-toggle&quot;</span> <span class="na">data-toggle</span><span class="o">=</span><span class="s">&quot;dropdown&quot;</span><span class="p">&gt;</span>
+        Button Group can be nested
+        <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+
+
+<p><code>.button-toolbar</code>: class that wrap several <code>.button-group</code>s.</p>
+<p>Justified button groups: use <code>.btn-group-justified</code>. You must <strong>wrap each button in a button-group</strong>:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn-group btn-group-justified&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn-group&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-default&quot;</span><span class="p">&gt;</span>Test Button1<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn-group&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-default&quot;</span><span class="p">&gt;</span>Test Button2<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+
+
+<h3 id="available-methods-for-button">Available Methods for Button</h3>
+<p><code>$().button('toggle')</code>: change any button to toggle state</p>
+<pre class="code literal-block"><span></span><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#myButton&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+        <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">button</span><span class="p">(</span><span class="s1">&#39;toggle&#39;</span><span class="p">);</span>
+        <span class="p">});</span>
+<span class="p">});</span>
+</pre>
+
+
+<p><code>$().button('loading')</code>: when loading, button is disabled and text is swapped with the value of 'data-loading-text' attribute of button element</p>
+<p><code>$().button('reset')</code>: reset button state by swapping text to original text</p>
+<p><code>$().button(string)</code>: reset button to show this string</p>
+<h2 id="dropdown">Dropdown</h2>
+<p>Dropdown can be done within navabar, nav or buttons. Reference: http://getbootstrap.com/components/#btn-dropdowns-single</p>
+<pre class="code literal-block"><span></span><span class="c">&lt;!-- &#39;nav nav-pills&#39; is nav, &#39;btn-group&#39; is button --&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;navbar navbar-static&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;navbar-inner&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#39;#&#39;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;First&quot;</span><span class="p">&gt;</span>
+        First
+        <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">ul</span> <span class="na">role</span><span class="o">=</span><span class="s">&quot;navigation&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;nav&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;dropdown&quot;</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span> <span class="na">data-toggle</span><span class="o">=</span><span class="s">&quot;dropdown&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;dropdown-toggle&quot;</span><span class="p">&gt;</span>
+                First Dropdown <span class="p">&lt;</span><span class="nt">b</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;caret&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">b</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;dropdown-menu&quot;</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#39;#&#39;</span><span class="p">&gt;</span>Second Dropdown<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+                    <span class="c">&lt;!-- &lt;li class=&#39;divider&#39;&gt;&lt;/li&gt; can be add here if a button dropdown needs a divider --&gt;</span>
+                <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="c">&lt;!-- a button can be directly used as dropdown: &lt;button data-toggle...&gt;Dropdown &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;&lt;/button&gt; --&gt;</span>
+</pre>
+
+
+<h3 id="available-methods-for-dropdown">Available Methods for Dropdown</h3>
+<p><code>$().dropdown('toggle')</code>: toggle item for a given dropdown</p>
+<h3 id="available-events-for-dropdown">Available Events for Dropdown</h3>
+<p><code>show.bs.dropdown</code>: trigger when show instance method is called. can be reached by <code>event.relatedTarget</code></p>
+<p><code>shown.bs.dropdown</code>: triger when a dropdown is visible. Will wait for css.
+can be reached by event.relatedTarget</p>
+<p><code>hide.bs.dropdown/hidden.bs.dropdown</code>: same except hide instance</p>
+<pre class="code literal-block"><span></span><span class="c1">//After click ok button, dropdown will be expanded</span>
+<span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.dropdown&quot;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;show,bas.dropdown&quot;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">linkedText</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">relatedTarget</span><span class="p">).</span><span class="nx">text</span><span class="p">();</span>
+        <span class="c1">//linkedText will be firstClass item in dropdown</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Click on OK button to view the dropdown menu for -&quot;</span> <span class="o">+</span> <span class="nx">linkText</span><span class="p">);</span>
+        <span class="p">});</span>
+<span class="p">});</span>
+</pre>
+
+
+<h2 id="tooltip">Tooltip</h2>
+<p>For performance reasons, tooltip must be initialized first</p>
+<pre class="code literal-block"><span></span><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.classOfItem a&quot;</span><span class="p">).</span><span class="nx">tooltip</span><span class="p">();</span>
+    <span class="c1">//Assume that structure of item is .classOfItem &lt;a&gt;...&lt;/a&gt;</span>
+<span class="p">});</span>
+</pre>
+
+
+<p>Trigger while set position of tooltip</p>
+<pre class="code literal-block"><span></span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.classOfItem&quot;</span><span class="p">).</span><span class="nx">tooltip</span><span class="p">({</span><span class="nx">placement</span><span class="o">:</span> <span class="s1">&#39;top/right/buttom/left&#39;</span><span class="p">});</span>
+</pre>
+
+
+<h3 id="available-method-for-tooltip">Available Method for Tooltip</h3>
+<p><code>$().tooltip(options)</code>: attach tooltip to elements, options can be found online, include titile, delay, etc</p>
+<p><code>$().tooltip('show'/'hide'/'toggle'/'destory')</code>: show/hide/toggle/destroy tooltip</p>
+<h2 id="popover">Popover</h2>
+<p>Popover is like tooltip but is a panel with header and body content. It also needs to be initialize first</p>
+<pre class="code literal-block"><span></span><span class="err">#</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="nx">funtion</span><span class="p">(){</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.classOfItem a&quot;</span><span class="p">).</span><span class="nx">popover</span><span class="p">();</span>
+    <span class="c1">//Same as tooltip. Popover can set position when triggered. See tooltip part for detail</span>
+<span class="p">});</span>
+</pre>
+
+
+<p>Popover has similar method as tooltip: options/show/hide/toggle/destroy.</p>
+<h2 id="alerts">Alerts</h2>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;alert alert-warning&quot;</span><span class="p">&gt;</span>
+    <span class="c">&lt;!-- &#39;alert-warning&#39; can be changed to error/success/info --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;close&quot;</span> <span class="na">data-dismiss</span><span class="o">=</span><span class="s">&quot;alert&quot;</span><span class="p">&gt;</span><span class="ni">&amp;times;</span><span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+    <span class="c">&lt;!-- enable close button for this alert message. Need JavaScript plugin--&gt;</span>
+    <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>Warning!<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span>There was a problem!
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+
+
+<p><code>.alert-link</code> adds link in alerts:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;alert&quot;</span> <span class="na">role</span><span class="o">=</span><span class="s">&quot;alert&quot;</span><span class="p">&gt;</span>
+  You must click <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;alert-link&quot;</span><span class="p">&gt;</span>Link to other url<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span> !
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+
+
+<h3 id="available-methods-for-alerts">Available Methods for Alerts</h3>
+<p><code>$().alert</code>: wrap all alert with close functionality</p>
+<pre class="code literal-block"><span></span><span class="nx">$</span><span class="p">(.</span><span class="nx">close</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.alert&quot;</span><span class="p">).</span><span class="nx">alert</span><span class="p">();</span>
+<span class="p">});</span>
+</pre>
+
+
+<p><code>$().alert('close')</code>: close a alert box</p>
+<h2 id="tabs">Tabs</h2>
+<p>To use tab in nav bar, create <code>&lt;ul&gt;</code> with <code>class="nav nav-tab"</code> and each <code>&lt;li&gt;</code> has a <code>href</code></p>
+<p>Tabs can be add dynamically with any javascript: simply specify the <code>data-toggle="tab"</code> on each tab, as well as create a <code>.tab-pane</code> with unque ID for every tab and wrap them in <code>.tab-content</code>.</p>
+<p>Create dynamic tab with javascript:</p>
+<pre class="code literal-block"><span></span><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#myTab a&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+        <span class="c1">//Note this function is defined on a href link</span>
+        <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+        <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">tab</span><span class="p">(</span><span class="s1">&#39;show&#39;</span><span class="p">);</span>
+        <span class="c1">//Method to activate a tab using .tab(&#39;show&#39;)</span>
+        <span class="p">});</span>
+<span class="p">});</span>
+</pre>
+
+
+<h1 id="form-part">Form Part</h1>
+<p>Any element with <code>.form-control</code> has <code>width:100%;</code> by default.</p>
+<p>You can nest the <code>.input-group</code> in <code>.form-group</code> but don't mix them directly.</p>
+<p>Vertical Form in Bootstrap3:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">form</span> <span class="na">role</span><span class="o">=</span><span class="s">&quot;form&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;form-group&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;example&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;example&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&#39;form-control&#39;</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</pre>
+
+
+<p>Inline Form in Bootstrap3 (i.e. For a device that has less than 768px width<code>.xs</code>, the elements that listed inline in larger device will list in block)</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">form</span> <span class="na">class</span><span class="o">=</span><span class="s">&#39;form-inline&#39;</span> <span class="na">role</span><span class="o">=</span><span class="s">&quot;form&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#39;form-group&#39;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;examle&quot;</span><span class="p">&gt;</span>You must always add labels. You can use .sr-only class to hide it<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;form-control&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;example&quot;</span><span class="p">/&gt;</span> //Define grid for input area
+            <span class="p">&lt;</span><span class="nt">input</span> <span class="err">...</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</pre>
+
+
+<h2 id="supported-form-controls">Supported Form Controls</h2>
+<p>All html5 input type are supported: <code>text</code>, <code>password</code>, <code>datetime</code>, <code>datetime-local</code>, <code>date</code>, <code>month</code>, <code>time</code>, <code>week</code>, <code>number</code>, <code>email</code>, <code>url</code>, <code>search</code>, <code>tel</code>, <code>color</code></p>
+<p><code>&lt;fieldset&gt;</code> can be used to wrap a few form-group in order to easily apply style.</p>
+<p><code>.disabled</code> can be added to <code>.radio</code> or <code>.checkbox</code> or <code>&lt;fieldset&gt;</code> to disable these elements.</p>
+<p><code>.checkbox-inline</code> or <code>.radio-inline</code> create inline-element. They needs to be wrpped in <code>&lt;label&gt;</code>:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;checkbox-line&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;test&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;test&quot;</span><span class="p">&gt;</span> test
+    <span class="c">&lt;!-- &#39;test&#39; here can be skipped if this checkbox don&#39;t need any label. But this input must always be wrapped in &lt;label&gt; tag.--&gt;</span>
+<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+</pre>
+
+
+<p><code>.form-control-static</code> can be put in a <code>&lt;p&gt;</code> tag to create a text that hold the place as a input field</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;form-group&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;test&quot;</span><span class="p">&gt;</span>Test:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;form-control-static&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;test&quot;</span><span class="p">&gt;</span>This is a text<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+
+
+<p>After using Javascript to valid data in input field, '.has-warning',<code>.has-error</code> or <code>.has-success</code> can be added to input fields to show validation result. <code>&lt;span class="glyphicon plyphicon-warning-sign form-control-feedback&gt;</code> can be added after <code>&lt;input&gt;</code> field if optional icons are needed.</p>
+<p><code>&lt;span class=".help-block"</code> can add help text under input field</p>
+<h2 id="input-group">Input Group</h2>
+<p>To add icon, put <code>&lt;span class='input-group-addon'&gt;&lt;/span&gt;</code> inside a input-group class</p>
+<p>To add button attched to input, use <code>.input-group-btn</code>for a span and add button in span. Put this span right after input box.</p>
+<p>Input group can have height class <code>.input-group-lg</code>.</p>
+<h1 id="image-and-media-part">Image and Media Part</h1>
+<p>Use Bootstrap3 to modify shape of image: <code>.img-rouned</code>,<code>.img-circle</code>,<code>.img-thumbnail</code>.</p>
+<p><code>.thumbnail</code> define a div with shape of thumbnail. div can include jpg file. Best use with grid class.</p>
+<p>Media Objects: create layout like twitter or Linkedin name signature</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#39;media&#39;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;pull-left&quot;</span><span class="p">&gt;</span>...
+    <span class="c">&lt;!--This part will be left panel, best to put thumbnail in --&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;media-body&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;media-heading&quot;</span><span class="p">&gt;</span>
+        Header
+        <span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>.
+        Body
+        <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+
+
+<p>Reference Glyphicon library: <code>&lt;span class="glyphicon glyphicon-class-name"&gt;&lt;/span&gt;</code>.</p>
+<h1 id="list-and-nav-part">List and Nav Part</h1>
+<h2 id="list">List</h2>
+<p>Horizontal list: <ul class='list-inline'></p>
+<p>Horizonal Defination List: work is on left, corresponding explanation is on right</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">dl</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;dl-horizontal&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">dt</span><span class="p">&gt;</span>Word<span class="p">&lt;/</span><span class="nt">dt</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">dd</span><span class="p">&gt;</span>Explanation<span class="p">&lt;/</span><span class="nt">dd</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">dl</span><span class="p">&gt;</span>
+</pre>
+
+
+<p>List Groups (like a vertical nav bar):</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&#39;list-group&#39;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;list-group-item&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</pre>
+
+
+<p>Make list group hyperlink (vertical nav bar)</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;list-group&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#39;#&#39;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;list-group-item (active)&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span>
+            <span class="c">&lt;!--You can dd .glyphicon for icons before text. span is easier to use--&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+
+
+<h2 id="nav-bar">Nav Bar</h2>
+<p>Create nav bar in tabs: <code>&lt;ul class="nav nav-tabs"&gt;&lt;li class="active"&gt;</code>. To add icon to tabs, just put span.</p>
+<p>Create nav bar in pills: <code>&lt;ul class="nav nav-pills"&gt;&lt;li&gt;</code>.</p>
+<p>Create vertical nav bar: <code>&lt;ul class="nav nav-pills nav-stacked"&gt;</code>.</p>
+<p>Dropdown nav bar:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;nav nav-tabs&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;dropdown&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span> <span class="na">data-toggle</span><span class="o">=</span><span class="s">&quot;dropdown&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;dropdown-toggle&quot;</span><span class="p">&gt;</span>FirstClass<span class="p">&lt;</span><span class="nt">b</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;caret&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">b</span><span class="p">&gt;&lt;/</span><span class="nt">a</span><span class="p">&gt;</span> //First class menu
+            <span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;dropdown-menu&quot;</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>... //Second class items
+</pre>
+
+
+<p>To make a justified nav bar, or make any elements justify-aligned, use <code>nav-justified</code> class. The way to use it is:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&#39;nav-justified&#39;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>...<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>...<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>...<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</pre>
+
+
+<p>Disable nav bar items:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;disabled&quot;</span><span class="p">&gt;</span>
+    content
+<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</pre>
+
+
+<p>A full example:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">nav</span> <span class="na">role</span><span class="o">=</span><span class="s">&quot;navigation&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;navbar navbar-default&quot;</span><span class="p">&gt;</span>
+    <span class="c">&lt;!--First class nav bar--&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;navbar-header&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span> <span class="na">data-target</span><span class="o">=</span><span class="s">&quot;#navbarCollapse&quot;</span> <span class="na">data-toggle</span><span class="o">=</span><span class="s">&quot;collapse&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;navbar-toggle&quot;</span><span class="p">&gt;</span>
+        <span class="c">&lt;!--Header is the button that when change to mobile, the only item that will not be put to menu button--&gt;</span>
+            <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;iron-bar&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;iron-bar&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+            <span class="c">&lt;!--put as many as the number of nav items--&gt;</span>
+        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">&gt;</span>NavBarHead<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;navbarCollapse&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;collapse navbar-collapse&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;nav navbar-nav&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;dropdown&quot;</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">data-toggle</span><span class="o">=</span><span class="s">&quot;dropdown&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;dropdown-toggle&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>
+                FirstClassItem <span class="c">&lt;!-- //Item that is going to have dropdown--&gt;</span>
+                <span class="p">&lt;</span><span class="nt">b</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;caret&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">b</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">ul</span> <span class="na">role</span><span class="o">=</span><span class="s">&quot;menu&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;dropdown-menu&quot;</span><span class="p">&gt;</span>
+                        <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+                        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>SecondClassItem<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+                        <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+                        <span class="c">&lt;!--Can add &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt; as divider between items--&gt;</span>
+</pre>
+
+
+<p>Fixed position nav bar: add <code>.navbar-fixed-top/.navbar-fixed-bottom</code> in <code>nav</code> tag.</p>
+<p>Full width nav bar: add <code>.navbar-static-top/bottom</code> in <code>nav</code> tag</p>
+<p>Nav Bar with Search Form:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;navbarCollapse&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;collapse navbar-collapse&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">form</span> <span class="na">role</span><span class="o">=</span><span class="s">&quot;search&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;navbar-form navbar-left&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;form-group&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">&quot;search&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;form-control&quot;</span><span class="p">&gt;</span>
+</pre>
+
+
+<p>Inversed navbar (color): add <code>.navbar-inverse</code> in <code>nav</code> tag</p>
+<h1 id="table-part">Table Part</h1>
+<p><code>.table-striped</code> make table's nth row has different color than n-1th row</p>
+<p><code>.table-bordered</code> add border</p>
+<p><code>.table-hover</code> add hover effect</p>
+<p><code>.table-condensed</code> cut the cell padding in half. Most obviously cell height is in half size.</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">table</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;table table-XXX&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;&lt;/</span><span class="nt">thead</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">tbody</span><span class="p">&gt;&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+</pre>
+
+
+<p>Responsive Table in Bootstrap3: <code>.table-responsive</code>. Will add scroll bar if table width is larger than container width, when device size is under 768px(i.e.<code>.xs</code>);</p>
+<h1 id="text-part">Text Part</h1>
+<p><code>.small</code> crates grey and smaller font</p>
+<p><code>.lead</code> creates standing-out font</p>
+<p>text alignment class: <code>text-left</code>, <code>text-center</code>, <code>text-right</code>, <code>text-justify</code>, <code>text-nowrap</code></p>
+<p>text style class: <code>&lt;b&gt;</code>:bold, <code>&lt;big&gt;</code>:bigger, <code>&lt;code&gt;</code>:computer code, <code>&lt;i&gt;</code>:italic, <code>&lt;mark&gt;</code>:highlight, <code>&lt;strong&gt;</code>: strong, <code>&lt;sub&gt;/&lt;sup&gt;</code>:lift and move down font, <code>&lt;ins&gt;</code>: unline, <code>&lt;del&gt;</code>: delete line</p>
+<p>text style class:</p>
+<p>-<code>.text-lowercase</code></p>
+<p>-<code>.text-uppercase</code></p>
+<p>-<code>.text-capitalize</code>: only first letter of each work will be upper case</p>
+<p>Bootstrap text emphasis class (text with color):</p>
+<p>-<code>.text-muted</code>: greyed out</p>
+<p>-<code>.text-primary</code>: important, default is blue</p>
+<p>-<code>.text-success</code>: default is green</p>
+<p>-<code>.text-info</code>: default is blue-grey</p>
+<p>-<code>.text-warning</code>: default is brown</p>
+<p>-<code>.text-danger</code>: default is red</p>
+<p>Quotes:</p>
+<p>-<code>&lt;blockquote&gt;</code>: start of a block of quote</p>
+<p>-<code>&lt;cite&gt;</code>: cite author name</p>
+<p>-<code>.pull-right</code>: all block text align is right</p>

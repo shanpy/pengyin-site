@@ -1,0 +1,164 @@
+<h1 id="reference-list">Reference List</h1>
+<p>This is a <strong>reading note</strong> for following articles/blogs:</p>
+<ul>
+<li>
+<p><a href="https://github.com/shanpy/shanpy.github.io.git"></a>, written by Julian Aubourg and Addy Osmani.</p>
+</li>
+<li>
+<p><a href="https://api.jquery.com/category/deferred-object/">jQuery API</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise in MSDN</a></p>
+</li>
+<li>
+<p>(Chinese) <a href="http://es6.ruanyifeng.com/#docs/generator">Entry of ECMA6</a>, from Yifeng Ran</p>
+</li>
+<li>
+<p>(Chinese) blog of <a href="http://www.cnblogs.com/dojo-lzz/p/5495671.html">dojo-lzz</a></p>
+</li>
+</ul>
+<h1 id="promises">Promises</h1>
+<p><code>Promises</code>: a <strong>container</strong> which contains everything that has been deferred.</p>
+<blockquote>
+<p>If you are creating a Deferred, keep a reference to the Deferred so that it can be resolved or rejected at some point. Return only the Promise object via deferred.promise() so other code can register callbacks or inspect the current state. - jQuery API</p>
+</blockquote>
+<p>A function which returns a promise <strong>will be run</strong> if the condition in this function is satisfied, no matter if it is a successfully satisfied case or a failure case. i.e. a <strong>fulfilled</strong> promise can be two states: <code>resolved</code>(successfully passing data) or <code>rejected</code> (something is wrong).</p>
+<h2 id="promisethen">promise.then</h2>
+<p><code>them</code> method is used to handle the case the future result is available (resolved or rejected). It accepts two parameters, which can be functions. One for successful case. One for failed case. Following is the example:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">promise</span> <span class="o">=</span> <span class="nx">someFunction</span><span class="p">(</span><span class="nx">arg1</span><span class="p">,</span> <span class="nx">arg2</span><span class="p">,</span> <span class="p">...);</span>
+<span class="nx">promise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">futurevalue</span><span class="p">){</span>
+        <span class="cm">/*Handle successfully passed futurevalue*/</span>
+    <span class="p">},</span><span class="kd">function</span><span class="p">(){</span>
+        <span class="cm">/*Handle cases with error*/</span>
+    <span class="p">}</span>
+<span class="p">);</span>
+</pre>
+</td></tr></table>
+
+<h2 id="promise-and-when-method">promise and when method</h2>
+<p><code>$.when</code> is used to perform action after all promises have been satisfied. For example:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><pre class="code literal-block"><span></span><span class="nx">when</span><span class="p">(</span>
+    <span class="kd">function</span><span class="p">(){</span>
+        <span class="cm">/*animation 1*/</span>
+        <span class="cm">/*return promise 1*/</span>
+        <span class="p">},</span>
+    <span class="kd">function</span><span class="p">(){</span>
+        <span class="cm">/*animation 2*/</span>
+        <span class="cm">/*return promise 2*/</span>
+    <span class="p">}</span>
+<span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+        <span class="cm">/*Handle events after both promises are satisfied*/</span>
+    <span class="p">});</span>
+</pre>
+</td></tr></table>
+
+<h2 id="promise-in-ecmascript-6">Promise in ECMAScript 6</h2>
+<p><em>Remember to check browser capability before using promise JS object</em></p>
+<p>ECMAScript 6 also have <code>Promise</code> object, which can be used for deferred operations. Similar as promise in jQuery, Promise object in JS has three states: <code>pending</code> (initial), <code>fulfilled</code>, <code>rejected</code>.</p>
+<h2 id="generator-in-ecmascript-6">Generator in ECMAScript 6</h2>
+<p>ECMAScript 6 has a <code>Generator</code> function, which provides possibility of lazy-loading.</p>
+<p>Generator is a function which generates a Iterator. The iterator iterates every <code>yield</code> statement insider Generator function and <strong>stop</strong> on each <code>yield</code> point. After running <code>.next()</code> method, iterator will <strong>resume</strong> from last <code>yield</code> point.</p>
+<p>Generator function has a <code>*</code> in function header, which can be put in any position.</p>
+<p><code>.next()</code> method will <strong>return</strong> a object with <code>value</code> and <code>done</code> attributes. <code>value</code> has the value which is returned by the last <code>yield</code> (breakpoint). <code>done</code> has the value which is the status of Generator, <code>true</code> means iteration is finished.</p>
+<p><strong>For the last <code>next()</code> method, if there is no <code>return</code> current function, <code>value</code> will be <code>undefined</code>. </strong></p>
+<p>A quick example:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><pre class="code literal-block"><span></span><span class="kd">function</span><span class="o">*</span> <span class="nx">test</span><span class="p">(){</span>
+    <span class="k">yield</span> <span class="s1">&#39;test&#39;</span><span class="p">;</span>
+    <span class="k">return</span> <span class="s1">&#39;end&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">testGenerator</span> <span class="o">=</span> <span class="nx">test</span><span class="p">();</span>
+<span class="nx">testGenerator</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span> <span class="c1">//Object {value: &quot;test&quot;, done:false}</span>
+<span class="nx">testGenerator</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span> <span class="c1">//Object {value: &quot;end&quot;, done:true}</span>
+<span class="nx">testGenerator</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span> <span class="c1">//Object {value: undefined, done:true}</span>
+</pre>
+</td></tr></table>
+
+<h2 id="others">Others</h2>
+<p>I like following problem when I read a Chinese blog article from<a href="http://www.cnblogs.com/dojo-lzz/p/5495671.html">dojo-lzz</a>: if you have red light which is on for every 3 seconds, green light which is on every 1 second and yellow light which is on every 2 seconds, how to make three light switch and on without break? (i.e. red -&gt; green -&gt; yellow -&gt; red -&gt; green -&gt; yellow, etc)</p>
+<h2 id="deferred-in-jquery">Deferred in jQuery</h2>
+<p><code>$.Deferred</code> is used to create new <em>deferred object</em>. This deferred object can be used to check if a promise is exist or not, or to accept an optional function which needs to have deferring effect.</p>
+<blockquote>
+<p>A Deferred object starts in the pending state.  - jQuery API</p>
+</blockquote>
+<p>From jQuery API, the function that is used inside <code>$.Deferred</code> is called just before the <code>$.Deferred</code> method returns. It accepts the new deferred object as parameter. This parameter represents as both the <code>this</code> object and as the first argument to the inner function (the function which needs to be deferred). The function which calling the <code>$.Deferred</code> method can attach callbacks using deferred.then(), for example.</p>
+<p>I created a <a href="https://jsfiddle.net/shanpy/g7kfqy8o/35/">JSFiddle</a>. The code is following:</p>
+<pre class="code literal-block"><span></span><span class="cm">/*This is a common function, which accepts functions that needs to have deferred effect*/</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">createCache</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">requestFunction</span><span class="p">){</span>
+<span class="kd">var</span> <span class="nx">cache</span> <span class="o">=</span> <span class="p">{};</span>
+  <span class="cm">/*</span>
+<span class="cm">  callback is optional</span>
+<span class="cm">  */</span>
+  <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">callback</span><span class="p">){</span>
+    <span class="nx">callback</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;deferred callback function&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">cache</span><span class="p">[</span><span class="nx">key</span><span class="p">]){</span>
+        <span class="nx">cache</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">defer</span><span class="p">){</span>
+        <span class="cm">/*</span>
+<span class="cm">        1. As mentioning above, defer is the deferred project</span>
+<span class="cm">        2. requestFunction here is loadImage function below</span>
+<span class="cm">        */</span>
+        <span class="nx">requestFunction</span><span class="p">(</span><span class="nx">defer</span><span class="p">,</span><span class="nx">key</span><span class="p">);</span>
+      <span class="p">}).</span><span class="nx">promise</span><span class="p">();</span> <span class="c1">// Return the Promise so caller can&#39;t change the Deferred</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">cache</span><span class="p">[</span><span class="nx">key</span><span class="p">].</span><span class="nx">done</span><span class="p">(</span><span class="nx">callback</span><span class="p">);</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="cm">/*Defer is the deferred parameter/object in $.Deferred method above*/</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">loadImage</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">createCache</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">defer</span><span class="p">,</span><span class="nx">url</span><span class="p">){</span>
+  <span class="kd">var</span> <span class="nx">image</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Image</span><span class="p">();</span>
+  <span class="kd">function</span> <span class="nx">cleanup</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;cleanup in process&#39;</span><span class="p">);</span>
+    <span class="nx">image</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="nx">image</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="cm">/*rejected/resolved/in process*/</span>
+  <span class="nx">defer</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">cleanup</span><span class="p">,</span> <span class="nx">cleanup</span><span class="p">);</span>
+  <span class="cm">/*resolved only*/</span>
+  <span class="nx">defer</span><span class="p">.</span><span class="nx">done</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;done&#39;</span><span class="p">);</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#test&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">image</span><span class="p">);</span>
+  <span class="p">});</span>
+  <span class="nx">image</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="cm">/*After image successfully loading, change state to resolve*/</span>
+    <span class="nx">defer</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">url</span><span class="p">);</span>
+  <span class="p">};</span>
+  <span class="nx">image</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="nx">defer</span><span class="p">.</span><span class="nx">reject</span><span class="p">;</span>
+  <span class="nx">image</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="nx">url</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="nx">$</span><span class="p">.</span><span class="nx">loadImage</span><span class="p">(</span><span class="s2">&quot;https://www.gstatic.com/webp/gallery3/1.png&quot;</span><span class="p">).</span><span class="nx">done</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;finish loadingImage function&#39;</span><span class="p">);</span>
+  <span class="p">}).</span><span class="nx">fail</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;there is error&#39;</span><span class="p">);</span>
+  <span class="p">})</span>
+</pre>
+
+
+<p>The output of code above in console is:</p>
+<pre class="code literal-block"><span></span><span class="nx">VM2454</span><span class="o">:</span><span class="mi">72</span> <span class="nx">cleanup</span> <span class="k">in</span> <span class="nx">process</span>
+<span class="nx">VM2454</span><span class="o">:</span><span class="mi">77</span> <span class="nx">done</span>
+<span class="nx">VM2454</span><span class="o">:</span><span class="mi">56</span> <span class="nx">deferred</span> <span class="nx">callback</span> <span class="kd">function</span>
+<span class="nx">VM2522</span><span class="o">:</span><span class="mi">88</span> <span class="nx">finish</span> <span class="nx">loadingImage</span> <span class="kd">function</span>
+</pre>

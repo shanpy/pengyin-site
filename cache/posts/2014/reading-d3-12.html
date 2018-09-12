@@ -1,0 +1,307 @@
+<p>This post is transferred from my <a href="http://blogpengyin.herokuapp.com/">old Hexo blog site</a>, created on 2014.</p>
+<p>This is a Reading Note for <em>Interactive Data Visualization for the Web - An Introduction to Designing with D3</em> by <em>Scott Murray</em>, pulished by <em>O'Reilly, 2013</em></p>
+<p>This post will contains concepts that I think it's important for me to be familiar with in D3 book.</p>
+<h1 id="chapter-12-map">Chapter 12 : Map</h1>
+<p>code example for Chapter 12 is <a href="http://shanpy.github.io/Front-End-Playground/D3/Reading-D3-VIII.html"><strong>here</strong></a>.</p>
+<p><code>GeoJSON</code> is a special format for <code>JSON</code>, which is used specially for geography. A typical <code>GeoJSON</code> file is an object with two attributes: <code>type</code> and <code>features</code>. The <code>features</code> attibute is an array of objects. Each objects have geography attributes, such as <code>type</code>,<code>id</code>,<code>properties</code>,<code>geometry</code>.</p>
+<p><code>geometry</code> is a vary useful attributes. It can include <code>coordinate</code> attribue, which inludes <code>longitude,latitude</code> pairs. Note <code>longitude</code> is <em>vertical</em> on map, <code>latitude</code> is <em>horizontal</em> on map. Here is a sample:
+images/posts/sampleGeoJSON.png </p>
+<p>Step 1: transfer <code>GeoJSON</code> to <code>SVG path</code> code by using <code>d3.geo.path()</code>. Then load <code>GeoJSON</code> file and apply new path:</p>
+<pre class="code literal-block"><span></span><span class="c1">//set a path generator</span>
+<span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">geo</span><span class="p">.</span><span class="nx">path</span><span class="p">();</span>
+
+<span class="c1">//load map json file. Since this is a callback function, code outside will run the same time as inside</span>
+<span class="nx">d3</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="s1">&#39;/js/us-states.json&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">json</span><span class="p">){</span>
+    <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">json</span><span class="p">.</span><span class="nx">features</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+        <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="nx">path</span><span class="p">);</span> <span class="c1">//This line will create a path generator to get all geography data and generate svg path</span>
+<span class="p">});</span>
+</pre>
+
+
+<p>Step 2: create <code>projection</code> to transfer <em>3D</em> to <em>2D</em>, then use <code>d3.geo.path().projection()</code> to apply projection to path. You can also add <code>scale()</code> to make map smaller or larger:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Apply scale and Use projection to let map cover all states in US, using a build-in projector albersUsa()</span>
+<span class="kd">var</span> <span class="nx">projection</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">geo</span><span class="p">.</span><span class="nx">albersUsa</span><span class="p">()</span>
+                        <span class="p">.</span><span class="nx">translate</span><span class="p">([</span><span class="nx">w</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="nx">h</span><span class="o">/</span><span class="mi">2</span><span class="p">])</span><span class="c1">//Make projection to the center of svg</span>
+                        <span class="p">.</span><span class="nx">scale</span><span class="p">([</span><span class="mi">500</span><span class="p">])</span><span class="c1">//make map smaller. Default value is 1000.</span>
+<span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">geo</span><span class="p">.</span><span class="nx">path</span><span class="p">().</span><span class="nx">projection</span><span class="p">(</span><span class="nx">projection</span><span class="p">);</span> <span class="c1">//Apply new projection to current path;</span>
+</pre>
+
+
+<h2 id="use-color-to-quantize-map">Use Color to Quantize Map</h2>
+<p>We can add color with different combination to map to show data difference in map. For example, the place that has more populatio with dark blue and less population with light green, etc.</p>
+<p>Step1: create a <em>quantize</em> scale with <em>color</em> as output. A combination of color can be found in https://github.com/mbostock/d3/tree/master/lib/colorbrewer, from D3 library. Now we output <em>discreate</em> value as color. The number of colors decides how precise the map will be. Less color group will make map has less color combination:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">color</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">quantize</span><span class="p">()</span>
+                <span class="p">.</span><span class="nx">range</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="nx">rgb</span><span class="p">(</span><span class="mi">237</span><span class="p">,</span><span class="mi">248</span><span class="p">,</span><span class="mi">251</span><span class="p">)</span><span class="s1">&#39;,&#39;</span><span class="nx">rgb</span><span class="p">(</span><span class="mi">204</span><span class="p">,</span><span class="mi">236</span><span class="p">,</span><span class="mi">230</span><span class="p">)</span><span class="s1">&#39;,&#39;</span><span class="nx">rgb</span><span class="p">(</span><span class="mi">153</span><span class="p">,</span><span class="mi">216</span><span class="p">,</span><span class="mi">201</span><span class="p">)</span><span class="s1">&#39;,&#39;</span><span class="nx">rgb</span><span class="p">(</span><span class="mi">102</span><span class="p">,</span><span class="mi">194</span><span class="p">,</span><span class="mi">164</span><span class="p">)</span><span class="s1">&#39;,&#39;</span><span class="nx">rgb</span><span class="p">(</span><span class="mi">44</span><span class="p">,</span><span class="mi">162</span><span class="p">,</span><span class="mi">95</span><span class="p">)</span><span class="s1">&#39;,&#39;</span><span class="nx">rgb</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">109</span><span class="p">,</span><span class="mi">44</span><span class="p">)</span><span class="s1">&#39;]&#39;</span><span class="p">);</span>
+    <span class="c1">//Here we want to devide data to different bucket.</span>
+</pre>
+
+
+<p>Step2: use <code>d3.json()</code> or <code>d3.csv()</code> to load data. In data callback function, set up color input domain:</p>
+<pre class="code literal-block"><span></span><span class="nx">d3</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="s1">&#39;sample.json&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span> <span class="c1">//note we use var data to represent data in json file</span>
+    <span class="nx">color</span><span class="p">.</span><span class="nx">range</span><span class="p">(</span>
+    <span class="p">[</span><span class="nx">d3</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span><span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">}),</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span><span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">;})]</span>
+    <span class="p">);</span>
+    <span class="c1">//Here we get min and max value from data</span>
+<span class="p">});</span>
+</pre>
+
+
+<p>Step3: load data. We may need to combine data in two json/csv file. To do this, <em>wrap</em> another data callback function in current data callback function, then compare column with same data. if it fits, add an attribute in a dataset with the nessiary data from the other dataset. You can use <em>nested for loop</em> to compare data:</p>
+<pre class="code literal-block"><span></span><span class="nx">d3</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="s1">&#39;1.json&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">data1</span><span class="p">){</span>
+
+    <span class="nx">d3</span><span class="p">.</span><span class="nx">csv</span><span class="p">(</span><span class="s1">&#39;2.csv&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">data2</span><span class="p">){</span> <span class="c1">//load another csv file</span>
+
+    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">data1</span><span class="p">.</span><span class="nx">attr1</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span> <span class="c1">//First for loop for data in json</span>
+        <span class="kd">var</span> <span class="nx">combine1</span> <span class="o">=</span> <span class="nx">data1</span><span class="p">.</span><span class="nx">attr1</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">data</span><span class="o">/</span><span class="nx">value</span><span class="o">/</span><span class="p">...;</span>
+
+        <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">j</span><span class="o">&lt;</span><span class="nx">data2</span><span class="p">.</span><span class="nx">attr2</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">){</span> <span class="c1">//Second for loop for data in csv</span>
+            <span class="kd">var</span> <span class="nx">combine2</span> <span class="o">=</span> <span class="nx">data2</span><span class="p">.</span><span class="nx">attr2</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">data</span><span class="o">/</span><span class="nx">value</span><span class="o">/</span><span class="p">...;</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">combine1</span> <span class="o">==</span> <span class="nx">combine2</span><span class="p">){</span> <span class="c1">//Check if combine 1 and combine 2 has the same data that can be joined</span>
+                <span class="nx">combine2</span><span class="p">.</span><span class="nx">attr2</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">newValue</span> <span class="o">=</span> <span class="nx">data1</span><span class="p">.</span><span class="nx">attr1</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">value</span><span class="p">;</span>
+                <span class="c1">//Get the data we need from data1 and put it as a new attribute for data2</span>
+                <span class="k">break</span><span class="p">;</span>
+                <span class="c1">//After find a proper fit, jump out of current for loop and check another value from data1</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="p">})</span>
+<span class="p">})</span>
+</pre>
+
+
+<p>Step 4: create path and load data to path. You need to do this <em>inside</em> a callback loop since we need to use data variable in loop. We need to check if the value in second json/csv exist or not in first json/csv. If not, we need return a single color:</p>
+<pre class="code literal-block"><span></span><span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">data1</span><span class="p">.</span><span class="nx">attr1</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+    <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="s1">&#39;path&#39;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">style</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">attr1</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span> <span class="c1">//value that you want to apply color</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="c1">//check exist</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">color</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+        <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+            <span class="k">return</span> <span class="s2">&quot;grey&quot;</span><span class="p">;</span>
+            <span class="c1">//if no value, make this part of map as grey.</span>
+        <span class="p">}</span>
+    <span class="p">})</span>
+</pre>
+
+
+<p>Step 5: create and add projection. Note you need to do this step <em>outside</em> of callback function so that your result will not be affected.</p>
+<h2 id="add-circle-as-data-point-on-map">Add Circle as Data Point on Map</h2>
+<p>If we have json/csv file that have city names, value, and cities longitude, latitude data, we can make it on map.</p>
+<p>Step1, Step2, Step3, Step4: Same as example above.</p>
+<p>Step 5: load new data and add circle to map. You need create projection function <em>before</em> this step, buy don't apply it to all map. Also, you need to put this part <em>inside</em> callback function, so that your circle will not be covered by map since map will be loaded later than outside functions:</p>
+<pre class="code literal-block"><span></span><span class="nx">svg</span><span class="p">.</span><span class="nx">csv</span><span class="p">(</span><span class="s1">&#39;3.csv&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">data3</span><span class="p">){</span>
+    <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">data3</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+        <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;cx&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">projector</span><span class="p">([</span><span class="nx">d</span><span class="p">.</span><span class="nx">lon</span><span class="p">,</span><span class="nx">d</span><span class="p">.</span><span class="nx">lat</span><span class="p">])[</span><span class="mi">0</span><span class="p">];</span>
+        <span class="c1">//Apply your projector function to the array combined by lon and lat, then get first element as new lon</span>
+
+        <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;cy&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">projector</span><span class="p">([</span><span class="nx">d</span><span class="p">.</span><span class="nx">lon</span><span class="p">,</span><span class="nx">d</span><span class="p">.</span><span class="nx">lat</span><span class="p">])[</span><span class="mi">1</span><span class="p">];</span>
+        <span class="c1">//Apply your projector function to the array combined by lon and lat, then get first element as new lat</span>
+
+        <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="nx">functon</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+            <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">sqrt</span><span class="p">(</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">attrName</span><span class="p">)</span><span class="o">*</span><span class="mf">0.00004</span><span class="p">);</span>
+            <span class="c1">//Get the value of the attribute value you want to use, then apply Math.sqrt to get r from coverage size.</span>
+        <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="s1">&#39;yellow&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;opacity&#39;</span><span class="p">,</span><span class="mf">0.75</span><span class="p">);</span>
+        <span class="c1">//You can set up opacity if you want</span>
+<span class="p">})</span>
+</pre>
+
+
+<h2 id="code-for-this-chapter">Code For This Chapter</h2>
+<p>code example for Chapter 12 is <a href="http://shanpy.github.io/Front-End-Playground/D3/Reading-D3-VIII.html"><strong>here</strong></a>.</p>
+<pre class="code literal-block"><span></span><span class="c1">//Part I Code</span>
+<span class="kd">function</span> <span class="nx">part1</span><span class="p">(){</span>
+<span class="c1">//create svg</span>
+<span class="kd">var</span> <span class="nx">h</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">padding</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">svg</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;chapter12&#39;</span><span class="p">).</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span><span class="s1">&#39;100%&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span><span class="nx">h</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">w</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">offsetWidth</span><span class="p">;</span>
+
+<span class="c1">//set a path generator</span>
+<span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">geo</span><span class="p">.</span><span class="nx">path</span><span class="p">();</span>
+
+<span class="c1">//load map json file. Since this is a callback function, code outside will run the same time as inside</span>
+<span class="nx">d3</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="s1">&#39;/data/us-states.json&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">json</span><span class="p">){</span>
+    <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">json</span><span class="p">.</span><span class="nx">features</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+        <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="nx">path</span><span class="p">);</span> <span class="c1">//This line will create a path generator to get all geography data and generate svg path</span>
+<span class="p">});</span>
+
+<span class="c1">//Apply scale and Use projection to let map cover all states in US, using a build-in projector albersUsa()</span>
+<span class="kd">var</span> <span class="nx">projection</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">geo</span><span class="p">.</span><span class="nx">albersUsa</span><span class="p">()</span>
+                        <span class="p">.</span><span class="nx">translate</span><span class="p">([</span><span class="nx">w</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="nx">h</span><span class="o">/</span><span class="mi">2</span><span class="p">])</span><span class="c1">//Make projection to the center of svg</span>
+                        <span class="p">.</span><span class="nx">scale</span><span class="p">([</span><span class="mi">500</span><span class="p">])</span><span class="c1">//make map smaller. Default value is 1000.</span>
+<span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">geo</span><span class="p">.</span><span class="nx">path</span><span class="p">().</span><span class="nx">projection</span><span class="p">(</span><span class="nx">projection</span><span class="p">);</span> <span class="c1">//Apply new projection to current path;</span>
+<span class="p">}</span>
+
+
+<span class="c1">//Part II Code</span>
+<span class="kd">function</span> <span class="nx">part2</span><span class="p">(){</span>
+<span class="c1">//Create svg</span>
+<span class="kd">var</span> <span class="nx">h</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">padding</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">svg</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;chapter12&#39;</span><span class="p">).</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span><span class="s1">&#39;100%&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span><span class="nx">h</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">w</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">offsetWidth</span><span class="p">;</span>
+
+
+<span class="c1">//Create a scale with different color for quantize map. Here we devide color to 6 groups. You can set your own.</span>
+<span class="c1">//Color reference: https://github.com/mbostock/d3/tree/master/lib/colorbrewer</span>
+<span class="kd">var</span> <span class="nx">colorBrew</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;rgb(237,248,251)&#39;</span><span class="p">,</span><span class="s1">&#39;rgb(204,236,230)&#39;</span><span class="p">,</span><span class="s1">&#39;rgb(153,216,201)&#39;</span><span class="p">,</span><span class="s1">&#39;rgb(102,194,164)&#39;</span><span class="p">,</span><span class="s1">&#39;rgb(44,162,95)&#39;</span><span class="p">,</span><span class="s1">&#39;rgb(0,109,44)&#39;</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">color</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">quantize</span><span class="p">()</span>
+                <span class="p">.</span><span class="nx">range</span><span class="p">(</span><span class="nx">colorBrew</span><span class="p">);</span> <span class="c1">//We need to wait till data finish loading to add input domain</span>
+
+
+<span class="c1">//Set up path generator</span>
+<span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">geo</span><span class="p">.</span><span class="nx">path</span><span class="p">();</span>
+
+
+<span class="c1">//Load data</span>
+<span class="nx">d3</span><span class="p">.</span><span class="nx">csv</span><span class="p">(</span><span class="s1">&#39;/data/us-ag-productivity-2004.csv&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+    <span class="nx">color</span><span class="p">.</span><span class="nx">domain</span><span class="p">([</span>
+            <span class="c1">//set up input domain after data has been loaded</span>
+            <span class="nx">d3</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span><span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">;}),</span>
+            <span class="nx">d3</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span><span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">;})</span>
+        <span class="p">]);</span>
+
+    <span class="c1">//Add csv data to json because we can only bind one group of data to elements.</span>
+    <span class="c1">//Note you need to do this in d3.csv() because this step rely on csv data</span>
+    <span class="nx">d3</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="s1">&#39;/data/us-states.json&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">json</span><span class="p">){</span>
+
+        <span class="c1">//Mix data in csv file</span>
+        <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">data</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="kd">var</span> <span class="nx">dataState</span> <span class="o">=</span> <span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">state</span><span class="p">;</span> <span class="c1">//get state name in csv file</span>
+            <span class="kd">var</span> <span class="nx">dataValue</span> <span class="o">=</span> <span class="nb">parseFloat</span><span class="p">(</span><span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">value</span><span class="p">);</span> <span class="c1">//get value in csv file. Note the column of csv file is state and value</span>
+
+            <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">j</span><span class="o">&lt;</span><span class="nx">json</span><span class="p">.</span><span class="nx">features</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">){</span>
+                <span class="kd">var</span> <span class="nx">jsonState</span> <span class="o">=</span> <span class="nx">json</span><span class="p">.</span><span class="nx">features</span><span class="p">[</span><span class="nx">j</span><span class="p">].</span><span class="nx">properties</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span> <span class="c1">//Find state name in json file</span>
+
+                <span class="k">if</span><span class="p">(</span><span class="nx">jsonState</span> <span class="o">==</span> <span class="nx">dataState</span><span class="p">){</span>
+                    <span class="c1">//copy csv value to json file, make a key as value</span>
+                    <span class="nx">json</span><span class="p">.</span><span class="nx">features</span><span class="p">[</span><span class="nx">j</span><span class="p">].</span><span class="nx">properties</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">dataValue</span><span class="p">;</span>
+                    <span class="c1">//go out for loop. we don&#39;t need to check more state in json file.</span>
+                    <span class="k">break</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">//Now create path and apply data</span>
+        <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">json</span><span class="p">.</span><span class="nx">features</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+            <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="nx">path</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">style</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+                <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">properties</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+                <span class="k">if</span><span class="p">(</span><span class="nx">value</span><span class="p">){</span> <span class="c1">//check if value exist or not</span>
+                    <span class="k">return</span> <span class="nx">color</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+                <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+                    <span class="k">return</span> <span class="s2">&quot;grey&quot;</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">});</span>
+        <span class="p">});</span>
+<span class="p">});</span>
+
+<span class="c1">//Add Projector</span>
+<span class="kd">var</span> <span class="nx">projection</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">geo</span><span class="p">.</span><span class="nx">albersUsa</span><span class="p">()</span>
+                        <span class="p">.</span><span class="nx">translate</span><span class="p">([</span><span class="nx">w</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="nx">h</span><span class="o">/</span><span class="mi">2</span><span class="p">])</span><span class="c1">//Make projection to the center of svg</span>
+                        <span class="p">.</span><span class="nx">scale</span><span class="p">([</span><span class="mi">500</span><span class="p">])</span><span class="c1">//make map smaller. Default value is 1000.</span>
+<span class="nx">path</span><span class="p">.</span><span class="nx">projection</span><span class="p">(</span><span class="nx">projection</span><span class="p">);</span>
+<span class="p">}</span>
+
+
+<span class="c1">//Part III Code</span>
+<span class="kd">function</span> <span class="nx">part3</span><span class="p">(){</span>
+    <span class="c1">//create svg</span>
+    <span class="kd">var</span> <span class="nx">h</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">padding</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">svg</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;chapter12&#39;</span><span class="p">).</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span><span class="s1">&#39;100%&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span><span class="nx">h</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">w</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">offsetWidth</span><span class="p">;</span>
+
+    <span class="c1">//create projector</span>
+    <span class="kd">var</span> <span class="nx">proj</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">geo</span><span class="p">.</span><span class="nx">albersUsa</span><span class="p">().</span><span class="nx">translate</span><span class="p">([</span><span class="nx">w</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="nx">h</span><span class="o">/</span><span class="mi">2</span><span class="p">]).</span><span class="nx">scale</span><span class="p">([</span><span class="mi">500</span><span class="p">]);</span>
+
+    <span class="c1">//create path generator</span>
+    <span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">geo</span><span class="p">.</span><span class="nx">path</span><span class="p">();</span>
+
+    <span class="c1">//create color brew</span>
+    <span class="kd">var</span> <span class="nx">colorBrew</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;#ffffd4&quot;</span><span class="p">,</span><span class="s2">&quot;#fed98e&quot;</span><span class="p">,</span><span class="s2">&quot;#fe9929&quot;</span><span class="p">,</span><span class="s2">&quot;#d95f0e&quot;</span><span class="p">,</span><span class="s2">&quot;#993404&quot;</span><span class="p">];</span> <span class="c1">//This time use 5 groups. Color effect will be different from example 2</span>
+    <span class="kd">var</span> <span class="nx">color</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">quantize</span><span class="p">().</span><span class="nx">range</span><span class="p">(</span><span class="nx">colorBrew</span><span class="p">);</span>
+
+    <span class="c1">//load population change.csv file</span>
+    <span class="nx">d3</span><span class="p">.</span><span class="nx">csv</span><span class="p">(</span><span class="s1">&#39;/data/us-ag-productivity-2004.csv&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+
+            <span class="c1">//set color input domain</span>
+            <span class="nx">color</span><span class="p">.</span><span class="nx">domain</span><span class="p">(</span>
+                <span class="p">[</span><span class="nx">d3</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span><span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">;}),</span>
+                 <span class="nx">d3</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span><span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">;})]</span>
+                <span class="p">);</span>
+
+            <span class="c1">//Combine data in csv to data in json</span>
+            <span class="nx">d3</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="s1">&#39;/data/us-states.json&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data2</span><span class="p">){</span>
+                <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">data</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+                    <span class="kd">var</span> <span class="nx">dataState</span> <span class="o">=</span> <span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">state</span><span class="p">;</span>
+                    <span class="kd">var</span> <span class="nx">dataValue</span> <span class="o">=</span> <span class="nb">parseFloat</span><span class="p">(</span><span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">value</span><span class="p">);</span>
+
+                    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">j</span><span class="o">&lt;</span><span class="nx">data2</span><span class="p">.</span><span class="nx">features</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">){</span>
+                    <span class="kd">var</span> <span class="nx">data2State</span> <span class="o">=</span> <span class="nx">data2</span><span class="p">.</span><span class="nx">features</span><span class="p">[</span><span class="nx">j</span><span class="p">].</span><span class="nx">properties</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+                    <span class="k">if</span><span class="p">(</span><span class="nx">dataState</span> <span class="o">==</span> <span class="nx">data2State</span><span class="p">){</span>
+                        <span class="nx">data2</span><span class="p">.</span><span class="nx">features</span><span class="p">[</span><span class="nx">j</span><span class="p">].</span><span class="nx">properties</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">dataValue</span><span class="p">;</span>
+                        <span class="k">break</span><span class="p">;</span>
+                    <span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+
+
+
+                <span class="c1">//Draw map and add color,projector</span>
+            <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">data2</span><span class="p">.</span><span class="nx">features</span><span class="p">).</span><span class="nx">enter</span><span class="p">().</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="nx">path</span><span class="p">).</span><span class="nx">style</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+                <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">properties</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span> <span class="c1">//note since we use data2.features as dataset, here d is equal to data2.features single item</span>
+                <span class="k">if</span><span class="p">(</span><span class="nx">value</span><span class="p">){</span>
+                    <span class="k">return</span> <span class="nx">color</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+                <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+                    <span class="k">return</span> <span class="s2">&quot;black&quot;</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">});</span>
+
+            <span class="c1">//load csv data from us cities.csv. Make sure you do this in data callback function so that circle is on top of map. Otherwise circle will be covered by map</span>
+            <span class="nx">d3</span><span class="p">.</span><span class="nx">csv</span><span class="p">(</span><span class="s1">&#39;/data/us cities.csv&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">data3</span><span class="p">){</span>
+                <span class="c1">//create circle that represetns city, then apply projector to it</span>
+                <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;circle&#39;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">data3</span><span class="p">).</span><span class="nx">enter</span><span class="p">()</span>
+                    <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+                    <span class="c1">//ImportantL proj(lon,lat) will return a array of two</span>
+                    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;cx&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+                        <span class="k">return</span> <span class="nx">proj</span><span class="p">([</span><span class="nx">d</span><span class="p">.</span><span class="nx">lon</span><span class="p">,</span> <span class="nx">d</span><span class="p">.</span><span class="nx">lat</span><span class="p">])[</span><span class="mi">0</span><span class="p">];</span> <span class="c1">//0 postion is longitude</span>
+                    <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;cy&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+                        <span class="k">return</span> <span class="nx">proj</span><span class="p">([</span><span class="nx">d</span><span class="p">.</span><span class="nx">lon</span><span class="p">,</span> <span class="nx">d</span><span class="p">.</span><span class="nx">lat</span><span class="p">])[</span><span class="mi">1</span><span class="p">];</span> <span class="c1">//1 position is latitude.</span>
+                    <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+                        <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">sqrt</span><span class="p">(</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">population</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.00004</span><span class="p">);</span> <span class="c1">//use sqrt to get r from coverage of population</span>
+                    <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+                    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;opacity&#39;</span><span class="p">,</span><span class="mf">0.75</span><span class="p">);</span>
+            <span class="p">});</span>
+            <span class="p">});</span>
+    <span class="p">});</span>
+
+            <span class="c1">//apply projector</span>
+            <span class="nx">path</span><span class="p">.</span><span class="nx">projection</span><span class="p">(</span><span class="nx">proj</span><span class="p">);</span>
+            <span class="c1">//Important! When you use projection for full map(i.e, all paths), you must do this out side data callback function!</span>
+
+
+    <span class="p">}</span>
+</pre>

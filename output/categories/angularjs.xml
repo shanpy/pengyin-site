@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Pengyin's Corner (Posts about AngularJS)</title><link>https://pengyin-shan.com/</link><description></description><atom:link type="application/rss+xml" href="https://pengyin-shan.com/categories/angularjs.xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Tue, 11 Sep 2018 20:57:12 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>AngularJS Basics</title><link>https://pengyin-shan.com/posts/2015/JavaScript/angularjs-basics/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;h3 id="resouce-list"&gt;Resouce List&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/angularjs"&gt;AngularJS Tutorial on tutorialspoint.com&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="https://docs.angularjs.org"&gt;AngularJS Official API Doc&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="core-features"&gt;Core Features&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Data-binding&lt;/code&gt;: Two-way data-binding between model and view components.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Scope&lt;/code&gt;: Objects that refer to the model&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Controller&lt;/code&gt;: The controller for a specific scope&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Services&lt;/code&gt;: Built-in services for functions such as &lt;code&gt;XMLHttpRequests&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Filters&lt;/code&gt;: Generate a new array from a subset of items in an old array.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Directives&lt;/code&gt;: Create custom HTML tags as new widgets.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Templates&lt;/code&gt;: The "View" part in MV* structure&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Routing&lt;/code&gt;: Switching between different views&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;MVVM&lt;/code&gt;: Instead of purse MVC structure, AngularJS is a &lt;code&gt;MVVM&lt;/code&gt; (Model-View-ViewModel) structure.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Deep Linking&lt;/code&gt;: Bookmark current state of application in URL so that this state can be restored later.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Dependency Injection&lt;/code&gt;: The DI system in AngularJS&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A description graph from tutorialspoint.com:&lt;/p&gt;
+&lt;p&gt;../images/articles/2015/javascript/angularjs_concepts.jpg &lt;/p&gt;
+&lt;h3 id="three-major-parts"&gt;Three Major Parts&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ng-app&lt;/code&gt;: Link a AngularJS application to HTML.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ng-model&lt;/code&gt;: Bind the value of AngularJS application data to HTML input controls&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ng-bind&lt;/code&gt;: Bind angularJS application to HTML tags.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="controller"&gt;Controller&lt;/h3&gt;
+&lt;p&gt;HTML:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;ng-app&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;""&lt;/span&gt; &lt;span class="na"&gt;ng-controller&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"testController"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    Test Name 1: {{names.name1}}
+    Test Name 2: {{names.name2}}
+    Test Name 3: {{names.name3()}}
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;JS:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;testController&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;$scope&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+    &lt;span class="nx"&gt;$scope&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;names&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nx"&gt;name1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'a'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="nx"&gt;name2&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'b'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="nx"&gt;name3&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;$scope&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;name1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3 id="type-of-filters"&gt;Type of Filters&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;uppercase&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;lowercase&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;currency&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;filter&lt;/code&gt;: example &lt;code&gt;ng-repeat='name in names | filter: firstname'&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;orderby&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="html-dom-control"&gt;HTML DOM Control&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ng-disabled&lt;/code&gt;: disable a given control.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ng-show&lt;/code&gt;: show a given control.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ng-hide&lt;/code&gt;: hide a give control.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ng-click&lt;/code&gt;: a AngularJS click event.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;input&lt;/span&gt; &lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"checkbox"&lt;/span&gt; &lt;span class="na"&gt;ng-model&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"checkboxmodel"&lt;/span&gt;&lt;span class="p"&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;button&lt;/span&gt; &lt;span class="na"&gt;ng-disabled&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;'checkboxmodel'&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Disable/Enable this Button&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;button&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3 id="module"&gt;Module&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Application Module&lt;/code&gt;: Initialize application with controller&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Example: &lt;code&gt;var myApp = angular.module('myApp, []);&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Controller Module&lt;/code&gt;: Define the controller. Example is in "Controller" section&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="ng-events"&gt;ng-events&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ng-click&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ng-dbl-click&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ng-mousedown&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ng-mouseup&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ng-mousenter&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ng-mouseleave&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ng-mousemove&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ng-mouseover&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ng-keydown&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ng-keyup&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ng-keypress&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ng-change&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="forms"&gt;Forms&lt;/h3&gt;
+&lt;h4 id="data-validation"&gt;Data Validation&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;$dirty&lt;/code&gt;: Notify when a value is changed&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;$invalid&lt;/code&gt;: Notify when a value is invalided&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;$error&lt;/code&gt;: Point out the error&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example from tutorspoint:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Enter last name: &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;input&lt;/span&gt; &lt;span class="na"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"lastname"&lt;/span&gt;  &lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"text"&lt;/span&gt; &lt;span class="na"&gt;ng-model&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"lastName"&lt;/span&gt; &lt;span class="na"&gt;required&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;style&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"color:red"&lt;/span&gt; &lt;span class="na"&gt;ng-show&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"studentForm.lastname.$dirty &amp;amp;&amp;amp; studentForm.lastname.$invalid"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;ng-show&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"studentForm.lastname.$error.required"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Last Name is required.&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+       &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3 id="ng-includes"&gt;ng-includes&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;ng-includes&lt;/code&gt; is used to include partial views, which is similar to
+&lt;code&gt;&amp;lt;jsp:include page = "../../test.jsp"/&amp;gt;&lt;/code&gt; in JSP page.&lt;/p&gt;
+&lt;p&gt;Example from tutorialspoint.com:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;ng-app&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;""&lt;/span&gt; &lt;span class="na"&gt;ng-controller&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"studentController"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+   &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;ng-include&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"'main.htm'"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+   &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;ng-include&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"'subjects.htm'"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3 id="ajax-in-angularjs"&gt;AJAX in AngularJS&lt;/h3&gt;
+&lt;p&gt;Similar as jQuery, the format of AJAX is following:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nx"&gt;$http&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'/someUrl'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;
+  &lt;span class="nx"&gt;then&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;response&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;// this callback will be called asynchronously&lt;/span&gt;
+    &lt;span class="c1"&gt;// when the response is available&lt;/span&gt;
+  &lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;response&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;// called asynchronously if an error occurs&lt;/span&gt;
+    &lt;span class="c1"&gt;// or server returns response with an error status.&lt;/span&gt;
+  &lt;span class="p"&gt;});&lt;/span&gt;
+
+&lt;span class="o"&gt;:::&lt;/span&gt;&lt;span class="nx"&gt;javascript&lt;/span&gt;
+&lt;span class="c1"&gt;// Simple POST request example (passing data) :&lt;/span&gt;
+&lt;span class="nx"&gt;$http&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;post&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'/someUrl'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nx"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s1"&gt;'hello word!'&lt;/span&gt;&lt;span class="p"&gt;}).&lt;/span&gt;
+  &lt;span class="nx"&gt;then&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;response&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;// this callback will be called asynchronously&lt;/span&gt;
+    &lt;span class="c1"&gt;// when the response is available&lt;/span&gt;
+  &lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;response&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;// called asynchronously if an error occurs&lt;/span&gt;
+    &lt;span class="c1"&gt;// or server returns response with an error status.&lt;/span&gt;
+  &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Since AngularJS Ajax involves in some other knowledge, I will write extra post about this.&lt;/p&gt;
+&lt;h3 id="views"&gt;Views&lt;/h3&gt;
+&lt;h4 id="ng-view"&gt;ng-view&lt;/h4&gt;
+&lt;p&gt;Just create a placeholder for easier configuration:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;ng-view&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="ng-template"&gt;ng-template&lt;/h4&gt;
+&lt;p&gt;Create a view with &lt;code&gt;id&lt;/code&gt;. This view will be map to a controller using &lt;code&gt;$routeProvider&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Example from tutorialspoint.com:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;ng-app&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"mainApp"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+   &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt; &lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"text/ng-template"&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"addStudent.htm"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;h2&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nx"&gt;Add&lt;/span&gt; &lt;span class="nx"&gt;Student&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="err"&gt;/h2&amp;gt;&lt;/span&gt;
+         &lt;span class="p"&gt;{{&lt;/span&gt;&lt;span class="nx"&gt;message&lt;/span&gt;&lt;span class="p"&gt;}}&lt;/span&gt;
+   &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="routeprovider"&gt;$routeProvider&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;$routeProvider&lt;/code&gt; configure urls and map to corresponding views. The controller for that corresponding view will also be attached. It works similar to &lt;code&gt;@RequestMapping(value='...')&lt;/code&gt; function in Spring MVC framework.&lt;/p&gt;
+&lt;p&gt;Example from tutorialspoint.com:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//You need to add ngRoute to application controller&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;mainApp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;angular&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;module&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"mainApp"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'ngRoute'&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;
+&lt;span class="c1"&gt;//templateUrl maps the id defined in ng-template&lt;/span&gt;
+&lt;span class="nx"&gt;mainApp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;config&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s1"&gt;'$routeProvider'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+     &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;$routeProvider&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nx"&gt;$routeProvider&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+           &lt;span class="nx"&gt;when&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'/addStudent'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+              &lt;span class="nx"&gt;templateUrl&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'addStudent.htm'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+              &lt;span class="c1"&gt;//addStudent.htm should be the same path as main.htm&lt;/span&gt;
+              &lt;span class="nx"&gt;controller&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'AddStudentController'&lt;/span&gt;
+           &lt;span class="p"&gt;}).&lt;/span&gt;
+           &lt;span class="nx"&gt;when&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'/viewStudents'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+              &lt;span class="nx"&gt;templateUrl&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'viewStudents.htm'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+              &lt;span class="nx"&gt;controller&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'ViewStudentsController'&lt;/span&gt;
+           &lt;span class="p"&gt;}).&lt;/span&gt;
+           &lt;span class="nx"&gt;otherwise&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;
+              &lt;span class="c1"&gt;//Default View&lt;/span&gt;
+              &lt;span class="nx"&gt;redirectTo&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'/addStudent'&lt;/span&gt;
+           &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;span class="p"&gt;}]);&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3 id="scope"&gt;Scope&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;$scope&lt;/code&gt; is passed as first argument to controller during its constructor definition.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Scope is controller specific.&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Child controller can inherit scope from parent controller.&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Scope in parent controller can be overwritten by child controller&lt;/strong&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example from tutorialspoint.com:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;script&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;mainApp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;angular&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;module&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"mainApp"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[]);&lt;/span&gt;
+  &lt;span class="nx"&gt;mainApp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;controller&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"shapeController"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;$scope&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+     &lt;span class="nx"&gt;$scope&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;message&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"In shape controller"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+     &lt;span class="nx"&gt;$scope&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"Shape"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="p"&gt;});&lt;/span&gt;
+  &lt;span class="nx"&gt;mainApp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;controller&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"circleController"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;$scope&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+     &lt;span class="nx"&gt;$scope&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;message&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"In circle controller"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  &lt;span class="c1"&gt;//Overwritten&lt;/span&gt;
+  &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="err"&gt;/script&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3 id="service"&gt;Service&lt;/h3&gt;
+&lt;p&gt;Services are JavaScript functions and are responsible to do a &lt;strong&gt;specific tasks&lt;/strong&gt; **only.&lt;/p&gt;
+&lt;p&gt;Services are normally injected using &lt;strong&gt;dependency injection&lt;/strong&gt; mechanism of AngularJS.&lt;/p&gt;
+&lt;p&gt;There are two types of service.&lt;/p&gt;
+&lt;h4 id="factory"&gt;Factory&lt;/h4&gt;
+&lt;p&gt;Define a factory then assign method to it.&lt;/p&gt;
+&lt;p&gt;Example from tutorialspoint.com:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt; &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;mainApp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;angular&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;module&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"mainApp"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[]);&lt;/span&gt;
+  &lt;span class="c1"&gt;//Define a MathService factory&lt;/span&gt;
+  &lt;span class="nx"&gt;mainApp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;factory&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'MathService'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+     &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;factory&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{};&lt;/span&gt;
+     &lt;span class="nx"&gt;factory&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;multiply&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="nx"&gt;b&lt;/span&gt;
+     &lt;span class="p"&gt;}&lt;/span&gt;
+     &lt;span class="c1"&gt;//return factory object&lt;/span&gt;
+     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;factory&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="service_1"&gt;Service&lt;/h4&gt;
+&lt;p&gt;Call Factory and perform methods defined in Factory:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//take MathService factory as a parameter&lt;/span&gt;
+&lt;span class="nx"&gt;mainApp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;service&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'CalcService'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;MathService&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+        &lt;span class="c1"&gt;//CalService define a squre method&lt;/span&gt;
+        &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;square&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;MathService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;multiply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nx"&gt;a&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="c1"&gt;//call MathService factory 'multiply' method&lt;/span&gt;
+     &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Finally, you can call service in your controller method:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//take CalcService service as a parameter&lt;/span&gt;
+&lt;span class="nx"&gt;mainApp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;controller&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'CalcController'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;$scope&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;CalcService&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nx"&gt;$scope&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;square&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nx"&gt;$scope&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;CalcService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;square&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;$scope&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;number&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="c1"&gt;//Call square method from CalcService&lt;/span&gt;
+     &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3 id="dependency-injection"&gt;Dependency Injection&lt;/h3&gt;
+&lt;p&gt;Following component of AngulaJS can be injected into other components:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;value&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;factory&lt;/code&gt;: Example above injecting MathService factory to CalcService service&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;service&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;provider&lt;/code&gt;: &lt;code&gt;Provider&lt;/code&gt; is a special factory method with a method &lt;code&gt;get()&lt;/code&gt;which is used to return the &lt;code&gt;value&lt;/code&gt;/&lt;code&gt;service&lt;/code&gt;/&lt;code&gt;factory&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;constant&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example for value/constnat from tutorialspoint.com:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nx"&gt;mainApp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;value&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"defaultInput"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="nx"&gt;mainApp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;constant&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"configParam"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"constant value"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="nx"&gt;mainApp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;controller&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'CalcController'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;$scope&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;defaultInput&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;configParam&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;//...&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Example for provider from tutorialspoint.com:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//create a service using provider which defines a method square to return square of a number.&lt;/span&gt;
+&lt;span class="nx"&gt;mainApp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;config&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;$provide&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+   &lt;span class="nx"&gt;$provide&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;provider&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'MathService'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="c1"&gt;//This provider gets MathService factory&lt;/span&gt;
+      &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;$get&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+         &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;factory&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{};&lt;/span&gt;
+         &lt;span class="nx"&gt;factory&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;multiply&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="nx"&gt;b&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+         &lt;span class="p"&gt;}&lt;/span&gt;
+         &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;factory&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;};&lt;/span&gt;
+   &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3 id="custom-directives"&gt;Custom Directives&lt;/h3&gt;
+&lt;p&gt;Custom directives are defined using &lt;code&gt;directive&lt;/code&gt; function. &lt;strong&gt;A custom directive simply replaces the element for which it is activated&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;AngularJS use its &lt;code&gt;compile()&lt;/code&gt; method of the custom directive then process the element using &lt;code&gt;link()&lt;/code&gt; method of the custom directive based on the scope of the directive.&lt;/p&gt;
+&lt;p&gt;You can create custom directives for following type of elements:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Element directives&lt;/code&gt;: Directive activates when a &lt;strong&gt;matching element&lt;/strong&gt; is encountered.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Attribute&lt;/code&gt;: Directive activates when a &lt;strong&gt;matching attribute&lt;/strong&gt; is encountered.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;CSS&lt;/code&gt;: Directive activates when a &lt;strong&gt;matching css&lt;/strong&gt; style is encountered.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Comment&lt;/code&gt;: Directive activates when a &lt;strong&gt;matching comment&lt;/strong&gt; is encountered.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example custom HTML tags from tutorialspoint.com:&lt;/p&gt;
+&lt;p&gt;View:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;&amp;lt;!-- This controller includes custom directive necessary information --&amp;gt;&lt;/span&gt;
+ &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;ng-app&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"mainApp"&lt;/span&gt; &lt;span class="na"&gt;ng-controller&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"StudentController"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;student&lt;/span&gt; &lt;span class="na"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"Mahesh"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;student&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;br&lt;/span&gt;&lt;span class="p"&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;student&lt;/span&gt; &lt;span class="na"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"Piyush"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;student&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+
+
+&lt;p&gt;Controller:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nx"&gt;mainApp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;controller&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'StudentController'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;$scope&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nx"&gt;$scope&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Mahesh&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{};&lt;/span&gt;
+        &lt;span class="nx"&gt;$scope&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Mahesh&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"Mahesh Parashar"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="nx"&gt;$scope&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Mahesh&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;rollno&lt;/span&gt;  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="nx"&gt;$scope&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Piyush&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{};&lt;/span&gt;
+        &lt;span class="nx"&gt;$scope&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Piyush&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"Piyush Parashar"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="nx"&gt;$scope&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Piyush&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;rollno&lt;/span&gt;  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Create Directive:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;/Create a directive, first parameter is the html element to be attached.&lt;/span&gt;
+&lt;span class="c1"&gt;//This directive will be activated as soon as any student element is encountered in html&lt;/span&gt;
+&lt;span class="nx"&gt;mainApp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;directive&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'student'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+   &lt;span class="c1"&gt;//define the directive object&lt;/span&gt;
+   &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;directive&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{};&lt;/span&gt;
+   &lt;span class="c1"&gt;//restrict = E, signifies that directive is Element directive&lt;/span&gt;
+   &lt;span class="nx"&gt;directive&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;restrict&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'E'&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+   &lt;span class="c1"&gt;//template replaces the complete element with its text.&lt;/span&gt;
+   &lt;span class="nx"&gt;directive&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;template&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"Student: &amp;lt;b&amp;gt;{{student.name}}&amp;lt;/b&amp;gt; , Roll No: &amp;lt;b&amp;gt;{{student.rollno}}&amp;lt;/b&amp;gt;"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+   &lt;span class="c1"&gt;//scope is used to distinguish each student element based on criteria.&lt;/span&gt;
+   &lt;span class="nx"&gt;directive&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;scope&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+       &lt;span class="nx"&gt;student&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;"=name"&lt;/span&gt;
+   &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Compile:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;   &lt;span class="c1"&gt;//compile is called during application initialization. AngularJS calls it once when html page is loaded.&lt;/span&gt;
+   &lt;span class="nx"&gt;directive&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;compile&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;element&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;attributes&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="nx"&gt;element&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;css&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"border"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"1px solid #cccccc"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+      &lt;span class="c1"&gt;//linkFunction is linked with each element with scope to get the element specific data.&lt;/span&gt;
+      &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;linkFunction&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;$scope&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;element&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;attributes&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+          &lt;span class="nx"&gt;element&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;html&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"Student: &amp;lt;b&amp;gt;"&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="nx"&gt;$scope&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;student&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="s2"&gt;"&amp;lt;/b&amp;gt; , Roll No: &amp;lt;b&amp;gt;"&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="nx"&gt;$scope&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;student&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;rollno&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="s2"&gt;"&amp;lt;/b&amp;gt;&amp;lt;br/&amp;gt;"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+          &lt;span class="c1"&gt;//You are using the scope from controller. Note StudentController replace 'student' to a specific student name&lt;/span&gt;
+          &lt;span class="nx"&gt;element&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;css&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"background-color"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"#ff00ff"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+      &lt;span class="p"&gt;}&lt;/span&gt;
+      &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;linkFunction&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+   &lt;span class="p"&gt;}&lt;/span&gt;
+   &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;directive&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;In the example above, you need to create a directive, then create a corresponding compile attribute for it.&lt;/p&gt;&lt;/div&gt;</description><category>AngularJS</category><category>JavaScript</category><guid>https://pengyin-shan.com/posts/2015/JavaScript/angularjs-basics/</guid><pubDate>Tue, 11 Aug 2015 04:00:00 GMT</pubDate></item></channel></rss>

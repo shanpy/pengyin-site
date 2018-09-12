@@ -1,0 +1,120 @@
+<p>I was working on an old Java web application today. This java web app used to pass data by using URL parameter, and I wanted to change it to passing data by using AJAX with JSON object, since there will be more data being passed in the future.</p>
+<p>After working a while I realized I need to write this post becasue:</p>
+<ol>
+<li>
+<p>Pure JSP/Servlet java app is a little bit different from Spring MVC Java web app</p>
+</li>
+<li>
+<p>I'm digging into Spring MVS so much that it's a little bit tough to change back to old way :)</p>
+</li>
+</ol>
+<p>So, if you have a JSP/Servlet Java web app and you want to use AJAX with JSON object, you have to write code in three places:</p>
+<h3 id="1-jsp-with-jquery">1. JSP with jQuery</h3>
+<p>You want to have <code>jQuery</code> library in your JSP file to make sure you can use AJAX.</p>
+<pre class="code literal-block"><span></span><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+        <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;POST&quot;</span><span class="p">,</span>
+        <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;your &lt;url-pattern&gt; in web.xml&#39;</span>
+        <span class="nx">data</span><span class="o">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">json_object</span><span class="p">),</span>
+        <span class="nx">contentType</span><span class="o">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
+        <span class="nx">dataType</span><span class="o">:</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span>
+        <span class="c1">//mimeType: &#39;application/json&#39;</span>
+        <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+            <span class="c1">//Process your data that is being passed back...</span>
+        <span class="p">},</span>
+        <span class="nx">error</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">jqXHR</span><span class="p">,</span> <span class="nx">textStatus</span><span class="p">,</span> <span class="nx">errorThrown</span> <span class="p">){</span>
+            <span class="c1">//Deal with error occation</span>
+        <span class="p">}</span>
+        <span class="p">});</span>
+<span class="c1">//New Version:</span>
+ <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+        <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;POST&quot;</span><span class="p">,</span>
+        <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;your &lt;url-pattern&gt; in web.xml&#39;</span>
+        <span class="nx">data</span><span class="o">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">json_object</span><span class="p">),</span>
+        <span class="nx">contentType</span><span class="o">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
+        <span class="nx">dataType</span><span class="o">:</span> <span class="s1">&#39;json&#39;</span>
+        <span class="p">}).</span><span class="nx">done</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+            <span class="c1">//Process your data that is being passed back...</span>
+        <span class="p">}).</span><span class="nx">fail</span><span class="p">(</span><span class="nx">fuction</span><span class="p">(){</span>
+            <span class="c1">//Deal with error occation</span>
+        <span class="p">}).</span><span class="nx">always</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+            <span class="c1">//Same as &#39;complete&#39; in old version, operate after done/fail</span>
+        <span class="p">});</span>
+<span class="c1">//You can also use $.post(url, data, success, dataType) as a new way</span>
+</pre>
+
+
+<blockquote>
+<p>In the code above, <code>contentType</code> and <code>dataType</code> (and <code>mimeType</code> if exists) is very important because wrong value of these attributes can give you a <code>404</code> or <code>500</code> error.</p>
+</blockquote>
+<h4 id="contenttype">contentType</h4>
+<p>Default value: <code>application/x-www-form-urlencoded; charset=UTF-8</code></p>
+<p>This is the data type <strong>when you send data to server</strong>.</p>
+<h4 id="datatype">dataType</h4>
+<p>Default value: Guess(<code>xml</code>, <code>json</code>, <code>script</code>, <code>html</code>)</p>
+<p>This is the data type <strong>when server pass data back to you</strong>.</p>
+<h4 id="mimetype">mimeType</h4>
+<p>A mime type to override the XHR mime type. This is the data type <strong>when server pass data back to you</strong>.</p>
+<p>Form Mozilla, MIME types describe the media type of content either in email or served by web servers or web applications.</p>
+<p>MIME types are intended to help guide a web browser in <em>how the content is to be processed and displayed</em>. Examples of MIME types are:</p>
+<ul>
+<li><code>text/html</code> for normal web pages</li>
+<li><code>text/plain</code> for plain text</li>
+<li><code>application/octet-stream</code> meaning "download this file"</li>
+<li><code>application/x-java-applet</code> for Java™ applets</li>
+<li><code>application/pdf</code> for Adobe® PDF documents.</li>
+</ul>
+<p>So if you want you browser to access data like <code>xml</code>, <code>json</code>, <code>script</code> or <code>html</code>, <code>dataType</code> is good enough. However, if you want to let your browser detect PDF file or other data types, you need to set <code>mimeType</code>.</p>
+<h3 id="2-webxml">2. web.xml</h3>
+<blockquote>
+<p>After working with Spring MVC for a while, I realizae I can forget web.xml easily. Make sure you register your servlet in web.xml.</p>
+</blockquote>
+<p>You need to regiseter your servlet in <code>web.xml</code> file in your project. Example:</p>
+<pre class="code literal-block"><span></span><span class="nt">&lt;servlet&gt;</span>
+    <span class="c">&lt;!-- Give a servlet name for using in web.xml --&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>proctorprocess<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="c">&lt;!-- This is the class of your servlet --&gt;</span>
+    <span class="nt">&lt;servlet-class&gt;</span>edu.fsu.odl.cat.cber2.ProctorProcessServlet<span class="nt">&lt;/servlet-class&gt;</span>
+<span class="nt">&lt;/servlet&gt;</span>
+<span class="nt">&lt;servlet-mapping&gt;</span>
+    <span class="c">&lt;!-- Same servlet name as above --&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>proctorprocess<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="c">&lt;!-- This is the url you want to put as url --&gt;</span>
+    <span class="nt">&lt;url-pattern&gt;</span>/ProctorProcess<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+</pre>
+
+
+<h3 id="3-servlet">3. Servlet</h3>
+<p>If you pass JSON object to your servlet, you may want to use <code>org.json</code>, <code>com.fasterxml.jackson</code> or <code>gson</code> external library to help you dealing with JSON object in Java.</p>
+<p>Example code for post operation:</p>
+<pre class="code literal-block"><span></span><span class="c1">//You want your class extends HttpServlet</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProctorProcessServlet</span> <span class="kd">extends</span> <span class="n">HttpServlet</span><span class="o">{</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="o">){</span>
+        <span class="k">try</span><span class="o">{</span>
+            <span class="n">String</span> <span class="n">json</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+            <span class="n">BufferedReader</span> <span class="n">br</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">InputStreamReader</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">()));</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">br</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+                <span class="n">json</span> <span class="o">=</span> <span class="n">br</span><span class="o">.</span><span class="na">readLine</span><span class="o">();</span> <span class="c1">//json should be the string of your JSON object</span>
+                <span class="c1">//Process your JSON object</span>
+            <span class="o">}</span>
+            <span class="c1">//Assume you want to pass JSON object back</span>
+            <span class="n">response</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">&quot;application/json&quot;</span><span class="o">);</span>
+            <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="na">getWriter</span><span class="o">();</span>
+            <span class="n">JSONObject</span> <span class="n">sample</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
+            <span class="c1">//Process sample</span>
+             <span class="n">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">sample</span><span class="o">);</span>
+             <span class="n">out</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
+             <span class="c1">//Now you finish your post operation and come back to JSP</span>
+        <span class="o">}</span>
+        <span class="k">catch</span><span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span>
+            <span class="c1">//...</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+</pre>
+
+
+<p>This post will be udpated when I learned more about AJAX in my work experience.</p>
+<h3 id="tips">Tips</h3>
+<h4 id="orgapachecatalinalifecycleexception-failed-to-start-component">org.apache.catalina.LifecycleException: Failed to start component</h4>
+<p>If you include <code>org.json</code> jar file in your project, and you encourter <code>org.apache.catalina.LifecycleException: Failed to start component</code> exception when you try to deploy to Tomcat:</p>
+<p>Make sure you add your jar files to <code>Web Deployment Assebly</code> in your project properies. Following <a href="http://stackoverflow.com/questions/16362302/java-servlet-error-with-jsonobject">this post</a> and you will be fine.</p>

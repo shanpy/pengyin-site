@@ -1,0 +1,166 @@
+<p>This post is transferred from my <a href="http://blogpengyin.herokuapp.com/">old Hexo blog site</a>, created on 2014.</p>
+<p>This is a Reading Note for <em>Interactive Data Visualization for the Web - An Introduction to Designing with D3</em> by <em>Scott Murray</em>, pulished by <em>O'Reilly, 2013</em></p>
+<p>This post will contains concepts that I think it's important for me to be familiar with in D3 book.</p>
+<h1 id="chapter-6-draw-graph-basiced-on-data">Chapter 6 : Draw Graph basiced on Data</h1>
+<p>code example for this chapter is <a href="http://shanpy.github.io/Front-End-Playground/D3/Reading-D3-II.html"><em>here</em></a>. This part involves lots of code practice.</p>
+<p>Everything is <code>rectangular</code> for browser. Using <code>div</code> is the easiest way to draw a <em>Bar Chart</em>.</p>
+<h3 id="code-part-i">code part I</h3>
+<p><code>attr()</code> set up the value for a DOM attribute, such as <code>.attr('class','bar')</code></p>
+<p><code>style()</code> add css style to an element</p>
+<p><code>classed()</code> quickly add/delete class to an element, such as <code>.classed('bar',true/false)</code> to add/delete a class <code>bar</code> to an element</p>
+<p><code>select().selectAll().data().enter()</code> put data to <code>data</code>, then use/create elements using <code>selectAll()</code>, append them in <code>select()</code>, for example:</p>
+<pre class="code literal-block"><span></span><span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">))</span> <span class="c1">//select the space that is a div &quot;test&quot;</span>
+    <span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">)</span> <span class="c1">//create divs in &#39;test&#39; div</span>
+    <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">).</span><span class="nx">enter</span><span class="p">();</span> <span class="c1">//for each new div, put data to it</span>
+</pre>
+
+
+<h2 id="draw-svg">Draw SVG</h2>
+<h3 id="code-part-ii">code part II</h3>
+<p>For each <code>SVG</code> element, all its properties are defined by <code>property='XXX'</code>, such as <code>&lt;element property = 'value'&gt;&lt;/element&gt;</code></p>
+<p>First step is always create a <code>SVG</code> element:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">w</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span> <span class="c1">//This is pixel</span>
+<span class="kd">var</span> <span class="nx">h</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">svg</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;chapter6&#39;</span><span class="p">).</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s2">&quot;2&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+                                <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">)</span>
+                                <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span><span class="nx">w</span><span class="p">)</span>
+                                <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span><span class="nx">h</span><span class="p">);</span>
+<span class="c1">//Create size of svg</span>
+</pre>
+
+
+<p>Then draw a circle:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">26</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">13</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">circles</span> <span class="o">=</span> <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+                <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;circle&#39;</span><span class="p">);</span> <span class="c1">//create circle and put data in</span>
+
+<span class="nx">circles</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;cx&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+            <span class="k">return</span> <span class="p">(</span><span class="nx">i</span><span class="o">*</span><span class="mi">20</span><span class="p">)</span><span class="o">+</span><span class="mi">10</span><span class="p">;</span>
+            <span class="p">})</span>
+            <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;cy&#39;</span><span class="p">,</span><span class="nx">h</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+            <span class="k">return</span> <span class="nx">d</span><span class="p">;</span>
+            <span class="p">})</span>
+            <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="s1">&#39;yellow&#39;</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;stroke&#39;</span><span class="p">,</span><span class="s1">&#39;pink&#39;</span><span class="p">);</span>
+            <span class="c1">//Add center point and radius. Then add color to it</span>
+</pre>
+
+
+<h2 id="draw-bar-chart">Draw Bar Chart</h2>
+<h3 id="code-part-iii">code part III</h3>
+<p>In D3, always choose element that you need, even before it is created.</p>
+<p><code>SVG</code> only support alignment through <em>left-upper</em> corner. To make sure bar chart using bottom alignment:</p>
+<ul>
+<li>
+<p>make the <code>y</code>, which is the vertical point of alignment point, equals to <code>total height - its own height</code></p>
+</li>
+<li>
+<p>then make each bar has height equal to its data.</p>
+</li>
+</ul>
+<p>Make color be ratio to data:</p>
+<pre class="code literal-block"><span></span><span class="c1">//add color to rectangular. Make each bar has color ratio to its data</span>
+<span class="nx">rect</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+        <span class="k">return</span><span class="p">(</span><span class="s2">&quot;rgb(0,0,&quot;</span><span class="o">+</span><span class="p">(</span><span class="nx">d</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;)&quot;</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+
+
+<p>The way to add <code>tags</code> is the same to add <code>rect</code>:</p>
+<pre class="code literal-block"><span></span><span class="c1">//create text</span>
+<span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+                <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">);</span>
+
+<span class="c1">//set text position. Adjust position a little bit</span>
+<span class="nx">text</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+                <span class="k">return</span> <span class="nx">i</span><span class="o">*</span><span class="p">(</span><span class="nx">w</span><span class="o">/</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span><span class="o">+</span><span class="mi">5</span><span class="p">;</span>
+                <span class="p">})</span>
+
+<span class="nx">text</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+                <span class="k">return</span> <span class="nx">h</span><span class="o">-</span><span class="p">(</span><span class="nx">d</span><span class="o">+</span><span class="mi">5</span><span class="p">);</span>
+                <span class="p">});</span>
+
+<span class="c1">//add text value</span>
+<span class="nx">text</span><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+                <span class="k">return</span> <span class="nx">d</span><span class="p">;</span> <span class="c1">//Get integer value in JavaScript</span>
+                <span class="p">});</span>
+
+<span class="c1">//set font family</span>
+<span class="nx">text</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;font-family&#39;</span><span class="p">,</span><span class="s1">&#39;sans-serif&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;font-size&#39;</span><span class="p">,</span><span class="s1">&#39;1em&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;text-anchor&#39;</span><span class="p">,</span><span class="s1">&#39;middle&#39;</span><span class="p">);</span> <span class="c1">//set text alignment</span>
+</pre>
+
+
+<h2 id="draw-scatter-plot">Draw Scatter Plot</h2>
+<h3 id="code-part-iv">code part IV</h3>
+<p>For a scatter plot, data should look like an array of arrays:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[</span>
+                                <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span>
+                                <span class="p">[</span><span class="mf">15.30</span><span class="p">],</span>
+                                <span class="p">[</span><span class="mi">60</span><span class="p">,</span><span class="mi">75</span><span class="p">],</span>
+                                <span class="p">[</span><span class="mi">99</span><span class="p">,</span><span class="mi">35</span><span class="p">]</span>
+            <span class="p">];</span>
+<span class="c1">//First Numer is X axis, Second Numer is y axis</span>
+</pre>
+
+
+<p>The way to draw a scatter plot is generating lots of circles on <code>svg</code>, each circle is a point:</p>
+<pre class="code literal-block"><span></span><span class="c1">//prepare data</span>
+<span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">115</span><span class="p">,</span><span class="mi">130</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">40</span><span class="p">,</span><span class="mi">40</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">160</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">199</span><span class="p">,</span><span class="mi">135</span><span class="p">]</span>
+                <span class="p">];</span>
+
+<span class="c1">//create svg element</span>
+<span class="kd">var</span> <span class="nx">w</span> <span class="o">=</span> <span class="mi">300</span><span class="p">;</span> <span class="c1">//This is pixel</span>
+<span class="kd">var</span> <span class="nx">h</span> <span class="o">=</span> <span class="mi">150</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">svg</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;chapter6&#39;</span><span class="p">).</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s2">&quot;4&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+<span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">)</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span><span class="nx">w</span><span class="p">)</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span><span class="nx">h</span><span class="p">);</span>
+
+<span class="c1">//create circles</span>
+<span class="kd">var</span> <span class="nx">circle</span> <span class="o">=</span> <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">)</span>
+<span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+<span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;circle&#39;</span><span class="p">);</span>
+
+<span class="c1">//set up cx, cy, r</span>
+<span class="nx">circle</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;cx&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span> <span class="c1">//Here, d is the single array in array group</span>
+                    <span class="k">return</span> <span class="nx">d</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="c1">//note it should be first element in array</span>
+                <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;cy&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+                    <span class="k">return</span> <span class="nx">h</span><span class="o">-</span><span class="nx">d</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="c1">//y should be second element in array</span>
+                <span class="p">});</span>
+
+<span class="c1">//Make area of circle be proportional to data, using A = π*r^2. We just assume y is the area here</span>
+<span class="nx">circle</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+                    <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">sqrt</span><span class="p">(</span><span class="nx">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mf">3.14</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5</span><span class="p">;</span>
+                <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="s1">&#39;pink&#39;</span><span class="p">);</span>
+
+<span class="c1">//Add Tags</span>
+<span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">)</span>
+                    <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">)</span>
+                    <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+                    <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">);</span>
+
+<span class="nx">text</span><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+                    <span class="k">return</span> <span class="nx">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span> <span class="o">+</span> <span class="nx">d</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+                <span class="p">});</span>
+
+<span class="nx">text</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+                    <span class="k">return</span> <span class="nx">d</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+                <span class="p">});</span>
+<span class="nx">text</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+                    <span class="k">return</span> <span class="nx">h</span><span class="o">-</span><span class="nx">d</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+                <span class="p">});</span>
+</pre>

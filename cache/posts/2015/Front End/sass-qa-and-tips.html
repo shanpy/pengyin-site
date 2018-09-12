@@ -1,0 +1,42 @@
+<p>This post will serve as a Q&amp;A note during the process of learning Sass. I'm absolutely a new beginner so I'll keep questions and answers updating continously:)</p>
+<h2 id="question-what-is-the-syntax-difference-between-sass-and-scss">Question: What is the syntax difference between sass and scss?</h2>
+<p>So far I've found following difference:</p>
+<ul>
+<li>
+<p>scss is similar to css style, requires "{" and ";"</p>
+</li>
+<li>
+<p>sass has none of these</p>
+</li>
+<li>
+<p>sass is white space recoginized while scss not</p>
+</li>
+</ul>
+<h2 id="question-how-jekyll-work-with-sass">Question: How Jekyll work with Sass?</h2>
+<p>Currently version of Jekyll (2.4.0) has native support for Sass and CoffeeScript. Official documentation is here: http://jekyllrb.com/docs/assets/</p>
+<p>I use official way for sass compile by following step:</p>
+<p>In home directory, create a folder called _sass. I decide to use this folder for sass files that I will import from.</p>
+<p>Add following lines in _config.yml to register _sass folder:</p>
+<blockquote>
+<p>sass:
+ sass_dir: _sass</p>
+</blockquote>
+<p>You can always modify it to your folder name.</p>
+<p>Create a folder called "css", then put all scss file there. Now website has:</p>
+<pre class="code literal-block"><span></span>/css
+    - default.scss
+    - header.scss
+    - page.scss
+/_sass
+    - _test.css
+</pre>
+
+
+<p>In scss file, first two lines needs to be '- - -'. You can use @import 'test' to import _test.sass file in _sass.</p>
+<blockquote>
+<p>Please make sure everything in <em>sass folder start with a '</em>'.</p>
+<p>You don't need to put '- - -' to files in _sass folder.</p>
+</blockquote>
+<p>In html page, add link to these scss file, using '.css' extension. For example: <code>&lt;link rel="stylesheet" type="text/css" href="/css/default.css"&gt;</code> pointing to default.scss in css folder. You can actually find default.css in _site/css folder</p>
+<p>Jeyll will automatically compile scss and sass file when you build your project.</p>
+<p>On Jekyll website, there are some websites that are built with Sass. You can refer them for folder structure on your own blog site.</p>

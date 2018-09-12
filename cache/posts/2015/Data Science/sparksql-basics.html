@@ -1,0 +1,118 @@
+<h2 id="resource-list">Resource List</h2>
+<ul>
+<li><a href="www.sparkinchina.com">SparkSQL(Chinese)</a>, written by Junhui Ma, www.sparkinchina.com (i.e. <code>SparkSQL book</code> in my post)</li>
+</ul>
+<h2 id="traditional-sql-and-rdbms">Traditional SQL and RDBMS</h2>
+<p>This is a graph of how traditional SQL query is processed, from SparkSQL book:</p>
+<p>../images/articles/2015/data_science/regular_query.png </p>
+<p>A traditional SQL query following this sequence: <code>Result</code> -&gt; <code>Data Source</code> -&gt; <code>Operation</code>.</p>
+<p>Step 1: a traditional RDBMS will first <strong>parse</strong> the sql query to get tokens such as <code>select</code>, <code>where</code>, etc.</p>
+<p>Step 2: RDBMS will <strong>bind</strong> sql query to data source in database system, such as <code>table</code> or <code>view</code>. If all corresponding data sources in database exists, this sql query is executable.</p>
+<p>Execute tree graph from SparkSQL book:</p>
+<p>../images/articles/2015/data_science/sql_execute_tree.png </p>
+<p>During step2, RDBMS will also supply a few execution plan. RDBMS will choose the one with the best optimization.</p>
+<p><strong>When RDBMS parse sql, it will transfer the sql to tree structure:</strong></p>
+<p>../images/articles/2015/data_science/sql_tree.png </p>
+<h1 id="sparksql">SparkSQL</h1>
+<p>SparkSQL(1.1) is combined by four modules:</p>
+<ul>
+<li>
+<p><code>core</code>: I/O operation. Get data resources(<code>RDD</code>, <code>JSON</code>, etc) then transfer it to <code>schemaRDD</code>.</p>
+</li>
+<li>
+<p><code>catalyst</code>: Process sql query. The process includes: parsing, binding, optimizing, creating logic plan, etc.</p>
+</li>
+<li>
+<p><code>hive</code>: process hive data.</p>
+</li>
+<li>
+<p><code>hive-Thriftserver</code>: provide <code>CLI</code> and <code>JDBC/ODBC</code> interface.</p>
+</li>
+</ul>
+<h2 id="sparksql-tree-and-rule">SparkSQL: Tree and Rule</h2>
+<p>Similar as traditional RDBMS, SparkSQL also parse SQL query to a <strong>Tree</strong> structure. The operation to tree is <strong>Rule</strong>, which involves in using pattern matching to decide which operation show be taken for a certain tree node.</p>
+<h3 id="tree">Tree</h3>
+<p>Tree can be used to show: <code>Logical Plans</code>, <code>Expressions</code> and <code>Physical Operators</code>.</p>
+<p>The operation to tree is working on <strong>TreeNode</strong>. Just like normal tree data structure, SparkSQL can traverse whole tree or go to a certain tree node to perform operation.</p>
+<h4 id="three-types-of-tree-node">Three Types of Tree Node</h4>
+<ul>
+<li>
+<p><code>UnaryNode</code>: Only one child node. Using for operations like <code>Limit</code>, <code>Filter</code></p>
+</li>
+<li>
+<p><code>BinaryNode</code>: Has left and right child node. Using for operations like <code>Join</code>, <code>Union</code></p>
+</li>
+<li>
+<p><code>LeafNode</code>: No child node. Using for user command, such as <code>SetCommand</code></p>
+</li>
+</ul>
+<h3 id="rule">Rule</h3>
+<p><code>Rule</code> is a abstract class. It is extended by <code>RuleExecutor</code>.</p>
+<p>Rule can perform <code>transform</code> operation by using <code>batch</code>es.</p>
+<p>Rule can perform recursive operations by using <code>Once</code> and <code>FixedPoint</code>.</p>
+<h4 id="example-for-rule-analyzer">Example for Rule: Analyzer</h4>
+<p>Analyzer graph from SparkSQL book:</p>
+<p>../images/articles/2015/data_science/sparksql_analyzer.png </p>
+<p>Face in <code>RuleExcutor</code> class for Analyzer:</p>
+<ul>
+<li>
+<p>There are multiple batches are used.</p>
+</li>
+<li>
+<p>Each batch is combined by different rules. Some rules may be applied multiple times.</p>
+</li>
+<li>
+<p>Each rule has its own functions</p>
+</li>
+</ul>
+<blockquote>
+<p>Tree and Rule are working together to perform: parse operation, binding operation, optimizing operation, create logical plan, etc. Finally a executable plan will be created.</p>
+</blockquote>
+<h2 id="sparksql-sqlcontext">SparkSQL: sqlContext</h2>
+<p>Source Code:</p>
+<pre class="code literal-block"><span></span><span class="k">def</span> <span class="n">sql</span><span class="o">(</span><span class="n">sqlText</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">SchemaRDD</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">dialect</span> <span class="o">==</span> <span class="s">&quot;sql&quot;</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">new</span> <span class="nc">SchemaRDD</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">parseSql</span><span class="o">(</span><span class="n">sqlText</span><span class="o">))</span> <span class="c1">//parse sql query</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">error</span><span class="o">(</span><span class="s">s&quot;Unsupported SQL dialect: </span><span class="si">$dialect</span><span class="s">&quot;</span><span class="o">)</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p><code>sqlContext.sql</code> will return a <code>new SchemaRDD(this, parseSql(sqlText))</code>, which has been parsed by <code>catalyst.SqlParser</code>. Note <code>parseSql()</code> will return a <code>Unresolved LogicalPlan</code>.</p>
+<p>sqlContext Process Graph from SparkSQL book:</p>
+<p>../images/articles/2015/data_science/sqlcontext_process.png </p>
+<h2 id="sparksql-catalyst">SparkSQL: catalyst</h2>
+<p>Design of SparkSQL(1.1) from SparkSQL Book (dash line means future feature):</p>
+<p>../images/articles/2015/data_science/catalyst_design.png </p>
+<p>Main modules for Catalyst:</p>
+<ul>
+<li>
+<p><code>sqlParse</code>: Parser for SQL query.</p>
+<ul>
+<li>First, parse sql query to a tree, then apply rules to tree to perform transformation.</li>
+</ul>
+</li>
+<li>
+<p><code>Analyzer</code>: Bind <code>Unresolved LogicalPlan</code> and meta-data from data resources. Generate <code>Resolved LogicalPlan</code>.</p>
+<ul>
+<li>Use <code>Analysis Rules</code> and meta-data to generate <code>Resolved LogicalPlan</code>.</li>
+</ul>
+</li>
+<li>
+<p><code>Optimizer</code>: Optimize <code>Resolved LogicalPlan</code>. Generate <code>Optimized LogicalPlan</code>.</p>
+<ul>
+<li>Use <code>Optimization Rules</code> to perform a group of optimizing operations.</li>
+</ul>
+</li>
+<li>
+<p><code>Planner</code>: Transfer <code>Logical Plan</code> to <code>Physical Plan</code>.</p>
+<ul>
+<li>Use <code>Planning Strategies</code> to generate <code>Physical Plan</code>.</li>
+</ul>
+</li>
+<li>
+<p><code>CostModel</code>: Choose best execution plan based on previous performance statistics.</p>
+</li>
+</ul>

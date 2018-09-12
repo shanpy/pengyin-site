@@ -1,0 +1,358 @@
+<h1 id="reference-list">Reference List</h1>
+<ul>
+<li>
+<p>(Need Lynda.com Account) <a href="https://www.lynda.com/CSS-tutorials/Exploring-transition-options/101072/108929-4.html">CSS: Transitions and Transforms</a></p>
+</li>
+<li>
+<p>(Chinese) <a href="http://www.jianshu.com/p/d999f090d333">cubic-bezier</a> by Jovey</p>
+</li>
+</ul>
+<h1 id="online-tools">Online Tools</h1>
+<ul>
+<li>
+<p><a href="matthewlein.com/ceaser">test a great variety of transitions</a></p>
+</li>
+<li>
+<p><a href="www.css3maker.com">CSS 3.0 Maker</a></p>
+</li>
+</ul>
+<h1 id="basics">Basics</h1>
+<p>To create a basic css transition, need as least two statement in css:</p>
+<ol>
+<li>
+<p>property: <code>transition-property</code></p>
+</li>
+<li>
+<p>duration: <code>transition-duration</code></p>
+</li>
+</ol>
+<blockquote>
+<p>Always add transition declarations to initial state</p>
+</blockquote>
+<p>Trigger States (See <a href="https://www.w3.org/TR/css3-transitions/#transition-property-property">here</a> for all transition properties from W3C):</p>
+<ul>
+<li>
+<p><code>:hover</code></p>
+</li>
+<li>
+<p><code>:focus</code></p>
+</li>
+<li>
+<p><code>:active</code></p>
+</li>
+<li>
+<p><code>:target</code></p>
+</li>
+<li>
+<p><code>:checked</code></p>
+</li>
+<li>
+<p><code>:disabled</code></p>
+</li>
+</ul>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="nt">a</span><span class="p">{</span>
+    <span class="k">background-color</span><span class="p">:</span> <span class="kc">orange</span><span class="p">;</span>
+    <span class="k">transition-property</span><span class="p">:</span> <span class="k">background</span><span class="p">;</span>
+    <span class="err">//you</span> <span class="err">may</span> <span class="err">need</span> <span class="err">to</span> <span class="err">add</span> <span class="err">prefix,</span> <span class="err">something</span> <span class="err">like</span> <span class="kp">-webkit-</span><span class="err">transition-property</span>
+    <span class="k">transition-duration</span><span class="p">:</span> <span class="mi">1</span><span class="kt">s</span><span class="p">;</span>
+
+    <span class="err">//Or</span> <span class="err">short-hand</span> <span class="n">version</span><span class="p">:</span> <span class="k">transition</span><span class="o">:</span> <span class="k">background</span><span class="p">,</span> <span class="mi">1</span><span class="kt">s</span><span class="p">,</span> <span class="kc">ease</span><span class="p">;</span> <span class="err">(property,</span> <span class="err">duration,</span> <span class="err">timing-function)</span>
+<span class="p">}</span>
+<span class="nt">a</span><span class="p">:</span><span class="nd">hover</span><span class="p">{</span>
+    <span class="k">background-color</span><span class="p">:</span> <span class="kc">blue</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+
+
+<h2 id="transition-timing-function">transition-timing-function</h2>
+<blockquote>
+<p>Default transitions start slow, speed up, and then slow down (<code>ease</code> transition)</p>
+</blockquote>
+<p>Values:</p>
+<ul>
+<li>
+<p><code>ease</code>: default</p>
+</li>
+<li>
+<p><code>linear</code>: constant rate</p>
+</li>
+<li>
+<p><code>ease-in</code>: start slow, then speed up</p>
+</li>
+<li>
+<p><code>ease-out</code>: start quickly, then slows down</p>
+</li>
+<li>
+<p><code>ease-in-out</code>: start slow, speed up, slows again</p>
+</li>
+</ul>
+<h3 id="cubic-bezier">cubic-bezier</h3>
+<p>Another <code>transition-timing-function</code> value is <code>cubic-besier(x1,y1,x2,y2)</code>. <code>0&lt;x&lt;1</code>, when <code>x&gt;1</code> cubic-besier will lose its effect. There is no rule for <code>y</code>.</p>
+<p>Jovey created following graph in her blog post <a href="http://www.jianshu.com/p/d999f090d333">cubic-bezier</a> to show cubic-bezier:</p>
+<p>img-responsive images/articles/2016/frontend/cubic-bezier.png </p>
+<p>The curve from cubic-bezier is used to decide the speed of animation. We can view this as a straight line being dragged by point <code>(x1, y1)</code> and point <code>(x2, y2)</code>.</p>
+<p>Jovey gave following example for the value of cubic-basier of <code>ease-out</code> and <code>ease-in-out</code>:</p>
+<p>img-responsive images/articles/2016/frontend/cubic-bezier2.png </p>
+<p><code>transition-delay</code> is used to hold transition for a period of time.</p>
+<h2 id="transforms">Transforms</h2>
+<p>Basic Syntax:</p>
+<pre class="code literal-block"><span></span><span class="nt">transform</span><span class="o">:</span> <span class="nt">function</span><span class="o">(</span><span class="nt">parameters</span><span class="o">)</span>
+</pre>
+
+
+<p>Basic transform functions:</p>
+<p><code>translate</code>: moving object along X and/or Y axis (use negative value to move to left/bottom)</p>
+<pre class="code literal-block"><span></span><span class="nt">transform</span><span class="o">:</span> <span class="nt">translate</span><span class="o">(</span><span class="nt">10px</span><span class="o">,</span> <span class="nt">10px</span><span class="o">);</span> <span class="o">//</span><span class="nt">move</span> <span class="nt">object</span> <span class="nt">right</span> <span class="nt">and</span> <span class="nt">top</span>
+</pre>
+
+
+<p><code>scale</code>: resize object along X (width) and/or Y axis (height)</p>
+<pre class="code literal-block"><span></span><span class="nt">transform</span><span class="o">:</span> <span class="nt">scale</span><span class="o">(</span><span class="p">.</span><span class="nc">5</span><span class="o">,</span><span class="p">.</span><span class="nc">5</span><span class="o">);</span> <span class="o">//</span><span class="nt">1</span> <span class="nt">is</span> <span class="nt">original</span> <span class="nt">size</span><span class="o">.</span> <span class="p">.</span><span class="nc">5</span> <span class="nt">is</span> <span class="nt">half</span> <span class="nt">size</span>
+</pre>
+
+
+<p><code>rotate</code>: rotate object to any degree (0 to 360)</p>
+<pre class="code literal-block"><span></span><span class="nt">transform</span><span class="o">:</span> <span class="nt">rotate</span><span class="o">(</span><span class="nt">15deg</span><span class="o">);</span>
+</pre>
+
+
+<p><code>skewX</code>/<code>skewY</code>: skew object along X or Y axis</p>
+<pre class="code literal-block"><span></span><span class="nt">transform</span><span class="o">:</span> <span class="nt">skewX</span><span class="o">(</span><span class="nt">-25deg</span><span class="o">);</span>
+</pre>
+
+
+<p><code>transform-origin</code>: set the origin point along X and Y axes</p>
+<pre class="code literal-block"><span></span><span class="nt">transform-origin</span><span class="o">:</span> <span class="nt">50</span><span class="o">%</span> <span class="nt">50</span><span class="o">%;</span> <span class="o">//</span><span class="nt">Center</span> <span class="o">(</span><span class="nt">Default</span><span class="o">)</span>
+<span class="nt">transform-origin</span><span class="o">:</span> <span class="nt">10px</span> <span class="nt">0</span><span class="o">;</span> <span class="o">//</span><span class="nt">10px</span> <span class="nt">right</span> <span class="nt">offset</span>
+<span class="nt">transform-origin</span><span class="o">:</span> <span class="nt">left</span> <span class="nt">bottom</span><span class="o">;</span> <span class="o">//</span><span class="nt">Bottom</span> <span class="nt">Left</span>
+</pre>
+
+
+<h2 id="3d-transforms">3D Transforms</h2>
+<p>Step 1: establishing 3D container and observer placement</p>
+<pre class="code literal-block"><span></span><span class="nt">perspective</span><span class="o">:</span> <span class="nt">500px</span><span class="o">;</span> <span class="o">//</span><span class="nt">distance</span> <span class="nt">from</span> <span class="nt">viewer</span> <span class="nt">to</span> <span class="nt">object</span>
+<span class="nt">perspective-origin</span><span class="o">:</span> <span class="nt">50</span><span class="o">%</span> <span class="nt">50</span><span class="o">%</span> <span class="o">//</span><span class="nt">vanishing</span> <span class="nt">point</span><span class="o">.</span> <span class="nt">50</span><span class="o">%</span> <span class="nt">50</span><span class="o">%</span> <span class="nt">is</span> <span class="nt">center</span> <span class="o">(</span><span class="nt">default</span><span class="o">)</span>
+</pre>
+
+
+<p>Step 2: move object along X, Y or Z axis</p>
+<pre class="code literal-block"><span></span><span class="nt">transform</span><span class="o">:</span> <span class="nt">translate3d</span><span class="o">(</span><span class="nt">20px</span><span class="o">,</span> <span class="nt">20px</span><span class="o">,</span> <span class="nt">-10px</span><span class="o">);</span>
+<span class="nt">transform</span><span class="o">:</span> <span class="nt">translateZ</span><span class="o">(</span><span class="nt">-10px</span><span class="o">);</span>
+</pre>
+
+
+<p>Step 2: resize object along X(width), Y(height) or Z(depth)</p>
+<pre class="code literal-block"><span></span><span class="nt">transform</span><span class="o">:</span> <span class="nt">scale3d</span><span class="o">(</span><span class="nt">2</span><span class="o">,</span> <span class="p">.</span><span class="nc">75</span><span class="o">,</span> <span class="nt">1</span><span class="p">.</span><span class="nc">5</span><span class="o">);</span>
+</pre>
+
+
+<p>Step 2: rotate object to any degree (4 values)</p>
+<pre class="code literal-block"><span></span><span class="nt">transform</span><span class="o">:</span> <span class="nt">rotate3d</span><span class="o">(</span><span class="nt">10</span><span class="o">,</span><span class="nt">20</span><span class="o">,</span><span class="nt">20</span><span class="o">,</span><span class="nt">15deg</span><span class="o">);</span> <span class="o">//</span><span class="nt">first</span> <span class="nt">three</span> <span class="nt">values</span> <span class="nt">are</span> <span class="nt">axis</span> <span class="nt">of</span> <span class="nt">rotation</span><span class="o">,</span> <span class="nt">last</span> <span class="nt">is</span> <span class="nt">angle</span> <span class="nt">of</span> <span class="nt">rotation</span>
+</pre>
+
+
+<p>Step 3: <code>transform-style</code> determines how child elements are treated in 3D space</p>
+<pre class="code literal-block"><span></span><span class="nt">transform-style</span><span class="o">:</span> <span class="nt">preserve-3d</span><span class="o">;</span> <span class="o">//</span><span class="nt">default</span><span class="o">,</span> <span class="nt">all</span> <span class="nt">style</span> <span class="nt">apply</span> <span class="nt">to</span> <span class="nt">children</span>
+<span class="nt">transform-style</span><span class="o">:</span> <span class="nt">flat</span><span class="o">;</span> <span class="o">//</span><span class="nt">2d</span> <span class="nt">element</span> <span class="nt">in</span> <span class="nt">parent</span> <span class="nt">plane</span>
+</pre>
+
+
+<h1 id="2d-transitions-and-transforms">2D Transitions and Transforms</h1>
+<h2 id="basic">Basic</h2>
+<ul>
+<li>
+<p>color: <code>transition: background-color 1s ease</code>, with <code>background-color</code> as changes attribute in target element</p>
+</li>
+<li>
+<p>fade object in/out: <code>transition: opacity 1s ease-in</code> with <code>opacity</code> as changes attribute in target element</p>
+</li>
+<li>
+<p>growing page elements: <code>transition: all .5s ease</code> in original element. <code>all</code>means all css attributes are effected. <code>transform: scale(1.5); //enlarge 50%</code> in new status.</p>
+</li>
+<li>
+<p>spin: <code>perspective: 500px;</code> in container, <code>transition: all 2s ease;</code> for target element, <code>transform: rotateY(360deg)</code> for new status.</p>
+</li>
+<li>
+<p>adjust font size: <code>transition: font-size .5s ease</code> for original element, <code>font-size</code> for new status.</p>
+</li>
+</ul>
+<h2 id="transition-multiple-properties">Transition Multiple Properties</h2>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="p">#</span><span class="nn">test</span><span class="p">{</span>
+    <span class="k">transition-property</span><span class="p">:</span> <span class="kc">left</span><span class="p">,</span> <span class="k">opacity</span><span class="p">,</span> <span class="k">transform</span><span class="p">;</span> <span class="err">//make</span> <span class="err">sure</span> <span class="err">transforming</span> <span class="err">being</span> <span class="err">add</span> <span class="err">prefix</span> <span class="err">in</span> <span class="err">prefix</span> <span class="err">version</span>
+    <span class="k">transition-duration</span><span class="p">:</span> <span class="mi">3</span><span class="kt">s</span><span class="p">,</span> <span class="mi">4</span><span class="kt">s</span><span class="p">,</span> <span class="mi">3</span><span class="kt">s</span><span class="p">;</span>
+    <span class="k">transition-timing-function</span><span class="p">:</span> <span class="kc">ease</span><span class="p">,</span> <span class="kc">ease</span><span class="p">,</span> <span class="kc">ease-out</span><span class="p">;</span>
+    <span class="k">transition-delay</span><span class="p">:</span> <span class="mi">0</span><span class="kt">s</span><span class="p">,</span> <span class="mf">.5</span><span class="kt">s</span><span class="p">,</span> <span class="mi">0</span><span class="kt">s</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+
+
+<h2 id="keyframes-and-animation"><code>@keyframes</code> and <code>animation</code></h2>
+<p><code>@keyframes</code> defines percentage-based or keyword timeline.</p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="p">@</span><span class="k">keyframes</span> <span class="nt">percentage</span><span class="p">{</span>
+    <span class="nt">0</span><span class="o">%</span> <span class="p">{</span><span class="k">color</span><span class="p">:</span> <span class="kc">black</span><span class="p">;}</span>
+    <span class="nt">50</span><span class="o">%</span> <span class="p">{</span><span class="k">color</span><span class="p">:</span> <span class="kc">pink</span><span class="p">}</span><span class="o">;</span>
+    <span class="nt">100</span><span class="o">%</span><span class="p">{</span> <span class="k">color</span><span class="p">:</span> <span class="kc">red</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">@</span><span class="k">keyframes</span> <span class="nt">keywords</span><span class="p">{</span>
+    <span class="nt">to</span> <span class="p">{</span><span class="k">color</span><span class="p">:</span> <span class="kc">red</span><span class="p">;}</span>
+    <span class="nt">from</span> <span class="p">{</span><span class="k">color</span><span class="p">:</span> <span class="kc">black</span><span class="p">;}</span>
+<span class="p">}</span>
+</pre>
+
+
+<p><code>animation</code> references <code>@keyframes</code> and defines parameters</p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="p">#</span><span class="nn">test</span><span class="p">{</span>
+    <span class="k">animation</span><span class="p">:</span> <span class="n">percentage</span> <span class="mi">15</span><span class="kt">s</span> <span class="kc">infinite</span> <span class="kc">alternate</span><span class="p">;</span> <span class="err">//keyframes</span> <span class="err">name,</span> <span class="err">duration,</span> <span class="err">iteration</span> <span class="err">count</span> <span class="err">(number</span> <span class="err">or</span> <span class="err">infinite),</span> <span class="err">direction</span> <span class="err">(normal,</span> <span class="err">alternate)</span>
+<span class="p">}</span>
+</pre>
+
+
+<h3 id="animation-properties"><code>animation</code> properties</h3>
+<ul>
+<li>
+<p><code>animation-name</code>: same name as <code>@keyframes</code></p>
+</li>
+<li>
+<p><code>animation-duration</code>: in <code>s</code> or <code>ms</code></p>
+</li>
+<li>
+<p><code>animation-iteration-count</code>: number of time to repeat or 'infinite' keyword</p>
+</li>
+<li>
+<p><code>animation-direction</code>: <code>normal</code> for one direction, <code>alternate</code> for back and forth</p>
+</li>
+<li>
+<p><code>animation-timing-function</code>: same as <code>transition-timing-function</code></p>
+</li>
+<li>
+<p><code>animation-delay</code>: value in <code>s</code> or <code>ms</code></p>
+</li>
+</ul>
+<h1 id="3d-transitions-and-transforms">3D Transitions and Transforms</h1>
+<h2 id="z-index-enhanced-image-size">z-index (Enhanced Image Size)</h2>
+<p>Example Code:</p>
+<pre class="code literal-block"><span></span><span class="p">.</span><span class="nc">ts-perspective</span><span class="p">{</span>
+    <span class="k">perspective</span><span class="p">:</span> <span class="mi">1000</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">@</span><span class="k">keyframes</span> <span class="nt">goBig</span><span class="p">{</span>
+    <span class="nt">0</span><span class="o">%</span> <span class="p">{</span><span class="k">opacity</span><span class="p">:</span> <span class="mi">1</span><span class="p">;}</span>
+    <span class="nt">100</span><span class="o">%</span> <span class="p">{</span>
+        <span class="k">opacity</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kp">-webkit-</span><span class="k">transform</span><span class="p">:</span> <span class="nb">scale3d</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">te-front</span><span class="p">{</span>
+    <span class="k">animation</span><span class="p">:</span> <span class="n">goBig</span> <span class="mf">.4</span><span class="kt">s</span> <span class="kc">ease-in-out</span><span class="p">;</span>
+    <span class="k">backface-visibility</span><span class="p">:</span> <span class="kc">hidden</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">td-back</span><span class="p">{</span>
+    <span class="k">transform-style</span><span class="p">:</span> <span class="kc">preserve-3d</span><span class="p">;</span>
+    <span class="k">z-index</span><span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+
+
+<h2 id="flipping-effect">Flipping Effect</h2>
+<p>Example Code:</p>
+<pre class="code literal-block"><span></span><span class="c">/*With Same JavaScript to Change Class*/</span>
+<span class="p">.</span><span class="nc">artGroup</span> <span class="p">.</span><span class="nc">flip</span><span class="p">{</span>
+    <span class="k">perspective</span><span class="p">:</span> <span class="mi">800</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">artGroup</span><span class="p">.</span><span class="nc">flip</span><span class="p">.</span><span class="nc">artwork</span><span class="p">{</span>
+    <span class="k">transition</span><span class="p">:</span> <span class="k">transform</span> <span class="mi">1</span><span class="kt">s</span><span class="p">;</span>
+    <span class="k">transform-style</span><span class="p">:</span> <span class="kc">preserve-3d</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">artGroup</span><span class="p">.</span><span class="nc">flip</span><span class="p">.</span><span class="nc">detail</span><span class="o">,</span><span class="p">.</span><span class="nc">artGroup</span><span class="p">.</span><span class="nc">flip</span><span class="p">.</span><span class="nc">theFlip</span><span class="p">{</span>
+    <span class="k">transform</span><span class="p">:</span> <span class="nb">rotateY</span><span class="p">(</span><span class="mi">-180</span><span class="kt">deg</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">artGroup</span><span class="p">.</span><span class="nc">flip</span> <span class="nt">img</span><span class="o">,</span><span class="p">.</span><span class="nc">artGroup</span><span class="p">.</span><span class="nc">flip</span><span class="p">.</span><span class="nc">detail</span><span class="p">{</span>
+    <span class="k">backface-visibility</span><span class="p">:</span> <span class="kc">hidden</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+
+
+<h2 id="image-cube">Image Cube</h2>
+<p>Example Code:</p>
+<pre class="code literal-block"><span></span><span class="p">#</span><span class="nn">theArt</span><span class="p">{</span>
+    <span class="k">perspective</span><span class="p">:</span> <span class="mi">1000</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">#</span><span class="nn">cube</span><span class="p">{</span>
+    <span class="k">transform-style</span><span class="p">:</span> <span class="kc">preserve-3d</span><span class="p">;</span>
+    <span class="k">transition</span><span class="p">:</span> <span class="k">transform</span> <span class="mi">1</span><span class="kt">s</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">#</span><span class="nn">cube</span> <span class="p">.</span><span class="nc">front</span><span class="p">{</span>
+    <span class="c">/*translate long z-axis*/</span>
+    <span class="k">transform</span><span class="p">:</span> <span class="nb">translateZ</span><span class="p">(</span><span class="mi">136</span><span class="kt">px</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">#</span><span class="nn">cube</span><span class="p">.</span><span class="nc">back</span><span class="p">{</span>
+    <span class="k">transform</span><span class="p">:</span> <span class="nb">rotateX</span><span class="p">(</span><span class="mi">-180</span><span class="kt">deg</span><span class="p">)</span> <span class="nb">translateZ</span><span class="p">(</span><span class="mi">136</span><span class="kt">px</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">#</span><span class="nn">cube</span><span class="p">.</span><span class="nc">right</span><span class="p">{</span>
+    <span class="k">transform</span><span class="p">:</span> <span class="nb">rotateX</span><span class="p">(</span><span class="mi">90</span><span class="kt">deg</span><span class="p">)</span> <span class="nb">translateZ</span><span class="p">(</span><span class="mi">136</span><span class="kt">px</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">#</span><span class="nn">cube</span><span class="p">.</span><span class="nc">left</span><span class="p">{</span>
+    <span class="k">transform</span><span class="p">:</span> <span class="nb">rotateX</span><span class="p">(</span><span class="mi">-90</span><span class="kt">deg</span><span class="p">)</span> <span class="nb">translateZ</span><span class="p">(</span><span class="mi">136</span><span class="kt">px</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">#</span><span class="nn">cube</span><span class="p">.</span><span class="nc">top</span><span class="p">{</span>
+    <span class="k">transform</span><span class="p">:</span> <span class="nb">rotateX</span><span class="p">(</span><span class="mi">90</span><span class="kt">deg</span><span class="p">)</span> <span class="nb">translateZ</span><span class="p">(</span><span class="mi">136</span><span class="kt">px</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="c">/*following are for parent container*/</span>
+<span class="p">#</span><span class="nn">cube</span><span class="p">.</span><span class="nc">show-front</span><span class="p">{</span>
+    <span class="k">transform</span><span class="p">:</span> <span class="nb">translateZ</span><span class="p">(</span><span class="mi">-136</span><span class="kt">px</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">#</span><span class="nn">cube</span><span class="p">.</span><span class="nc">show-back</span><span class="p">{</span>
+    <span class="k">transform</span><span class="p">:</span> <span class="nb">translateZ</span><span class="p">(</span><span class="mi">-136</span><span class="kt">px</span><span class="p">)</span> <span class="nb">rotateX</span><span class="p">(</span><span class="mi">180</span><span class="kt">deg</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">#</span><span class="nn">cube</span><span class="p">.</span><span class="nc">show-right</span><span class="p">{</span>
+    <span class="k">transform</span><span class="p">:</span> <span class="nb">translateZ</span><span class="p">(</span><span class="mi">-136</span><span class="kt">px</span><span class="p">)</span> <span class="nb">rotateY</span><span class="p">(</span><span class="mi">-90</span><span class="kt">deg</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">#</span><span class="nn">cube</span><span class="p">.</span><span class="nc">show-left</span><span class="p">{</span>
+    <span class="k">transform</span><span class="p">:</span> <span class="nb">translateZ</span><span class="p">(</span><span class="mi">-136</span><span class="kt">px</span><span class="p">)</span> <span class="nb">rotateY</span><span class="p">(</span><span class="mi">90</span><span class="kt">deg</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">#</span><span class="nn">cube</span><span class="p">.</span><span class="nc">show-top</span><span class="p">{</span>
+    <span class="k">transform</span><span class="p">:</span> <span class="nb">translateZ</span><span class="p">(</span><span class="mi">-136</span><span class="kt">px</span><span class="p">)</span> <span class="nb">rotateX</span><span class="p">(</span><span class="mi">-90</span><span class="kt">deg</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">#</span><span class="nn">cube</span><span class="p">.</span><span class="nc">show-bottom</span><span class="p">{</span>
+    <span class="k">transform</span><span class="p">:</span> <span class="nb">translateZ</span><span class="p">(</span><span class="mi">-136</span><span class="kt">px</span><span class="p">)</span> <span class="nb">rotateX</span><span class="p">(</span><span class="mi">90</span><span class="kt">deg</span><span class="p">);</span>
+<span class="p">}</span>
+</pre>
+
+
+<h2 id="create-carousel">Create Carousel</h2>
+<p>HTML -&gt; JavaScript -&gt; CSS</p>
+<h3 id="html">HTML</h3>
+<p>User <code>data-increment = 1/-1</code> to control direction</p>
+<h3 id="js">JS</h3>
+<p>Add/Remove Class, using index incremented by 1</p>
+<h3 id="css">CSS</h3>
+<pre class="code literal-block"><span></span><span class="p">.</span><span class="nc">container</span><span class="p">{</span>
+    <span class="k">perspective</span><span class="p">:</span> <span class="mi">1000</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">#</span><span class="nn">carousel</span><span class="p">{</span>
+    <span class="k">transform-style</span><span class="p">:</span> <span class="kc">preserve-3d</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">#</span><span class="nn">carousel</span> <span class="nt">figure</span><span class="p">{</span>
+
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">ready</span> <span class="p">#</span><span class="nn">carousel</span><span class="o">,</span> <span class="p">.</span><span class="nc">ready</span> <span class="p">#</span><span class="nn">carousel</span> <span class="nt">figure</span><span class="p">{</span>
+    <span class="k">transition</span><span class="p">:</span> <span class="k">transform</span> <span class="mi">1</span><span class="kt">s</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">#</span><span class="nn">carousel</span> <span class="nt">figure</span> <span class="nt">img</span><span class="p">{</span>
+    <span class="k">box-shadow</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mh">#000</span><span class="p">;</span>
+    <span class="k">transition</span><span class="p">:</span> <span class="kc">all</span> <span class="mi">1</span><span class="kt">s</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">#</span><span class="nn">carousel</span> <span class="nt">figure</span><span class="p">.</span><span class="nc">showFig</span> <span class="nt">img</span><span class="p">:</span><span class="nd">hover</span><span class="p">{</span>
+    <span class="k">box-shadow</span><span class="p">:</span> <span class="mi">3</span><span class="kt">px</span> <span class="mi">3</span><span class="kt">px</span> <span class="mi">5</span><span class="kt">px</span> <span class="mh">#000</span><span class="p">;</span>
+    <span class="k">transform</span><span class="p">:</span> <span class="nb">scale</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">no-csstransform3d</span> <span class="p">#</span><span class="nn">carousel</span> <span class="nt">figure</span><span class="o">,</span> <span class="p">.</span><span class="nc">no-csstransform3d</span> <span class="p">#</span><span class="nn">toggle</span><span class="p">{</span>
+    <span class="k">display</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">no-csstransform3d</span> <span class="p">#</span><span class="nn">carousel</span> <span class="nt">figure</span><span class="p">.</span><span class="nc">showFig</span><span class="p">{</span>
+    <span class="k">display</span><span class="p">:</span> <span class="kc">block</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>

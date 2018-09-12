@@ -1,0 +1,426 @@
+<p>This post is transferred from my <a href="http://blogpengyin.herokuapp.com/">old Hexo blog site</a>, created on 2014.</p>
+<p>This is a Reading Note for <em>Interactive Data Visualization for the Web - An Introduction to Designing with D3</em> by <em>Scott Murray</em>, pulished by <em>O'Reilly, 2013</em></p>
+<p>This post will contains concepts that I think it's important for me to be familiar with in D3 book.</p>
+<h1 id="chapter-11-layout">Chapter 11 : Layout</h1>
+<p>code example for Chapter 11 is <a href="http://shanpy.github.io/Front-End-Playground/D3/Reading-D3-VII.html"><strong>here</strong></a>.</p>
+<p>All Layouts for D3 are:</p>
+<ul>
+<li>
+<p><code>Bundle</code>: assign <code>Holten</code> algorithem to <code>edge</code></p>
+</li>
+<li>
+<p><code>Chord</code>: generate <code>chord diagram</code></p>
+</li>
+<li>
+<p><code>Cluster</code>: generate <code>dendrogram</code></p>
+</li>
+<li>
+<p><code>Force</code>: generate and assign <code>nodes</code> following physics</p>
+</li>
+<li>
+<p><code>Hierarchy</code>: there are sevel layer in chart. Each chart inherience layout from previous layer</p>
+</li>
+<li>
+<p><code>Histogram</code>: generate <code>histogram</code></p>
+</li>
+<li>
+<p><code>Pack</code>: generate layout based on <code>circle packing</code></p>
+</li>
+<li>
+<p><code>Partition</code>: generate adjacency diagrams: a space-filling variant of a node-link tree diagram</p>
+</li>
+<li>
+<p><code>Pie</code>: generate pie chart</p>
+</li>
+<li>
+<p><code>Stack</code>: generate base line for a series of bars</p>
+</li>
+<li>
+<p><code>Tree</code>: generate tree chart</p>
+</li>
+<li>
+<p><code>Treemap</code>: generate a group of rectangles. Each reactangles size is based on radio of data.</p>
+</li>
+</ul>
+<h2 id="pie-chart">Pie Chart</h2>
+<p>Step one: given a dataset(array of numbers), you can use <code>var pie = d3.layout.pie()</code> to convert this dataset to a <em>new</em> dataset with numbers ready for pie chart.</p>
+<p>Step two: you can use <code>d3.svg.arc()</code> to create <code>arc</code> for pie chart. This function will generate a <code>path</code> variable, which can draw any shape in SVG:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">outRadius</span> <span class="o">=</span> <span class="nx">h</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+<span class="c1">//If h is smaller, make outter radius to h/2 so center will be at the center of height</span>
+<span class="kd">var</span> <span class="nx">inRadius</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">arc</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">svg</span><span class="p">.</span><span class="nx">arc</span><span class="p">()</span>
+                <span class="p">.</span><span class="nx">innerRadius</span><span class="p">(</span><span class="nx">inRadius</span><span class="p">)</span>
+                <span class="c1">//set the inner radius of arc to 0 so that they can all center a point. You can also set to other value if you need</span>
+                <span class="p">.</span><span class="nx">outerRadius</span><span class="p">(</span><span class="nx">outRadius</span><span class="p">);</span>
+</pre>
+
+
+<p>Step 3: create new group and make arcs in this group to comine a pie chart. Then add <code>path</code> element to store arcs data and generate shape:</p>
+<pre class="code literal-block"><span></span><span class="c1">//After code above</span>
+
+<span class="kd">var</span> <span class="nx">arcs</span> <span class="o">=</span> <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;g.arc&#39;</span><span class="p">)</span> <span class="c1">//This is the way to wrap elements to group when creating elements!</span>
+            <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">pie</span><span class="p">(</span><span class="nx">dataset</span><span class="p">))</span> <span class="c1">//Or you can use d3.layout.pie(dataset) to convert original dataset</span>
+            <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+            <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">)</span> <span class="c1">//you only append g here</span>
+            <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;class&#39;</span><span class="p">,</span><span class="s1">&#39;arc&#39;</span><span class="p">)</span> <span class="c1">//create class for easier usage</span>
+            <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;transform&#39;</span><span class="p">,</span><span class="s1">&#39;translate(&#39;</span><span class="o">+</span><span class="nx">outRadius</span><span class="o">+</span><span class="s1">&#39;, &#39;</span><span class="o">+</span><span class="nx">outRadius</span><span class="o">+</span><span class="s1">&#39;)&#39;</span><span class="p">);</span>
+            <span class="c1">//This step move arcs to certain position for pie chart</span>
+
+
+<span class="c1">//A color function to call default ten d3 colors</span>
+<span class="kd">var</span> <span class="nx">color</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">category10</span><span class="p">();</span>
+
+
+<span class="c1">//Now add path to generate shape</span>
+<span class="nx">arcs</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">color</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span> <span class="c1">//d3 will automatically find d and i based on dataset</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="nx">arc</span><span class="p">);</span> <span class="c1">//Assign arc created by arc() function</span>
+
+<span class="c1">//Add Tags for this pie chart</span>
+    <span class="nx">arcs</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;transform&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+        <span class="k">return</span> <span class="s2">&quot;translate(&quot;</span> <span class="o">+</span> <span class="nx">arc</span><span class="p">.</span><span class="nx">centroid</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">;</span>  <span class="c1">//centroid is the center point of any shape. Here means move tag to center of shape</span>
+    <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;text-anchor&#39;</span><span class="p">,</span><span class="s1">&#39;middle&#39;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span> <span class="c1">//Use d.value here because new dataset make d as key-value pair</span>
+    <span class="p">});</span>
+</pre>
+
+
+<h2 id="stack-layout">Stack Layout</h2>
+<p>Step 1: Assume you have a dataset which contains objects with attributes, you need to <em>re-organize</em> this dataset to objects with <code>x-y</code> attribues. <code>x</code> is the <code>ID</code> value. <code>y</code> is the actally value of original data:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Sample Dataset</span>
+<span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="nx">apple</span><span class="o">:</span><span class="mi">25</span><span class="p">,</span> <span class="nx">banana</span><span class="o">:</span> <span class="mi">50</span><span class="p">,</span> <span class="nx">peach</span><span class="o">:</span> <span class="mi">150</span><span class="p">},</span>
+    <span class="p">{</span><span class="nx">apple</span><span class="o">:</span><span class="mi">177</span><span class="p">,</span> <span class="nx">banana</span><span class="o">:</span> <span class="mi">98</span><span class="p">,</span> <span class="nx">peach</span><span class="o">:</span> <span class="mi">35</span><span class="p">},</span>
+    <span class="p">{</span><span class="nx">apple</span><span class="o">:</span> <span class="mi">59</span><span class="p">,</span> <span class="nx">banana</span><span class="o">:</span> <span class="mi">87</span><span class="p">,</span> <span class="nx">peach</span><span class="o">:</span> <span class="mi">120</span><span class="p">}</span>
+<span class="p">];</span>
+
+<span class="c1">//Re-origanize dataset. Each key group become a array. x means index, y is the value</span>
+<span class="nx">dataset</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[{</span><span class="nx">x</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span><span class="nx">y</span><span class="o">:</span><span class="mi">25</span><span class="p">},</span> <span class="p">{</span><span class="nx">x</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span><span class="nx">y</span><span class="o">:</span><span class="mi">177</span><span class="p">},</span> <span class="p">{</span><span class="nx">x</span><span class="o">:</span><span class="mi">2</span><span class="p">,</span><span class="nx">y</span><span class="o">:</span><span class="mi">59</span><span class="p">}],</span> <span class="c1">//apple group</span>
+    <span class="p">[{</span><span class="nx">x</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span><span class="nx">y</span><span class="o">:</span><span class="mi">50</span><span class="p">},</span> <span class="p">{</span><span class="nx">x</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span><span class="nx">y</span><span class="o">:</span><span class="mi">98</span><span class="p">},</span> <span class="p">{</span><span class="nx">x</span><span class="o">:</span><span class="mi">2</span><span class="p">,</span><span class="nx">y</span><span class="o">:</span><span class="mi">87</span><span class="p">}],</span> <span class="c1">//banana group</span>
+    <span class="p">[{</span><span class="nx">x</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span><span class="nx">y</span><span class="o">:</span><span class="mi">150</span><span class="p">},</span> <span class="p">{</span><span class="nx">x</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span><span class="nx">y</span><span class="o">:</span><span class="mi">35</span><span class="p">},</span> <span class="p">{</span><span class="nx">x</span><span class="o">:</span><span class="mi">2</span><span class="p">,</span><span class="nx">y</span><span class="o">:</span><span class="mi">120</span><span class="p">}]</span> <span class="c1">//peach group</span>
+<span class="p">];</span>
+</pre>
+
+
+<p>Step 2: similar to pie chart, use <code>d3.layout.stack(dataset)</code> to re-generate dataset. Note this will generate a <code>y0</code> value as <em>baseline</em> for each object, which equals to the <em>total</em> of all <code>y</code> value for its previous object / the minimum y-position of the value:
+images/posts/stack chart data.png </p>
+<p>Step 3: Assign <code>x</code>,<code>y</code>,<code>width</code>,<code>height</code> attribute to each rect. You need to use <code>d.y0</code> and <code>d.y</code> for <code>y</code> and <code>height</code>:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">rects</span> <span class="o">=</span> <span class="nx">groups</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;rect&#39;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">d</span><span class="p">;</span>
+<span class="p">}).</span><span class="nx">enter</span><span class="p">().</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;rect&#39;</span><span class="p">)</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">xScale</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">y0</span><span class="p">;</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">y</span><span class="p">);</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span><span class="nx">xScale</span><span class="p">.</span><span class="nx">rangeBand</span><span class="p">())</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">color</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">y0</span><span class="p">);</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;stroke&#39;</span><span class="p">,</span><span class="s1">&#39;black&#39;</span><span class="p">);</span>
+
+<span class="c1">//This will create a bar chart with three columns, which are the three objects in original dataset</span>
+
+<span class="c1">//Each column will have three ractangle, representing three attributes for each object in original dataset</span>
+</pre>
+
+
+<h2 id="force-directed-layout">Force Directed Layout</h2>
+<p>This layout is <em>dragable</em> by user, and the chart will move following physic role. This layout use <code>graph</code>, which is combined by <code>node</code> and <code>edge</code>.</p>
+<p>Step 1: This layout needs special dataset which defining <code>nodes</code> and <code>edges</code> object. <code>nodes</code> has <code>name</code> attribute. <code>edges</code> has <code>source</code> and <code>target</code> and <code>weight</code> attributes, which defines the <em>from</em> and <em>to</em> attribute for each edge, with <em>line weight</em>:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">nodes</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;apple&#39;</span><span class="p">},</span> <span class="c1">//name of nodes</span>
+        <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;peach&#39;</span><span class="p">},</span>
+        <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;banana&#39;</span><span class="p">},</span>
+        <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;pear&#39;</span><span class="p">},</span>
+        <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;pineapple&#39;</span><span class="p">}</span>
+    <span class="p">],</span>
+    <span class="nx">edges</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span><span class="nx">source</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="nx">target</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="nx">weight</span><span class="o">:</span><span class="mi">1</span><span class="p">},</span> <span class="c1">//edges linking nodes.Has a source and a target</span>
+        <span class="p">{</span><span class="nx">source</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="nx">target</span><span class="o">:</span><span class="mi">2</span><span class="p">,</span> <span class="nx">weight</span><span class="o">:</span><span class="mi">2</span><span class="p">},</span>
+        <span class="p">{</span><span class="nx">source</span><span class="o">:</span><span class="mi">2</span><span class="p">,</span> <span class="nx">target</span><span class="o">:</span><span class="mi">3</span><span class="p">,</span> <span class="nx">weight</span><span class="o">:</span><span class="mi">3</span><span class="p">},</span>
+        <span class="p">{</span><span class="nx">source</span><span class="o">:</span><span class="mi">3</span><span class="p">,</span> <span class="nx">target</span><span class="o">:</span><span class="mi">4</span><span class="p">,</span> <span class="nx">weight</span><span class="o">:</span><span class="mi">4</span><span class="p">},</span>
+        <span class="p">{</span><span class="nx">source</span><span class="o">:</span><span class="mi">4</span><span class="p">,</span> <span class="nx">target</span><span class="o">:</span><span class="mi">2</span><span class="p">,</span> <span class="nx">weight</span><span class="o">:</span><span class="mi">5</span><span class="p">}</span>
+        <span class="c1">//Important: make sure last source connect back to existing source!</span>
+    <span class="p">]</span>
+<span class="p">};</span>
+</pre>
+
+
+<p>Step 2: Using <code>d3.layout.force()</code> to initailize dataset. You need to set <code>.nodes()</code> and <code>.links()</code> with data in dataset, then set <code>size</code> of how far user can drag. Use <code>start()</code> to finish initialization:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Initialize force-directed graph</span>
+<span class="kd">var</span> <span class="nx">force</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">layout</span><span class="p">.</span><span class="nx">force</span><span class="p">()</span>
+                    <span class="p">.</span><span class="nx">nodes</span><span class="p">(</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">nodes</span><span class="p">)</span>
+                    <span class="p">.</span><span class="nx">links</span><span class="p">(</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">edges</span><span class="p">)</span>
+                    <span class="p">.</span><span class="nx">size</span><span class="p">([</span><span class="nx">w</span><span class="p">,</span><span class="nx">h</span><span class="p">])</span>
+                    <span class="p">.</span><span class="nx">linkDistance</span><span class="p">([</span><span class="mi">50</span><span class="p">])</span> <span class="c1">//distance between each node</span>
+                    <span class="p">.</span><span class="nx">charge</span><span class="p">([</span><span class="o">-</span><span class="mi">100</span><span class="p">])</span> <span class="c1">//how much nodes wanting to escape from each other</span>
+                    <span class="p">.</span><span class="nx">start</span><span class="p">();</span>
+</pre>
+
+
+<p>Step 3: Set attributes for <code>nodes</code> and <code>ages</code>. At the ends of <code>nodes</code> attribute, make sure use <code>.call(force.drage)</code> to enable the ability of dragging.</p>
+<pre class="code literal-block"><span></span><span class="c1">//Create line to connecting nodes</span>
+<span class="kd">var</span> <span class="nx">edges</span> <span class="o">=</span> <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;line&#39;</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">edges</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+                <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;line&#39;</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">style</span><span class="p">(</span><span class="s1">&#39;stroke&#39;</span><span class="p">,</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">style</span><span class="p">(</span><span class="s1">&#39;stroke-width&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+                    <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">weight</span><span class="p">;</span>
+                <span class="p">});</span>
+
+<span class="c1">//Create circle as nodes</span>
+<span class="kd">var</span> <span class="nx">color</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">category10</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">nodes</span> <span class="o">=</span> <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">nodes</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+                <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+                    <span class="k">return</span> <span class="nx">color</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+                <span class="p">})</span>
+                <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">force</span><span class="p">.</span><span class="nx">drag</span><span class="p">);</span>      <span class="c1">//start the function to drag circles.</span>
+</pre>
+
+
+<p>Step 4: Define what is going to happen in <code>tick</code>, which means define the behavior of chart when a time frame pass by. Here we want for each time frame, chart will update nodes and edges:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Define tick: what is going to happen for each time second</span>
+<span class="nx">force</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;tick&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">edges</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">source</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span> <span class="c1">//x1 of edge to be x of source</span>
+    <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y1&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">source</span><span class="p">.</span><span class="nx">y</span> <span class="c1">//y1 of edge to be y of source</span>
+    <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span>
+    <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y2&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">y</span><span class="p">;</span>
+    <span class="p">});</span>
+
+    <span class="nx">nodes</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;cx&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span>
+    <span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;cy&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">y</span><span class="p">;</span>
+    <span class="p">})</span>
+<span class="p">})</span>
+</pre>
+
+
+<h2 id="code-for-this-chapter">Code for This Chapter</h2>
+<p>An interacive version is <a href="http://shanpy.github.io/Front-End-Playground/D3/Reading-D3-VII.html"><strong>here</strong></a>.</p>
+<pre class="code literal-block"><span></span>//Part I Code
+
+//create random dataset
+var numberOfData = 10;
+var dataset = [];
+for(var i=1; i<span class="p">&lt;</span><span class="nt">numberOfData</span><span class="err">;</span> <span class="na">i</span><span class="err">++){</span>
+    <span class="na">dataset</span><span class="err">.</span><span class="na">push</span><span class="err">(</span><span class="na">Math</span><span class="err">.</span><span class="na">round</span><span class="err">(</span><span class="na">Math</span><span class="err">.</span><span class="na">random</span><span class="err">()*</span><span class="na">i</span><span class="err">*</span><span class="na">30</span><span class="err">));</span>
+<span class="err">}</span>
+
+
+<span class="err">//</span><span class="na">create</span> <span class="na">svg</span>
+<span class="na">var</span> <span class="na">h</span><span class="o">=</span> <span class="s">300;</span>
+<span class="na">var</span> <span class="na">padding </span><span class="o">=</span> <span class="s">5;</span>
+<span class="na">var</span> <span class="na">svg </span><span class="o">=</span> <span class="s">d3.select(document.getElementById(&#39;chapter11&#39;).getElementsByClassName(&#39;1&#39;)[0]).append(&#39;svg&#39;).attr(&#39;height&#39;,h).attr(&#39;width&#39;,&#39;100%&#39;);</span>
+<span class="na">var</span> <span class="na">w </span><span class="o">=</span> <span class="s">document.getElementsByTagName(&#39;svg&#39;)[0].offsetWidth;</span>
+
+<span class="err">//</span><span class="na">Get</span> <span class="na">pie</span> <span class="na">value</span> <span class="na">data</span> <span class="na">from</span> <span class="na">d3</span><span class="err">.</span><span class="na">layout</span><span class="err">.</span><span class="na">pie</span> <span class="na">function</span>
+<span class="na">var</span> <span class="na">pie </span><span class="o">=</span> <span class="s">d3.layout.pie();</span>
+<span class="na">dataset </span><span class="o">=</span> <span class="s">pie(dataset);</span>
+
+<span class="err">//</span><span class="na">create</span> <span class="na">pie</span> <span class="na">chart</span> <span class="na">based</span> <span class="na">on</span> <span class="na">new</span> <span class="na">dataset</span><span class="err">.</span> <span class="na">Use</span> <span class="na">d3</span><span class="err">.</span><span class="na">svg</span><span class="err">.</span><span class="na">arc</span><span class="err">()</span> <span class="na">and</span> <span class="na">path</span> <span class="na">to</span> <span class="na">create</span> <span class="na">arc</span>
+<span class="na">var</span> <span class="na">outRadius </span><span class="o">=</span> <span class="s">h/2;</span>
+<span class="na">var</span> <span class="na">inRadius </span><span class="o">=</span> <span class="s">0;</span>
+<span class="na">var</span> <span class="na">arc </span><span class="o">=</span> <span class="s">d3.svg.arc().innerRadius(inRadius).outerRadius(outRadius);</span> <span class="err">//</span><span class="na">assign</span> <span class="na">two</span> <span class="na">radius</span> <span class="na">to</span> <span class="na">arc</span>
+
+<span class="err">//</span><span class="na">Put</span> <span class="na">arcs</span> <span class="na">to</span> <span class="na">group</span><span class="err">,</span> <span class="na">and</span> <span class="na">binding</span> <span class="na">data</span>
+<span class="na">var</span> <span class="na">arcs </span><span class="o">=</span> <span class="s">svg.selectAll(&#39;g.arc&#39;)</span> <span class="err">//</span><span class="na">This</span> <span class="na">is</span> <span class="na">how</span> <span class="na">to</span> <span class="na">add</span> <span class="na">class</span> <span class="na">elements</span> <span class="na">to</span> <span class="na">a</span> <span class="na">group</span>
+                <span class="err">.</span><span class="na">data</span><span class="err">(</span><span class="na">dataset</span><span class="err">)</span>
+                <span class="err">.</span><span class="na">enter</span><span class="err">()</span>
+                <span class="err">.</span><span class="na">append</span><span class="err">(&#39;</span><span class="na">g</span><span class="err">&#39;)</span>
+                <span class="err">.</span><span class="na">attr</span><span class="err">(&#39;</span><span class="na">class</span><span class="err">&#39;,&#39;</span><span class="na">arc</span><span class="err">&#39;)</span>
+                <span class="err">.</span><span class="na">attr</span><span class="err">(&#39;</span><span class="na">transform</span><span class="err">&#39;,&#39;</span><span class="na">translate</span><span class="err">(&#39;</span> <span class="err">+</span> <span class="na">outRadius</span> <span class="err">+</span> <span class="err">&#39;,</span> <span class="err">&#39;</span> <span class="err">+</span> <span class="na">outRadius</span> <span class="err">+</span> <span class="err">&#39;)&#39;);</span>
+                <span class="err">//</span><span class="na">transform</span> <span class="na">to</span> <span class="na">right</span> <span class="na">with</span> <span class="na">outRadius</span> <span class="na">value</span><span class="err">,</span> <span class="na">transform</span> <span class="na">to</span> <span class="na">button</span> <span class="na">with</span> <span class="na">outRadius</span> <span class="na">value</span>
+
+<span class="err">//</span><span class="na">Add</span> <span class="na">path</span> <span class="na">element</span> <span class="na">and</span> <span class="na">put</span> <span class="na">arc</span> <span class="na">to</span> <span class="na">it</span>
+<span class="na">arcs</span><span class="err">.</span><span class="na">append</span><span class="err">(&#39;</span><span class="na">path</span><span class="err">&#39;)</span>
+    <span class="err">.</span><span class="na">attr</span><span class="err">(&#39;</span><span class="na">fill</span><span class="err">&#39;,</span><span class="na">function</span> <span class="err">(</span><span class="na">d</span><span class="err">)</span> <span class="err">{</span>
+        <span class="na">return</span> <span class="err">&#39;</span><span class="na">rgb</span><span class="err">(</span><span class="na">100</span><span class="err">,&#39;</span> <span class="err">+</span> <span class="na">Math</span><span class="err">.</span><span class="na">round</span><span class="err">(</span><span class="na">d</span><span class="err">.</span><span class="na">value</span><span class="err">)</span> <span class="err">+</span> <span class="err">&quot;,</span><span class="na">200</span><span class="err">)&quot;;</span> <span class="err">//</span><span class="na">You</span> <span class="na">need</span> <span class="na">to</span> <span class="na">use</span> <span class="na">d</span><span class="err">.</span><span class="na">value</span> <span class="na">here</span> <span class="na">because</span> <span class="na">data</span> <span class="na">source</span> <span class="na">now</span> <span class="na">is</span> <span class="na">pie</span><span class="err">.</span>
+    <span class="err">}).</span><span class="na">attr</span><span class="err">(&#39;</span><span class="na">d</span><span class="err">&#39;,</span><span class="na">arc</span><span class="err">);</span>
+
+<span class="err">//</span><span class="na">Add</span> <span class="na">Tags</span> <span class="na">for</span> <span class="na">this</span> <span class="na">pie</span> <span class="na">chart</span>
+<span class="na">arcs</span><span class="err">.</span><span class="na">append</span><span class="err">(&#39;</span><span class="na">text</span><span class="err">&#39;).</span><span class="na">attr</span><span class="err">(&#39;</span><span class="na">transform</span><span class="err">&#39;,</span><span class="na">function</span><span class="err">(</span><span class="na">d</span><span class="err">){</span>
+    <span class="na">return</span> <span class="err">&quot;</span><span class="na">translate</span><span class="err">(&quot;</span> <span class="err">+</span> <span class="na">arc</span><span class="err">.</span><span class="na">centroid</span><span class="err">(</span><span class="na">d</span><span class="err">)</span> <span class="err">+</span> <span class="err">&#39;)&#39;;</span>  <span class="err">//</span><span class="na">centroid</span> <span class="na">is</span> <span class="na">the</span> <span class="na">center</span> <span class="na">point</span> <span class="na">of</span> <span class="na">any</span> <span class="na">shape</span><span class="err">.</span> <span class="na">Here</span> <span class="na">means</span> <span class="na">move</span> <span class="na">tag</span> <span class="na">to</span> <span class="na">center</span> <span class="na">of</span> <span class="na">shape</span>
+<span class="err">}).</span><span class="na">attr</span><span class="err">(&#39;</span><span class="na">text-anchor</span><span class="err">&#39;,&#39;</span><span class="na">middle</span><span class="err">&#39;)</span>
+<span class="err">.</span><span class="na">text</span><span class="err">(</span><span class="na">function</span><span class="err">(</span><span class="na">d</span><span class="err">){</span>
+    <span class="na">return</span> <span class="na">d</span><span class="err">.</span><span class="na">value</span><span class="err">;</span>
+<span class="err">});</span>
+
+<span class="err">&lt;/</span><span class="na">script</span><span class="p">&gt;</span>
+
+<span class="c">&lt;!--Part II Code--&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
+<span class="c1">//Sample Dataset</span>
+<span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="nx">apple</span><span class="o">:</span><span class="mi">25</span><span class="p">,</span> <span class="nx">banana</span><span class="o">:</span> <span class="mi">50</span><span class="p">,</span> <span class="nx">peach</span><span class="o">:</span> <span class="mi">150</span><span class="p">},</span>
+    <span class="p">{</span><span class="nx">apple</span><span class="o">:</span><span class="mi">177</span><span class="p">,</span> <span class="nx">banana</span><span class="o">:</span> <span class="mi">98</span><span class="p">,</span> <span class="nx">peach</span><span class="o">:</span> <span class="mi">35</span><span class="p">},</span>
+    <span class="p">{</span><span class="nx">apple</span><span class="o">:</span> <span class="mi">59</span><span class="p">,</span> <span class="nx">banana</span><span class="o">:</span> <span class="mi">87</span><span class="p">,</span> <span class="nx">peach</span><span class="o">:</span> <span class="mi">120</span><span class="p">}</span>
+<span class="p">];</span>
+
+<span class="c1">//Re-origanize dataset. Each key group become a array. x means index, y is the value</span>
+<span class="nx">dataset</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[{</span><span class="nx">x</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span><span class="nx">y</span><span class="o">:</span><span class="mi">25</span><span class="p">},</span> <span class="p">{</span><span class="nx">x</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span><span class="nx">y</span><span class="o">:</span><span class="mi">177</span><span class="p">},</span> <span class="p">{</span><span class="nx">x</span><span class="o">:</span><span class="mi">2</span><span class="p">,</span><span class="nx">y</span><span class="o">:</span><span class="mi">59</span><span class="p">}],</span> <span class="c1">//apple group</span>
+    <span class="p">[{</span><span class="nx">x</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span><span class="nx">y</span><span class="o">:</span><span class="mi">50</span><span class="p">},</span> <span class="p">{</span><span class="nx">x</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span><span class="nx">y</span><span class="o">:</span><span class="mi">98</span><span class="p">},</span> <span class="p">{</span><span class="nx">x</span><span class="o">:</span><span class="mi">2</span><span class="p">,</span><span class="nx">y</span><span class="o">:</span><span class="mi">87</span><span class="p">}],</span> <span class="c1">//banana group</span>
+    <span class="p">[{</span><span class="nx">x</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span><span class="nx">y</span><span class="o">:</span><span class="mi">150</span><span class="p">},</span> <span class="p">{</span><span class="nx">x</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span><span class="nx">y</span><span class="o">:</span><span class="mi">35</span><span class="p">},</span> <span class="p">{</span><span class="nx">x</span><span class="o">:</span><span class="mi">2</span><span class="p">,</span><span class="nx">y</span><span class="o">:</span><span class="mi">120</span><span class="p">}]</span> <span class="c1">//peach group</span>
+<span class="p">];</span>
+
+<span class="c1">//Use d3.layout.stack() to modify dataset</span>
+<span class="kd">var</span> <span class="nx">stack</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">layout</span><span class="p">.</span><span class="nx">stack</span><span class="p">();</span>
+<span class="nx">stack</span><span class="p">(</span><span class="nx">dataset</span><span class="p">);</span>
+
+<span class="c1">//create svg</span>
+<span class="kd">var</span> <span class="nx">h</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">padding</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">svg</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;chapter11&#39;</span><span class="p">).</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span><span class="s1">&#39;100%&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span><span class="nx">h</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">w</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="nx">offsetWidth</span><span class="p">;</span>
+
+<span class="c1">//create scale</span>
+<span class="kd">var</span> <span class="nx">xScale</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">ordinal</span><span class="p">()</span>
+            <span class="p">.</span><span class="nx">domain</span><span class="p">(</span><span class="nx">d3</span><span class="p">.</span><span class="nx">range</span><span class="p">(</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">))</span>
+            <span class="p">.</span><span class="nx">rangeRoundBands</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="nx">w</span><span class="p">],</span><span class="mf">0.05</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">yScale</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">linear</span><span class="p">()</span>
+                <span class="p">.</span><span class="nx">domain</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">dataset</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+                    <span class="k">return</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+                        <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">y</span> <span class="o">+</span> <span class="nx">d</span><span class="p">.</span><span class="nx">y0</span><span class="p">;</span>
+                    <span class="p">});</span>
+                <span class="p">})])</span>
+                <span class="p">.</span><span class="nx">range</span><span class="p">([</span><span class="nx">h</span><span class="o">-</span><span class="nx">padding</span><span class="p">,</span><span class="mi">0</span><span class="p">]);</span>
+
+<span class="c1">//Add a group for each row of data</span>
+<span class="kd">var</span> <span class="nx">groups</span> <span class="o">=</span> <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">).</span><span class="nx">enter</span><span class="p">().</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;class&#39;</span><span class="p">,</span><span class="s1">&#39;group&#39;</span><span class="p">);</span>
+
+<span class="c1">//Add bar chart</span>
+<span class="kd">var</span> <span class="nx">color</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">category10</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">rects</span> <span class="o">=</span> <span class="nx">groups</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;rect&#39;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">d</span><span class="p">;</span>
+<span class="p">}).</span><span class="nx">enter</span><span class="p">().</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;rect&#39;</span><span class="p">)</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;x: &quot;</span> <span class="o">+</span> <span class="nx">xScale</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; y: &quot;</span> <span class="o">+</span> <span class="nx">d</span><span class="p">.</span><span class="nx">y</span> <span class="o">+</span> <span class="s2">&quot; y0: &quot;</span> <span class="o">+</span> <span class="nx">d</span><span class="p">.</span><span class="nx">y0</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">xScale</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">h</span><span class="o">-</span><span class="nx">d</span><span class="p">.</span><span class="nx">y0</span><span class="p">;</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">yScale</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">y</span><span class="p">);</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span><span class="nx">xScale</span><span class="p">.</span><span class="nx">rangeBand</span><span class="p">())</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">color</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">y</span><span class="p">)</span><span class="o">/</span><span class="mi">10</span><span class="p">);</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;stroke&#39;</span><span class="p">,</span><span class="s1">&#39;black&#39;</span><span class="p">);</span>
+
+<span class="c1">//add tags</span>
+<span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">groups</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">d</span><span class="p">;</span>
+<span class="p">}).</span><span class="nx">enter</span><span class="p">().</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">);</span>
+<span class="nx">text</span><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">y</span><span class="p">;</span>
+<span class="p">});</span>
+<span class="nx">text</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">xScale</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="o">+</span> <span class="nx">xScale</span><span class="p">.</span><span class="nx">rangeBand</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+<span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">h</span><span class="o">-</span><span class="nx">d</span><span class="p">.</span><span class="nx">y0</span><span class="o">-</span><span class="nx">padding</span><span class="p">;</span>
+<span class="p">}).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;fill&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">);;</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="c">&lt;!--Part III Code--&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
+//data should be a group, contains a nodes array group and an edges arraygroup
+var dataset = {
+    nodes: [
+        {name: &#39;apple&#39;}, //name of nodes
+        {name: &#39;peach&#39;},
+        {name: &#39;banana&#39;},
+        {name: &#39;pear&#39;},
+        {name: &#39;pineapple&#39;}
+    ],
+    edges: [
+        {source:0, target:1, weight:1}, //edges linking nodes.Has a source and a target
+        {source:1, target:2, weight:2},
+        {source:2, target:3, weight:3},
+        {source:3, target:4, weight:4},
+        {source:4, target:2, weight:5}
+        //Important: make sure last source connect back to existing source!
+    ]
+};
+
+
+//create svg
+var h=300;
+var padding=5;
+var svg = d3.select(document.getElementById(&#39;chapter11&#39;).getElementsByClassName(&#39;3&#39;)[0]).append(&#39;svg&#39;).attr(&#39;width&#39;,&#39;100%&#39;).attr(&#39;height&#39;,h);
+var w = document.getElementsByTagName(&#39;svg&#39;)[2].offsetWidth;
+
+//Initialize force-directed graph
+var force = d3.layout.force()
+                .nodes(dataset.nodes)
+                .links(dataset.edges)
+                .size([w,h])
+                .linkDistance([50]) //distance between each node
+                .charge([-100]) //how much nodes wanting to escape from each other
+                .start();
+
+//Create line to connecting nodes
+var edges = svg.selectAll(&#39;line&#39;)
+                .data(dataset.edges)
+                .enter()
+                .append(&#39;line&#39;)
+                .style(&#39;stroke&#39;,&#39;black&#39;)
+                .style(&#39;stroke-width&#39;,function(d){
+                    return d.weight;
+                });
+
+//Create circle as nodes
+var color = d3.scale.category10();
+
+var nodes = svg.selectAll(&#39;circle&#39;)
+                .data(dataset.nodes)
+                .enter()
+                .append(&#39;circle&#39;)
+                .attr(&#39;fill&#39;,function(d,i){
+                    return color(i);
+                })
+                .attr(&#39;r&#39;, 5)
+                .call(force.drag);      //start the function to drag circles.
+
+//Define tick: what is going to happen for each time second
+force.on(&#39;tick&#39;,function(){
+    edges.attr(&#39;x1&#39;,function(d){
+        return d.source.x; //x1 of edge to be x of source
+    }).attr(&#39;y1&#39;,function(d){
+        return d.source.y //y1 of edge to be y of source
+    }).attr(&#39;x2&#39;,function(d){
+        return d.target.x;
+    }).attr(&#39;y2&#39;,function(d){
+        return d.target.y;
+    });
+
+    nodes.attr(&#39;cx&#39;,function(d){
+        return d.x;
+    }).attr(&#39;cy&#39;,function(d){
+        return d.y;
+    })
+})
+</pre>

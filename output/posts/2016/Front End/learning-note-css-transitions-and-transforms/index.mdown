@@ -1,0 +1,362 @@
+.. title: Learning Note - CSS Transitions and Transforms (Lynda.com)
+.. date: 2016-07-18
+.. category: Front End
+.. tags: CSS3
+.. slug: learning-note-css-transitions-and-transforms
+.. authors: Pengyin Shan
+.. description: This is a learning note for **CSS Transitions and Transforms** taught by *Joseph Lowery*, on *Lynda.com*, with accompanying knowledge from other resources.
+
+
+
+#Reference List
+
+- (Need Lynda.com Account) <a href="https://www.lynda.com/CSS-tutorials/Exploring-transition-options/101072/108929-4.html">CSS: Transitions and Transforms</a>
+
+- (Chinese) <a href="http://www.jianshu.com/p/d999f090d333">cubic-bezier</a> by Jovey
+
+#Online Tools
+
+- <a href="matthewlein.com/ceaser">test a great variety of transitions</a>
+
+- <a href="www.css3maker.com">CSS 3.0 Maker</a>
+
+#Basics
+
+To create a basic css transition, need as least two statement in css:
+
+1. property: `transition-property`
+
+2. duration: `transition-duration`
+
+> Always add transition declarations to initial state
+
+Trigger States (See <a href="https://www.w3.org/TR/css3-transitions/#transition-property-property">here</a> for all transition properties from W3C):
+
+- `:hover`
+
+- `:focus`
+
+- `:active`
+
+- `:target`
+
+- `:checked`
+
+- `:disabled`
+
+
+Example:
+
+    :::css
+    a{
+        background-color: orange;
+        transition-property: background;
+        //you may need to add prefix, something like -webkit-transition-property
+        transition-duration: 1s;
+
+        //Or short-hand version: transition: background, 1s, ease; (property, duration, timing-function)
+    }
+    a:hover{
+        background-color: blue;
+    }
+
+##transition-timing-function
+
+> Default transitions start slow, speed up, and then slow down (`ease` transition)
+
+Values:
+
+- `ease`: default
+
+- `linear`: constant rate
+
+- `ease-in`: start slow, then speed up
+
+- `ease-out`: start quickly, then slows down
+
+- `ease-in-out`: start slow, speed up, slows again
+
+###cubic-bezier
+
+Another `transition-timing-function` value is `cubic-besier(x1,y1,x2,y2)`. `0<x<1`, when `x>1` cubic-besier will lose its effect. There is no rule for `y`.
+
+Jovey created following graph in her blog post <a href="http://www.jianshu.com/p/d999f090d333">cubic-bezier</a> to show cubic-bezier:
+
+img-responsive images/articles/2016/frontend/cubic-bezier.png 
+
+The curve from cubic-bezier is used to decide the speed of animation. We can view this as a straight line being dragged by point `(x1, y1)` and point `(x2, y2)`.
+
+Jovey gave following example for the value of cubic-basier of `ease-out` and `ease-in-out`:
+
+img-responsive images/articles/2016/frontend/cubic-bezier2.png 
+
+`transition-delay` is used to hold transition for a period of time.
+
+##Transforms
+
+Basic Syntax:
+
+    :::css
+    transform: function(parameters)
+
+Basic transform functions:
+
+`translate`: moving object along X and/or Y axis (use negative value to move to left/bottom)
+
+    :::css
+    transform: translate(10px, 10px); //move object right and top
+
+`scale`: resize object along X (width) and/or Y axis (height)
+
+    :::css
+    transform: scale(.5,.5); //1 is original size. .5 is half size
+
+`rotate`: rotate object to any degree (0 to 360)
+
+    :::css
+    transform: rotate(15deg);
+
+`skewX`/`skewY`: skew object along X or Y axis
+
+    :::css
+    transform: skewX(-25deg);
+
+`transform-origin`: set the origin point along X and Y axes
+
+    :::css
+    transform-origin: 50% 50%; //Center (Default)
+    transform-origin: 10px 0; //10px right offset
+    transform-origin: left bottom; //Bottom Left
+
+##3D Transforms
+
+Step 1: establishing 3D container and observer placement
+
+    :::css
+    perspective: 500px; //distance from viewer to object
+    perspective-origin: 50% 50% //vanishing point. 50% 50% is center (default)
+
+Step 2: move object along X, Y or Z axis
+
+    :::css
+    transform: translate3d(20px, 20px, -10px);
+    transform: translateZ(-10px);
+
+
+Step 2: resize object along X(width), Y(height) or Z(depth)
+
+    :::css
+    transform: scale3d(2, .75, 1.5);
+
+Step 2: rotate object to any degree (4 values)
+
+    :::css
+    transform: rotate3d(10,20,20,15deg); //first three values are axis of rotation, last is angle of rotation
+
+Step 3: `transform-style` determines how child elements are treated in 3D space
+
+    :::css
+    transform-style: preserve-3d; //default, all style apply to children
+    transform-style: flat; //2d element in parent plane
+
+#2D Transitions and Transforms
+
+##Basic
+
+- color: `transition: background-color 1s ease`, with `background-color` as changes attribute in target element
+
+- fade object in/out: `transition: opacity 1s ease-in` with `opacity` as changes attribute in target element
+
+- growing page elements: `transition: all .5s ease` in original element. `all`means all css attributes are effected. `transform: scale(1.5); //enlarge 50% ` in new status.
+
+- spin: `perspective: 500px;` in container, `transition: all 2s ease;` for target element, `transform: rotateY(360deg)` for new status.
+
+- adjust font size: `transition: font-size .5s ease` for original element, `font-size` for new status.
+
+##Transition Multiple Properties
+
+Example:
+
+    :::css
+    #test{
+        transition-property: left, opacity, transform; //make sure transforming being add prefix in prefix version
+        transition-duration: 3s, 4s, 3s;
+        transition-timing-function: ease, ease, ease-out;
+        transition-delay: 0s, .5s, 0s;
+    }
+
+##`@keyframes` and `animation`
+
+`@keyframes` defines percentage-based or keyword timeline.
+
+Example:
+
+    :::css
+    @keyframes percentage{
+        0% {color: black;}
+        50% {color: pink};
+        100%{ color: red; }
+    }
+    @keyframes keywords{
+        to {color: red;}
+        from {color: black;}
+    }
+
+`animation` references `@keyframes` and defines parameters
+
+Example:
+
+    :::css
+    #test{
+        animation: percentage 15s infinite alternate; //keyframes name, duration, iteration count (number or infinite), direction (normal, alternate)
+    }
+
+###`animation` properties
+
+- `animation-name`: same name as `@keyframes`
+
+- `animation-duration`: in `s` or `ms`
+
+- `animation-iteration-count`: number of time to repeat or 'infinite' keyword
+
+- `animation-direction`: `normal` for one direction, `alternate` for back and forth
+
+- `animation-timing-function`: same as `transition-timing-function`
+
+- `animation-delay`: value in `s` or `ms`
+
+#3D Transitions and Transforms
+
+##z-index (Enhanced Image Size)
+
+Example Code:
+
+    :::css
+    .ts-perspective{
+        perspective: 1000;
+    }
+    @keyframes goBig{
+        0% {opacity: 1;}
+        100% {
+            opacity: 0;
+            -webkit-transform: scale3d(5,5,5);
+        }
+    }
+    .te-front{
+        animation: goBig .4s ease-in-out;
+        backface-visibility: hidden;
+    }
+    .td-back{
+        transform-style: preserve-3d;
+        z-index: 1;
+    }
+
+##Flipping Effect
+
+Example Code:
+
+    :::css
+    /*With Same JavaScript to Change Class*/
+    .artGroup .flip{
+        perspective: 800px;
+    }
+    .artGroup.flip.artwork{
+        transition: transform 1s;
+        transform-style: preserve-3d;
+    }
+    .artGroup.flip.detail,.artGroup.flip.theFlip{
+        transform: rotateY(-180deg);
+    }
+    .artGroup.flip img,.artGroup.flip.detail{
+        backface-visibility: hidden;
+    }
+
+##Image Cube
+
+Example Code:
+
+    :::css
+    #theArt{
+        perspective: 1000px;
+    }
+    #cube{
+        transform-style: preserve-3d;
+        transition: transform 1s;
+    }
+    #cube .front{
+        /*translate long z-axis*/
+        transform: translateZ(136px);
+    }
+    #cube.back{
+        transform: rotateX(-180deg) translateZ(136px);
+    }
+    #cube.right{
+        transform: rotateX(90deg) translateZ(136px);
+    }
+    #cube.left{
+        transform: rotateX(-90deg) translateZ(136px);
+    }
+    #cube.top{
+        transform: rotateX(90deg) translateZ(136px);
+    }
+    /*following are for parent container*/
+    #cube.show-front{
+        transform: translateZ(-136px);
+    }
+    #cube.show-back{
+        transform: translateZ(-136px) rotateX(180deg);
+    }
+    #cube.show-right{
+        transform: translateZ(-136px) rotateY(-90deg);
+    }
+    #cube.show-left{
+        transform: translateZ(-136px) rotateY(90deg);
+    }
+    #cube.show-top{
+        transform: translateZ(-136px) rotateX(-90deg);
+    }
+    #cube.show-bottom{
+        transform: translateZ(-136px) rotateX(90deg);
+    }
+
+##Create Carousel
+
+HTML -> JavaScript -> CSS
+
+###HTML
+
+User `data-increment = 1/-1` to control direction
+
+###JS
+
+Add/Remove Class, using index incremented by 1
+
+###CSS
+
+    :::css
+    .container{
+        perspective: 1000;
+    }
+    #carousel{
+        transform-style: preserve-3d;
+    }
+    #carousel figure{
+
+    }
+    .ready #carousel, .ready #carousel figure{
+        transition: transform 1s;
+    }
+    #carousel figure img{
+        box-shadow: 0 0 0 #000;
+        transition: all 1s;
+    }
+    #carousel figure.showFig img:hover{
+        box-shadow: 3px 3px 5px #000;
+        transform: scale(2);
+    }
+    .no-csstransform3d #carousel figure, .no-csstransform3d #toggle{
+        display: none;
+    }
+    .no-csstransform3d #carousel figure.showFig{
+        display: block;
+    }

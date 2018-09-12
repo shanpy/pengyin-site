@@ -1,0 +1,55 @@
+<h2 id="data-immigration">Data Immigration</h2>
+<p><em>This part is based on the <a href="https://github.com/projecthydra/hydra/wiki/Dive-into-Hydra">dive-into-hydra</a> tutorial project.</em></p>
+<p>What should I do to immigrate Hydra Data (Fedora files, Solr documents and indexes, etc) from one Hydra project to another project?</p>
+<p>To figure out a way, I have explored following items:</p>
+<h3 id="step-1-sqlite3">Step 1: SQLite3</h3>
+<p><strong>8/12/15</strong></p>
+<p>My first idea is to check database. Tutorial project uses SQLite3 as database. All files are included in <code>/db</code> folder. Before going to production, you may get <code>developer.sqlite3</code>, <code>test.sqlite3</code>.</p>
+<p>I used <code>SQLiteStudio</code> to open these two SQLite3 databases. Each database has four tables, which are:</p>
+<ul>
+<li>
+<p><code>bookmarks</code>: save information when a bookmark is created. Sample Fields: <code>user_id</code>, <code>document_id</code>, <code>title</code>, <code>created_at</code>, etc</p>
+</li>
+<li>
+<p><code>schema_migrations</code>: version of query schema</p>
+</li>
+<li>
+<p><code>searches</code>: save information when a search operation is performed. Sample Fields: <code>user_id</code>, <code>query_params</code>, <code>created_at</code>, etc</p>
+</li>
+<li>
+<p><code>users</code>: user information. Sample Fields: <code>email</code>, <code>current_sign_in_ip</code>, <code>encrpted_password</code>, etc.</p>
+</li>
+</ul>
+<p>It seems that database(SQLite3) here is used to record information in search process, after all previous data has been immigrated.</p>
+<p>Now my question is: <em>Does Hydra have a solution?</em></p>
+<h3 id="step-2-hydra">Step 2: Hydra</h3>
+<p><strong>8/12/15</strong></p>
+<p>I did some research about a full immigration solution in Hydra. I didn't find any result, which is nature because Hydra includes so many components: Fedora, Solr, Blacklight, etc. It would be extremely hard to transfer all data from these components once, without any error.</p>
+<p>After I re-think my requirement, I realize this is what I want: <strong>Get all data from Fedora in old project -&gt; Put it to Fedora in new project, with same structure -&gt; Solr in new project re-indexing -&gt; Blacklight can find new documents</strong></p>
+<p>Now I want to start the process of <em>export and import Fedora data</em>.</p>
+<h3 id="step-3-fedora">Step 3: Fedora</h3>
+<p><strong>8/12/15</strong></p>
+<h4 id="data-export">Data Export</h4>
+<p>Fedora4 provides a <a href="https://wiki.duraspace.org/display/FEDORA40/RESTful+HTTP+API">RESTful HTTP API</a> for data processing.</p>
+<p>To export serialized form of a resource, <strong>with all subtress and binary content</strong>, run following in your terminal (I adjust path based on my project):</p>
+<pre class="code literal-block"><span></span>curl -u fedoraAdmin:fedoraAdmin http://127.0.0.1:8983/fedora/dev/fcr:export?recurse=true&amp;skipBinary=false&quot;
+</pre>
+
+
+<p>Make sure to use your own fedora username and password.</p>
+<p>This command will generate a group of <code>xml</code> code, save it to a <code>xml</code> file, such as <code>FedoraExport.xml</code>.</p>
+<h4 id="data-import">Data Import</h4>
+<p>Now go to your new project and get a copy of your exported xml file. Run following command to import:</p>
+<pre class="code literal-block"><span></span>curl -u fedoraAdmin:fedoraAdmin -X POST --data-binary &quot;@FedoraExport.xml&quot; &quot;http://127.0.0.1:8983/fedora/rest/dev/fcr:import?format=jcr/xml&quot;
+</pre>
+
+
+<p>Now restart jetty and navigate to <code>http://127.0.0.1:8983/fedora/rest/dev</code>. I'll be able to see all data, includes all subtrees, in the Fedora of new project.</p>
+<p>I also noticed Fedora UI can import and export xml files. However, there is no recursive export feature there.</p>
+<blockquote>
+<p>Problem: When I followed tutorial project, I made all the book nodes under /fedora/rest/dev. When I did export, I had to export dev node to make sure it includes book childnodes. After I imported dev node to new /fedora/rest/dev, I realized I had two dev nodes now. Another solution is to replace new fedora's dev node. However after I imported dev node directly to /fedora/rest, the new dev node will show as 'dev%5B2%5D' instead of 'dev'.</p>
+<p>Possible Solution: I should create a summary node, which includes all my books data. I export this summary node and import it to /fedora/rest/dev. Now I can have exactly same structure as old fedora.</p>
+</blockquote>
+<p>Now I want to start the process of <em>Solr re-indexing</em>.</p>
+<h3 id="step-4-solr">Step 4: Solr</h3>
+<p>Working in process :)</p>

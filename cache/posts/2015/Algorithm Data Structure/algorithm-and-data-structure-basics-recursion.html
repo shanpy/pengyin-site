@@ -1,0 +1,401 @@
+<h3 id="reference-list">Reference List</h3>
+<ul>
+<li>
+<p><a href="http://www.nowamagic.net/librarys/veda/detail/2314">Understand Recursion (Chinese)</a></p>
+</li>
+<li>
+<p><a href="http://blog.csdn.net/wangjinyu501/article/details/8248492">Recursion (Chinese)</a></p>
+</li>
+</ul>
+<h3 id="common-model-of-recursion">Common Model of Recursion</h3>
+<pre class="code literal-block"><span></span><span class="n">Obj</span> <span class="nf">recursion</span><span class="o">(</span><span class="n">Obj</span> <span class="n">o</span><span class="o">){</span>
+    <span class="k">if</span><span class="o">(</span><span class="n">baseCondition</span><span class="o">){</span>
+        <span class="cm">/*</span>
+<span class="cm">        You need to return here, so that recursion part can use the basic value which is returned back</span>
+<span class="cm">        */</span>
+        <span class="k">return</span> <span class="n">baseConditionResult</span><span class="o">;</span>
+    <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+        <span class="n">o</span> <span class="o">=</span> <span class="n">some_expression</span><span class="o">;</span>
+        <span class="n">recursion</span><span class="o">(</span><span class="n">o</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p><em>If there are other expression before or after recursion call, make sure you run it after each call back, because these expressions are part of method, and you want to call the full method for each recursion. Check "Hanoi" example below for detail.</em></p>
+<h3 id="problem-in-recursion">Problem in Recursion</h3>
+<p>Since system using <strong>stack</strong> to save return values from each callback, it's really easy to get memory overflow problem.</p>
+<h3 id="hanoi">Hanoi</h3>
+<h4 id="rule">Rule</h4>
+<ol>
+<li>
+<p>Move plate when number of plate is <code>1</code> (In code below, we want to printout basic value);</p>
+</li>
+<li>
+<p>If number of plates on a tower is more than <code>1</code> (assume <code>n</code>), move first <code>n-1</code> plate, then move the bottom plate.</p>
+</li>
+</ol>
+<h4 id="code">Code</h4>
+<pre class="code literal-block"><span></span><span class="cm">/**</span>
+<span class="cm">Result:</span>
+<span class="cm">    Dist 1 from A  to C</span>
+<span class="cm">    Dist 2 from A to B</span>
+<span class="cm">    Dist 1 from C  to B</span>
+<span class="cm">    Dist 3 from A to C</span>
+<span class="cm">    Dist 1 from B  to A</span>
+<span class="cm">    Dist 2 from B to C</span>
+<span class="cm">    Dist 1 from A  to C</span>
+<span class="cm">*/</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Hanoi</span> <span class="o">{</span>
+
+    <span class="kd">static</span> <span class="kt">int</span> <span class="n">nDisks</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">doTowers</span><span class="o">(</span><span class="kt">int</span> <span class="n">topN</span><span class="o">,</span> <span class="kt">char</span> <span class="n">from</span><span class="o">,</span> <span class="kt">char</span> <span class="n">inter</span><span class="o">,</span> <span class="kt">char</span> <span class="n">to</span><span class="o">){</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">topN</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Dist &quot;</span> <span class="o">+</span> <span class="n">topN</span> <span class="o">+</span> <span class="s">&quot; from &quot;</span> <span class="o">+</span> <span class="n">from</span> <span class="o">+</span> <span class="s">&quot; to &quot;</span> <span class="o">+</span> <span class="n">to</span><span class="o">);</span>
+        <span class="k">else</span><span class="o">{</span>
+            <span class="c1">//Move top n-1 from start tower to mid tower</span>
+            <span class="n">doTowers</span><span class="o">(</span><span class="n">topN</span><span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="n">from</span><span class="o">,</span> <span class="n">to</span><span class="o">,</span> <span class="n">inter</span><span class="o">);</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Dist &quot;</span> <span class="o">+</span> <span class="n">topN</span> <span class="o">+</span> <span class="s">&quot; from &quot;</span> <span class="o">+</span> <span class="n">from</span> <span class="o">+</span> <span class="s">&quot; to &quot;</span> <span class="o">+</span> <span class="n">to</span><span class="o">);</span>
+            <span class="c1">//Move top n-1 from mid tower to end tower</span>
+            <span class="n">doTowers</span><span class="o">(</span><span class="n">topN</span><span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="n">inter</span><span class="o">,</span> <span class="n">from</span><span class="o">,</span> <span class="n">to</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">doTowers</span><span class="o">(</span><span class="n">nDisks</span><span class="o">,</span> <span class="sc">&#39;A&#39;</span><span class="o">,</span> <span class="sc">&#39;B&#39;</span><span class="o">,</span> <span class="sc">&#39;C&#39;</span><span class="o">);</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</pre>
+
+
+<p>To make code looks clear, I draw a draft of the sequence of recursion call for the code above. Note the purpose numbers are the sequence of call:</p>
+<p>../images/articles/2015/algorithm/hanoi_graph.png </p>
+<h3 id="merge-sort">Merge Sort</h3>
+<h4 id="code_1">Code</h4>
+<pre class="code literal-block"><span></span><span class="cm">/*</span>
+<span class="cm">Output:</span>
+<span class="cm">72 90 45 126 54</span>
+<span class="cm">45 54 72 90 126</span>
+<span class="cm">*/</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MergeSort</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kt">long</span><span class="o">[]</span> <span class="n">theArray</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">nElems</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">MergeSort</span><span class="o">(</span><span class="kt">int</span> <span class="n">max</span><span class="o">){</span>
+        <span class="n">theArray</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">long</span><span class="o">[</span><span class="n">max</span><span class="o">];</span>
+        <span class="n">nElems</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">insert</span><span class="o">(</span><span class="kt">long</span> <span class="n">value</span><span class="o">){</span>
+        <span class="n">theArray</span><span class="o">[</span><span class="n">nElems</span><span class="o">]</span> <span class="o">=</span> <span class="n">value</span><span class="o">;</span>
+        <span class="n">nElems</span><span class="o">++;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">display</span><span class="o">(){</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">nElems</span><span class="o">;</span> <span class="n">j</span><span class="o">++){</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">theArray</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">+</span> <span class="s">&quot; &quot;</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">mergeSort</span><span class="o">(){</span>
+        <span class="kt">long</span><span class="o">[]</span> <span class="n">workspace</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">long</span><span class="o">[</span><span class="n">nElems</span><span class="o">];</span>
+        <span class="n">recMergeSort</span><span class="o">(</span><span class="n">workspace</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">nElems</span><span class="o">-</span><span class="mi">1</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">recMergeSort</span><span class="o">(</span><span class="kt">long</span><span class="o">[]</span> <span class="n">workspace</span><span class="o">,</span> <span class="kt">int</span> <span class="n">lowerBound</span><span class="o">,</span> <span class="kt">int</span> <span class="n">upperBound</span><span class="o">){</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">lowerBound</span> <span class="o">==</span> <span class="n">upperBound</span><span class="o">)</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="k">else</span><span class="o">{</span>
+            <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="o">(</span><span class="n">lowerBound</span> <span class="o">+</span> <span class="n">upperBound</span><span class="o">)/</span><span class="mi">2</span><span class="o">;</span>
+            <span class="n">recMergeSort</span><span class="o">(</span><span class="n">workspace</span><span class="o">,</span> <span class="n">lowerBound</span><span class="o">,</span> <span class="n">mid</span><span class="o">);</span>
+            <span class="n">recMergeSort</span><span class="o">(</span><span class="n">workspace</span><span class="o">,</span> <span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="o">,</span> <span class="n">upperBound</span><span class="o">);</span>
+            <span class="n">merge</span><span class="o">(</span><span class="n">workspace</span><span class="o">,</span><span class="n">lowerBound</span><span class="o">,</span> <span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="o">,</span> <span class="n">upperBound</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">merge</span><span class="o">(</span><span class="kt">long</span><span class="o">[]</span> <span class="n">workspace</span><span class="o">,</span> <span class="kt">int</span> <span class="n">lowPtr</span><span class="o">,</span> <span class="kt">int</span> <span class="n">highPtr</span><span class="o">,</span> <span class="kt">int</span> <span class="n">upperBound</span><span class="o">){</span>
+        <span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">lowerBound</span> <span class="o">=</span> <span class="n">lowPtr</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">highPtr</span><span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">upperBound</span> <span class="o">-</span> <span class="n">lowerBound</span> <span class="o">+</span><span class="mi">1</span><span class="o">;</span> <span class="c1">//# of items</span>
+
+        <span class="k">while</span><span class="o">(</span><span class="n">lowPtr</span> <span class="o">&lt;=</span> <span class="n">mid</span> <span class="o">&amp;&amp;</span> <span class="n">highPtr</span> <span class="o">&lt;=</span> <span class="n">upperBound</span><span class="o">){</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">theArray</span><span class="o">[</span><span class="n">lowPtr</span><span class="o">]&lt;</span><span class="n">theArray</span><span class="o">[</span><span class="n">highPtr</span><span class="o">]){</span>
+                <span class="n">workspace</span><span class="o">[</span><span class="n">j</span><span class="o">++]</span> <span class="o">=</span> <span class="n">theArray</span><span class="o">[</span><span class="n">lowPtr</span><span class="o">++];</span>
+            <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+                <span class="n">workspace</span><span class="o">[</span><span class="n">j</span><span class="o">++]</span> <span class="o">=</span> <span class="n">theArray</span><span class="o">[</span><span class="n">highPtr</span><span class="o">++];</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="k">while</span><span class="o">(</span><span class="n">lowPtr</span> <span class="o">&lt;=</span> <span class="n">mid</span><span class="o">){</span> <span class="c1">//upper side are gone, some lower side left</span>
+            <span class="n">workspace</span><span class="o">[</span><span class="n">j</span><span class="o">++]</span> <span class="o">=</span> <span class="n">theArray</span><span class="o">[</span><span class="n">lowPtr</span><span class="o">++];</span>
+        <span class="o">}</span>
+        <span class="k">while</span><span class="o">(</span><span class="n">highPtr</span><span class="o">&lt;=</span><span class="n">upperBound</span><span class="o">){</span> <span class="c1">//lower side are gone, some upperside left</span>
+            <span class="n">workspace</span><span class="o">[</span><span class="n">j</span><span class="o">++]</span> <span class="o">=</span> <span class="n">theArray</span><span class="o">[</span><span class="n">highPtr</span><span class="o">++];</span>
+        <span class="o">}</span>
+
+        <span class="k">for</span><span class="o">(</span><span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">n</span><span class="o">;</span> <span class="n">j</span><span class="o">++){</span><span class="c1">//copy back</span>
+            <span class="n">theArray</span><span class="o">[</span><span class="n">lowerBound</span><span class="o">+</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">workspace</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">maxSize</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+        <span class="n">MergeSort</span> <span class="n">arr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MergeSort</span><span class="o">(</span><span class="n">maxSize</span><span class="o">);</span>
+        <span class="n">arr</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="mi">72</span><span class="o">);</span>
+        <span class="n">arr</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="mi">90</span><span class="o">);</span>
+        <span class="n">arr</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="mi">45</span><span class="o">);</span>
+        <span class="n">arr</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="mi">126</span><span class="o">);</span>
+        <span class="n">arr</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="mi">54</span><span class="o">);</span>
+        <span class="n">arr</span><span class="o">.</span><span class="na">display</span><span class="o">();</span>
+
+        <span class="n">arr</span><span class="o">.</span><span class="na">mergeSort</span><span class="o">();</span>
+        <span class="n">arr</span><span class="o">.</span><span class="na">display</span><span class="o">();</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</pre>
+
+
+<h3 id="binary-search">Binary Search</h3>
+<pre class="code literal-block"><span></span><span class="cm">/**</span>
+<span class="cm">Output:</span>
+<span class="cm">    45 54 72 90 126</span>
+<span class="cm">    Found 54</span>
+<span class="cm">**/</span>
+<span class="kd">class</span> <span class="nc">BinarySearch</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kt">long</span><span class="o">[]</span> <span class="n">a</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">nElems</span><span class="o">;</span> <span class="c1">//count how many existing elements in array</span>
+
+    <span class="kd">public</span> <span class="nf">BinarySearch</span><span class="o">(</span><span class="kt">int</span> <span class="n">max</span><span class="o">){</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">long</span><span class="o">[</span><span class="n">max</span><span class="o">];</span>
+        <span class="n">nElems</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">size</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="n">nElems</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">find</span><span class="o">(</span><span class="kt">long</span> <span class="n">searchKey</span><span class="o">){</span>
+        <span class="k">return</span> <span class="n">recFind</span><span class="o">(</span><span class="n">searchKey</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">nElems</span><span class="o">-</span><span class="mi">1</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">int</span> <span class="nf">recFind</span><span class="o">(</span><span class="kt">long</span> <span class="n">searchKey</span><span class="o">,</span> <span class="kt">int</span> <span class="n">lowerBound</span><span class="o">,</span> <span class="kt">int</span> <span class="n">upperBound</span><span class="o">){</span>
+        <span class="kt">int</span> <span class="n">curIn</span><span class="o">;</span>
+
+        <span class="n">curIn</span> <span class="o">=</span> <span class="o">(</span><span class="n">lowerBound</span> <span class="o">+</span> <span class="n">upperBound</span><span class="o">)/</span><span class="mi">2</span><span class="o">;</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">curIn</span><span class="o">]</span> <span class="o">==</span> <span class="n">searchKey</span><span class="o">){</span>
+            <span class="k">return</span> <span class="n">curIn</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">lowerBound</span> <span class="o">&gt;</span> <span class="n">upperBound</span><span class="o">){</span>
+            <span class="k">return</span> <span class="n">nElems</span><span class="o">;</span> <span class="c1">//cannot find</span>
+        <span class="o">}</span>
+        <span class="k">else</span><span class="o">{</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">curIn</span><span class="o">]&lt;</span><span class="n">searchKey</span><span class="o">)</span>
+                <span class="k">return</span> <span class="n">recFind</span><span class="o">(</span><span class="n">searchKey</span><span class="o">,</span> <span class="n">curIn</span><span class="o">+</span><span class="mi">1</span><span class="o">,</span> <span class="n">upperBound</span><span class="o">);</span> <span class="c1">//check larger half</span>
+            <span class="k">else</span>
+                <span class="k">return</span> <span class="n">recFind</span><span class="o">(</span><span class="n">searchKey</span><span class="o">,</span> <span class="n">lowerBound</span><span class="o">,</span> <span class="n">curIn</span><span class="o">-</span><span class="mi">1</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">insert</span><span class="o">(</span><span class="kt">long</span> <span class="n">value</span><span class="o">){</span>
+        <span class="kt">int</span> <span class="n">j</span><span class="o">;</span>
+        <span class="k">for</span><span class="o">(</span><span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">nElems</span><span class="o">;</span> <span class="n">j</span><span class="o">++){</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]&gt;</span><span class="n">value</span><span class="o">){</span>
+                <span class="k">break</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">k</span><span class="o">=</span><span class="n">nElems</span><span class="o">;</span> <span class="n">k</span><span class="o">&gt;</span><span class="n">j</span><span class="o">;</span> <span class="n">k</span><span class="o">--){</span>
+            <span class="n">a</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="o">];</span>
+        <span class="o">}</span>
+        <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">value</span><span class="o">;</span>
+        <span class="n">nElems</span> <span class="o">++;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">display</span><span class="o">(){</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">nElems</span><span class="o">;</span> <span class="n">j</span><span class="o">++){</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">+</span> <span class="s">&quot; &quot;</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot; &quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">maxSize</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+        <span class="n">BinarySearch</span> <span class="n">arr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BinarySearch</span><span class="o">(</span><span class="n">maxSize</span><span class="o">);</span>
+        <span class="n">arr</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="mi">72</span><span class="o">);</span>
+        <span class="n">arr</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="mi">90</span><span class="o">);</span>
+        <span class="n">arr</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="mi">45</span><span class="o">);</span>
+        <span class="n">arr</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="mi">126</span><span class="o">);</span>
+        <span class="n">arr</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="mi">54</span><span class="o">);</span>
+        <span class="n">arr</span><span class="o">.</span><span class="na">display</span><span class="o">();</span>
+
+        <span class="kt">int</span> <span class="n">searchKey</span> <span class="o">=</span> <span class="mi">54</span><span class="o">;</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">arr</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="n">searchKey</span><span class="o">)</span> <span class="o">!=</span> <span class="n">arr</span><span class="o">.</span><span class="na">size</span><span class="o">())</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Found &quot;</span> <span class="o">+</span> <span class="n">searchKey</span><span class="o">);</span>
+        <span class="k">else</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Can&#39;t find &quot;</span> <span class="o">+</span> <span class="n">searchKey</span><span class="o">);</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</pre>
+
+
+<h3 id="word-recursion-anagram">Word Recursion (Anagram)</h3>
+<h4 id="idea">Idea</h4>
+<p>Assume a word has <code>n</code> letters:</p>
+<ol>
+<li>
+<p>List right-most <code>n-1</code> letters</p>
+</li>
+<li>
+<p>Rotate all <code>n</code> letters</p>
+</li>
+<li>
+<p>Do two steps above <code>n</code> times</p>
+</li>
+</ol>
+<h4 id="code_2">Code</h4>
+<pre class="code literal-block"><span></span><span class="cm">/**</span>
+<span class="cm">If you input &#39;test&#39;, you will get:</span>
+<span class="cm">  1 test</span>
+<span class="cm">  2 tets</span>
+<span class="cm">  3 tste</span>
+<span class="cm">  4 tset</span>
+<span class="cm">  5 ttes</span>
+<span class="cm">  6 ttse</span>
+<span class="cm">  7 estt</span>
+<span class="cm">  8 estt</span>
+<span class="cm">  9 etts</span>
+<span class="cm"> 10 etst</span>
+<span class="cm"> 11 etst</span>
+<span class="cm"> 12 etts</span>
+<span class="cm"> 13 stte</span>
+<span class="cm"> 14 stet</span>
+<span class="cm"> 15 stet</span>
+<span class="cm"> 16 stte</span>
+<span class="cm"> 17 sett</span>
+<span class="cm"> 18 sett</span>
+<span class="cm"> 19 ttes</span>
+<span class="cm"> 20 ttse</span>
+<span class="cm"> 21 test</span>
+<span class="cm"> 22 tets</span>
+<span class="cm"> 23 tste</span>
+<span class="cm"> 24 tset</span>
+<span class="cm">**/</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WordRecurtion</span> <span class="o">{</span>
+
+    <span class="kd">static</span> <span class="kt">int</span> <span class="n">size</span><span class="o">;</span>
+    <span class="kd">static</span> <span class="kt">int</span> <span class="n">count</span><span class="o">;</span>
+    <span class="kd">static</span> <span class="kt">char</span><span class="o">[]</span> <span class="n">arrChar</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="o">[</span><span class="mi">100</span><span class="o">];</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;Enter a word: &quot;</span><span class="o">);</span>
+        <span class="n">String</span> <span class="n">input</span> <span class="o">=</span> <span class="n">getString</span><span class="o">();</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">length</span><span class="o">();</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">size</span><span class="o">;</span> <span class="n">j</span><span class="o">++){</span>
+            <span class="n">arrChar</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">j</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">doAnagram</span><span class="o">(</span><span class="n">size</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">doAnagram</span><span class="o">(</span><span class="kt">int</span> <span class="n">newSize</span><span class="o">){</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">newSize</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span>
+          <span class="k">return</span><span class="o">;</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">newSize</span><span class="o">;</span> <span class="n">j</span><span class="o">++){</span>
+          <span class="n">doAnagram</span><span class="o">(</span><span class="n">newSize</span><span class="o">-</span><span class="mi">1</span><span class="o">);</span>
+          <span class="k">if</span><span class="o">(</span><span class="n">newSize</span><span class="o">==</span><span class="mi">2</span><span class="o">)</span>
+            <span class="n">displayWord</span><span class="o">();</span>
+          <span class="c1">//Starting from every two words, rotate after each recursion</span>
+          <span class="n">rotate</span><span class="o">(</span><span class="n">newSize</span><span class="o">);</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+
+      <span class="c1">//Rotate word one position to right</span>
+      <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">rotate</span><span class="o">(</span><span class="kt">int</span> <span class="n">newSize</span><span class="o">){</span>
+        <span class="kt">int</span> <span class="n">j</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">position</span> <span class="o">=</span> <span class="n">size</span> <span class="o">-</span> <span class="n">newSize</span><span class="o">;</span>
+        <span class="kt">char</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">arrChar</span><span class="o">[</span><span class="n">position</span><span class="o">];</span>
+        <span class="k">for</span><span class="o">(</span><span class="n">j</span><span class="o">=</span><span class="n">position</span><span class="o">+</span><span class="mi">1</span><span class="o">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">size</span><span class="o">;</span> <span class="n">j</span><span class="o">++){</span>
+          <span class="n">arrChar</span><span class="o">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">arrChar</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+        <span class="o">}</span>
+        <span class="n">arrChar</span><span class="o">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">temp</span><span class="o">;</span>
+      <span class="o">}</span>
+
+      <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">displayWord</span><span class="o">(){</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">count</span><span class="o">&lt;</span><span class="mi">99</span><span class="o">)</span>
+          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot; &quot;</span><span class="o">);</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">count</span><span class="o">&lt;</span><span class="mi">9</span><span class="o">)</span>
+          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot; &quot;</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(++</span><span class="n">count</span> <span class="o">+</span> <span class="s">&quot; &quot;</span><span class="o">);</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">size</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span>
+          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">arrChar</span><span class="o">[</span><span class="n">j</span><span class="o">]);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot; &quot;</span><span class="o">);</span>
+      <span class="o">}</span>
+
+      <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">getString</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">{</span>
+        <span class="n">InputStreamReader</span> <span class="n">isr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InputStreamReader</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+        <span class="n">BufferedReader</span> <span class="n">br</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="n">isr</span><span class="o">);</span>
+        <span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="n">br</span><span class="o">.</span><span class="na">readLine</span><span class="o">();</span>
+        <span class="k">return</span> <span class="n">s</span><span class="o">;</span>
+      <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3 id="height-of-b-tree">Height of B-Tree</h3>
+<h4 id="code_3">Code</h4>
+<p>This is my code from hankerrank.com:</p>
+<pre class="code literal-block"><span></span>    <span class="cm">/*</span>
+<span class="cm">    class Node</span>
+<span class="cm">       int data;</span>
+<span class="cm">       Node left;</span>
+<span class="cm">       Node right;</span>
+<span class="cm">    */</span>
+   <span class="kt">int</span> <span class="nf">height</span><span class="o">(</span><span class="n">Node</span> <span class="n">root</span><span class="o">)</span>
+    <span class="o">{</span>
+         <span class="n">Node</span> <span class="n">current</span> <span class="o">=</span> <span class="n">root</span><span class="o">;</span>
+         <span class="k">if</span><span class="o">(</span><span class="n">current</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+         <span class="o">}</span>
+         <span class="k">if</span><span class="o">(</span><span class="n">height</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">left</span><span class="o">)&gt;</span><span class="n">height</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">right</span><span class="o">))</span>
+             <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">height</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">left</span><span class="o">);</span>
+         <span class="k">else</span>
+             <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">height</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">right</span><span class="o">);</span>
+    <span class="o">}</span>
+</pre>
+
+
+<h3 id="decide-if-b-tree-is-balanced">Decide if B-Tree is Balanced</h3>
+<p>Following method is taken from <a href ="http://www.nowamagic.net/librarys/veda/detail/2314">this post</a>:</p>
+<pre class="code literal-block"><span></span><span class="cm">/*</span>
+<span class="cm">class Node</span>
+<span class="cm">   int data;</span>
+<span class="cm">   Node left;</span>
+<span class="cm">   Node right;</span>
+<span class="cm">*/</span>
+<span class="c1">//Return depth of tree if tree is balanced. Otherwise return -1</span>
+<span class="kt">int</span> <span class="nf">isBalenced</span><span class="o">(</span><span class="n">Node</span> <span class="n">root</span><span class="o">)</span>
+<span class="o">{</span>
+     <span class="n">Node</span> <span class="n">current</span> <span class="o">=</span> <span class="n">root</span><span class="o">;</span>
+     <span class="k">if</span><span class="o">(</span><span class="n">current</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="o">;</span> <span class="c1">//return 0 for null node</span>
+     <span class="o">}</span>
+
+     <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="n">isBalenced</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">left</span><span class="o">);</span>
+     <span class="kt">int</span> <span class="n">right</span> <span class="o">=</span> <span class="n">isBalenced</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">right</span><span class="o">);</span>
+
+     <span class="k">if</span><span class="o">(</span><span class="n">left</span><span class="o">&gt;=</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">right</span><span class="o">&gt;=</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">left</span><span class="o">-</span><span class="n">right</span><span class="o">&lt;=</span><span class="mi">1</span> <span class="o">||</span> <span class="n">left</span><span class="o">-</span><span class="n">right</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="mi">1</span><span class="o">){</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">left</span><span class="o">&lt;</span><span class="n">right</span><span class="o">)</span>
+            <span class="k">return</span> <span class="n">right</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="k">else</span>
+            <span class="k">return</span> <span class="n">left</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>

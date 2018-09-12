@@ -1,0 +1,457 @@
+<p>This is a post that I moved from my <a href="blogpengyin.herokuapp.com">old blog site</a>. This is the reading note for <strong>OCA Java SE 7 Certification Guide</strong> from <strong>Manning</strong>. <em>Please note that all definations and examples in this post are taken from the book.</em></p>
+<h1 id="chapter-5-flow-control">Chapter 5 Flow Control</h1>
+<p>This chapter has following content:</p>
+<ul>
+<li>
+<p>Creating and using <code>if</code>, <code>if-else</code>, and <code>switch</code> constructs to execute statements selectively</p>
+</li>
+<li>
+<p>Creating and using <code>loops—while</code>, <code>do-while</code>, <code>for</code>, and <code>enhanced for</code></p>
+</li>
+<li>
+<p>Creating <code>nested construct</code>s for selection and iteration statements</p>
+</li>
+<li>
+<p>Comparing the <code>do-while</code>, <code>while</code>, <code>for</code>, and <code>enhanced for</code> loop constructs</p>
+</li>
+<li>
+<p>Using <code>break</code> and <code>continue</code> statements</p>
+</li>
+</ul>
+<h2 id="if-and-if-else">If and If-Else</h2>
+<p>In Java, <strong><code>then</code> isn’t a keyword</strong>, so it shouldn’t be used with the <code>if</code> statement.</p>
+<p>It’s acceptable to define one course of action for an if construct:</p>
+<pre class="code literal-block"><span></span><span class="kt">boolean</span> <span class="n">testValue</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">testValue</span> <span class="o">==</span> <span class="kc">true</span><span class="o">)</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;value is true&quot;</span><span class="o">);</span>
+
+<span class="c1">//you can’t define the `else` part for an `if` construct, **skipping the `if` code block**:</span>
+
+<span class="kt">boolean</span> <span class="n">testValue</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">testValue</span> <span class="o">==</span> <span class="kc">true</span><span class="o">)</span>
+<span class="c1">//Won&#39;t compile, no content for &#39;if&#39; but has content for &#39;else&#39;</span>
+<span class="k">else</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;value is false&quot;</span><span class="o">);</span>
+<span class="cm">/**********/</span>
+<span class="kt">int</span> <span class="n">score</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+<span class="k">if</span><span class="o">((</span><span class="n">score</span><span class="o">=</span><span class="n">score</span><span class="o">+</span><span class="mi">10</span><span class="o">)</span> <span class="o">&gt;</span> <span class="mi">110</span><span class="o">);</span>
+<span class="c1">//Compile fine. Since no content for `else`, it is fine to skip content for &#39;if&#39;</span>
+</pre>
+
+
+<p>Using <code>if(testValue==true)</code> is the same as using <code>if(testValue)</code>. Similarly, <code>if(testValue==false)</code> is the same as using <code>if(!testValue)</code>.</p>
+<p>An <code>if</code> block is marked by enclosing one or more statements within a pair of <code>curly braces</code>, <code>{}</code>.</p>
+<p>An <code>if</code> block will execute <strong>a single line of code if there are no braces</strong>, but will execute <strong>an unlimited number of lines</strong> if they’re con- tained within a block (defined using <code>{}</code>)</p>
+<blockquote>
+<p>i.e. In the <strong>absence of a defined code block</strong> (marked with a pair of {}), <strong>only the statement following the if construct</strong> will be considered to be part of it.</p>
+</blockquote>
+<pre class="code literal-block"><span></span><span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Lion&quot;</span><span class="o">;</span>
+<span class="kt">int</span> <span class="n">score</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">name</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;Lion&quot;</span><span class="o">))</span>
+<span class="n">score</span> <span class="o">=</span> <span class="mi">200</span><span class="o">;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Larry&quot;</span><span class="o">;</span>
+<span class="k">else</span>  <span class="c1">//Won&#39;t compile. Compiler can&#39;t get a if for this else</span>
+<span class="n">score</span> <span class="o">=</span> <span class="mi">129</span><span class="o">;</span>
+</pre>
+
+
+<p>The <strong>result</strong> of a variable or an expression used in an <code>if</code> construct must evaluate to <code>true</code> or <code>false</code>.</p>
+<blockquote>
+<p>i.e. <code>if(exp)</code> must have a <code>boolean</code> expression.</p>
+</blockquote>
+<p>However, <strong>if you use <code>=</code> as assignment in <code>if</code> construct, no compile error.</strong> It will become a simple assignment operation.</p>
+<h2 id="switch-statement">Switch Statement</h2>
+<p>A <code>switch</code> statement can define multiple case labels within its switch block, but <strong>only a single <code>default</code> label</strong>.
+- The default label executes when no matching value is found in
+the case labels.</p>
+<p>A <code>break</code> statement is used to exit a switch statement, after the code completes its execution for a matching case .</p>
+<p>When the code control enters the label matching one case in the switch construct, it’ll <strong>execute all of the code until it encounters a <code>break</code> statement or it reaches the end of the switch statement.</strong></p>
+<p>You can’t use the <code>switch</code> statement to compare all types of values, such as all types of <code>object</code>s and <code>primitive</code>s. A switch statement accepts arguments of type:</p>
+<ul>
+<li>
+<p><code>char</code></p>
+</li>
+<li>
+<p><code>byte</code></p>
+</li>
+<li>
+<p><code>short</code></p>
+</li>
+<li>
+<p><code>int</code></p>
+</li>
+<li>
+<p><code>String</code></p>
+</li>
+<li>
+<p><code>enum</code></p>
+</li>
+<li>
+<p><code>Character</code></p>
+</li>
+<li>
+<p><code>Byte</code></p>
+</li>
+<li>
+<p><code>Integer</code></p>
+</li>
+<li>
+<p><code>Short</code></p>
+</li>
+</ul>
+<p>The <code>witch</code> statement <strong>doesn’t accept</strong> arguments of type:</p>
+<ul>
+<li>
+<p><code>long</code></p>
+</li>
+<li>
+<p><code>float</code></p>
+</li>
+<li>
+<p><code>double</code></p>
+</li>
+<li>
+<p>any <code>object</code> besides <code>String</code></p>
+</li>
+</ul>
+<p>Apart from passing a variable to a <code>switch</code> statement, you can also pass an <code>expression</code> to the <code>switch</code> statement <strong>as long as it returns one of the allowed types</strong>:
+    :::java
+    int score =10, num = 20;
+    switch (score+num) {
+    // ..code
+    }</p>
+<p>The value of a <code>case</code> label must be a <strong>compile-time constant value</strong>; that is, the value should be known at the time of code compilation:</p>
+<pre class="code literal-block"><span></span><span class="kt">int</span> <span class="n">a</span><span class="o">=</span><span class="mi">10</span><span class="o">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">20</span><span class="o">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">30</span><span class="o">;</span>
+<span class="k">switch</span> <span class="o">(</span><span class="n">a</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="n">b</span><span class="o">+</span><span class="n">c</span><span class="o">:</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">b</span><span class="o">+</span><span class="n">c</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span> <span class="c1">//Not Allowed</span>
+    <span class="k">case</span> <span class="mi">10</span><span class="o">*</span><span class="mi">7</span><span class="o">:</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="mi">10</span><span class="o">*</span><span class="mi">7512</span><span class="o">+</span><span class="mi">10</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>  <span class="c1">//Allowed</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>You can use <strong>variables in an expression</strong> if they’re marked <code>final</code> because the value of final variables can’t change once they’re initialized:</p>
+<pre class="code literal-block"><span></span><span class="kd">final</span> <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+<span class="kd">final</span> <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">20</span><span class="o">;</span>
+<span class="kd">final</span> <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">30</span><span class="o">;</span>
+<span class="k">switch</span> <span class="o">(</span><span class="n">a</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="n">b</span><span class="o">+</span><span class="n">c</span><span class="o">:</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">b</span><span class="o">+</span><span class="n">c</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span> <span class="c1">//Works fine</span>
+<span class="o">}</span>
+
+<span class="c1">//if you don’t *assign* a value to a `final` variable</span>
+<span class="n">with</span> <span class="n">its</span> <span class="n">declaration</span><span class="o">,</span> <span class="n">it</span> <span class="n">isn</span><span class="err">’</span><span class="n">t</span> <span class="n">considered</span> <span class="n">a</span> <span class="n">compile</span><span class="o">-</span><span class="n">time</span> <span class="n">constant</span><span class="o">**:</span>
+
+<span class="kd">final</span> <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+<span class="kd">final</span> <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">20</span><span class="o">;</span>
+<span class="kd">final</span> <span class="kt">int</span> <span class="n">c</span><span class="o">;</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mi">30</span><span class="o">;</span> <span class="c1">//c is not assigned value after initialized, so compile error</span>
+<span class="k">switch</span> <span class="o">(</span><span class="n">a</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="n">b</span><span class="o">+</span><span class="n">c</span><span class="o">:</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">b</span><span class="o">+</span><span class="n">c</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kt">byte</span> <span class="n">myByte</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+<span class="k">switch</span> <span class="o">(</span><span class="n">myByte</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">//Not compile. Floating-point can&#39;t be used for case variable</span>
+    <span class="k">case</span> <span class="mf">1.2</span><span class="o">:</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>Code that tries to compare the variable passed to the <code>switch</code> statement with <code>null</code> <strong>won’t compile</strong>:</p>
+<pre class="code literal-block"><span></span><span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Paul&quot;</span><span class="o">;</span>
+<span class="k">switch</span> <span class="o">(</span><span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="s">&quot;Paul&quot;</span><span class="o">:</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+    <span class="k">break</span><span class="o">;</span>
+    <span class="k">case</span> <span class="kc">null</span><span class="o">:</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;null&quot;</span><span class="o">);</span>
+    <span class="c1">//Not compile, null can&#39;t be a case variable</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>It’s acceptable to define a <strong>single code block for multiple case labels</strong> in a <code>switch</code> statement:</p>
+<pre class="code literal-block"><span></span><span class="kt">int</span> <span class="n">score</span> <span class="o">=</span><span class="mi">10</span><span class="o">;</span>
+<span class="k">switch</span> <span class="o">(</span><span class="n">score</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="mi">100</span><span class="o">:</span>  <span class="c1">//Works fine. Match case will execute till a break;</span>
+    <span class="k">case</span> <span class="mi">50</span> <span class="o">:</span>
+    <span class="k">case</span> <span class="mi">10</span> <span class="o">:</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Average score&quot;</span><span class="o">);</span>
+    <span class="k">break</span><span class="o">;</span>
+    <span class="k">case</span> <span class="mi">200</span><span class="o">:</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Good score&quot;</span><span class="o">);</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>In the absence of the <code>break</code> statement, control will <strong>fall through
+the remaining code and execute the code corresponding to all the remaining cases that follow that matching case</strong>.</p>
+<h2 id="for-loop">For Loop</h2>
+<p>Code Structure:</p>
+<pre class="code literal-block"><span></span><span class="k">for</span> <span class="o">(</span><span class="n">initialization</span><span class="o">;</span> <span class="n">condition</span><span class="o">;</span> <span class="n">update</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">statements</span><span class="o">;</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>You can consider the <code>update</code> clause to be <strong>a last statement in the for loop</strong>.</p>
+<p>The <code>initialization</code> section, which executes only once, may define <strong>multiple initialization statements</strong>.</p>
+<p>The <code>update</code> clause may define <strong>multiple statements</strong>. But there can be <strong>only one <code>termination</code> condition</strong> for a <code>for</code> loop.</p>
+<p>Code Example:</p>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DemonstrateFor</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">ctr</span> <span class="o">=</span> <span class="mi">12</span><span class="o">;</span>
+    <span class="c1">//mutiple initialization and mutiple update, only one termination, which is j&lt;=k</span>
+    <span class="k">for</span> <span class="o">(</span> <span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">10</span><span class="o">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">14</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">k</span><span class="o">;</span> <span class="o">++</span><span class="n">j</span><span class="o">,</span> <span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="n">ctr</span><span class="o">--)</span>
+        <span class="o">{</span>
+           <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">j</span><span class="o">+</span><span class="s">&quot;:&quot;</span><span class="o">+</span><span class="n">k</span><span class="o">+</span><span class="s">&quot;:&quot;</span><span class="o">+</span><span class="n">ctr</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3 id="block-variables">Block Variables</h3>
+<p>An <code>initialization</code> block executes <strong>only once</strong>.</p>
+<p>A <code>for</code> loop can declare and initialize multiple variables in its initialization block, but <strong>the variables it declares should be of the same type</strong>:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Won&#39;t compile</span>
+<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">10</span><span class="o">,</span> <span class="kt">long</span> <span class="n">longVar</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">l</span><span class="o">;</span> <span class="o">++</span><span class="n">j</span><span class="o">)</span> <span class="o">{</span> <span class="o">}</span>
+</pre>
+
+
+<p>The scope of the variables declared in the <code>initialization</code> block is <strong>limited to the <code>for</code> block</strong>.</p>
+<p>For example, the variable <code>j</code> above cannot be used outside of <code>for</code> loop.</p>
+<p>The <code>termination</code> condition is evaluated <strong>once</strong> for each iteration <strong>before executing the statements defined within the body of the loop</strong>.</p>
+<p>Code defined in <code>update</code> block executes <strong>after all the code defined in the body of the <code>for</code> loop</strong>.</p>
+<p><strong>Mutiple</strong> <code>udpate</code> statements will execute <strong>in the order in which
+they appear</strong>, at the <strong>end</strong> of all the statements defined in the <code>for</code> block.</p>
+<p><code>Update</code> block can also call <strong>method</strong>s:</p>
+<pre class="code literal-block"><span></span><span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">line</span><span class="o">.</span><span class="na">length</span><span class="o">();</span> <span class="o">++</span><span class="n">i</span><span class="o">,</span> <span class="n">printMethod</span><span class="o">())</span> <span class="c1">//works fine</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">line</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3 id="nested-for-loop">Nested For Loop</h3>
+<p>The loop that encloses another loop is called the <code>outer loop</code>, and the enclosed loop is called the <code>inner loop</code>.</p>
+<h2 id="the-enhanced-for-loop">The Enhanced For Loop</h2>
+<p>The <code>enhanced for loop</code> is also called the <code>for-each</code> loop, and it offers some advantages over the regular for loop.</p>
+<p>You can read the colon ( <code>:</code> ) in a for- each loop as <strong>“in”</strong>.</p>
+<p>Code Example:</p>
+<pre class="code literal-block"><span></span><span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">val</span> <span class="o">:</span> <span class="n">myList</span><span class="o">)</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">val</span><span class="o">);</span>
+</pre>
+
+
+<p><strong>What happens when you try to modify the value of the loop variable in an <code>enhanced for loop</code>?</strong></p>
+<blockquote>
+<p>The result depends on whether you’re iterating through a collection of <code>primitive</code> values or <code>objects</code>.</p>
+<p>If you’re iterating through an array of <code>primitive</code> values, manipulation of the loop variable will <strong>never change the value</strong> of the array being iterated because the primitive values are passed by value to the loop variable in an enhanced for loop.</p>
+<p>When you iterate through a collection of <code>objects</code>, the value of the collection is <strong>passed by reference</strong> to the loop variable. Therefore, <strong>if the value of the loop variabl is manipulated by executing methods on it, the modified value will be reflected</strong> in the collection of objects being iterated.</p>
+<p>Example:</p>
+</blockquote>
+<pre class="code literal-block"><span></span><span class="n">StringBuilder</span> <span class="n">myArr</span><span class="o">[]</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">(</span><span class="s">&quot;Java&quot;</span><span class="o">),</span>
+    <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">(</span><span class="s">&quot;Loop&quot;</span><span class="o">)</span>
+<span class="o">};</span>
+<span class="k">for</span> <span class="o">(</span><span class="n">StringBuilder</span> <span class="n">val</span> <span class="o">:</span> <span class="n">myArr</span><span class="o">)</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">val</span><span class="o">);</span>
+<span class="k">for</span> <span class="o">(</span><span class="n">StringBuilder</span> <span class="n">val</span> <span class="o">:</span> <span class="n">myArr</span><span class="o">)</span>
+    <span class="n">val</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;Oracle&quot;</span><span class="o">);</span> <span class="c1">//append() means you edit var in myArr</span>
+<span class="k">for</span> <span class="o">(</span><span class="n">StringBuilder</span> <span class="n">val</span> <span class="o">:</span> <span class="n">myArr</span><span class="o">)</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">val</span><span class="o">);</span> <span class="c1">//JavaOracle LoopOracle</span>
+
+<span class="cm">/*************/</span>
+<span class="n">StringBuilder</span> <span class="n">myArr</span><span class="o">[]</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">(</span><span class="s">&quot;Java&quot;</span><span class="o">),</span>
+    <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">(</span><span class="s">&quot;Loop&quot;</span><span class="o">)</span>
+<span class="o">};</span>
+<span class="k">for</span> <span class="o">(</span><span class="n">StringBuilder</span> <span class="n">val</span> <span class="o">:</span> <span class="n">myArr</span><span class="o">)</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span> <span class="o">(</span><span class="n">val</span><span class="o">);</span>
+<span class="k">for</span> <span class="o">(</span><span class="n">StringBuilder</span> <span class="n">val</span> <span class="o">:</span> <span class="n">myArr</span><span class="o">)</span>
+    <span class="c1">//This just make sure make StringBuild(&quot;Oracle&quot;) pointing to same address as val</span>
+    <span class="c1">//So it is not a manipulating operation !</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">(</span><span class="s">&quot;Oracle&quot;</span><span class="o">);</span>
+<span class="k">for</span> <span class="o">(</span><span class="n">StringBuilder</span> <span class="n">val</span> <span class="o">:</span> <span class="n">myArr</span><span class="o">)</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span> <span class="o">(</span><span class="n">val</span><span class="o">);</span> <span class="c1">//Java Loop</span>
+</pre>
+
+
+<p>A <code>nested loop</code> executes all its iterations for each single iteration of its immediate outer loop.</p>
+<h4 id="limitations-of-the-enhanced-for-loop">Limitations of the enhanced for loop</h4>
+<p>Can't be used to <strong>initialize</strong> an <code>array</code> and <strong>modify</strong> its elements</p>
+<p>Can't be used to <strong>delete</strong> or <strong>remove</strong> the elements in a collection:</p>
+<blockquote>
+<p>Because the <code>for</code> loop <strong>hides the iterator</strong> used to iterate through the elements of a collection, you can’t use it to remove or delete the existing collection values because you <strong>can’t call the remove method</strong>.</p>
+<p>If you assign a <code>null</code> value to the loop variable, <strong>it won’t remove the element from a collection</strong>:</p>
+</blockquote>
+<pre class="code literal-block"><span></span><span class="k">for</span> <span class="o">(</span><span class="n">StringBuilder</span> <span class="n">val</span> <span class="o">:</span> <span class="n">myList</span><span class="o">)</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span> <span class="c1">//Won&#39;t remove. Just change variable to null</span>
+</pre>
+
+
+<p>Can't be used to <strong>iterate over multiple <code>collection</code>s or <code>array</code>s in the same loop</strong></p>
+<p>You can’t iterate over multiple collections or arrays in the same <code>for-each</code> loop because the <code>for-each</code> loop allows for the <strong>creation of only one looping variable</strong>.</p>
+<p>Unlike the regular for loop, you <strong>can’t define multiple looping variables</strong> in a <code>for-each</code> loop.</p>
+<h3 id="the-while-and-do-while-loops">The while and do-while loops</h3>
+<p>The <code>while</code> loops checks its condition before evaluating its loop body, and the <code>do-while</code> loop checks its condition <strong>after executing the statements</strong> defined in its loop body.</p>
+<h3 id="while-loop">while Loop</h3>
+<p>This loop checks the condition <strong>before</strong> it starts the execution of
+the statement.</p>
+<p>The condition used in the while loop to check whether or not to
+execute the loop body again <strong>should evaluate to <code>false</code> at some point in time</strong>; otherwise, the loop will <strong>execute indefinitely</strong>.</p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="c1">//This code works fine</span>
+<span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">9</span><span class="o">;</span>
+<span class="kt">boolean</span> <span class="n">divisibleBy7</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+<span class="c1">//if condition values true, which is the case here, get into loop</span>
+<span class="k">while</span> <span class="o">(!</span><span class="n">divisibleBy7</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">num</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">num</span> <span class="o">%</span> <span class="mi">7</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="n">divisibleBy7</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">--</span><span class="n">num</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="c1">//Print out: 9 8 7</span>
+</pre>
+
+
+<h3 id="do-while-loop">do-while loop</h3>
+<p>This loop checks the condition <strong>after it completes the execution of all the statements in its loop body</strong>.</p>
+<p><strong>Don’t forget to use a semicolon ( <code>;</code> ) to end the <code>do-while</code> loop after specifying its condition</strong>.</p>
+<p>Code Example:</p>
+<pre class="code literal-block"><span></span><span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">9</span><span class="o">;</span>
+<span class="kt">boolean</span> <span class="n">divisibleBy7</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+<span class="k">do</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">num</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">num</span> <span class="o">%</span> <span class="mi">7</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="n">divisibleBy7</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="n">num</span><span class="o">--;</span>
+<span class="o">}</span> <span class="k">while</span> <span class="o">(</span><span class="n">divisibleBy7</span> <span class="o">==</span> <span class="kc">false</span><span class="o">);</span>
+<span class="c1">//Print out: 9 8 7</span>
+</pre>
+
+
+<p>You can use the curly braces <code>{}</code> with <code>while</code> and <code>do-while</code> loops to define multiple lines of code to execute for every iteration.</p>
+<p>Without the use of curly braces, <strong>only the first line of code will be considered a part of the <code>while</code> or <code>do-while</code> loop</strong></p>
+<h2 id="comparing-loop-constrcuts">Comparing Loop Constrcuts</h2>
+<p>The <code>do-while</code> loop executes the code <strong>at least once</strong>.</p>
+<pre class="code literal-block"><span></span><span class="kt">int</span> <span class="n">num</span><span class="o">=</span><span class="mi">10</span><span class="o">;</span>
+<span class="k">do</span> <span class="o">{</span>
+    <span class="n">num</span><span class="o">++;</span> <span class="c1">//num = 11</span>
+<span class="o">}</span> <span class="k">while</span> <span class="o">(++</span><span class="n">num</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="o">);</span> <span class="c1">//num =12, then evaluate</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span> <span class="o">(</span><span class="n">num</span><span class="o">);</span>
+<span class="c1">//Print out: 12</span>
+<span class="cm">/**************/</span>
+<span class="kt">int</span> <span class="n">num</span><span class="o">=</span><span class="mi">10</span><span class="o">;</span>
+<span class="k">while</span> <span class="o">(++</span><span class="n">num</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="o">)</span> <span class="o">{</span> <span class="c1">//First, num = 11, then evaluate</span>
+    <span class="n">num</span><span class="o">++;</span>
+<span class="o">}</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">num</span><span class="o">);</span>
+<span class="c1">//Print out: 11</span>
+</pre>
+
+
+<h2 id="loop-statements-break-and-continue">Loop Statements: break and continue</h2>
+<h3 id="break">break</h3>
+<p>The <code>break</code> statement is used to <strong>exit</strong> — or <strong>break out of</strong> —the <code>for</code>, <code>for-each</code>, <code>do</code> , and <code>do-while</code> loops, as well as <code>switch</code> constructs.</p>
+<p>Alternatively, the <code>continue</code> statement can be used to
+<strong><em>skip</em> the remaining steps in the current iteration and <em>start</em> with the next loop iteration</strong>.</p>
+<p>When you use the <code>break</code> statement with <code>nested loop</code>s, <strong>it exits the <code>inner loop</code></strong>.</p>
+<p><strong><code>if</code> is not a loop!</strong></p>
+<p>Code Example:</p>
+<pre class="code literal-block"><span></span><span class="n">String</span><span class="o">[]</span> <span class="n">programmers</span> <span class="o">=</span> <span class="o">{</span><span class="s">&quot;Paul&quot;</span><span class="o">,</span> <span class="s">&quot;Shreya&quot;</span><span class="o">,</span> <span class="s">&quot;Selvan&quot;</span><span class="o">,</span> <span class="s">&quot;Harry&quot;</span><span class="o">};</span>
+<span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">name</span> <span class="o">:</span> <span class="n">programmers</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">name</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;Shreya&quot;</span><span class="o">))</span>
+        <span class="k">break</span><span class="o">;</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="c1">//Print out: Paul</span>
+</pre>
+
+
+<h3 id="continue">continue</h3>
+<p>The <code>continue</code> statement is used to <strong>skip</strong> the remaining steps in the current iteration and <strong>start</strong> with the next loop iteration.</p>
+<p>As soon as a loop encounters <code>continue</code> , it <strong>exits the current iteration</strong> of the loop</p>
+<p>Unlike the <code>break</code> statement, <code>continue</code> doesn’t exit the loop — it <strong>restarts</strong> with the next loop iteration</p>
+<p>When you use the <code>continue</code> statement with nested loops, it exits the current iteration of the <strong>inner loop.</strong></p>
+<p>Code Example:</p>
+<pre class="code literal-block"><span></span><span class="n">String</span><span class="o">[]</span> <span class="n">programmers</span> <span class="o">=</span> <span class="o">{</span><span class="s">&quot;Paul&quot;</span><span class="o">,</span> <span class="s">&quot;Shreya&quot;</span><span class="o">,</span> <span class="s">&quot;Selvan&quot;</span><span class="o">,</span> <span class="s">&quot;Harry&quot;</span><span class="o">};</span>
+<span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">name</span> <span class="o">:</span> <span class="n">programmers</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">name</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;Shreya&quot;</span><span class="o">))</span>
+        <span class="k">continue</span><span class="o">;</span> <span class="c1">//Re-start for loop from next programmers</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="c1">//Print out: Paul Selvan Harry</span>
+</pre>
+
+
+<h3 id="labeled-statements">Labeled Statements</h3>
+<p>In Java, you can add <code>label</code>s to the following types of statements:</p>
+<ul>
+<li>
+<p>A code block defined using <code>{}</code></p>
+</li>
+<li>
+<p>All looping statements ( <code>for</code>,<code>enhanced for</code>,<code>while</code>,<code>do-while</code> )</p>
+</li>
+<li>
+<p>Conditional constructs ( <code>if</code> and <code>switch</code> statements)</p>
+</li>
+<li>
+<p>Expressions</p>
+</li>
+<li>
+<p>Assignments</p>
+</li>
+<li>
+<p><code>return</code> statements</p>
+</li>
+<li>
+<p><code>try</code> blocks</p>
+</li>
+<li>
+<p><code>throws</code> statements</p>
+</li>
+</ul>
+<p>Code Example:</p>
+<pre class="code literal-block"><span></span><span class="n">String</span><span class="o">[]</span> <span class="n">programmers</span> <span class="o">=</span> <span class="o">{</span><span class="s">&quot;Outer&quot;</span><span class="o">,</span> <span class="s">&quot;Inner&quot;</span><span class="o">};</span>
+<span class="nl">outer:</span> <span class="c1">//This is a label</span>
+<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">programmers</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>You <strong>can’t add labels to <code>declaration</code>s</strong>. For example, <code>outer : int[] myArray = {1,2,3};</code> won't compile.</p>
+<p><strong>previous declaration</strong> can be defined within a <code>block</code> statement:</p>
+<pre class="code literal-block"><span></span><span class="n">outer</span> <span class="o">:</span> <span class="c1">//Label with a block</span>
+<span class="o">{</span>
+    <span class="kt">int</span><span class="o">[]</span> <span class="n">myArray</span> <span class="o">=</span> <span class="o">{</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">};</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>You can use a labeled <code>break</code> statement to <strong>exit an outer loop</strong>:</p>
+<pre class="code literal-block"><span></span><span class="n">String</span><span class="o">[]</span> <span class="n">programmers</span> <span class="o">=</span> <span class="o">{</span><span class="s">&quot;Outer&quot;</span><span class="o">,</span> <span class="s">&quot;Inner&quot;</span><span class="o">};</span>
+<span class="nl">outer:</span>
+<span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">outer</span> <span class="o">:</span> <span class="n">programmers</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">inner</span> <span class="o">:</span> <span class="n">programmers</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">inner</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;Inner&quot;</span><span class="o">))</span>
+            <span class="k">break</span> <span class="n">outer</span><span class="o">;</span> <span class="c1">//Add label name to exit such loop</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">inner</span> <span class="o">+</span> <span class="s">&quot;:&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>You can use a labeled <code>continue</code> statement to <strong>skip an iteration of the outer loop</strong>:</p>
+<pre class="code literal-block"><span></span><span class="n">String</span><span class="o">[]</span> <span class="n">programmers</span> <span class="o">=</span> <span class="o">{</span><span class="s">&quot;Paul&quot;</span><span class="o">,</span> <span class="s">&quot;Shreya&quot;</span><span class="o">,</span> <span class="s">&quot;Selvan&quot;</span><span class="o">,</span> <span class="s">&quot;Harry&quot;</span><span class="o">};</span>
+<span class="nl">outer:</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">name1</span> <span class="o">:</span> <span class="n">programmers</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">name</span> <span class="o">:</span> <span class="n">programmers</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">name</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;Shreya&quot;</span><span class="o">))</span>
+            <span class="k">continue</span> <span class="n">outer</span><span class="o">;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+        <span class="o">}</span>
+<span class="o">}</span>
+<span class="cm">/**Process:</span>
+<span class="cm">* name1 = Paul, name= Paul, print Paul;</span>
+<span class="cm">* name1 = Paul, name= Shreya, re-start outer</span>
+<span class="cm">* name1 = Shreya, name = Paul, print Paul;</span>
+<span class="cm">* name1 = Shreya, name = Shreya, re-start outer;</span>
+<span class="cm">* ...</span>
+<span class="cm">* Total print-out: Paul, Paul, Paul, Paul</span>
+<span class="cm">**/</span>
+</pre>

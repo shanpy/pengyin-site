@@ -1,0 +1,59 @@
+<p><em>This post is being updated while I'm learning more about Hydra</em></p>
+<h3 id="main-idea">Main Idea</h3>
+<p>I used to create a small Spring MVC web app <a href='https://github.com/shanpy/RDFExperiment'>RDF Experiment</a> to experiment the ideas behind Hydra. Following is a graph about my assumption of Hydra Idea:</p>
+<p>../images/articles/2015/digital_library/ProjectHydra.png </p>
+<p>Behind this large frame, there are lots of small classes/methods that will push through stages above.</p>
+<h4 id="key-concerns">Key Concerns</h4>
+<p>Following key concerns should be evaluated carefully during the processes above:</p>
+<ul>
+<li>
+<p>When parsing RDF file to Model, what are the key properties which should be kept? What are properties that should be ignored? How client and domain expert think about your solution?</p>
+</li>
+<li>
+<p>What's the best way of modeling Fedora and Solr such that user can use different way of searching, and getting best result? Is there any possibility to shorten result list, while not losing necessary close-results? Is there any way to shorten the searching time?</p>
+</li>
+<li>
+<p>Is there any visualization job can be done to let user understand more about results?</p>
+</li>
+</ul>
+<h3 id="problems-and-thoughts">Problems and Thoughts</h3>
+<h4 id="installation">Installation</h4>
+<p>Although RubyInstaller is available in Windows, I still encountered lots of unexpected errors when setting up environment in Windows 10. I took much less time in Linux. I used to run CygWin for virtual Linux environment in Windows, but it's not work well for any environment setup process, including Python and RoR.</p>
+<p>If anyone is like me who are starting a taste of Hydra, I suggest using Unix-Based system first.</p>
+<p><em>Update on 8/12/15</em>: I created a <a href="http://pengyin-shan.com/blog/setting-up-ror-hydra-environment-problems-and-solutions">post</a> talking about installation of RoR and Hydra. If you need to install RoR or Hydra, feel free to use this post.</p>
+<h4 id="ror">RoR</h4>
+<p>Since both Spring and Rails framework are holding MVC structure, it's not hard to transfer idea from Spring to RoR. Subfolders in <code>app</code> folder self-explained themselves:</p>
+<ul>
+<li>
+<p><code>controllers</code>, <code>models</code>, <code>views</code> are folders for MVC structure.</p>
+</li>
+<li>
+<p><code>assets</code> has static resources.</p>
+</li>
+<li>
+<p><code>helpers</code> is special for RoR. Since <code>helper</code> is targeted to for variables talking before controller and view, they are very similar to <code>model attributes</code> in Spring MVC framework.</p>
+</li>
+</ul>
+<p>The basic structure of Hydra-Demo is similar to the a Node.js app, and <code>Gemfile</code> is similar to <code>requirements.txt</code> file in Python.</p>
+<h4 id="deployment">Deployment</h4>
+<p>Unfortunately, although Hydra is can be deployed on development environment easily for a single developer, there's no hosting platform that fully host a production environment of it. Following problem needs to be considered:</p>
+<p>First, the default database needs to be changed in <code>database.yml</code>. Obviously not a lot of institutions will use SQLite3 (Default) in production environment.</p>
+<p><em>Solution</em>: I have tried to replace it by MySQL and PostgreSQL, and these two solution all work. I believe other RDBMS should also work well. Just need to change <code>Gemfile</code>. Replace <code>gem 'sqlite3'</code> to <code>gem 'pg'</code> or <code>gem 'mysql2'</code>.</p>
+<p><code>database.yml</code> can be changed as following for development purpose:</p>
+<pre class="code literal-block"><span></span>default: &amp;default
+adapter: postgresql
+pool: 5
+development:
+  &lt;&lt;: *default
+  url: postgresql_url_or_environment_virable
+  database: database_name
+  username:
+  pasword:
+test: #...
+production: #...
+</pre>
+
+
+<p>Second problem is the host of fedora commons. As a single developer, I cannot find a cloud-hosted fedora to make calls, which cause me the problem of hosting hydra demo on cloud.</p>
+<p><em>Solution</em>: Since fedora commons has pretty good deployment guideline, I will try to deploy one on Amazon AWS, then adjust <code>fedora.yml</code> in hydra-demo when moving to cloud.</p>
+<p><em>Update 08/10/15</em>: When I tried to deploy Fedora 4 on my local machine using Jetty 8, I got unexpected error message, such as  <code>Problem processing jar entry org/fcrepo/kernel/modeshape/observer/GetNamespacedProperties.class</code> <code>java.lang.ArrayIndexOutOfBoundsException: 16680</code>. It happens to lots of fedora classes, such as <code>org/fcrepo/http/commons/api/rdf/HttpTripleUtil.class</code>. I need to figure out this problem before deploying fedora to cloud platform. Tomcat 7 gave no error message, but still unable to deploy it.</p>

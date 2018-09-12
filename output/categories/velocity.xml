@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Pengyin's Corner (Posts about Velocity)</title><link>https://pengyin-shan.com/</link><description></description><atom:link type="application/rss+xml" href="https://pengyin-shan.com/categories/velocity.xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Tue, 11 Sep 2018 20:57:14 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Apache Velocity Language Basics</title><link>https://pengyin-shan.com/posts/2015/Java/apache-velocity-basics/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;h3 id="syntax-basics"&gt;Syntax Basics&lt;/h3&gt;
+&lt;p&gt;All VTL statements, begins with the &lt;code&gt;#&lt;/code&gt; character. For rendering process: the &lt;strong&gt;Velocity Templating Engine&lt;/strong&gt; will:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;search&lt;/strong&gt; through your web page to find all &lt;code&gt;#&lt;/code&gt; characters&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Then &lt;strong&gt;determine&lt;/strong&gt; which mark the beginning of VTL statements, and which of the &lt;code&gt;#&lt;/code&gt; characters that have nothing to do with VTL.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;It is recommended to start each VTL statement on a &lt;strong&gt;new line&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id="references"&gt;References&lt;/h4&gt;
+&lt;p&gt;There are &lt;strong&gt;three&lt;/strong&gt; types of references in the VTL: &lt;code&gt;variables&lt;/code&gt;, &lt;code&gt;properties&lt;/code&gt; and &lt;code&gt;methods&lt;/code&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;In VTL, References begin with $ and are used to &lt;strong&gt;get&lt;/strong&gt; something. Directives begin with # and are used to &lt;strong&gt;do&lt;/strong&gt; something.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h5 id="variables"&gt;Variables&lt;/h5&gt;
+&lt;p&gt;All variables/references in VTL begins with the &lt;code&gt;$&lt;/code&gt; character,followed by a &lt;strong&gt;VTL Identifier&lt;/strong&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A &lt;strong&gt;VTL Identifier&lt;/strong&gt; must start with an alphabetic character (i.e. a to z case insensitive). The rest of the characters are limited to the following types of characters: alphabetic, numeric, &lt;code&gt;-&lt;/code&gt; or &lt;code&gt;_&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In VTL, the variable can get its value from either a &lt;strong&gt;set directive&lt;/strong&gt; in the template, or from the &lt;strong&gt;Java code&lt;/strong&gt;. Example: for &lt;code&gt;#set( $foo = "bar" )&lt;/code&gt;, &lt;code&gt;"bar"&lt;/code&gt; will replace all &lt;code&gt;$foo&lt;/code&gt; variables in VTL.&lt;/p&gt;
+&lt;p&gt;Once a value has been assigned to a variable, you can reference the variable &lt;strong&gt;anywhere&lt;/strong&gt; in your HTML document. Example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    #set( $foo = "Velocity" )
+    Hello $foo World!
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h6 id="string"&gt;String&lt;/h6&gt;
+&lt;p&gt;String values are always enclosed in &lt;em&gt;quotes&lt;/em&gt;, either &lt;em&gt;single&lt;/em&gt; or &lt;em&gt;double&lt;/em&gt; quotes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Single quotes will ensure that the quoted value will be &lt;strong&gt;assigned&lt;/strong&gt; to the reference as is.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Double quotes allow you to use &lt;strong&gt;velocity references and directives&lt;/strong&gt; to interpolate&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Example: for &lt;code&gt;"Hello $name"&lt;/code&gt;, the &lt;code&gt;$name&lt;/code&gt; will be replaced by the referenced value.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5 id="properties"&gt;Properties&lt;/h5&gt;
+&lt;p&gt;Properties have a distinctive format.&lt;/p&gt;
+&lt;p&gt;The shorthand notation consists of a leading &lt;code&gt;$&lt;/code&gt; character followed a &lt;strong&gt;VTL Identifier&lt;/strong&gt;, followed by a dot character &lt;code&gt;.&lt;/code&gt; and another &lt;strong&gt;VTL Identifier&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Example: &lt;code&gt;$customer.Address&lt;/code&gt; has &lt;strong&gt;two meanings&lt;/strong&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;VTL should look in the &lt;strong&gt;hashtable&lt;/strong&gt; named as &lt;code&gt;customer&lt;/code&gt;, then return the value associated with the &lt;strong&gt;key&lt;/strong&gt; &lt;code&gt;Address&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;VTL should find a referring to a &lt;strong&gt;method&lt;/strong&gt; called &lt;code&gt;$customer.getAddress()&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h5 id="methods"&gt;Methods&lt;/h5&gt;
+&lt;p&gt;Methods are references that consist of a leading &lt;code&gt;$&lt;/code&gt; character followed a &lt;strong&gt;VTL Identifier&lt;/strong&gt;, followed by a &lt;strong&gt;VTL Method Body&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;A &lt;strong&gt;VTL Method Body&lt;/strong&gt; consists of a &lt;strong&gt;VTL Identifier&lt;/strong&gt; followed by an left parenthesis character &lt;code&gt;(&lt;/code&gt;, followed by an &lt;strong&gt;optional parameter list&lt;/strong&gt;, followed by right parenthesis character &lt;code&gt;)&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;customer&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nv"&gt;getAddress&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;purchase&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nv"&gt;getTotal&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;page&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nv"&gt;setTitle&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="s2"&gt;"My Home Page"&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;person&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nv"&gt;setAttributes&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"Strange"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"Weird"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"Excited"&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h6 id="a-shorthand-notation-for-vtl-methods"&gt;a &lt;em&gt;shorthand notation&lt;/em&gt; for &lt;strong&gt;VTL Methods&lt;/strong&gt;&lt;/h6&gt;
+&lt;p&gt;In the example above, The &lt;strong&gt;property&lt;/strong&gt; &lt;code&gt;$customer.Address&lt;/code&gt; has the exact same effect as using the &lt;strong&gt;method&lt;/strong&gt; &lt;code&gt;$customer.getAddress()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;It is generally &lt;strong&gt;preferable&lt;/strong&gt; to use a &lt;strong&gt;Property&lt;/strong&gt; when available.&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The main difference between Properties and Methods is that you can specify a &lt;strong&gt;parameter list&lt;/strong&gt; to a Method.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h6 id="array-as-lists"&gt;Array as Lists&lt;/h6&gt;
+&lt;p&gt;As of Velocity 1.6, all &lt;strong&gt;array&lt;/strong&gt; references are treated as &lt;strong&gt;fixed-length lists&lt;/strong&gt;. User can call &lt;code&gt;java.util.List&lt;/code&gt; methods on array references. Example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;myarray&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nv"&gt;isEmpty&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;myarray&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nv"&gt;size&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;myarray&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nv"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;myarray&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nv"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'test'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h6 id="vararg-methods"&gt;vararg methods&lt;/h6&gt;
+&lt;p&gt;From Velocity 1.6, &lt;strong&gt;setter&lt;/strong&gt; methods can have different parameter list:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;sun&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nv"&gt;setPlanets&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Earth'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'Mars'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'Neptune'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;sun&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nv"&gt;setPlanets&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Mercury'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;sun&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nv"&gt;setPlanets&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;span class="cp"&gt;##&lt;/span&gt;&lt;span class="c"&gt;  Will just pass in an empty, zero-length array&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="other-syntax-information"&gt;Other Syntax Information&lt;/h4&gt;
+&lt;h5 id="comments"&gt;Comments&lt;/h5&gt;
+&lt;p&gt;In VTL, A single line comment begins with &lt;code&gt;##&lt;/code&gt; and finishes at the end of the line. Example: &lt;code&gt;## This is a single line comment.&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Multi-line&lt;/strong&gt; comments, which begin with &lt;code&gt;#*&lt;/code&gt; and end with &lt;code&gt;*#&lt;/code&gt;, are available to handle this scenario.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;This is text that is outside the multi-line comment.&lt;/span&gt;
+&lt;span class="x"&gt;Online visitors can see it.&lt;/span&gt;
+&lt;span class="x"&gt;*&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;span class="x"&gt; Thus begins a multi-line comment. Online visitors won't&lt;/span&gt;
+&lt;span class="x"&gt; see this text because the Velocity Templating Engine will&lt;/span&gt;
+&lt;span class="x"&gt; ignore it.&lt;/span&gt;
+&lt;span class="x"&gt;*&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;span class="x"&gt;Here is text outside the multi-line comment; it is visible.&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;User can also set &lt;strong&gt;javadoc-style&lt;/strong&gt; annotation in VTL comment block:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;#&lt;/span&gt;&lt;span class="c"&gt;**&lt;/span&gt;
+&lt;span class="c"&gt;This is a VTL comment block and&lt;/span&gt;
+&lt;span class="c"&gt;may be used to store such information&lt;/span&gt;
+&lt;span class="c"&gt;as the document author and versioning&lt;/span&gt;
+&lt;span class="c"&gt;information:&lt;/span&gt;
+&lt;span class="c"&gt;@author&lt;/span&gt;
+&lt;span class="c"&gt;@version 5&lt;/span&gt;
+&lt;span class="c"&gt;*&lt;/span&gt;&lt;span class="cp"&gt;#&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><category>Java</category><category>Velocity</category><guid>https://pengyin-shan.com/posts/2015/Java/apache-velocity-basics/</guid><pubDate>Wed, 11 Nov 2015 05:00:00 GMT</pubDate></item></channel></rss>

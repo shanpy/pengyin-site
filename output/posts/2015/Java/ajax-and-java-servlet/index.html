@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " vocab="http://ogp.me/ns" lang="en">
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]--><!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]--><!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]--><!--[if gt IE 8]><!--><!--<![endif]--><head>
+<meta charset="utf-8">
+<meta name="description" content="This post describe the way to using AJAX with JSP/Servlet Java Web Apps.">
+<!-- http://t.co/dKP3o1e --><meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ajax and Java Servlet | Pengyin's Corner</title>
+<link href="../../../../assets/css/all.css" rel="stylesheet" type="text/css">
+<!-- Webfonts --><link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+<!-- Load Modernizr --><script src="//mmistakes.github.io/hpstr-jekyll-theme/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script><link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../rss.xml">
+<link rel="canonical" href="https://pengyin-shan.com/posts/2015/Java/ajax-and-java-servlet/">
+<!--[if lt IE 9]><script src="../../../../assets/js/html5.js"></script><![endif]--><meta name="description" content="This post describe the way to using AJAX with JSP/Servlet Java Web Apps.">
+<meta name="author" content="Pengyin(Wendy) Shan">
+<link rel="prev" href="../../Linux/ubuntu-tips/" title="Ubuntu Tips" type="text/html">
+<link rel="next" href="../requestdispacher-redirection-in-java/" title="RequestDispacher and Redirection in Java Web App" type="text/html">
+<meta property="og:site_name" content="Pengyin's Corner">
+<meta property="og:title" content="Ajax and Java Servlet">
+<meta property="og:url" content="https://pengyin-shan.com/posts/2015/Java/ajax-and-java-servlet/">
+<meta property="og:description" content="This post describe the way to using AJAX with JSP/Servlet Java Web Apps.">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-08-03T00:00:00-04:00">
+<meta property="article:tag" content="Ajax">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="jQuery">
+<meta property="article:tag" content="Servlet">
+</head>
+<body id="post-index" class="feature">
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    
+
+    <nav id="dl-menu" class="dl-menuwrapper" role="navigation"><button class="dl-trigger">Open Menu</button>
+    <ul class="dl-menu">
+<li><a href="../../../">My Knowledge Base</a></li>
+            <li><a href="https://www.linkedin.com/in/pengyinshan">My LinkedIn</a></li>
+            <li><a href="../../../../categories/">Tags and Categories</a></li>
+            <li><a href="../../../../rss.xml">RSS feed</a></li>
+            <li><a href="../../../../archive.html">Archive</a></li>
+    
+    
+    </ul></nav><div class="entry-header">
+<!-- /.image-credit -->
+    <div class="entry-image">
+      <img src="../../../../bk.JPG" alt="Latest Posts">
+</div>
+<!-- /.entry-image -->
+      
+  <div class="header-title">
+    <div class="header-title-wrap">
+    <h1 id="brand"><a href="https://pengyin-shan.com/" title="Pengyin's Corner" rel="home">
+    Pengyin's Corner</a></h1>
+      <h2>Be Passionate.</h2>
+    </div>
+<!-- /.header-title-wrap -->
+  </div>
+<!-- /.header-title -->
+
+</div>
+<!-- /.entry-header -->
+
+    <div id="main" role="main">
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><div class="entry-meta">
+            <span class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2015-08-03T00:00:00-04:00" itemprop="datePublished" title="2015-08-03">2015-08-03</time></a></span>  ·  
+            <span class="byline author vcard">Pengyin(Wendy) Shan</span>  ·  
+                <span class="commentline">
+        
+    <a href="#disqus_thread" data-disqus-identifier="cache/posts/2015/Java/ajax-and-java-servlet.html">Comments</a>
+
+</span>  ·  
+            
+        <span class="sourceline"><a href="index.md" id="sourcelink">Source</a></span>  ·  
+
+                <meta name="description" itemprop="description" content="This post describe the way to using AJAX with JSP/Servlet Java Web Apps.">
+</div>
+        
+
+    
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Ajax and Java Servlet</a></h1>
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>I was working on an old Java web application today. This java web app used to pass data by using URL parameter, and I wanted to change it to passing data by using AJAX with JSON object, since there will be more data being passed in the future.</p>
+<p>After working a while I realized I need to write this post becasue:</p>
+<ol>
+<li>
+<p>Pure JSP/Servlet java app is a little bit different from Spring MVC Java web app</p>
+</li>
+<li>
+<p>I'm digging into Spring MVS so much that it's a little bit tough to change back to old way :)</p>
+</li>
+</ol>
+<p>So, if you have a JSP/Servlet Java web app and you want to use AJAX with JSON object, you have to write code in three places:</p>
+<h4 id="1-jsp-with-jquery">1. JSP with jQuery</h4>
+<p>You want to have <code>jQuery</code> library in your JSP file to make sure you can use AJAX.</p>
+<pre class="code literal-block"><span></span><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+        <span class="nx">type</span><span class="o">:</span> <span class="s2">"POST"</span><span class="p">,</span>
+        <span class="nx">url</span><span class="o">:</span> <span class="s1">'your &lt;url-pattern&gt; in web.xml'</span>
+        <span class="nx">data</span><span class="o">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">json_object</span><span class="p">),</span>
+        <span class="nx">contentType</span><span class="o">:</span> <span class="s1">'application/json'</span><span class="p">,</span>
+        <span class="nx">dataType</span><span class="o">:</span> <span class="s1">'json'</span><span class="p">,</span>
+        <span class="c1">//mimeType: 'application/json'</span>
+        <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+            <span class="c1">//Process your data that is being passed back...</span>
+        <span class="p">},</span>
+        <span class="nx">error</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">jqXHR</span><span class="p">,</span> <span class="nx">textStatus</span><span class="p">,</span> <span class="nx">errorThrown</span> <span class="p">){</span>
+            <span class="c1">//Deal with error occation</span>
+        <span class="p">}</span>
+        <span class="p">});</span>
+<span class="c1">//New Version:</span>
+ <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+        <span class="nx">type</span><span class="o">:</span> <span class="s2">"POST"</span><span class="p">,</span>
+        <span class="nx">url</span><span class="o">:</span> <span class="s1">'your &lt;url-pattern&gt; in web.xml'</span>
+        <span class="nx">data</span><span class="o">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">json_object</span><span class="p">),</span>
+        <span class="nx">contentType</span><span class="o">:</span> <span class="s1">'application/json'</span><span class="p">,</span>
+        <span class="nx">dataType</span><span class="o">:</span> <span class="s1">'json'</span>
+        <span class="p">}).</span><span class="nx">done</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+            <span class="c1">//Process your data that is being passed back...</span>
+        <span class="p">}).</span><span class="nx">fail</span><span class="p">(</span><span class="nx">fuction</span><span class="p">(){</span>
+            <span class="c1">//Deal with error occation</span>
+        <span class="p">}).</span><span class="nx">always</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+            <span class="c1">//Same as 'complete' in old version, operate after done/fail</span>
+        <span class="p">});</span>
+<span class="c1">//You can also use $.post(url, data, success, dataType) as a new way</span>
+</pre>
+
+
+<blockquote>
+<p>In the code above, <code>contentType</code> and <code>dataType</code> (and <code>mimeType</code> if exists) is very important because wrong value of these attributes can give you a <code>404</code> or <code>500</code> error.</p>
+</blockquote>
+<h5 id="contenttype">contentType</h5>
+<p>Default value: <code>application/x-www-form-urlencoded; charset=UTF-8</code></p>
+<p>This is the data type <strong>when you send data to server</strong>.</p>
+<h5 id="datatype">dataType</h5>
+<p>Default value: Guess(<code>xml</code>, <code>json</code>, <code>script</code>, <code>html</code>)</p>
+<p>This is the data type <strong>when server pass data back to you</strong>.</p>
+<h5 id="mimetype">mimeType</h5>
+<p>A mime type to override the XHR mime type. This is the data type <strong>when server pass data back to you</strong>.</p>
+<p>Form Mozilla, MIME types describe the media type of content either in email or served by web servers or web applications.</p>
+<p>MIME types are intended to help guide a web browser in <em>how the content is to be processed and displayed</em>. Examples of MIME types are:</p>
+<ul>
+<li>
+<code>text/html</code> for normal web pages</li>
+<li>
+<code>text/plain</code> for plain text</li>
+<li>
+<code>application/octet-stream</code> meaning "download this file"</li>
+<li>
+<code>application/x-java-applet</code> for Java™ applets</li>
+<li>
+<code>application/pdf</code> for Adobe® PDF documents.</li>
+</ul>
+<p>So if you want you browser to access data like <code>xml</code>, <code>json</code>, <code>script</code> or <code>html</code>, <code>dataType</code> is good enough. However, if you want to let your browser detect PDF file or other data types, you need to set <code>mimeType</code>.</p>
+<h4 id="2-webxml">2. web.xml</h4>
+<blockquote>
+<p>After working with Spring MVC for a while, I realizae I can forget web.xml easily. Make sure you register your servlet in web.xml.</p>
+</blockquote>
+<p>You need to regiseter your servlet in <code>web.xml</code> file in your project. Example:</p>
+<pre class="code literal-block"><span></span><span class="nt">&lt;servlet&gt;</span>
+    <span class="c">&lt;!-- Give a servlet name for using in web.xml --&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>proctorprocess<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="c">&lt;!-- This is the class of your servlet --&gt;</span>
+    <span class="nt">&lt;servlet-class&gt;</span>edu.fsu.odl.cat.cber2.ProctorProcessServlet<span class="nt">&lt;/servlet-class&gt;</span>
+<span class="nt">&lt;/servlet&gt;</span>
+<span class="nt">&lt;servlet-mapping&gt;</span>
+    <span class="c">&lt;!-- Same servlet name as above --&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>proctorprocess<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="c">&lt;!-- This is the url you want to put as url --&gt;</span>
+    <span class="nt">&lt;url-pattern&gt;</span>/ProctorProcess<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+</pre>
+
+
+<h4 id="3-servlet">3. Servlet</h4>
+<p>If you pass JSON object to your servlet, you may want to use <code>org.json</code>, <code>com.fasterxml.jackson</code> or <code>gson</code> external library to help you dealing with JSON object in Java.</p>
+<p>Example code for post operation:</p>
+<pre class="code literal-block"><span></span><span class="c1">//You want your class extends HttpServlet</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProctorProcessServlet</span> <span class="kd">extends</span> <span class="n">HttpServlet</span><span class="o">{</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="o">){</span>
+        <span class="k">try</span><span class="o">{</span>
+            <span class="n">String</span> <span class="n">json</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+            <span class="n">BufferedReader</span> <span class="n">br</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">InputStreamReader</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">()));</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">br</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+                <span class="n">json</span> <span class="o">=</span> <span class="n">br</span><span class="o">.</span><span class="na">readLine</span><span class="o">();</span> <span class="c1">//json should be the string of your JSON object</span>
+                <span class="c1">//Process your JSON object</span>
+            <span class="o">}</span>
+            <span class="c1">//Assume you want to pass JSON object back</span>
+            <span class="n">response</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">"application/json"</span><span class="o">);</span>
+            <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="na">getWriter</span><span class="o">();</span>
+            <span class="n">JSONObject</span> <span class="n">sample</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
+            <span class="c1">//Process sample</span>
+             <span class="n">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">sample</span><span class="o">);</span>
+             <span class="n">out</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
+             <span class="c1">//Now you finish your post operation and come back to JSP</span>
+        <span class="o">}</span>
+        <span class="k">catch</span><span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span>
+            <span class="c1">//...</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+</pre>
+
+
+<p>This post will be udpated when I learned more about AJAX in my work experience.</p>
+<h4 id="tips">Tips</h4>
+<h5 id="orgapachecatalinalifecycleexception-failed-to-start-component">org.apache.catalina.LifecycleException: Failed to start component</h5>
+<p>If you include <code>org.json</code> jar file in your project, and you encourter <code>org.apache.catalina.LifecycleException: Failed to start component</code> exception when you try to deploy to Tomcat:</p>
+<p>Make sure you add your jar files to <code>Web Deployment Assebly</code> in your project properies. Following <a href="http://stackoverflow.com/questions/16362302/java-servlet-error-with-jsonobject">this post</a> and you will be fine.</p>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../categories/ajax/" rel="tag">Ajax</a></li>
+            <li><a class="tag p-category" href="../../../../categories/java/" rel="tag">Java</a></li>
+            <li><a class="tag p-category" href="../../../../categories/jquery/" rel="tag">jQuery</a></li>
+            <li><a class="tag p-category" href="../../../../categories/servlet/" rel="tag">Servlet</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../../Linux/ubuntu-tips/" rel="prev" title="Ubuntu Tips">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../requestdispacher-redirection-in-java/" rel="next" title="RequestDispacher and Redirection in Java Web App">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="pengyinsnotes",
+            disqus_url="https://pengyin-shan.com/posts/2015/Java/ajax-and-java-servlet/",
+        disqus_title="Ajax and Java Servlet",
+        disqus_identifier="cache/posts/2015/Java/ajax-and-java-servlet.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="pengyinsnotes";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+    
+    <div class="footer-wrapper">
+        <footer role="contentinfo"><p>Contents © 2018         <a href="mailto:pengyin.shan@outlook.com">Pengyin(Wendy) Shan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+        </footer>
+</div>
+
+    
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script src="../../../../assets/js/scripts.min.js"></script>
+</body>
+</html>

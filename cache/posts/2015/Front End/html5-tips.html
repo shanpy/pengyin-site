@@ -1,0 +1,86 @@
+<h1 id="canvas">Canvas</h1>
+<h3 id="html">HTML</h3>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">canvas</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;width:1000px; height:1000px;&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;thecanvas&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">canvas</span><span class="p">&gt;</span>
+</pre>
+
+
+<h3 id="javascript-operation">JavaScript Operation</h3>
+<h4 id="get-context-2d">Get Context (2d)</h4>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">oCanvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;thecanvas&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">oCtx</span> <span class="o">=</span> <span class="nx">oCanvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;2d&quot;</span><span class="p">);</span>
+</pre>
+
+
+<h4 id="add-text-and-edit-text-style">Add Text and Edit Text Style</h4>
+<pre class="code literal-block"><span></span><span class="c1">//Example of Text Shadow. If you make them to 0, you can remove text shadow</span>
+<span class="nx">oCtx</span><span class="p">.</span><span class="nx">shadowColor</span> <span class="o">=</span> <span class="s2">&quot;#000000&quot;</span><span class="p">;</span>
+<span class="nx">oCtx</span><span class="p">.</span><span class="nx">shadowOffsetX</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>
+<span class="nx">oCtx</span><span class="p">.</span><span class="nx">shadowOffsetY</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>
+<span class="nx">oCtx</span><span class="p">.</span><span class="nx">shadowBlur</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>
+<span class="c1">//Example of Text Style</span>
+<span class="nx">oCtx</span><span class="p">.</span><span class="nx">font</span> <span class="o">=</span> <span class="s2">&quot;normal 18px Arial&quot;</span><span class="p">;</span>
+<span class="nx">oCtx</span><span class="p">.</span><span class="nx">fillStyle</span> <span class="o">=</span> <span class="s2">&quot;#ccc&quot;</span><span class="p">;</span>
+<span class="c1">//Draw Text</span>
+<span class="nx">oCtx</span><span class="p">.</span><span class="nx">fillText</span><span class="p">(</span><span class="s2">&quot;Hello World&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> <span class="c1">//x-axis and y-axis</span>
+</pre>
+
+
+<h4 id="draw-existing-image-to-canvas">Draw Existing Image to Canvas</h4>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">imageObj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Image</span><span class="p">();</span>
+<span class="c1">//get src of existing image</span>
+<span class="nx">imageObj</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;existing_image&#39;</span><span class="p">).</span><span class="nx">src</span><span class="p">;</span>
+<span class="nx">oCtx</span><span class="p">.</span><span class="nx">drawImage</span><span class="p">(</span><span class="nx">imageObj</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> <span class="c1">//x-axis and y-axis</span>
+</pre>
+
+
+<h4 id="download-canvas-as-image">Download Canvas as Image</h4>
+<pre class="code literal-block"><span></span><span class="cm">/**Create a (hidden) image to hold canvas data:</span>
+<span class="cm">&lt;img hidden src=&quot;&quot; id=&quot;downloadCanvas&quot; /&gt;</span>
+<span class="cm">**/</span>
+<span class="kd">var</span> <span class="nx">dataURL</span> <span class="o">=</span> <span class="nx">oCanvas</span><span class="p">.</span><span class="nx">toDataURL</span><span class="p">(</span><span class="s1">&#39;image/png&#39;</span><span class="p">);</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;downloadCanvas&#39;</span><span class="p">).</span><span class="nx">width</span> <span class="o">=</span> <span class="nx">oCanvas</span><span class="p">.</span><span class="nx">width</span><span class="p">;</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;downloadCanvas&#39;</span><span class="p">).</span><span class="nx">height</span> <span class="o">=</span> <span class="nx">oCanvas</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;downloadCanvas&#39;</span><span class="p">).</span><span class="nx">src</span> <span class="o">=</span> <span class="nx">dataURL</span><span class="p">;</span>
+<span class="cm">/**</span>
+<span class="cm">If you want to have a download link to download canvas image, make sure you have HTML such as:</span>
+<span class="cm">&lt;a id=&quot;downloadBanner&quot; href=&quot;#&quot; class=&quot;button&quot; download=&quot;banner_result.png&quot;&gt;Download&lt;/a&gt;</span>
+<span class="cm">Note &quot;download&quot; attribute is able to re-name the downloadable image.</span>
+<span class="cm">**/</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;downloadBanner&#39;</span><span class="p">).</span><span class="nx">href</span> <span class="o">=</span> <span class="nx">dataURL</span><span class="p">;</span>
+</pre>
+
+
+<h4 id="clear-canvas">Clear Canvas</h4>
+<pre class="code literal-block"><span></span><span class="c1">//You may want to do this to remove unwanted elements from canvas</span>
+<span class="nx">oCtx</span><span class="p">.</span><span class="nx">clearRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">oCanvas</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span> <span class="nx">oCanvas</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+</pre>
+
+
+<h1 id="drag-and-drop">Drag and Drop</h1>
+<p>Examples are taken from <a href="www.w3schools.com/html/html5_draganddrop.asp">w3schools.com</a>.</p>
+<h3 id="general-process">General Process</h3>
+<p>Draable stuff has <code>draggable = 'true'</code> attribute; has <code>ondragstart</code> attribute, which takes a method.</p>
+<p>Destination stuff has <code>ondrop</code> and <code>ondragover</code> attribute. Both of them take method.</p>
+<h3 id="ondragstart">ondragstart</h3>
+<p>This attribute takes a JavaScript method. This method takes a <code>event</code> parameter and describe what will happen when you start to drag.</p>
+<p>You need to set the data to drag by using <code>event.dataTransfer.setData(format, event.target.id)</code>:</p>
+<blockquote>
+<p><code>format</code> above can be <code>text</code>, <code>text/plain</code>, <code>text/html</code> etc, or <code>URL</code> format.</p>
+<p>This function set up the data that is take via <code>event.target.id</code>, which is the <code>id</code> for draggable stuff, and temparary store it. Note <code>event.target</code> now pointing to draggable stuff.</p>
+</blockquote>
+<h3 id="ondragover">ondragover</h3>
+<p>This attribute takes a JavaScript method. This method takes a <code>event</code> parameter and describe what will happen when you drag stuff over elements without drop the stuff.</p>
+<p>Basic set up is <code>event.preventDefault()</code>, which prevents browser asking elements doing default behavior.</p>
+<h3 id="ondrop">ondrop</h3>
+<p>This attribute takes a JavaScript method. This method takes a <code>event</code> parameter and describe what will happen when you drop the draggable stuff.</p>
+<p>First, you should do <code>event.preventDefault()</code>, which prevents browser asking elements doing default behavior.</p>
+<p>Then, you need to get the data that you dragged by using <code>event.dataTransfer.getData(format)</code>. The format should corresponding what you had in <code>event.dataTransfer.setData()</code> method.</p>
+<blockquote>
+<p>The method will return all data that has same format.</p>
+</blockquote>
+<p>You can get current dropdown container by using <code>event.target</code> (instead of draggable element). You can choose to append your draggable stuff by using</p>
+<pre class="code literal-block"><span></span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">dataTransfer</span><span class="p">.</span><span class="nx">getData</span><span class="p">(</span><span class="nx">format</span><span class="p">))</span>
+</pre>
+
+
+<p>if you passed <code>id</code> in <code>ondragstart</code>'s method. Or you can do whatever you want.</p>

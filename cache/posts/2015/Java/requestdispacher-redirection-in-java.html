@@ -1,0 +1,68 @@
+<p>This post only talks about <code>RequestDispacher</code> in Java web app. If you want to know more about using servlet in Java, I have another related post: <a href="http://pengyin-shan.com/blog/ajax-and-java-servlet">Ajax and Java Servlet</a>.</p>
+<h3 id="dispach">Dispach</h3>
+<p>This <a href="http://www.xyzws.com/servletfaq/what-is-the-defferent-between-getnameddispatcher-and-getrequestdispatcher/3">article</a> from www.xyzws.com is very useful.</p>
+<p><code>RequestDispacher</code> is used to formard a client's request to another 'place', which including another servlet, another JSP, etc.</p>
+<p>In a servlet, there are three ways to get RequestDispacher:</p>
+<h4 id="requestdispatcher-dispatch-requestgetrequestdispatcherpath">RequestDispatcher dispatch = request.getRequestDispatcher(path);</h4>
+<p>Using this, <em>path</em> can be:</p>
+<ul>
+<li>
+<p>either a path related to your current request, such as <code>subhome.html</code></p>
+</li>
+<li>
+<p>or a servlet name in your <code>web.xml</code> file</p>
+</li>
+<li>
+<p>or a abosute path related to your current contaxt, such as <code>/subpage/subjome.jsp</code></p>
+</li>
+</ul>
+<h4 id="requestdispatcher-dispatch-getservletcontextgetrequestdispatcherpath">RequestDispatcher dispatch = getServletContext.getRequestDispatcher(path)</h4>
+<p>Using this, <em>path</em> <strong>must</strong> start with <code>/</code>, such as <code>/subpage/subjome.jsp</code></p>
+<h4 id="requestdispatcher-dispatch-getservletcontextgetnameddispatcherstring">RequestDispatcher dispatch = getServletContext.getNamedDispatcher("string")</h4>
+<p>This method must take the servlet name as its parameter. The servlet name is definded in <code>web.xml</code> as  <servlet-name> sub-element of the <servlet> element. The request is dispatched to that corresponding servlet.</p>
+<p>Example in <code>web.xml</code>:</p>
+<pre class="code literal-block"><span></span><span class="nt">&lt;servlet&gt;</span>
+    <span class="c">&lt;!-- Use testProctor for getting RequestDispatcher --&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>testProctor<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="nt">&lt;servlet-class&gt;</span>com.test.proctortest<span class="nt">&lt;/servlet-class&gt;</span>
+<span class="nt">&lt;/servlet&gt;</span>
+<span class="nt">&lt;servlet-mapping&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>testProctor<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="nt">&lt;url-pattern&gt;</span>/test_proctor<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+</pre>
+
+
+<p>Before/After get your RequestDispacher, you can use <code>request.addAttribute(something)</code> or other functions to add stuff to your request.</p>
+<h3 id="go-to-another-place">Go to another place</h3>
+<p>After you finish process HttpRequest or HttpResponse, there are three ways to 'leave' for another place:</p>
+<h4 id="requestdispatcherforwardrequest-response-requestdispatcherincluderequest-response">RequestDispatcher.forward(request, response) | RequestDispatcher.include(request, response)</h4>
+<p>There is a greate <a href="http://way2java.com/servlets/difference-between-include-and-forward-in-requestdispatcher/">article</a> from way2java.com to explain the difference between <code>RequestDispatcher.forward()</code> and <code>RequestDispatcher.include()</code>.</p>
+<p>These are main differences bewtween these two methods:</p>
+<ul>
+<li>
+<p><code>include()</code> will <strong>include</strong> another file in your current file, the send back to client. This is like <code>&lt;include /footer.jsp/&gt;</code> but on server side. <code>forward()</code> will <strong>forward</strong> the client to another page/servlet.</p>
+</li>
+<li>
+<p><code>include()</code> will return back to original servlet, but <code>forward()</code> will go directly to client.</p>
+</li>
+<li>
+<p>So, if you need response from <em>two</em> servlet, use <code>include()</code>. If you only need reponse from last servlet, use <code>forward()</code>. <em>Note include() does have limitation for second servlet accessing information from first servlet</em>.</p>
+</li>
+<li>
+<p><code>include()</code> will give client the response from the <strong>same</strong> servlet which he requested. <code>forward()</code> will give client the response from a different servlet.</p>
+</li>
+<li>
+<p>Generally, you want to use <code>include()</code> when <strong>static</strong> information needs to be included, such as Banner Content or Copyright Information. <code>forward()</code> should be used to include <strong>dynamic</strong> information, or when you want to use servlet as a Controller.</p>
+</li>
+</ul>
+<h4 id="httpresponsesendredirectstring">HttpResponse.sendRedirect(String)</h4>
+<p>The differnce between <code>forward()/include()</code> and <code>HttpResponse.sendRedirect()</code> is very obvious:</p>
+<ul>
+<li>
+<p><code>SendRedirect</code> is just for re-direction. If you have any data, it has to be transferred by <strong>session</strong> or being included in <strong>URL</strong>. This request is <strong>visible</strong> in browser as a new request. i.e. it is a <strong>client side redirect</strong>.</p>
+</li>
+<li>
+<p><code>forward()/include()</code> is server side operation, which is not visible to browser. You can use <code>request.getAttribute()</code> to get data.</p>
+</li>
+</ul>

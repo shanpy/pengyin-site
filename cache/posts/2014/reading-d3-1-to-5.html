@@ -1,0 +1,147 @@
+<p>This post is transferred from my <a href="http://blogpengyin.herokuapp.com/">old Hexo blog site</a>, created on 2014.</p>
+<p>This is a Reading Note for "Interactive Data Visualization for the Web - An Introduction to Designing with D3" by <em>Scott Murray</em>, pulished by O'Reilly</p>
+<p>This post will contains concepts that I think it's important for me to be familiar with in D3 book.</p>
+<h1 id="chapter-2-d3-introduction">Chapter 2: D3 Introduction</h1>
+<p>D3 is a short-name for <em>Data-Driven Documents</em>. The data is from data provider (users, customers, etc) and the documents are documents based on web, such as HTML, SVG.</p>
+<p>The process that D3 create data-driven document is:</p>
+<ul>
+<li>
+<p>Load data to browser cache</p>
+</li>
+<li>
+<p>Bind data to elements in document, and create new element if need</p>
+</li>
+<li>
+<p>Analysis bound datum for each element and set up virtualization attribute. Finish transforming element.</p>
+</li>
+<li>
+<p>Transitioning element based on user input</p>
+</li>
+</ul>
+<p>Transforming is very important. You will need to create transforming rule in this step.</p>
+<p>D3.js is great for explaining data instead of exploring data.</p>
+<p>D3.js will not hide you original data in client side.</p>
+<h1 id="chapter-3-basic-skill-in-web">Chapter 3: Basic Skill in Web</h1>
+<p>GeoJSON is similar to JSON, specailly for geograpic data, like points(longitude, latitude) or shapes.</p>
+<p>Make sure not decling too many global object. All global variables are attributes for <code>window</code> object. You can declare one or few gloal object then assign attribute to this global object.</p>
+<p>In SVG, if <code>x</code> is getting larger, graph will move towards <em>right</em>. If <code>y</code> is getting larger, graph will move towards <em>bottom</em>.</p>
+<h2 id="graphs-in-svg">Graphs in SVG:</h2>
+<p><code>rect</code>: <code>x</code> and <code>y</code> is the location of left top corner.</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">rect</span> <span class="na">x</span><span class="o">=</span><span class="s">&quot;0&quot;</span> <span class="na">y</span><span class="o">=</span><span class="s">&quot;0&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;500&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;50&quot;</span><span class="p">/&gt;</span>
+</pre>
+
+
+<p><code>circle</code>: <code>cx</code> and <code>cy</code> is the location of center of circle. <code>r</code> is radius.</p>
+<p><code>ellipse</code>: similar to <code>circle</code>, but instead of <code>r</code>, it needs <code>rx</code> and <code>ry</code>.</p>
+<p><code>line</code>: <code>x1</code> and <code>y1</code> is used for location of starting point. <code>x2</code> and <code>y2</code> is used for location of end point. <em>You must use <code>stroke</code> to assign color to line so you can see it</em>.</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">line</span> <span class="na">x1</span><span class="o">=</span><span class="s">&quot;0&quot;</span> <span class="na">y1</span><span class="o">=</span><span class="s">&quot;0&quot;</span> <span class="na">x2</span><span class="o">=</span><span class="s">&quot;500&quot;</span> <span class="na">y2</span><span class="o">=</span><span class="s">&quot;0&quot;</span> <span class="na">stroke</span><span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">/&gt;</span>
+</pre>
+
+
+<p><code>text</code>: creatign text. <code>x</code> is the left top corner of text, <code>y</code> is the base line of text. Letters like <em>p</em> or <em>y</em> have parts that are under base line. <code>font-family | font-size | etc</code> can be used to add style to text.</p>
+<h2 id="styleattribute-for-svg-element">Style/Attribute for SVG Element</h2>
+<p><code>fill</code>: fill color</p>
+<p><code>stroke</code>: border color</p>
+<p><code>stroke-width</code>: width of border</p>
+<p><code>opacity</code>: how transparent the graph will be</p>
+<p>You can also assign <code>.class</code> to svg element for style. Same attributes will apply:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">circle</span> <span class="na">cx</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="na">cy</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="na">r</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;test&quot;</span><span class="p">/&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/css&quot;</span><span class="p">&gt;</span>
+    <span class="p">.</span><span class="nc">test</span><span class="p">{</span>
+        <span class="n">fill</span><span class="p">:</span> <span class="kc">red</span><span class="p">;</span>
+        <span class="n">stroke</span><span class="p">:</span> <span class="kc">yellow</span><span class="p">;</span>
+        <span class="n">stroke-width</span><span class="p">:</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+</pre>
+
+
+<p>In SVG, there is no layer or <code>z-index</code>, so the sequence that elements are inserted is the sequence of the real graph. They can be partially or fully covered by other graphs.</p>
+<p>It is really important to check if user's browser supports SVG or not first. <em>Modernizr</em> (http://modernizr.com) can be used for this.</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;path_to_modernizr.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
+    <span class="nx">Modernizr</span><span class="p">.</span><span class="nx">load</span><span class="p">({</span>
+        <span class="nx">test</span><span class="o">:</span> <span class="nx">Modernizr</span><span class="p">.</span><span class="nx">svg</span> <span class="o">&amp;&amp;</span> <span class="nx">Modernizr</span><span class="p">.</span><span class="nx">inlinesvg</span><span class="p">,</span>
+        <span class="nx">yep</span> <span class="o">:</span> <span class="p">[</span>
+            <span class="nx">path_to_d3</span><span class="p">.</span><span class="nx">js</span><span class="p">,</span> <span class="nx">path_to_other_css_file</span>
+        <span class="p">]</span>
+    <span class="p">});</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre>
+
+
+<h1 id="chapter-4-install-d3js">Chapter 4: Install D3.js</h1>
+<p>It is important to set <code>&lt;meta charset="utf-8"&gt;</code> for correctly compile D3.js.</p>
+<h1 id="chapter-5-data">Chapter 5: Data</h1>
+<p><code>.select("tag_name")</code>: reference the first element that has tag_name.</p>
+<p><code>.text("content_of_text")</code>: insert text.</p>
+<h2 id="use-csv">Use CSV</h2>
+<p>D3 can load CSV file via <code>d3.csv()</code>:</p>
+<pre class="code literal-block"><span></span><span class="nx">d3</span><span class="p">.</span><span class="nx">csv</span><span class="p">(</span><span class="s2">&quot;test.csv&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+
+
+<p>All data, includes number, is saved as string in csv after you load it.</p>
+<p><code>d3.csv()/d3.json()/d3.tsv()</code> are <em>asynchromous</em> methods, which means other javascript methods will run <em>at the same</em> time when these method runs. Also, asynchromous will run not matter if the data file is successfully loaded or not.</p>
+<p>To avoid any program based on asynchromous, you can declare a global variable first, then call <code>d3.csv()</code> with a <code>error</code> parameter. After finish loading data, if these is no error, assign data to this global variable. Then you can call other functions that should run after successfully load data. Put error handing message if there is any error.</p>
+<pre class="code literal-block"><span></span><span class="c">&lt;!--</span><span class="nx">This</span> <span class="nx">is</span> <span class="nx">the</span> <span class="nx">code</span> <span class="nx">part</span> <span class="nx">from</span> <span class="nx">book</span> <span class="o">--&gt;</span>
+<span class="kd">var</span> <span class="nx">dataset</span><span class="p">;</span>
+<span class="nx">d3</span><span class="p">.</span><span class="nx">csv</span><span class="p">(</span><span class="s2">&quot;food.csv&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+        <span class="c1">// Output error message if there is any error</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+        <span class="c1">// If there is no error, assign loaded data to global variable, then call other functions</span>
+        <span class="nx">dataset</span> <span class="o">=</span> <span class="nx">data</span><span class="p">;</span>
+        <span class="nx">generateVis</span><span class="p">();</span>
+        <span class="nx">hideLoadingMsg</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre>
+
+
+<p>To create a new element with data binding, use <code>enter()</code>.This method can create new placefolder if dataset has more elements than existing elements. Next method can operate based on new placeholder(s):</p>
+<pre class="code literal-block"><span></span><span class="c">&lt;!--</span><span class="nx">This</span> <span class="nx">is</span> <span class="nx">the</span> <span class="nx">code</span> <span class="nx">part</span> <span class="nx">from</span> <span class="nx">book</span> <span class="o">--&gt;</span>
+<span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">25</span> <span class="p">];</span>
+
+<span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">).</span><span class="nx">selectAll</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">)</span> <span class="c1">//currently no &#39;p&#39; element exist, but you can select them first.</span>
+<span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">)</span> <span class="c1">//bind data in dataset</span>
+<span class="p">.</span><span class="nx">enter</span><span class="p">()</span> <span class="c1">//create 5 placeholders</span>
+<span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">)</span> <span class="c1">//insert &#39;p&#39; element to these 5 placeholders</span>
+<span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="s2">&quot;New paragraph!&quot;</span><span class="p">);</span> <span class="c1">//each holder has text</span>
+
+<span class="cm">/*</span>
+<span class="cm">Result:</span>
+<span class="cm">&lt;p&gt;&quot;New paragraph!&quot;&lt;/p&gt;</span>
+<span class="cm">&lt;p&gt;&quot;New paragraph!&quot;&lt;/p&gt;</span>
+<span class="cm">&lt;p&gt;&quot;New paragraph!&quot;&lt;/p&gt;</span>
+<span class="cm">&lt;p&gt;&quot;New paragraph!&quot;&lt;/p&gt;</span>
+<span class="cm">&lt;p&gt;&quot;New paragraph!&quot;&lt;/p&gt;</span>
+
+<span class="cm">Each number in dataset is binding to the &#39;__data__&#39; attribute for each &#39;p&#39; element. You can find it in console. For example, the first &#39;p&#39; element has a `__data__` attribute. Value is 5.</span>
+<span class="cm">*/</span>
+</pre>
+
+
+<p>As long as you use <code>data()</code> method, you can access a anonymous function that has a parameter <code>d</code>. <code>d</code> is the value of the corresponding data in dataset. You can use this function in continous methods whenever you need. For example:</p>
+<pre class="code literal-block"><span></span><span class="c">&lt;!--</span><span class="nx">Link</span> <span class="nx">to</span> <span class="nx">the</span> <span class="nx">code</span> <span class="nx">above</span><span class="o">--&gt;</span>
+<span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">)</span>
+<span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+<span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">)</span>
+<span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="nx">fucntion</span><span class="p">(</span><span class="nx">d</span><span class="p">){</span>
+    <span class="k">return</span> <span class="s2">&quot;test &quot;</span> <span class="o">+</span> <span class="nx">d</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="cm">/*</span>
+<span class="cm">Result:</span>
+<span class="cm">&lt;p&gt;test 5&lt;/p&gt;</span>
+<span class="cm">&lt;p&gt;test 10&lt;/p&gt;</span>
+<span class="cm">&lt;p&gt;test 15&lt;/p&gt;</span>
+<span class="cm">&lt;p&gt;test 20&lt;/p&gt;</span>
+<span class="cm">&lt;p&gt;test 25&lt;/p&gt;</span>
+<span class="cm">*/</span>
+</pre>

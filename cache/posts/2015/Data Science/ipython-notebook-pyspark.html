@@ -1,0 +1,62 @@
+<p>After reading a few useful posts and some debugging time, I successfully installed <strong>Apache Spark</strong> on my Ubuntu 15 machine. I also add <strong>PySpark</strong> in <strong>IPython Notebook</strong> for development purpose.</p>
+<p>Many thanks to author of these articles:</p>
+<p><a href="http://blog.cloudera.com/blog/2014/08/how-to-use-ipython-notebook-with-apache-spark/">How-to: Use IPython Notebook with Apache Spark</a>, written by Uri Laserson.</p>
+<p><a href="http://ramhiser.com/2015/02/01/configuring-ipython-notebook-support-for-pyspark/">Configuring IPython Notebook Support for PySpark</a>, written by John Ramey.</p>
+<p><a href="https://beingzy.github.io/tutorial/2014/10/13/spark-tutorial-Part-I-setting-up-spark-and-ipython-notebook-within-10-minutes.html">Spark Tutorial (Part I): Setting Up Spark and IPython Notebook within 10 minutes</a>, written by Yi Zhang.</p>
+<p><a href="https://ipython.org/ipython-doc/dev/config/intro.html">Introduction to IPython Configuration</a></p>
+<h2 id="install-python-and-ipython-notebook">Install Python and IPython Notebook</h2>
+<p>I highly recommend you using <a href="https://virtualenv.pypa.io/en/latest/">Virtualenv</a> or <a href="https://store.continuum.io/cshop/anaconda/">Anacona</a> for Python package control.</p>
+<p>You need to install <strong>Python</strong> and <strong>pip</strong> first (You can find installation documents through Google Search). Then in terminal, type following:</p>
+<pre class="code literal-block"><span></span><span class="gp">$</span>pip install <span class="s2">&quot;ipython[notebook]&quot;</span>
+</pre>
+
+
+<p>If you want to install everything for IPython, including Notebook, type following in terminal:</p>
+<pre class="code literal-block"><span></span><span class="gp">$</span>pip install <span class="s2">&quot;ipython[all]&quot;</span>
+</pre>
+
+
+<p>You can test your installation by type following command in terminal (Make sure you are in right environment):</p>
+<pre class="code literal-block"><span></span><span class="gp">$</span>ipython notebook
+</pre>
+
+
+<p>Your default browser should open a window with IPython Notebook interface.</p>
+<h2 id="install-spark-and-pyspark">Install Spark and PySpark</h2>
+<p>You can download Spark from <a href="https://spark.apache.org/downloads.html">here</a>. You can install either source code package, or a pre-build package. All packages can be installed and configured for IPython Notebook.</p>
+<p>Pre-build package can be extracted and being used directly. If you download source package, you need to do this after extracting:</p>
+<pre class="code literal-block"><span></span><span class="gp">$</span><span class="nb">cd</span> your_spark_source_folder
+<span class="gp">$</span>sbt/sbt assembly
+</pre>
+
+
+<blockquote>
+<p>This process may take a while :)</p>
+</blockquote>
+<p>You may need to install <strong>sbt</strong> first. For Linux user, please refer to this article: <a href="http://www.scala-sbt.org/0.13/tutorial/Installing-sbt-on-Linux.html">Installing sbt on Linux</a>.</p>
+<p>You can test your installation by doing following:</p>
+<pre class="code literal-block"><span></span><span class="gp">$</span><span class="nb">cd</span> your_spark_folder
+<span class="gp">$</span>./bin/pyspark
+</pre>
+
+
+<blockquote>
+<p>You need java jdk installed on your machine and JAVA_HOME has been set, otherwise PySpark will throw error for that, such as:</p>
+</blockquote>
+<p>../images/articles/2015/python/hadoop2.6_java_home_dir_problem.png </p>
+<blockquote>
+<p>Make sure your JAVA_HOME pointing to home folder of your desired JDK. For example, I want to use Oracle JDK 8. So I type <code>sudo update-alternatives --config java</code> in terminal to find preferred JDK path (JDK 8 in my case), then add<code>export JAVA_HOME=/usr/lib/jvm/java-8-oracle</code> in <code>.bashrc</code> file.</p>
+</blockquote>
+<p>You should see following in your terminal. Type <code>sc</code> and you should see output as <code>SparkContext</code>:</p>
+<p>../images/articles/2015/python/test_pyspark.png </p>
+<h2 id="configure-pyspark-and-ipython-notebook">Configure PySpark and IPython Notebook</h2>
+<p>Based on my experience, PySpark has good support for Python 2.7, but not Python 3. I recommend you use <strong>Python 2.7</strong> in this step.</p>
+<p><a href="http://ramhiser.com/2015/02/01/configuring-ipython-notebook-support-for-pyspark/">Configuring IPython Notebook Support for PySpark</a>, written by John Ramey, gave a very good description of steps you need to follow. However, you need to remember doing following:</p>
+<p>In <code>.bashrc</code> and <code>00-pyspark-setup.py</code>, make sure you have your own Spark folder name. Check your <code>your_spark_folder/python/lib</code> for py4j version.</p>
+<p>After you do <code>ipython notebook --profile=pyspark</code>, you will open Jupyter web interface in your default browser, using the <code>c.NotebookApp.port</code> in your <code>.bashrc</code> file.</p>
+<p>In Jupyter interface, You can upload one existing IPython Notebook to test your configuration by clicking <code>Upload</code> button, Or create a new IPython Notebook by clicking <code>new</code> button, then select <code>Python 2</code> or <code>Python 3</code> in drop-down menu.</p>
+<p>In IPython Notebook interface, create a new cell and type <code>sc</code>. When you run this cell, you should see <code>SparkContext</code> object, same as following:</p>
+<p>../images/articles/2015/python/test_pyspark_notebook.png </p>
+<blockquote>
+<p>Now, if your IPython Notebook show message: <code>NameError: name 'sc' is not defined</code>, which means your IPython Notebook doesn't use PySpark profile. You can try typing <code>ipython --profile=pyspark</code> in terminal to make PySpark as default IPython profile, then try <code>ipython notebook --profile=pyspark</code> again. PySpark should be available now.</p>
+</blockquote>

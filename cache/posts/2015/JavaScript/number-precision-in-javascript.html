@@ -1,0 +1,49 @@
+<p>Following methods is referenced from developer.mozilla.org.</p>
+<h3 id="numberprototypetoprecision">Number.prototype.toPrecision()</h3>
+<p>The <code>toPrecision()</code> method returns a string representing the Number object to the specified precision.</p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="kd">var</span> <span class="nx">test</span> <span class="o">=</span> <span class="mf">1.999</span>
+<span class="nx">test</span><span class="p">.</span><span class="nx">toPrecision</span><span class="p">()</span> <span class="c1">//1.999</span>
+
+<span class="kd">var</span> <span class="nx">test2</span> <span class="o">=</span> <span class="mf">1.511</span>
+<span class="nx">test2</span><span class="p">.</span><span class="nx">toPrecision</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">//2</span>
+<span class="nx">test2</span><span class="p">.</span><span class="nx">toPrecision</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1">//1.5</span>
+
+<span class="kd">var</span> <span class="nx">test3</span> <span class="o">=</span> <span class="mf">1.001</span>
+<span class="nx">test3</span><span class="p">.</span><span class="nx">toPrecision</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">//1</span>
+<span class="nx">test3</span><span class="p">.</span><span class="nx">toPrecision</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1">//1.0</span>
+
+<span class="kd">var</span> <span class="nx">test4</span> <span class="o">=</span> <span class="mf">0.999</span>
+<span class="nx">test4</span><span class="p">.</span><span class="nx">toPrecision</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">//1</span>
+<span class="nx">test4</span><span class="p">.</span><span class="nx">toPrecision</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1">//1.0</span>
+</pre>
+
+
+<h3 id="numberprototypetofixed">Number.prototype.toFixed()</h3>
+<p>The <code>toFixed(parameter)</code> method formats a number using <strong>fixed-point notation</strong>.</p>
+<p><em>The parameter may be a value between 0 and 20, inclusive. If no parameter, it is treated as 0.</em></p>
+<p>This function returns a string representation of the number that <strong>does not use exponential notation and has exactly digits digits after the decimal place</strong>. The number is <strong>rounded</strong> if necessary, and the fractional part is <strong>padded with zeros</strong> if necessary so that it has the specified length.</p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="nx">test</span> <span class="o">=</span> <span class="mf">2.059</span>
+<span class="nx">test</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">()</span> <span class="c1">//2</span>
+<span class="nx">test</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">//2.1</span>
+<span class="nx">test</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1">//2.06</span>
+
+<span class="nx">test2</span> <span class="o">=</span> <span class="mi">2</span><span class="nx">e</span><span class="o">+</span><span class="mi">10</span>
+<span class="nx">test2</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">//20000000000.0</span>
+</pre>
+
+
+<blockquote>
+<p>toPrecision() is to count the total length. toFixed() is to count length after decimal point.</p>
+</blockquote>
+<h3 id="numberprototypetoexponential">Number.prototype.toExponential()</h3>
+<p>The <code>toExponential(parameter)</code> method returns a string representing the Number object in <strong>exponential notation</strong>.</p>
+<p><em>The parameter specifying the number of digits after the decimal point.</em></p>
+<p><em>If you use the `toExponential()`` method for a numeric literal and the numeric literal has no exponent and no decimal point, <strong>leave a space before the dot</strong> that precedes the method call to prevent the dot from being interpreted as a decimal point.</em></p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="nx">test</span> <span class="o">=</span> <span class="mf">2.019</span>
+<span class="nx">test</span><span class="p">.</span><span class="nx">toExponential</span><span class="p">()</span> <span class="c1">//&#39;2.019e+0&#39;</span>
+<span class="nx">test</span><span class="p">.</span><span class="nx">toExponential</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">//&#39;2.0e+0&#39;</span>
+<span class="nx">test</span><span class="p">.</span><span class="nx">toExponential</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1">//&#39;2.02e+0&#39;</span>
+</pre>

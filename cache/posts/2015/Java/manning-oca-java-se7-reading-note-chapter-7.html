@@ -1,0 +1,354 @@
+<p>This is a post that I moved from <a href="blogpengyin.herokuapp.com"> my old blog site</a>. This is the reading note for <strong>OCA Java SE 7 Certification Guide</strong> from <strong>Manning</strong>. <em>Please note that all definations and examples in this post are taken from the book.</em></p>
+<h1 id="chapter-7-exception-handling">Chapter 7: Exception Handling</h1>
+<p>This chapter mainly covers:</p>
+<ul>
+<li>
+<p>Understanding and identifying exceptions arising in code</p>
+</li>
+<li>
+<p>Determining how exceptions alter the normal program flow</p>
+</li>
+<li>
+<p>Understanding the need to handle exceptions separately in your code</p>
+</li>
+<li>
+<p>Using <code>try-catch-finally</code> blocks to handle exceptions</p>
+</li>
+<li>
+<p>Differentiating among <code>checked exception</code>s, <code>unchecked exception</code>s, and <code>error</code>s</p>
+</li>
+<li>
+<p>Invoking methods that may throw exceptions</p>
+</li>
+<li>
+<p>Recognizing common exception categories and classes</p>
+</li>
+</ul>
+<p>When JVM reposts exceptions, Stack traces are read <strong>from the bottom</strong>.</p>
+<h2 id="72-what-happens-when-an-exception-is-thrown">7.2 What happens when an exception is thrown?</h2>
+<p>As with all other Java objects, <strong>an exception is an object</strong>. All types of exceptions subclass <code>java.lang.Throwable</code>.</p>
+<p>An operating system (OS) keeps track of the code that it needs to execute using a <code>stack</code>. A stack is a type of list in which the items that are added last to it are the first ones to be taken off it—<strong>Last In First Out</strong>. This stack uses a <code>stack pointer</code> to point to the instructions that the OS should execute.</p>
+<p>When a stack pointer finds an exception should be throwed out in one method, it will check if this methos has a <strong>error handler</strong>. If not, go and find upper level.</p>
+<p>For example, if method call a method1 then call a method2, And a <code>IndexOutOfBounds</code> error should be throwed out in method2, but method2 doesn't have a error handler, stack pointer will find method1 -&gt; main.</p>
+<p>If there are no further methods that handle <code>ArrayIndexOutOfBoundsException</code>, execution stops.</p>
+<h3 id="creating-try-catch-finally-blocks">Creating try-catch-finally blocks</h3>
+<p>Try what?</p>
+<blockquote>
+<p>First you try to execute your code. If it doesn’t execute as planned, you handle the exceptional conditions using a catch block.</p>
+</blockquote>
+<p>Catch what?</p>
+<blockquote>
+<p>You catch the <strong>exceptional event</strong> arising from the code enclosed within the try block and handle the event by defining appropriate exception handlers.</p>
+</blockquote>
+<p>What does finally do?</p>
+<blockquote>
+<p>Finally, you execute a set of code, in all conditions, <strong>regardless of whether the code in the try block throws any exceptions</strong>.</p>
+<p>You can create an exception of your own—a <strong>custom exception</strong>—by extending the class <code>Exception</code>.</p>
+</blockquote>
+<p>For a try block, you can define <strong>multiple catch blocks</strong></p>
+<p>But <strong>only a single finally block</strong>.</p>
+<p>Multiple catch blocks are used to handle different types of exceptions. - A finally block is used to define cleanup code—code that closes and releases resources, such as file handlers and database or network connections.</p>
+<h3 id="will-a-finally-block-execute-even-if-the-catch-block-defines-a-return-statement">Will a finally block execute even if the catch block defines a return statement?</h3>
+<p><strong>Yes</strong>. The <code>return</code> statement does not return the control to the main method before execution of the finally block completes.</p>
+<h3 id="what-happens-if-both-a-catch-and-a-finally-block-define-return-statements">What happens if both a catch and a finally block define return statements?</h3>
+<p>If both catch and finally blocks define return statements, the calling method will receive a value from the <code>finally</code> block.</p>
+<h3 id="what-happens-if-a-finally-block-modifies-the-value-returned-from-a-catch-block">What happens if a finally block modifies the value returned from a catch block?</h3>
+<p>If a catch block returns a <strong>primitive data type</strong>, the finally block <strong>can’t modify the value</strong> being returned by it. <em>Note: in this case, finally block does not return anything</em>.</p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">MultipleReturn</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="nf">getInt</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">returnVal</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+            <span class="k">try</span> <span class="o">{</span>
+                    <span class="n">String</span><span class="o">[]</span> <span class="n">students</span> <span class="o">=</span> <span class="o">{</span><span class="s">&quot;Harry&quot;</span><span class="o">,</span> <span class="s">&quot;Paul&quot;</span><span class="o">};</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">students</span><span class="o">[</span><span class="mi">5</span><span class="o">]);</span>
+                 <span class="o">}</span>
+        <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="err">￼￼￼￼</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;About to return :&quot;</span> <span class="o">+</span> <span class="n">returnVal</span><span class="o">);</span>
+                    <span class="k">return</span> <span class="n">returnVal</span><span class="o">;</span>
+                <span class="o">}</span>
+        <span class="k">finally</span> <span class="o">{</span>
+                <span class="n">returnVal</span> <span class="o">+=</span> <span class="mi">10</span><span class="o">;</span>
+        <span class="err">￼￼￼￼</span>    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Return value is now :&quot;</span> <span class="o">+</span> <span class="n">returnVal</span><span class="o">);</span>
+        <span class="o">}</span>
+            <span class="k">return</span> <span class="n">returnVal</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+            <span class="n">MultipleReturn</span> <span class="n">var</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MultipleReturn</span><span class="o">();</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;In Main:&quot;</span> <span class="o">+</span> <span class="n">var</span><span class="o">.</span><span class="na">getInt</span><span class="o">());</span>
+    <span class="o">}</span> <span class="o">}</span>
+
+<span class="c1">//- Output will be:</span>
+<span class="c1">//About to return :10</span>
+<span class="c1">//Return value is now :20</span>
+<span class="c1">//In Main:10</span>
+</pre>
+
+
+<p>Even though the <strong>finally</strong> block adds <code>10</code> to variable <code>returnVal</code>, <strong>this modified value is not returned to the method main</strong> . Control in the catch block <strong>copies</strong> the value of <code>returnVal</code> to be returned before it executes the finally block, so <strong>the returned value is not modified when finally executes</strong>.</p>
+<p><strong>Important:</strong> the value <strong>inside finally block changed</strong>. So if you return <strong>inside</strong> finally block, the value passed to <code>main</code> will be changed</p>
+<p>If a catch block returns a <strong>object</strong>, When the finally block executes, it <strong>can access</strong> the value of the object referred to by the variable and <strong>can modify</strong> it. <strong>The modified value is returned to the method main</strong>.</p>
+<p>Remember that <strong>primitives are passed by value and objects are passed by reference</strong>.</p>
+<h3 id="does-the-order-of-the-exceptions-caught-in-the-catch-blocks-matter">Does the order of the exceptions caught in the catch blocks matter?</h3>
+<p>Order doesn’t matter for unrelated classes. But it does matter for related classes sharing an <code>IS-A</code> relationship.</p>
+<p>If you try to catch an exception of the <strong>base class before an excep- tion of the derived class</strong> , the exception handler for the derived class can never be reached, so your code will <strong>fail to compile</strong>.</p>
+<p>Code Example:</p>
+<pre class="code literal-block"><span></span><span class="k">try</span> <span class="o">{</span>
+    <span class="n">fis</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="s">&quot;file.txt&quot;</span><span class="o">);</span>
+    <span class="n">fis</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+<span class="o">}</span>
+<span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">ioe</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;IOException&quot;</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="k">catch</span> <span class="o">(</span><span class="n">FileNotFoundException</span> <span class="n">fnfe</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;file not found&quot;</span><span class="o">);</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>In the code above, since <code>FileNoteFoundException</code> is a derived class from <code>IOException</code>, <code>FileNoteFoundException</code> should be catched <strong>before</strong> <code>IOException</code>, otherwise code will not compile.</p>
+<p><strong>Rules to Remember</strong></p>
+<ul>
+<li>
+<p>A <code>try</code> block may be followed by <strong>multiple</strong> <code>catch</code> blocks</p>
+</li>
+<li>
+<p>the <code>catch</code> blocks may be followed by a <strong>single</strong> <code>finally</code> block.</p>
+</li>
+<li>
+<p>A <code>try</code> block may be followed by <strong>either</strong> a <code>catch</code> or a <code>finally</code> block or <strong>both</strong>. But a <code>finally</code> block alone wouldn’t <strong>suffice</strong> if code in the try block throws a checked exception. In this case, you need to catch the checked exception or declare it to be thrown by your method. Otherwise <strong>your code won’t compile</strong>.</p>
+</li>
+<li>
+<p>The <code>try</code>, <code>catch</code>, and <code>finally</code> blocks can’t exist <strong>independently</strong>.</p>
+</li>
+<li>
+<p>The <code>finally</code> block <strong>can’t appear <code>before</code> a catch block</strong>.</p>
+</li>
+<li>
+<p>A <code>finally</code> block <strong>always executes</strong>, regardless of whether the code throws an exception.</p>
+</li>
+</ul>
+<h3 id="can-i-rethrow-an-exception-or-the-error-i-catch">Can I rethrow an exception or the error I catch</h3>
+<p>You can do whatever you want with an exception.</p>
+<p>Rethrow example:</p>
+<pre class="code literal-block"><span></span><span class="k">try</span> <span class="o">{</span>
+    <span class="n">soccer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="s">&quot;soccer.txt&quot;</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="k">catch</span> <span class="o">(</span><span class="n">FileNotFoundException</span> <span class="n">fnfe</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">throw</span> <span class="n">fnfe</span><span class="o">;</span> <span class="c1">//re-throw error without handler. Will not compile</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>When you rethrow a checked exception, it’s treated like a regular thrown checked exception, meaning that all the rules of handling a checked exception apply to it. <strong>So after you re-throw, you still need a error handler or a <code>throw</code> argument to handle error, otherwise your code will not compile.</strong></p>
+<p>However, You can rethrow a <code>runtime exception</code>, but <strong>you’re not required to catch it</strong>, nor must you modify your method signature to include the throws clause</p>
+<h3 id="can-i-declare-my-methods-to-throw-a-checked-exception-instead-of-handling-it">Can I declare my methods to throw a checked exception, instead of handling it?</h3>
+<p>If a method doesn’t wish to handle the checked exceptions thrown by a method it calls, it can <strong>throw</strong> these exceptions using the <code>throws</code> clause in its own method signature.</p>
+<p>For example: <code>public void myMethod() throws IOException{...}</code></p>
+<h3 id="i-can-create-nested-loops-so-can-i-create-nested-try-catch-blocks-too">I can create nested loops, so can I create nested try-catch blocks too?</h3>
+<p><strong>Yes</strong>. you can define a <code>try-catch-finally</code> block within another <code>try-catch-finally</code> block.</p>
+<h2 id="73-categories-of-exceptions">7.3 Categories of Exceptions</h2>
+<p>There are <strong>three</strong> categories of Exceptions:</p>
+<ul>
+<li>
+<p><code>Checked exceptions</code></p>
+</li>
+<li>
+<p><code>Runtime exceptions</code> (<code>unchecked exceptions</code>)</p>
+</li>
+<li>
+<p><code>Errors</code></p>
+</li>
+</ul>
+<p><strong>you shouldn’t try to catch runtime exceptions</strong>, and there are few options you can use for the <strong>errors</strong>, because <strong>they’re thrown by the JVM</strong>.</p>
+<h3 id="checked-exceptions">Checked exceptions</h3>
+<p>A <code>checked exception</code> is an unacceptable condition <strong>foreseen</strong> by the author of a method but outside the immediate control of the code.</p>
+<p>A<code>checked exception</code> is a <strong>subclass</strong> of class <code>java.lang.Exception</code>, but it’s <strong>not a subclass</strong> of <code>java.lang.RuntimeException</code>.</p>
+<p>If a method uses another method that may throw a checked exception, one of the two following things should be true:</p>
+<ul>
+<li>
+<p>The method should be enclosed within a <code>try-catch</code> block or</p>
+</li>
+<li>
+<p>The method should specify this exception to be thrown in its <strong>method signature</strong>, i.e. <code>throws XXXException</code></p>
+</li>
+</ul>
+<h3 id="runtime-exceptionunchecked-exception">Runtime Exception/Unchecked Exception</h3>
+<p>A <code>runtime exception</code> is a representation of a <strong>programming error</strong>. These occur from <strong>inappropriate use</strong> of another piece of code.</p>
+<p>A runtime exception is a <strong>subclass</strong> of <code>java.lang.RuntimeException</code>.</p>
+<p>A runtime exception <strong>may not be a part of the method signature</strong>, even if a method may throw it. i.e. You may not need a <code>throws</code>.</p>
+<p>However, you <strong>can</strong> create a error handler for runtime exception.</p>
+<h3 id="errors">Errors</h3>
+<p>The <code>error</code>s are considered to be <strong>serious exceptional condition</strong>s and they <strong>can’t be directly controlled by your code</strong>.</p>
+<p>An <code>error</code> is a serious exception thrown by the <strong>JVM</strong> as a result of an error in the <strong>environment state</strong> that processes your code.</p>
+<p>An error is a <strong>subclass</strong> of class <code>java.lang.Error</code>.</p>
+<p>An error <strong>need not</strong> be a part of a method signature.</p>
+<p>An error <strong>can be</strong> caught by an <code>exception handler</code>, but it <strong>shouldn’t</strong> be.</p>
+<h2 id="74-common-exception-classes-and-categories">7.4 Common Exception Classes and Categories</h2>
+<p><strong>Common Runtime Exceptions</strong></p>
+<ul>
+<li>
+<p><code>ArrayIndexOutOfBoundsException</code></p>
+</li>
+<li>
+<p><code>IndexOutOfBoundsException</code></p>
+</li>
+<li>
+<p><code>ClassCastException</code></p>
+</li>
+<li>
+<p><code>IllegalArgumentException</code></p>
+</li>
+<li>
+<p><code>IllegalStateException</code></p>
+</li>
+<li>
+<p><code>NullPointerException</code></p>
+</li>
+<li>
+<p><code>NumberFormatException</code></p>
+</li>
+</ul>
+<p><strong>Common Errors</strong></p>
+<ul>
+<li>
+<p><code>ExceptionInInitializerError</code></p>
+</li>
+<li>
+<p><code>StackOverflowError</code></p>
+</li>
+<li>
+<p><code>NoClassDefFoundError</code></p>
+</li>
+<li>
+<p><code>OutOfMemoryError</code></p>
+</li>
+</ul>
+<h3 id="arrayindexoutofboundsexception-and-indexoutofboundsexception">ArrayIndexOutOfBoundsException and IndexOutOfBoundsException</h3>
+<p><code>ArrayIndexOutOfBoundsException</code> and <code>IndexOutOfBoundsException</code> are <strong>runtime exceptions</strong>, which share an <code>IS-A</code> relationship. <code>IndexOutOfBoundsException</code> is <strong>subclassed</strong> by <code>ArrayIndexOutOfBoundsException</code>.</p>
+<p><code>ArrayIndexOutOfBoundsException</code> is thrown when a piece of code <strong>tries to access an <code>array</code> out of its bounds</strong> (either an array is <strong>accessed at a position less than 0 or at a position greater than or equal to its length</strong>).</p>
+<p><code>IndexOutOfBoundsException</code> is thrown when a piece of code tries to <strong>access a <code>list</code></strong>, like an ArrayList, using an <strong>illegal index</strong>.</p>
+<p>Reason for these two runtime exception is: a variable is used to specify this array or list position, and <strong>its value may not be known until runtime</strong>.</p>
+<h4 id="classcastexception">ClassCastException</h4>
+<p><code>ClassCastException</code> is thrown when an object fails an <code>IS-A</code> test with the class type to which it’s being cast.</p>
+<p>Code Example:</p>
+<pre class="code literal-block"><span></span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">ColorInk</span><span class="o">&gt;</span> <span class="n">inks</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">ColorInk</span><span class="o">&gt;();</span>
+<span class="n">inks</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">ColorInk</span><span class="o">());</span>
+<span class="n">Ink</span> <span class="n">ink</span> <span class="o">=</span> <span class="o">(</span><span class="n">BlackInk</span><span class="o">)</span><span class="n">inks</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+<span class="c1">//Can throw ClassCastException error if BlackInk has no relation with ColorInk</span>
+</pre>
+
+
+<p>You can use the <code>instanceof</code> operator to <strong>verify</strong> whether an object can be cast to another class before casting it: <code>inks.get(0) instanceof BlackInk</code></p>
+<h4 id="illegalargumentexception">IllegalArgumentException</h4>
+<p><code>IllegalArgumentException</code> is thrown to specify that a method has <strong>passed illegal or inappropriate arguments</strong>.</p>
+<h3 id="illegalstateexception">IllegalStateException</h3>
+<p>an <code>IllegalStateException</code> happens if the Java environment or Java application is <strong>not in an appropriate state for the requested operation</strong>.</p>
+<p>You can throw <code>IllegalStateException</code> to signal to the calling method that the method being requested for execution <strong>can’t be called</strong> for the current state of an object.</p>
+<p>For example, you can set if <code>int a !=0</code>, then throw <code>IllegalStateException</code>.</p>
+<h3 id="nullpointerexception">NullPointerException</h3>
+<p>This exception is thrown by the <strong>JVM</strong> if you try to access a method or a variable with <strong>a null value</strong></p>
+<p>Cases can be the following:</p>
+<ul>
+<li>
+<p>Accessing members of a reference variable that is <strong>explicitly assigned a <code>null</code> value</strong>.</p>
+</li>
+<li>
+<p>Accessing members of an <strong>uninitialized</strong> <code>instance</code> or <code>static</code> reference variable. These are <strong>implicitly assigned a <code>null</code> value</strong>.</p>
+</li>
+<li>
+<p>Using an <strong>uninitialized</strong> <code>local variable</code>, which may seem to throw a <code>NullPointerException</code>.</p>
+</li>
+<li>
+<p>Attempting to access <strong>nonexistent array positions</strong>. Note the difference between <code>ArrayOutOfBoundException</code> and <code>NullPointerException</code></p>
+</li>
+<li>
+<p>Using members of an <code>array</code> element that are <strong>assigned a <code>null</code> value</strong>.</p>
+</li>
+</ul>
+<p>Code Example:</p>
+<pre class="code literal-block"><span></span><span class="kd">static</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span> <span class="c1">//No initialization</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;1&quot;</span><span class="o">);</span> <span class="c1">//NullPointerException</span>
+<span class="o">}</span>
+</pre>
+
+
+<p><strong>By default, the <code>static</code> and <code>instance</code> variables of a class are assigned a <code>null</code> value.</strong></p>
+<p>You can prevent a <code>NullPointerException</code> from being thrown by checking <strong>whether an object is null</strong> before trying to access its member.</p>
+<p><strong>Important:</strong> If you attempt to use an <strong>uninitialized</strong> <code>local variable</code>, your code will fail to compile.</p>
+<p>For example, following code will not compile:</p>
+<pre class="code literal-block"><span></span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">;</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">list</span><span class="o">!=</span><span class="kc">null</span><span class="o">)</span>
+<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;1&quot;</span><span class="o">);</span>
+</pre>
+
+
+<p><strong>Important</strong>: for <code>array</code>, <code>NullPointerException</code> only throws if you want to <strong>do something</strong> with a null array space or <strong>access</strong> a non-exisit positon (For example, a <strong>non-initialized</strong> <code>static/instance</code> array).</p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">ThrowAnotherNullPointerException</span> <span class="o">{</span>
+    <span class="kd">static</span> <span class="n">String</span><span class="o">[]</span> <span class="n">oldLaptops</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">oldLaptops</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span> <span class="c1">//NullPointerException</span>
+
+        <span class="n">String</span><span class="o">[]</span> <span class="n">newLaptops</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span>
+        <span class="c1">//Note if there is no initialization, code will not compile</span>
+
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">newLaptops</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span> <span class="c1">//Print null</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">newLaptops</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="na">toString</span><span class="o">());</span>
+        <span class="c1">//NullPointerException</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3 id="numberformatexception">NumberFormatException</h3>
+<p><code>NumberFormatException</code> is a runtime exception. It’s thrown to indicate that the application has tried to <strong>convert a string (with an inappropriate format) to one of the numeric types</strong>.</p>
+<p>For example: Starting in Java 7, you can use underscores<code>_</code> in numeric literal values. But you can’t use them in String values passed to the method <code>parseInt()</code>. So if you do <code>Integer.parseInt("123_45")</code>, you will get <code>NumberFormatException</code>.</p>
+<p>Note: <code>Integer.parseInt("123ABCD", 16)</code> is valid, since this is the way to parse hex number. If you remove <code>16</code>, a <code>NumberFormatException</code> will throw since you cannot covert it to <strong>base 10</strong>.</p>
+<h3 id="exceptionininitializererror">ExceptionInInitializerError</h3>
+<p>The <code>ExceptionInInitializerError</code> error is typically thrown by the <strong>JVM</strong> when a <code>static initializer</code> in your code throws any type of <code>RuntimeException</code>.</p>
+<p>This error always goes with <code>runtime exception</code>. It can’t occur as the result of an <code>error</code> or <code>checked exception</code> thrown by the <code>static</code> initialization block.</p>
+<p><code>Runtime exception</code>s arising from any of the following will throw this error:</p>
+<ul>
+<li>
+<p>Execution of an <strong>anonymous <code>static</code> block</strong></p>
+</li>
+<li>
+<p><strong>Initialization</strong> of a <code>static</code> variable</p>
+</li>
+<li>
+<p>Execution of a <code>static</code> method (called from either of the previous two items)</p>
+</li>
+</ul>
+<p>For example, following code will throw this error, with <code>NumberFormatInitializerError</code>:</p>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DemoExceptionInInitializerError</span> <span class="o">{</span>
+            <span class="kd">static</span> <span class="o">{</span>
+                <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="s">&quot;sd&quot;</span><span class="o">,</span> <span class="mi">16</span><span class="o">);</span>
+                <span class="c1">//anoymous static block with runtime exception</span>
+            <span class="o">}</span>
+
+            <span class="kd">public</span> <span class="kd">class</span> <span class="nc">DemoExceptionInInitializerError1</span> <span class="o">{</span>
+                <span class="kd">static</span> <span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+                <span class="kd">static</span> <span class="kt">int</span> <span class="n">nameLength</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="na">length</span><span class="o">();</span>
+           <span class="c1">//Initialization of a static variable with NullPointerException</span>
+            <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3 id="stackoverflowerror">StackOverflowError</h3>
+<p>This error is thrown by the <strong>JVM</strong> when a Java program <strong>calls itself</strong> so many times that the memory stack allocated to execute the Java program “overflows.”</p>
+<p>For example, a infinate loop can cause this error</p>
+<h3 id="noclassdeffounderror">NoClassDefFoundError</h3>
+<p><code>NoClassDefFoundError</code> can throw if:</p>
+<ul>
+<li>
+<p>If you <strong>failed to set your classpath</strong> and, as a result, the JVM was unable to load the class that you wanted to access or execute.</p>
+</li>
+<li>
+<p>If you try to run your application before compiling it.</p>
+</li>
+</ul>
+<p>Note, <code>Class.forName()</code> methods, which is used to load class, throws <code>ClassNotFoundException</code> instead of this error.</p>
+<h4 id="outofmemoryerror">OutOfMemoryError</h4>
+<p>the JVM may <strong>run out of memory on the heap</strong>, and the garbage collector may <strong>not be able to free more memory for the JVM</strong>. In this case, the JVM is unable to create any more objects on the heap. An <code>OutOfMemoryError</code> will be thrown.</p>

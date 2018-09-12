@@ -1,0 +1,968 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Pengyin's Corner (Posts about SQL)</title><link>https://pengyin-shan.com/</link><description></description><atom:link type="application/rss+xml" href="https://pengyin-shan.com/categories/sql.xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Tue, 11 Sep 2018 20:57:13 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>SQL Tips</title><link>https://pengyin-shan.com/posts/2015/Data%20Science/sql-tips/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;h4 id="using-sqlprocessor-in-java"&gt;Using SQLProcessor in Java&lt;/h4&gt;
+&lt;p&gt;My current job requires me to work on some old Java web application, which involves in connecting to Oracle SQL database using &lt;code&gt;SQLProcesoor&lt;/code&gt;.&lt;/p&gt;
+&lt;h5 id="basic-syntax"&gt;Basic Syntax&lt;/h5&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//Assume you want to return an ArrayList of 'Course' objects&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;SQLProcessorExample&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;ArrayList&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Course&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nf"&gt;selectSQLExample&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;final&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;anyParameter&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+        &lt;span class="n"&gt;ArrayList&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Course&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;courses&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ArrayList&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Course&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;SQLProcessor&lt;/span&gt; &lt;span class="n"&gt;sProc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;SQLProcessor&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+            &lt;span class="n"&gt;PreparedStatementGenerator&lt;/span&gt; &lt;span class="n"&gt;coursePSG&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;PreparedStatementGenerator&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;PreparedStatement&lt;/span&gt; &lt;span class="nf"&gt;generatePrepareStatement&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Connection&lt;/span&gt; &lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;SQLException&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                        &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;sql&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"select * from test_table where test_para = ?"&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                        &lt;span class="n"&gt;PreparedStatement&lt;/span&gt; &lt;span class="n"&gt;ps&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;prepareStatement&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sql&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                        &lt;span class="c1"&gt;//Note: Index starting from 1. You can also use setInt or other setting methods&lt;/span&gt;
+                        &lt;span class="n"&gt;ps&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setString&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;anyParameter&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;ps&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                    &lt;span class="o"&gt;}&lt;/span&gt;
+            &lt;span class="n"&gt;ArrayList&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ArrayList&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&amp;gt;();&lt;/span&gt;
+            &lt;span class="c1"&gt;//Use MultiResultListReader if you have mutiple rows returned&lt;/span&gt;
+            &lt;span class="n"&gt;MultiResultListReader&lt;/span&gt; &lt;span class="n"&gt;reader&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;MultiResultListReader&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="n"&gt;sProc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;query&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;coursePSG&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;database_connection&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;reader&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="c1"&gt;//Deal with your results&lt;/span&gt;
+            &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;row&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;Course&lt;/span&gt; &lt;span class="n"&gt;result_c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Course&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                &lt;span class="n"&gt;result_c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setCourseNumber&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;row&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;]);&lt;/span&gt;
+                &lt;span class="n"&gt;result_c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setSectionNumber&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;row&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]);&lt;/span&gt;
+                &lt;span class="c1"&gt;//Process results...&lt;/span&gt;
+                &lt;span class="n"&gt;courses&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;add&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result_c&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+        &lt;span class="k"&gt;catch&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+            &lt;span class="c1"&gt;//Handle exceptions&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h5 id="important-tips"&gt;Important Tips&lt;/h5&gt;
+&lt;p&gt;If you have any trouble in your query and have no idea after checking with error message, try run this query in your &lt;strong&gt;DB workbench&lt;/strong&gt; first. This may help with possible syntax error.&lt;/p&gt;
+&lt;p&gt;If you run query sucessfully in your DB workbench, but you get a &lt;code&gt;Invalid Indentifer&lt;/code&gt; or &lt;code&gt;Invalid Keyword&lt;/code&gt; exception in your Java app. &lt;strong&gt;Make sure you check your query in code with all necessary white spaces. You may have muliple lines of query code and you forget spaces at the end of one line.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;```java
+String sql = "select * from table_test a, table_test2 b" +
+            "where id = 1";
+//Notice this sql doesn't have white_space between 'b' and 'where', which will cause trouble
+&lt;/pre&gt;&lt;/div&gt;</description><category>Database</category><category>SQL</category><guid>https://pengyin-shan.com/posts/2015/Data%20Science/sql-tips/</guid><pubDate>Thu, 30 Jul 2015 04:00:00 GMT</pubDate></item><item><title>SQL Basics</title><link>https://pengyin-shan.com/posts/2015/Data%20Science/sql-basics/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;h4 id="reference-list"&gt;Reference List&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="https://en.wikibooks.org/wiki/Oracle_Programming/SQL_Cheatsheet"&gt;Oracle Programming/SQL Cheatsheet&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/sql/index.htm"&gt;SQL Tutorial on TutorialsPoint&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="basic-sql-commands"&gt;Basic SQL Commands&lt;/h4&gt;
+&lt;h6 id="ddl-data-definition-language"&gt;DDL - Data Definition Language&lt;/h6&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;CREATE&lt;/code&gt;: Creates a new table, a view of a table, or other object in database&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ALTER&lt;/code&gt;: Modifies an existing database object, such as a table.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;DROP&lt;/code&gt;: Deletes an entire table, a view of a table or other object in the database.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6 id="dml-data-manipulation-language"&gt;DML - Data Manipulation Language&lt;/h6&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;INSERT&lt;/code&gt;: Creates a record&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;UPDATE&lt;/code&gt;: Modifies records&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;DELETE&lt;/code&gt;: Deletes records&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6 id="dcl-data-control-language"&gt;DCL - Data Control Language&lt;/h6&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;GRANT&lt;/code&gt;: Gives a privilege to user&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;REVOKE&lt;/code&gt;: Takes back privileges granted from user&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6 id="dql-data-query-language"&gt;DQL - Data Query Language&lt;/h6&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;SELECT&lt;/code&gt;: Retrieves certain records from one or more tables&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="data-integrity"&gt;Data Integrity&lt;/h4&gt;
+&lt;p&gt;The following categories of the data integrity exist with each RDBMS:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Entity Integrity&lt;/code&gt;: There are &lt;strong&gt;no duplicate rows&lt;/strong&gt; in a table.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Domain Integrity&lt;/code&gt;: Enforces valid entries for a given column by &lt;strong&gt;restricting the type, the format, or the range of values&lt;/strong&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Referential Integrity&lt;/code&gt;: Rows &lt;strong&gt;cannot be deleted&lt;/strong&gt;, which are &lt;strong&gt;used by other records&lt;/strong&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;User-Defined Integrity&lt;/code&gt;: Enforces some specific business rules that do not fall into entity, domain or referential integrity.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="database-normalization"&gt;Database Normalization&lt;/h4&gt;
+&lt;p&gt;Database normalization is the process of efficiently organizing data in a database.&lt;/p&gt;
+&lt;p&gt;There are two reasons of the normalization process:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Eliminating redundant data, for example, storing the same data in more than one tables.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Ensuring data dependencies make sense.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Normalization guidelines are divided into normal forms; The aim of normal forms is to organize the database structure so that it complies with the rules of &lt;code&gt;first normal form&lt;/code&gt;, then &lt;code&gt;second normal form&lt;/code&gt;, and finally &lt;code&gt;third normal form&lt;/code&gt;.&lt;/p&gt;
+&lt;h6 id="first-normal-form-1nf"&gt;First Normal Form (1NF)&lt;/h6&gt;
+&lt;p&gt;First normal form (&lt;code&gt;1NF&lt;/code&gt;) sets the very basic rules for an organized database:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Define the data items required, because they become the columns in a table. Place related data items in a table.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Ensure that there are &lt;em&gt;no repeating groups of data&lt;/em&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Ensure that there is a &lt;em&gt;primary key&lt;/em&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6 id="first-rule-of-1nf"&gt;First Rule of 1NF&lt;/h6&gt;
+&lt;p&gt;You must define the data items.&lt;/p&gt;
+&lt;p&gt;This means looking at the data to be stored, organizing the data into columns, defining what type of data each column contains, and finally putting related columns into their own table.&lt;/p&gt;
+&lt;h6 id="second-rule-of-1nf"&gt;Second Rule of 1NF&lt;/h6&gt;
+&lt;p&gt;Ensure that there are no repeating groups of data: you may need to &lt;code&gt;JOIN&lt;/code&gt; tables.&lt;/p&gt;
+&lt;h6 id="third-rule-of-1nf"&gt;Third Rule of 1NF&lt;/h6&gt;
+&lt;p&gt;Create primary key: &lt;code&gt;CREATE TABLE CUSTOMERS(PRIMARY KEY (ID));&lt;/code&gt;&lt;/p&gt;
+&lt;h6 id="second-normal-form-2nf"&gt;Second Normal Form (2NF)&lt;/h6&gt;
+&lt;p&gt;Second normal form states that it should meet all the rules for 1NF and there must be no partial dependences of any of the columns on the primary key.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;p&gt;Consider a customer-order relation and you want to store customer ID, customer name, order ID and order detail, and date of purchase:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;CREATE&lt;/span&gt; &lt;span class="k"&gt;TABLE&lt;/span&gt; &lt;span class="n"&gt;CUSTOMERS&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;CUST_ID&lt;/span&gt; &lt;span class="nb"&gt;INT&lt;/span&gt; &lt;span class="k"&gt;NOT&lt;/span&gt; &lt;span class="k"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;CUST_NAME&lt;/span&gt; &lt;span class="nb"&gt;VARCHAR&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;NOT&lt;/span&gt; &lt;span class="k"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;ORDER_ID&lt;/span&gt; &lt;span class="nb"&gt;INT&lt;/span&gt; &lt;span class="k"&gt;NOT&lt;/span&gt; &lt;span class="k"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;ORDER_DETAIL&lt;/span&gt; &lt;span class="nb"&gt;VARCHAR&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;NOT&lt;/span&gt; &lt;span class="k"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;SALE_DATE&lt;/span&gt; &lt;span class="n"&gt;DATETIME&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="k"&gt;PRIMARY&lt;/span&gt; &lt;span class="k"&gt;KEY&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;CUST_ID&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ORDER_ID&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;This table is in first normal form, in that it obeys all the rules of first normal form.&lt;/p&gt;
+&lt;p&gt;In this table, the primary key consists of &lt;code&gt;CUST_ID&lt;/code&gt; and &lt;code&gt;ORDER_ID&lt;/code&gt;. Combined, they are unique assuming same customer would hardly order same thing.&lt;/p&gt;
+&lt;p&gt;However, the table is not in second normal form because there are partial dependencies of primary keys and columns:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;CUST_NAME&lt;/code&gt; is dependent on &lt;code&gt;CUST_ID&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Order detail and purchase date are dependent on &lt;code&gt;ORDER_ID&lt;/code&gt;, but they are not dependent on &lt;code&gt;CUST_ID&lt;/code&gt;, because there's no link between a CUST_ID and an ORDER_DETAIL or their SALE_DATE.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;No real link between a customer's name and what he purchased.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;To make this table comply with second normal form, you need to separate the columns into three tables.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h6 id="third-normal-form-3nf"&gt;Third Normal Form (3NF)&lt;/h6&gt;
+&lt;p&gt;A table is in third normal form when the following conditions are met:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;It is in second normal form.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;All nonprimary fields are dependent on the primary key.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The dependency of nonprimary fields is between the data.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;CREATE&lt;/span&gt; &lt;span class="k"&gt;TABLE&lt;/span&gt; &lt;span class="n"&gt;CUSTOMERS&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;CUST_ID&lt;/span&gt; &lt;span class="nb"&gt;INT&lt;/span&gt; &lt;span class="k"&gt;NOT&lt;/span&gt; &lt;span class="k"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;CUST_NAME&lt;/span&gt; &lt;span class="nb"&gt;VARCHAR&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;NOT&lt;/span&gt; &lt;span class="k"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;DOB&lt;/span&gt; &lt;span class="nb"&gt;DATE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;STREET&lt;/span&gt; &lt;span class="nb"&gt;VARCHAR&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="n"&gt;CITY&lt;/span&gt; &lt;span class="nb"&gt;VARCHAR&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="k"&gt;STATE&lt;/span&gt; &lt;span class="nb"&gt;VARCHAR&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="n"&gt;ZIP&lt;/span&gt; &lt;span class="nb"&gt;VARCHAR&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="n"&gt;EMAIL_ID&lt;/span&gt; &lt;span class="nb"&gt;VARCHAR&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;256&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="k"&gt;PRIMARY&lt;/span&gt; &lt;span class="k"&gt;KEY&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;CUST_ID&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;The dependency between &lt;code&gt;zip code&lt;/code&gt; and &lt;code&gt;address&lt;/code&gt; is called a &lt;strong&gt;transitive dependency&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;To comply with third normal form, all you need to do is move the Street, City, and State fields into their own table.&lt;/p&gt;
+&lt;p&gt;The advantages of removing transitive dependencies:
+- The amount of data duplication is reduced and therefore your database becomes smaller.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Data integrity.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;When duplicated data changes, there's a big risk of updating only some of the data, especially if it's spread out in a number of different places in the database.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id="select"&gt;SELECT&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;SELECT INTO&lt;/code&gt; can only retrieve &lt;strong&gt;one&lt;/strong&gt; line of item. Empty line will get &lt;em&gt;NO_DATA_FOUND&lt;/em&gt; error. Mutiple lines will get &lt;em&gt;TOO_MANY_ROWS&lt;/em&gt; error.&lt;/p&gt;
+&lt;h4 id="like"&gt;LIKE&lt;/h4&gt;
+&lt;p&gt;User &lt;code&gt;LIKE&lt;/code&gt; to compare a value to similar values using wildcard operators.&lt;/p&gt;
+&lt;p&gt;There are two wildcards used in conjunction with the LIKE operator:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;The percent sign &lt;code&gt;%&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The underscore &lt;code&gt;_&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;WHERE SALARY LIKE '2_%_%'&lt;/code&gt;: Finds any values that start with 2 and are at least 3 characters in length&lt;/p&gt;
+&lt;h4 id="top"&gt;TOP&lt;/h4&gt;
+&lt;p&gt;The SQL &lt;code&gt;TOP&lt;/code&gt; clause is used to fetch a TOP N number or X percent records from a table.&lt;/p&gt;
+&lt;p&gt;Note: All the databases do not support TOP clause. For example MySQL supports &lt;code&gt;LIMIT&lt;/code&gt; clause to fetch limited number of records and Oracle uses &lt;code&gt;ROWNUM&lt;/code&gt; to fetch limited number of records.&lt;/p&gt;
+&lt;p&gt;Syntax:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="n"&gt;TOP&lt;/span&gt; &lt;span class="nb"&gt;number&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;percent&lt;/span&gt; &lt;span class="k"&gt;column_name&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="k"&gt;table_name&lt;/span&gt;
+&lt;span class="k"&gt;WHERE&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;condition&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;MySQL:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="n"&gt;columns&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="k"&gt;table&lt;/span&gt;
+&lt;span class="k"&gt;LIMIT&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;condition&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Oracle Server:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="n"&gt;columns&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="k"&gt;table&lt;/span&gt;
+&lt;span class="k"&gt;WHERE&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;ROWNUM&lt;/span&gt; &lt;span class="n"&gt;condition&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="order-by"&gt;ORDER BY&lt;/h4&gt;
+&lt;p&gt;The SQL &lt;code&gt;ORDER BY&lt;/code&gt; clause is used to sort the data in ascending or descending order, based on one or more columns.&lt;/p&gt;
+&lt;p&gt;Some database sorts query results in ascending order by default.&lt;/p&gt;
+&lt;p&gt;You can use more than one column in the &lt;code&gt;ORDER BY&lt;/code&gt; clause. Make sure whatever column you are using to sort, that column should be in column-list.&lt;/p&gt;
+&lt;p&gt;Syntax:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="k"&gt;column&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;list&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="k"&gt;table_name&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="k"&gt;WHERE&lt;/span&gt; &lt;span class="n"&gt;condition&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="k"&gt;ORDER&lt;/span&gt; &lt;span class="k"&gt;BY&lt;/span&gt; &lt;span class="n"&gt;column1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;column2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;..&lt;/span&gt; &lt;span class="n"&gt;columnN&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="k"&gt;ASC&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="k"&gt;DESC&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="group-by"&gt;GROUP BY&lt;/h4&gt;
+&lt;p&gt;The SQL &lt;code&gt;GROUP BY&lt;/code&gt; clause is used in collaboration with the &lt;code&gt;SELECT&lt;/code&gt; statement to arrange identical data into groups.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;GROUP BY&lt;/code&gt; clause follows the &lt;code&gt;WHERE&lt;/code&gt; clause in a &lt;code&gt;SELECT&lt;/code&gt; statement and must precedes the &lt;code&gt;ORDER BY&lt;/code&gt; clause.&lt;/p&gt;
+&lt;p&gt;Syntax:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="n"&gt;column1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;column2&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="k"&gt;table_name&lt;/span&gt;
+&lt;span class="k"&gt;WHERE&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="n"&gt;conditions&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;GROUP&lt;/span&gt; &lt;span class="k"&gt;BY&lt;/span&gt; &lt;span class="n"&gt;column1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;column2&lt;/span&gt;
+&lt;span class="k"&gt;ORDER&lt;/span&gt; &lt;span class="k"&gt;BY&lt;/span&gt; &lt;span class="n"&gt;column1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;column2&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="distinct"&gt;DISTINCT&lt;/h4&gt;
+&lt;p&gt;The SQL &lt;code&gt;DISTINCT&lt;/code&gt; keyword is used in conjunction with &lt;code&gt;SELECT&lt;/code&gt; statement to eliminate all the duplicate records and fetching only unique records.&lt;/p&gt;
+&lt;p&gt;Syntax:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="k"&gt;DISTINCT&lt;/span&gt; &lt;span class="n"&gt;column1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;column2&lt;/span&gt;&lt;span class="p"&gt;,.....&lt;/span&gt;&lt;span class="n"&gt;columnN&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="k"&gt;table_name&lt;/span&gt;
+&lt;span class="k"&gt;WHERE&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;condition&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="sql-constraints"&gt;SQL Constraints&lt;/h4&gt;
+&lt;p&gt;Constraints could be column level or table level.&lt;/p&gt;
+&lt;p&gt;Commonly used constraints:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;NOT NULL&lt;/code&gt; Constraint: Ensures that a column cannot have &lt;code&gt;NULL&lt;/code&gt; value.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;DEFAULT&lt;/code&gt; Constraint: Provides a default value for a column when none is specified.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;UNIQUE&lt;/code&gt; Constraint: Ensures that all values in a column are different.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;PRIMARY&lt;/code&gt; Key: Uniquely identified each rows/records in a database table.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;FOREIGN&lt;/code&gt; Key: Uniquely identified a rows/records in any another database table.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;CHECK&lt;/code&gt; Constraint: The &lt;code&gt;CHECK&lt;/code&gt; constraint ensures that all values in a column &lt;em&gt;satisfy certain conditions&lt;/em&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;INDEX&lt;/code&gt;: Use to create and retrieve data from the database very quickly.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6 id="not-null"&gt;NOT NULL&lt;/h6&gt;
+&lt;p&gt;A NULL is not the same as no data, rather, it represents unknown data.&lt;/p&gt;
+&lt;p&gt;Example: &lt;code&gt;CREATE TABLE CUSTOMERS( ID  INT  NOT NULL);&lt;/code&gt;&lt;/p&gt;
+&lt;h6 id="default"&gt;DEFAULT&lt;/h6&gt;
+&lt;p&gt;In case &lt;code&gt;INSERT INTO&lt;/code&gt; or &lt;code&gt;INSERT&lt;/code&gt; statement does not provide a value for such column, then the column will have a default value.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;CREATE TABLE CUSTOMERS(ID  INT  NOT NULL)&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ALTER COLUMN SALARY DROP DEFAULT;&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6 id="primary-key"&gt;PRIMARY KEY&lt;/h6&gt;
+&lt;p&gt;A primary key is a field in a table which uniquely identifies each row/record in a database table.&lt;/p&gt;
+&lt;p&gt;Primary keys must contain unique values. A primary key column cannot have &lt;code&gt;NULL&lt;/code&gt; values.&lt;/p&gt;
+&lt;p&gt;A table can have only one primary key. When multiple fields are used as a primary key, they are called a &lt;code&gt;composite key&lt;/code&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NOTE: If you use the &lt;code&gt;ALTER TABLE&lt;/code&gt; statement to add a primary key, the primary key column(s) must already have been declared to not contain &lt;code&gt;NULL&lt;/code&gt; values (when the table was first created).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Example: &lt;code&gt;CREATE TABLE CUSTOMERS( PRIMARY KEY (ID, NAME) );&lt;/code&gt;&lt;/p&gt;
+&lt;h6 id="foreign-key"&gt;FOREIGN KEY&lt;/h6&gt;
+&lt;p&gt;A &lt;code&gt;foreign key&lt;/code&gt; is a key used to link two tables together. This is sometimes called a &lt;code&gt;referencing key&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Foreign Key is a column or a combination of columns whose values match a Primary Key in a different table.&lt;/p&gt;
+&lt;p&gt;The relationship between 2 tables matches the Primary Key in one of the tables with a Foreign Key in the second table.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;CREATE TABLE ORDERS (  CUSTOMER_ID INT references CUSTOMERS(ID) );&lt;/code&gt;&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;ALTER&lt;/span&gt; &lt;span class="k"&gt;TABLE&lt;/span&gt; &lt;span class="n"&gt;ORDERS&lt;/span&gt;
+&lt;span class="k"&gt;DROP&lt;/span&gt; &lt;span class="k"&gt;FOREIGN&lt;/span&gt; &lt;span class="k"&gt;KEY&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;If ORDERS table has already been created, and the foreign key has not yet been set, use the syntax for specifying a foreign key by altering a table:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;ALTER&lt;/span&gt; &lt;span class="k"&gt;TABLE&lt;/span&gt; &lt;span class="n"&gt;ORDERS&lt;/span&gt;
+&lt;span class="k"&gt;ADD&lt;/span&gt; &lt;span class="k"&gt;FOREIGN&lt;/span&gt; &lt;span class="k"&gt;KEY&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Customer_ID&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;REFERENCES&lt;/span&gt; &lt;span class="n"&gt;CUSTOMERS&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ID&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h6 id="check"&gt;CHECK&lt;/h6&gt;
+&lt;p&gt;The &lt;code&gt;CHECK&lt;/code&gt; Constraint enables a condition to check the value being entered into a record. If the condition evaluates to false, the record violates the constraint and isn't entered into the table.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;CREATE TABLE CUSTOMERS(AGE INT NOT NULL CHECK (AGE &amp;gt;= 18));&lt;/code&gt;&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;ALTER&lt;/span&gt; &lt;span class="k"&gt;TABLE&lt;/span&gt; &lt;span class="n"&gt;CUSTOMERS&lt;/span&gt;
+    &lt;span class="k"&gt;MODIFY&lt;/span&gt; &lt;span class="n"&gt;AGE&lt;/span&gt; &lt;span class="nb"&gt;INT&lt;/span&gt; &lt;span class="k"&gt;NOT&lt;/span&gt; &lt;span class="k"&gt;NULL&lt;/span&gt; &lt;span class="k"&gt;CHECK&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;AGE&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;=&lt;/span&gt; &lt;span class="mi"&gt;18&lt;/span&gt; &lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="k"&gt;ALTER&lt;/span&gt; &lt;span class="k"&gt;TABLE&lt;/span&gt; &lt;span class="n"&gt;CUSTOMERS&lt;/span&gt;
+    &lt;span class="k"&gt;ADD&lt;/span&gt; &lt;span class="k"&gt;CONSTRAINT&lt;/span&gt; &lt;span class="n"&gt;myCheckConstraint&lt;/span&gt; &lt;span class="k"&gt;CHECK&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;AGE&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;=&lt;/span&gt; &lt;span class="mi"&gt;18&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="k"&gt;ALTER&lt;/span&gt; &lt;span class="k"&gt;TABLE&lt;/span&gt; &lt;span class="n"&gt;CUSTOMERS&lt;/span&gt;
+    &lt;span class="k"&gt;DROP&lt;/span&gt; &lt;span class="k"&gt;CONSTRAINT&lt;/span&gt; &lt;span class="n"&gt;myCheckConstraint&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h6 id="index"&gt;INDEX&lt;/h6&gt;
+&lt;p&gt;The &lt;code&gt;INDEX&lt;/code&gt; is used to create and retrieve data from the database very quickly.&lt;/p&gt;
+&lt;p&gt;Index can be created by using single or group of columns in a table.&lt;/p&gt;
+&lt;p&gt;When index is created, it is assigned a &lt;code&gt;ROWID&lt;/code&gt; for each row before it sorts out the data.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;CREATE&lt;/span&gt; &lt;span class="k"&gt;INDEX&lt;/span&gt; &lt;span class="n"&gt;index_name&lt;/span&gt;
+    &lt;span class="k"&gt;ON&lt;/span&gt; &lt;span class="k"&gt;table_name&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="n"&gt;column1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;column2&lt;/span&gt;&lt;span class="p"&gt;.....);&lt;/span&gt;
+&lt;span class="k"&gt;ALTER&lt;/span&gt; &lt;span class="k"&gt;TABLE&lt;/span&gt; &lt;span class="n"&gt;CUSTOMERS&lt;/span&gt;
+    &lt;span class="k"&gt;DROP&lt;/span&gt; &lt;span class="k"&gt;INDEX&lt;/span&gt; &lt;span class="n"&gt;idx_age&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="join"&gt;JOIN&lt;/h4&gt;
+&lt;p&gt;JOIN is performed in the WHERE clause. Several operators can be used to join tables, such as =, &amp;lt;, &amp;gt;, &amp;lt;&amp;gt;, &amp;lt;=, &amp;gt;=, !=, BETWEEN, LIKE, and NOT;&lt;/p&gt;
+&lt;p&gt;There are different types of joins available in SQL:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;INNER JOIN&lt;/code&gt;: returns rows when there is a match in &lt;strong&gt;both tables&lt;/strong&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;LEFT JOIN&lt;/code&gt;: returns all rows from the &lt;strong&gt;left table&lt;/strong&gt;, even if there are no matches in the right table.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;RIGHT JOIN&lt;/code&gt;: returns all rows from the &lt;strong&gt;right table&lt;/strong&gt;, even if there are no matches in the left table.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;FULL JOIN&lt;/code&gt;: returns rows when there is a match &lt;strong&gt;in one of the tables&lt;/strong&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;SELF JOIN&lt;/code&gt;: is used to &lt;strong&gt;join a table to itself&lt;/strong&gt; as if the table were two tables, temporarily renaming at least one table in the SQL statement.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;CARTESIAN JOIN&lt;/code&gt;: returns the &lt;strong&gt;Cartesian product&lt;/strong&gt; of the sets of records from the two or more joined tables.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6 id="inner-join"&gt;INNER JOIN&lt;/h6&gt;
+&lt;p&gt;When the join-predicate is satisfied, column values for each matched pair of rows of A and B are combined into a result row.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SQL&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;SELECT&lt;/span&gt;  &lt;span class="n"&gt;ID&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;NAME&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;AMOUNT&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;DATE&lt;/span&gt;
+ &lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;CUSTOMERS&lt;/span&gt;
+ &lt;span class="k"&gt;INNER&lt;/span&gt; &lt;span class="k"&gt;JOIN&lt;/span&gt; &lt;span class="n"&gt;ORDERS&lt;/span&gt;
+ &lt;span class="k"&gt;ON&lt;/span&gt; &lt;span class="n"&gt;CUSTOMERS&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ID&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ORDERS&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CUSTOMER_ID&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h6 id="left-join"&gt;LEFT JOIN&lt;/h6&gt;
+&lt;p&gt;The SQL LEFT JOIN returns all rows from the left table, even if there are no matches in the right table.&lt;/p&gt;
+&lt;p&gt;This means that if the ON clause matches 0 (zero) records in right table, the join will still return a row in the result, but with &lt;code&gt;NULL&lt;/code&gt; in each column &lt;strong&gt;from right table&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;This means that a left join returns all the values from the left table, plus matched values from the right table or NULL in case of no matching join predicate.&lt;/p&gt;
+&lt;p&gt;Syntax:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="n"&gt;table1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;column1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;table2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;column2&lt;/span&gt;&lt;span class="p"&gt;...&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;table1&lt;/span&gt;
+&lt;span class="k"&gt;LEFT&lt;/span&gt; &lt;span class="k"&gt;JOIN&lt;/span&gt; &lt;span class="n"&gt;table2&lt;/span&gt;
+&lt;span class="k"&gt;ON&lt;/span&gt; &lt;span class="n"&gt;table1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;common_field&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;table2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;common_field&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;RIGHT JOIN is similar.&lt;/p&gt;
+&lt;h6 id="full-join"&gt;FULL JOIN&lt;/h6&gt;
+&lt;p&gt;The SQL FULL JOIN combines &lt;strong&gt;the results of both left and right outer joins&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The joined table will contain all records from both tables, and fill in NULLs for missing matches on either side.&lt;/p&gt;
+&lt;h6 id="self-join"&gt;SELF JOIN&lt;/h6&gt;
+&lt;p&gt;Syntax:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;column_name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;column_name&lt;/span&gt;&lt;span class="p"&gt;...&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;table1&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;table1&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;
+&lt;span class="k"&gt;WHERE&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;common_field&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;common_field&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h6 id="cartesian-joincross-join"&gt;CARTESIAN JOIN/CROSS JOIN&lt;/h6&gt;
+&lt;p&gt;The &lt;code&gt;CARTESIAN JOIN&lt;/code&gt; or &lt;code&gt;CROSS JOIN&lt;/code&gt; returns the Cartesian product of the sets of records from the two or more joined tables.&lt;/p&gt;
+&lt;p&gt;Thus, it equates to &lt;em&gt;an inner join where the join-condition always evaluates to True&lt;/em&gt; or &lt;em&gt;where the join-condition is absent&lt;/em&gt; from the statement.&lt;/p&gt;
+&lt;p&gt;Syntax:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="n"&gt;table1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;column1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;table2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;column2&lt;/span&gt;&lt;span class="p"&gt;...&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt;  &lt;span class="n"&gt;table1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;table2&lt;/span&gt; &lt;span class="p"&gt;[,&lt;/span&gt; &lt;span class="n"&gt;table3&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="union"&gt;UNION&lt;/h4&gt;
+&lt;p&gt;The SQL &lt;code&gt;UNION&lt;/code&gt; clause/operator is used to combine the results of two or more SELECT statements &lt;strong&gt;without returning any duplicate rows&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;To use UNION, each SELECT must have &lt;em&gt;the same number of columns selected, the same number of column expressions, the same data type, and have them in the same order&lt;/em&gt;, but they do not have to be the same length.&lt;/p&gt;
+&lt;p&gt;Syntax:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="n"&gt;column1&lt;/span&gt; &lt;span class="p"&gt;[,&lt;/span&gt; &lt;span class="n"&gt;column2&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;table1&lt;/span&gt; &lt;span class="p"&gt;[,&lt;/span&gt; &lt;span class="n"&gt;table2&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="k"&gt;WHERE&lt;/span&gt; &lt;span class="n"&gt;condition&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;UNION&lt;/span&gt;
+&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="n"&gt;column1&lt;/span&gt; &lt;span class="p"&gt;[,&lt;/span&gt; &lt;span class="n"&gt;column2&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;table1&lt;/span&gt; &lt;span class="p"&gt;[,&lt;/span&gt; &lt;span class="n"&gt;table2&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="k"&gt;WHERE&lt;/span&gt; &lt;span class="n"&gt;condition&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;The &lt;code&gt;UNION ALL&lt;/code&gt; operator is used to combine the results of two SELECT statements &lt;strong&gt;including duplicate rows&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;There are two other clauses (i.e., operators), which are very similar to UNION clause:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;SQL &lt;code&gt;INTERSECT&lt;/code&gt; Clause&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;SQL &lt;code&gt;EXCEPT&lt;/code&gt; Clause&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6 id="intersect"&gt;INTERSECT&lt;/h6&gt;
+&lt;p&gt;The SQL &lt;code&gt;INTERSECT&lt;/code&gt; clause/operator is used to combine two SELECT statements, but returns rows only from the first SELECT statement that are identical to a row in the second SELECT statement.&lt;/p&gt;
+&lt;p&gt;This means INTERSECT returns &lt;em&gt;only common rows returned by the two SELECT statements&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Syntax:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="n"&gt;column1&lt;/span&gt; &lt;span class="p"&gt;[,&lt;/span&gt; &lt;span class="n"&gt;column2&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;table1&lt;/span&gt; &lt;span class="p"&gt;[,&lt;/span&gt; &lt;span class="n"&gt;table2&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="k"&gt;WHERE&lt;/span&gt; &lt;span class="n"&gt;condition&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;INTERSECT&lt;/span&gt;
+&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="n"&gt;column1&lt;/span&gt; &lt;span class="p"&gt;[,&lt;/span&gt; &lt;span class="n"&gt;column2&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;table1&lt;/span&gt; &lt;span class="p"&gt;[,&lt;/span&gt; &lt;span class="n"&gt;table2&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="k"&gt;WHERE&lt;/span&gt; &lt;span class="n"&gt;condition&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h6 id="except"&gt;EXCEPT&lt;/h6&gt;
+&lt;p&gt;The SQL &lt;code&gt;EXCEPT&lt;/code&gt; clause/operator is used to combine two SELECT statements and returns rows from the first SELECT statement that are not returned by the second SELECT statement.&lt;/p&gt;
+&lt;p&gt;This means EXCEPT returns only rows, which &lt;em&gt;are not available in second SELECT statement&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Syntax is similar to &lt;code&gt;INTERSECT&lt;/code&gt;.&lt;/p&gt;
+&lt;h4 id="null-values"&gt;NULL VALUES&lt;/h4&gt;
+&lt;p&gt;SQL NULL is the term used to represent &lt;strong&gt;no&lt;/strong&gt; value.&lt;/p&gt;
+&lt;p&gt;It is very important to understand that a NULL value is different than a zero value or a field that contains spaces.&lt;/p&gt;
+&lt;p&gt;You must use the &lt;code&gt;IS NULL&lt;/code&gt; or &lt;code&gt;IS NOT NULL&lt;/code&gt; operators in order to check for a NULL value.&lt;/p&gt;
+&lt;h4 id="sql-alias"&gt;SQL Alias&lt;/h4&gt;
+&lt;p&gt;User can rename a table or a column &lt;strong&gt;temporarily&lt;/strong&gt; by giving another name known as &lt;code&gt;alias&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Syntax:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="n"&gt;column1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;column2&lt;/span&gt;&lt;span class="p"&gt;....&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="k"&gt;table_name&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt; &lt;span class="n"&gt;alias_name&lt;/span&gt;
+&lt;span class="k"&gt;WHERE&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;condition&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+
+&lt;span class="p"&gt;:::&lt;/span&gt;&lt;span class="k"&gt;sql&lt;/span&gt;
+&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="k"&gt;column_name&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt; &lt;span class="n"&gt;alias_name&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="k"&gt;table_name&lt;/span&gt;
+&lt;span class="k"&gt;WHERE&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;condition&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SQL&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="k"&gt;C&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ID&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;C&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;NAME&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;C&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;AGE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;O&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;AMOUNT&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;CUSTOMERS&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt; &lt;span class="k"&gt;C&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ORDERS&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt; &lt;span class="n"&gt;O&lt;/span&gt;
+&lt;span class="k"&gt;WHERE&lt;/span&gt; &lt;span class="k"&gt;C&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ID&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;O&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CUSTOMER_ID&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="sql-index"&gt;SQL INDEX&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;Index&lt;/code&gt; is special lookup table that the database search engine can use to speed up data retrieval. i.e. an index is a &lt;strong&gt;pointer to data&lt;/strong&gt; in a table.&lt;/p&gt;
+&lt;p&gt;An index helps &lt;strong&gt;speed up&lt;/strong&gt; &lt;code&gt;SELECT&lt;/code&gt; queries and &lt;code&gt;WHERE&lt;/code&gt; clauses, but it &lt;strong&gt;slows down&lt;/strong&gt; data input, with &lt;code&gt;UPDATE&lt;/code&gt; and &lt;code&gt;INSERT&lt;/code&gt; statements. Indexes can be created or dropped with no effect on the data.&lt;/p&gt;
+&lt;h6 id="create"&gt;CREATE&lt;/h6&gt;
+&lt;p&gt;Creating index involves the &lt;code&gt;CREATE INDEX&lt;/code&gt; statement, which allows you to name the index, to specify the table and which column or columns to index, and to indicate whether the index is in ascending or descending
+order.&lt;/p&gt;
+&lt;p&gt;Indexes can also be &lt;strong&gt;unique&lt;/strong&gt;, similar to the UNIQUE constraint, in that the index prevents duplicate entries in the column or combination of columns on which there's an index.&lt;/p&gt;
+&lt;p&gt;Syntax:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;CREATE&lt;/span&gt; &lt;span class="k"&gt;INDEX&lt;/span&gt; &lt;span class="n"&gt;index_name&lt;/span&gt; &lt;span class="k"&gt;ON&lt;/span&gt; &lt;span class="k"&gt;table_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Single-Column Indexes:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;CREATE&lt;/span&gt; &lt;span class="k"&gt;INDEX&lt;/span&gt; &lt;span class="n"&gt;index_name&lt;/span&gt;
+&lt;span class="k"&gt;ON&lt;/span&gt; &lt;span class="k"&gt;table_name&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;column_name&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h6 id="unique-indexes"&gt;Unique Indexes&lt;/h6&gt;
+&lt;p&gt;A unique index does not allow any duplicate values to be inserted into the table.&lt;/p&gt;
+&lt;p&gt;Syntax:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;CREATE&lt;/span&gt; &lt;span class="k"&gt;UNIQUE&lt;/span&gt; &lt;span class="k"&gt;INDEX&lt;/span&gt; &lt;span class="n"&gt;index_name&lt;/span&gt; &lt;span class="k"&gt;on&lt;/span&gt; &lt;span class="k"&gt;table_name&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;column_name&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h6 id="composite-indexes"&gt;Composite Indexes&lt;/h6&gt;
+&lt;p&gt;Should there be only one column used, a single-column index should be the choice.&lt;/p&gt;
+&lt;p&gt;Should there be two or more columns that are frequently used in the WHERE clause as filters, the composite index would be the best choice.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;CREATE&lt;/span&gt; &lt;span class="k"&gt;INDEX&lt;/span&gt; &lt;span class="n"&gt;index_name&lt;/span&gt;
+&lt;span class="k"&gt;on&lt;/span&gt; &lt;span class="k"&gt;table_name&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;column1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;column2&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h6 id="implicit-indexed"&gt;Implicit Indexed&lt;/h6&gt;
+&lt;p&gt;Implicit indexes are indexes that are automatically created by the database server when an object is created.&lt;/p&gt;
+&lt;p&gt;Indexes are automatically created for &lt;strong&gt;primary key constraints and unique constraints&lt;/strong&gt;.&lt;/p&gt;
+&lt;h6 id="drop"&gt;DROP&lt;/h6&gt;
+&lt;p&gt;Syntax:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;DROP&lt;/span&gt; &lt;span class="k"&gt;INDEX&lt;/span&gt; &lt;span class="n"&gt;index_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h6 id="when-to-avoid-index"&gt;WHEN TO AVOID INDEX&lt;/h6&gt;
+&lt;p&gt;The following guidelines indicate when the use of an index should be reconsidered:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Indexes should not be used on &lt;strong&gt;small tables&lt;/strong&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Tables that have frequent, large &lt;strong&gt;batch update&lt;/strong&gt; or &lt;strong&gt;insert&lt;/strong&gt; operations.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Indexes should not be used on columns that contain a high number of NULL values.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Columns that are &lt;strong&gt;frequently manipulated&lt;/strong&gt; should not be indexed.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="alter-table"&gt;ALTER TABLE&lt;/h4&gt;
+&lt;p&gt;SQL &lt;code&gt;ALTER TABLE&lt;/code&gt; command is used to add, delete or modify columns in an existing table.&lt;/p&gt;
+&lt;p&gt;Syntax:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;ALTER&lt;/span&gt; &lt;span class="k"&gt;TABLE&lt;/span&gt; &lt;span class="k"&gt;table_name&lt;/span&gt;
+&lt;span class="k"&gt;DO&lt;/span&gt; &lt;span class="n"&gt;SOMETHING&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="trunacte-table"&gt;TRUNACTE TABLE&lt;/h4&gt;
+&lt;p&gt;SQL &lt;code&gt;TRUNCATE TABLE&lt;/code&gt; command is used to &lt;strong&gt;delete complete data&lt;/strong&gt; from an existing table.&lt;/p&gt;
+&lt;p&gt;Syntax:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;TRUNCATE&lt;/span&gt; &lt;span class="k"&gt;TABLE&lt;/span&gt; &lt;span class="k"&gt;table_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="views"&gt;VIEWS&lt;/h4&gt;
+&lt;p&gt;View is nothing more than a SQL statement that is stored in the database with an associated name.&lt;/p&gt;
+&lt;p&gt;A view is actually a composition of a table in the form of a predefined SQL query.&lt;/p&gt;
+&lt;p&gt;A view can contain all rows of a table or select rows from a table.&lt;/p&gt;
+&lt;p&gt;A view can be created from one or many tables which depends on the written SQL query to create a view.&lt;/p&gt;
+&lt;h6 id="creating-view"&gt;CREATING VIEW&lt;/h6&gt;
+&lt;p&gt;Database views are created using the &lt;code&gt;CREATE VIEW&lt;/code&gt; statement.&lt;/p&gt;
+&lt;p&gt;Views can be created from a single table, multiple tables, or another view.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;CREATE&lt;/span&gt; &lt;span class="k"&gt;VIEW&lt;/span&gt; &lt;span class="n"&gt;view_name&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt;
+&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="n"&gt;column1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;column2&lt;/span&gt;&lt;span class="p"&gt;.....&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="k"&gt;table_name&lt;/span&gt;
+&lt;span class="k"&gt;WHERE&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;condition&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+
+&lt;span class="p"&gt;:::&lt;/span&gt;&lt;span class="k"&gt;sql&lt;/span&gt;
+&lt;span class="k"&gt;SQL&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;CUSTOMERS_VIEW&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h6 id="with-check-option"&gt;WITH CHECK OPTION&lt;/h6&gt;
+&lt;p&gt;The &lt;code&gt;WITH CHECK OPTION&lt;/code&gt; is a &lt;code&gt;CREATE VIEW&lt;/code&gt; statement option.&lt;/p&gt;
+&lt;p&gt;The purpose of the WITH CHECK OPTION is to ensure that &lt;strong&gt;all UPDATE and INSERTs satisfy the condition(s) in the view definition&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;If they do not satisfy the condition(s), the UPDATE or INSERT returns an error.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;CREATE&lt;/span&gt; &lt;span class="k"&gt;VIEW&lt;/span&gt; &lt;span class="n"&gt;CUSTOMERS_VIEW&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt;
+&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;age&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;CUSTOMERS&lt;/span&gt;
+&lt;span class="k"&gt;WHERE&lt;/span&gt; &lt;span class="n"&gt;age&lt;/span&gt; &lt;span class="k"&gt;IS&lt;/span&gt; &lt;span class="k"&gt;NOT&lt;/span&gt; &lt;span class="k"&gt;NULL&lt;/span&gt;
+&lt;span class="k"&gt;WITH&lt;/span&gt; &lt;span class="k"&gt;CHECK&lt;/span&gt; &lt;span class="k"&gt;OPTION&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;The WITH CHECK OPTION in this case should deny the entry of any NULL values in the view's AGE column.&lt;/p&gt;
+&lt;h6 id="update-view"&gt;UPDATE VIEW&lt;/h6&gt;
+&lt;p&gt;A VIEW can be updated in certain conditions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;The SELECT clause may not contain the keyword DISTINCT.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The SELECT clause may not contain summary functions.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The SELECT clause may not contain set functions.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The SELECT clause may not contain set operators.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The SELECT clause may not contain an ORDER BY clause.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The FROM clause may not contain multiple tables.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The WHERE clause may not contain subqueries.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The query may not contain GROUP BY or HAVING.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Calculated columns may not be updated.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;All NOT NULL columns from the base table must be included in the view in order for the INSERT query to function.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SQL&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;UPDATE&lt;/span&gt; &lt;span class="n"&gt;CUSTOMERS_VIEW&lt;/span&gt;
+&lt;span class="k"&gt;SET&lt;/span&gt; &lt;span class="n"&gt;AGE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;35&lt;/span&gt;
+&lt;span class="k"&gt;WHERE&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'Ramesh'&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;This would ultimately update the base table CUSTOMERS &lt;strong&gt;and&lt;/strong&gt; same would reflect in the view itself.&lt;/p&gt;
+&lt;h6 id="insert-or-delete-rows"&gt;INSERT OR DELETE ROWS&lt;/h6&gt;
+&lt;p&gt;Rows of data can be inserted/deleted from a view.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SQL&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;DELETE&lt;/span&gt; &lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;CUSTOMERS_VIEW&lt;/span&gt;
+&lt;span class="k"&gt;WHERE&lt;/span&gt; &lt;span class="n"&gt;age&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;22&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;This would ultimately delete a row from the base table CUSTOMERS &lt;strong&gt;and&lt;/strong&gt; same would reflect in the view itself.&lt;/p&gt;
+&lt;h6 id="drop-view"&gt;DROP VIEW&lt;/h6&gt;
+&lt;p&gt;Syntax:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;DROP&lt;/span&gt; &lt;span class="k"&gt;VIEW&lt;/span&gt; &lt;span class="n"&gt;view_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="having-clause"&gt;HAVING CLAUSE&lt;/h4&gt;
+&lt;p&gt;HAVING clause enables you to specify conditions that filter which group results appear in the final results.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;HAVING&lt;/code&gt; clause places conditions on groups created by the &lt;code&gt;GROUP BY&lt;/code&gt; clause.&lt;/p&gt;
+&lt;p&gt;Syntax:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt;
+&lt;span class="k"&gt;WHERE&lt;/span&gt;
+&lt;span class="k"&gt;GROUP&lt;/span&gt; &lt;span class="k"&gt;BY&lt;/span&gt;
+&lt;span class="k"&gt;HAVING&lt;/span&gt;
+&lt;span class="k"&gt;ORDER&lt;/span&gt; &lt;span class="k"&gt;BY&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;The &lt;code&gt;HAVING&lt;/code&gt; clause must follow the &lt;code&gt;GROUP BY&lt;/code&gt; clause in a query and must also precede the &lt;code&gt;ORDER BY&lt;/code&gt; clause if used.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="n"&gt;column1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;column2&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;table1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;table2&lt;/span&gt;
+&lt;span class="k"&gt;WHERE&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="n"&gt;conditions&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;GROUP&lt;/span&gt; &lt;span class="k"&gt;BY&lt;/span&gt; &lt;span class="n"&gt;column1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;column2&lt;/span&gt;
+&lt;span class="k"&gt;HAVING&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="n"&gt;conditions&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;ORDER&lt;/span&gt; &lt;span class="k"&gt;BY&lt;/span&gt; &lt;span class="n"&gt;column1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;column2&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="tansactions"&gt;TANSACTIONS&lt;/h4&gt;
+&lt;p&gt;Transaction is a unit of work that is performed &lt;strong&gt;against a database&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Transactions are &lt;strong&gt;units&lt;/strong&gt; or &lt;strong&gt;sequences&lt;/strong&gt; of work accomplished in a logical order, whether in a manual fashion by a user or automatically by some sort of a database program.&lt;/p&gt;
+&lt;p&gt;A transaction is the propagation of one or more changes to the database.&lt;/p&gt;
+&lt;p&gt;Practically, you will club many SQL queries into a group and you will execute all of them together as a part of a transaction.&lt;/p&gt;
+&lt;h6 id="properties-of-transactions"&gt;PROPERTIES OF TRANSACTIONS&lt;/h6&gt;
+&lt;p&gt;Transactions have the following four standard properties, usually referred to by the acronym &lt;code&gt;ACID&lt;/code&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Atomicity&lt;/code&gt;: ensures that all operations within the work unit are completed successfully; otherwise, the transaction is aborted at the point of failure, and previous operations are rolled back to their former state.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Consistency&lt;/code&gt;: ensures that the database properly changes states upon a successfully committed transaction.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Isolation&lt;/code&gt;: enables transactions to operate independently of and transparent to each other.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Durability&lt;/code&gt;: ensures that the result or effect of a committed transaction persists in case of a system failure.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6 id="transaction-control"&gt;TRANSACTION CONTROL&lt;/h6&gt;
+&lt;p&gt;There are following commands used to control transactions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;COMMIT&lt;/code&gt;: to save the changes.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ROLLBACK&lt;/code&gt;: to rollback the changes.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;SAVEPOINT&lt;/code&gt;: creates points within groups of transactions in which to ROLLBACK&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;SET TRANSACTION&lt;/code&gt;: Places a name on a transaction.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Transactional control commands are only used with the DML commands &lt;code&gt;INSERT&lt;/code&gt;, &lt;code&gt;UPDATE&lt;/code&gt; and &lt;code&gt;DELETE&lt;/code&gt; only.&lt;/p&gt;
+&lt;p&gt;They can not be used while creating tables or dropping them because these operations are automatically committed in the database.&lt;/p&gt;
+&lt;h6 id="commit"&gt;COMMIT&lt;/h6&gt;
+&lt;p&gt;The COMMIT command is the transactional command used to &lt;strong&gt;save changes&lt;/strong&gt; invoked by a transaction to the database.&lt;/p&gt;
+&lt;p&gt;The COMMIT command saves all transactions to the database since the last &lt;code&gt;COMMIT&lt;/code&gt; or &lt;code&gt;ROLLBACK&lt;/code&gt; command.&lt;/p&gt;
+&lt;p&gt;The syntax for COMMIT command is as follows:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;COMMIT&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h6 id="rollback"&gt;ROLLBACK&lt;/h6&gt;
+&lt;p&gt;The ROLLBACK command is the transactional command used to &lt;strong&gt;undo transactions&lt;/strong&gt; that &lt;strong&gt;have not already been saved&lt;/strong&gt; to the database.&lt;/p&gt;
+&lt;p&gt;The ROLLBACK command can only be used to undo transactions since the last &lt;code&gt;COMMIT&lt;/code&gt; or &lt;code&gt;ROLLBACK&lt;/code&gt; command was issued.&lt;/p&gt;
+&lt;p&gt;The syntax for ROLLBACK command is as follows:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;ROLLBACK&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h6 id="savepoint"&gt;SAVEPOINT&lt;/h6&gt;
+&lt;p&gt;A SAVEPOINT is a point in a transaction when you can roll the transaction back to a certain point without rolling back the entire transaction.&lt;/p&gt;
+&lt;p&gt;The syntax for SAVEPOINT command is as follows:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;SAVEPOINT&lt;/span&gt; &lt;span class="n"&gt;SAVEPOINT_NAME&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;This command serves only in the creation of a SAVEPOINT among transactional statements.&lt;/p&gt;
+&lt;p&gt;The ROLLBACK command is used to undo a group of transactions.&lt;/p&gt;
+&lt;p&gt;The syntax for rolling back to a SAVEPOINT is as follows:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;ROLLBACK&lt;/span&gt; &lt;span class="k"&gt;TO&lt;/span&gt; &lt;span class="n"&gt;SAVEPOINT_NAME&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h6 id="release-savepoint"&gt;RELEASE SAVEPOINT&lt;/h6&gt;
+&lt;p&gt;The RELEASE SAVEPOINT command is used to &lt;strong&gt;remove&lt;/strong&gt; a &lt;code&gt;SAVEPOINT&lt;/code&gt; that you have created.&lt;/p&gt;
+&lt;p&gt;Syntax:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;RELEASE&lt;/span&gt; &lt;span class="n"&gt;SAVEPOINT&lt;/span&gt; &lt;span class="n"&gt;SAVEPOINT_NAME&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h6 id="set-transaction"&gt;SET TRANSACTION&lt;/h6&gt;
+&lt;p&gt;The SET TRANSACTION command can be used to &lt;strong&gt;initiate&lt;/strong&gt; a database transaction.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SET&lt;/span&gt; &lt;span class="n"&gt;TRANSACTION&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="k"&gt;READ&lt;/span&gt; &lt;span class="k"&gt;WRITE&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="k"&gt;READ&lt;/span&gt; &lt;span class="k"&gt;ONLY&lt;/span&gt; &lt;span class="p"&gt;];&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="wildcard-in-sql"&gt;WILDCARD IN SQL&lt;/h4&gt;
+&lt;h6 id="types"&gt;TYPES&lt;/h6&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;%&lt;/code&gt;: Matches &lt;strong&gt;one or more&lt;/strong&gt; characters. Note that MS Access uses the asterisk (&lt;code&gt;*&lt;/code&gt;) wildcard character instead of the percent sign (&lt;code&gt;%&lt;/code&gt;) wildcard character.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;_&lt;/code&gt;: Matches &lt;strong&gt;one&lt;/strong&gt; character. Note that MS Access uses a question mark (&lt;code&gt;?&lt;/code&gt;) instead of the underscore (&lt;code&gt;_&lt;/code&gt;) to match any one character.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The percent sign represents zero, one, or multiple characters. The underscore represents a single number or character. The symbols can be used in combinations.&lt;/p&gt;
+&lt;h6 id="example"&gt;Example&lt;/h6&gt;
+&lt;p&gt;&lt;code&gt;WHERE SALARY LIKE '2_%_%'&lt;/code&gt;: Finds any values that start with 2 and are at least 3 characters in length&lt;/p&gt;
+&lt;h4 id="temporary-table"&gt;TEMPORARY TABLE&lt;/h4&gt;
+&lt;p&gt;Temporary Tables are a great feature that lets you store and process intermediate results by using the same selection, update, and join capabilities that you can use with typical SQL Server tables.&lt;/p&gt;
+&lt;p&gt;The temporary tables could be very useful in some cases to &lt;strong&gt;keep temporary data&lt;/strong&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Temporary tables will be deleted when the current client session terminates.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;mysql&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;CREATE&lt;/span&gt; &lt;span class="k"&gt;TEMPORARY&lt;/span&gt; &lt;span class="k"&gt;TABLE&lt;/span&gt; &lt;span class="n"&gt;SALESSUMMARY&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;product_name&lt;/span&gt; &lt;span class="nb"&gt;VARCHAR&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;50&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;NOT&lt;/span&gt; &lt;span class="k"&gt;NULL&lt;/span&gt;
+&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;total_sales&lt;/span&gt; &lt;span class="nb"&gt;DECIMAL&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;NOT&lt;/span&gt; &lt;span class="k"&gt;NULL&lt;/span&gt; &lt;span class="k"&gt;DEFAULT&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;00&lt;/span&gt;
+&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;avg_unit_price&lt;/span&gt; &lt;span class="nb"&gt;DECIMAL&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;NOT&lt;/span&gt; &lt;span class="k"&gt;NULL&lt;/span&gt; &lt;span class="k"&gt;DEFAULT&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;00&lt;/span&gt;
+&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;total_units_sold&lt;/span&gt; &lt;span class="nb"&gt;INT&lt;/span&gt; &lt;span class="n"&gt;UNSIGNED&lt;/span&gt; &lt;span class="k"&gt;NOT&lt;/span&gt; &lt;span class="k"&gt;NULL&lt;/span&gt; &lt;span class="k"&gt;DEFAULT&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;Query&lt;/span&gt; &lt;span class="n"&gt;OK&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="k"&gt;rows&lt;/span&gt; &lt;span class="n"&gt;affected&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="n"&gt;sec&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;When you issue a &lt;code&gt;SHOW TABLES&lt;/code&gt; command, then your temporary table &lt;strong&gt;would not be listed out&lt;/strong&gt; in the list.&lt;/p&gt;
+&lt;p&gt;Now if you will log out of the MySQL session and then you will issue a SELECT command, then you will find no data available in the database.&lt;/p&gt;
+&lt;p&gt;Even your temporary table would also not exist.&lt;/p&gt;
+&lt;p&gt;By default, all the temporary tables are deleted by MySQL when your database connection gets terminated.&lt;/p&gt;
+&lt;h4 id="sql-clone-tables"&gt;SQL CLONE TABLES&lt;/h4&gt;
+&lt;p&gt;If you are using MySQL RDBMS, you can handle this situation by the following steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Use &lt;code&gt;SHOW CREATE TABLE&lt;/code&gt; command to get a &lt;code&gt;CREATE TABLE&lt;/code&gt; statement that specifies the source table's structure, indexes and all.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Modify the statement to change the table name to that of the clone table and execute the statement. This way you will have exact clone table.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Optionally, if you need the table contents copied as well, issue an &lt;code&gt;INSERT INTO ... SELECT&lt;/code&gt; statement, too.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="sql-subquery"&gt;SQL SUBQUERY&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;Subquery&lt;/code&gt; or &lt;code&gt;Inner query&lt;/code&gt; or &lt;code&gt;Nested query&lt;/code&gt; is a query within another SQL query and embedded within the WHERE clause.&lt;/p&gt;
+&lt;p&gt;There are a few rules that subqueries must follow:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Subqueries must be enclosed within parentheses.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;A subquery can have only one column in the SELECT clause, unless multiple columns are in the main query for the subquery to compare its selected columns.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;An ORDER BY cannot be used in a subquery, although the main query can use an ORDER BY. The GROUP BY can be used to perform the same function as the ORDER BY in a subquery.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Subqueries that return more than one row can only be used with multiple value operators, such as the IN operator.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The SELECT list cannot include any references to values that evaluate to a BLOB, ARRAY, CLOB, or NCLOB.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;A subquery cannot be immediately enclosed in a set function.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The BETWEEN operator cannot be used with a subquery; however, the BETWEEN operator can be used within the subquery.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6 id="select-example"&gt;SELECT EXAMPLE&lt;/h6&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="k"&gt;column_name&lt;/span&gt; &lt;span class="p"&gt;[,&lt;/span&gt; &lt;span class="k"&gt;column_name&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;table1&lt;/span&gt; &lt;span class="p"&gt;[,&lt;/span&gt; &lt;span class="n"&gt;table2&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="k"&gt;WHERE&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h6 id="insert-example"&gt;INSERT EXAMPLE&lt;/h6&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;INSERT&lt;/span&gt; &lt;span class="k"&gt;INTO&lt;/span&gt; &lt;span class="k"&gt;table_name&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;column1&lt;/span&gt; &lt;span class="p"&gt;[,&lt;/span&gt; &lt;span class="n"&gt;column2&lt;/span&gt; &lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="o"&gt;*|&lt;/span&gt;&lt;span class="n"&gt;column1&lt;/span&gt; &lt;span class="p"&gt;[,&lt;/span&gt; &lt;span class="n"&gt;column2&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;table1&lt;/span&gt; &lt;span class="p"&gt;[,&lt;/span&gt; &lt;span class="n"&gt;table2&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="k"&gt;WHERE&lt;/span&gt; &lt;span class="n"&gt;VALUE&lt;/span&gt; &lt;span class="k"&gt;OPERATOR&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h6 id="update-example"&gt;UPDATE EXAMPLE&lt;/h6&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;UPDATE&lt;/span&gt; &lt;span class="k"&gt;table&lt;/span&gt;
+&lt;span class="k"&gt;SET&lt;/span&gt; &lt;span class="k"&gt;column_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;new_value&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="k"&gt;WHERE&lt;/span&gt; &lt;span class="k"&gt;OPERATOR&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="n"&gt;VALUE&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="k"&gt;COLUMN_NAME&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="k"&gt;TABLE_NAME&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="k"&gt;WHERE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h6 id="delete-example"&gt;DELETE EXAMPLE&lt;/h6&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;DELETE&lt;/span&gt; &lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="k"&gt;TABLE_NAME&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="k"&gt;WHERE&lt;/span&gt; &lt;span class="k"&gt;OPERATOR&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="n"&gt;VALUE&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="k"&gt;COLUMN_NAME&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="k"&gt;TABLE_NAME&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="k"&gt;WHERE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="sequence"&gt;SEQUENCE&lt;/h4&gt;
+&lt;p&gt;Sequence is &lt;strong&gt;a set of integers&lt;/strong&gt; 1, 2, 3, ... that are generated in order on demand.&lt;/p&gt;
+&lt;h6 id="creating"&gt;CREATING&lt;/h6&gt;
+&lt;p&gt;The simplest way in MySQL to use sequences is to define a column as &lt;code&gt;AUTO_INCREMENT&lt;/code&gt; and leave rest of the things to MySQL to take care.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;mysql&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;CREATE&lt;/span&gt; &lt;span class="k"&gt;TABLE&lt;/span&gt; &lt;span class="n"&gt;INSECT&lt;/span&gt;
+&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="nb"&gt;INT&lt;/span&gt; &lt;span class="n"&gt;UNSIGNED&lt;/span&gt; &lt;span class="k"&gt;NOT&lt;/span&gt; &lt;span class="k"&gt;NULL&lt;/span&gt; &lt;span class="n"&gt;AUTO_INCREMENT&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;PRIMARY&lt;/span&gt; &lt;span class="k"&gt;KEY&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="nb"&gt;VARCHAR&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;30&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;NOT&lt;/span&gt; &lt;span class="k"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="k"&gt;type&lt;/span&gt; &lt;span class="k"&gt;of&lt;/span&gt; &lt;span class="n"&gt;insect&lt;/span&gt;
+&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;date&lt;/span&gt; &lt;span class="nb"&gt;DATE&lt;/span&gt; &lt;span class="k"&gt;NOT&lt;/span&gt; &lt;span class="k"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="nb"&gt;date&lt;/span&gt; &lt;span class="n"&gt;collected&lt;/span&gt;
+&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;origin&lt;/span&gt; &lt;span class="nb"&gt;VARCHAR&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;30&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;NOT&lt;/span&gt; &lt;span class="k"&gt;NULL&lt;/span&gt; &lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="k"&gt;where&lt;/span&gt; &lt;span class="n"&gt;collected&lt;/span&gt;
+&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;Query&lt;/span&gt; &lt;span class="n"&gt;OK&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="k"&gt;rows&lt;/span&gt; &lt;span class="n"&gt;affected&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;02&lt;/span&gt; &lt;span class="n"&gt;sec&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h6 id="renumbering"&gt;RENUMBERING&lt;/h6&gt;
+&lt;p&gt;There may be a case when you have deleted many records from a table and you want to resequence all the records.&lt;/p&gt;
+&lt;p&gt;This can be done by using a simple trick but you should be very careful to do so if your table is having joins with other table.&lt;/p&gt;
+&lt;p&gt;If you determine that resequencing an AUTO_INCREMENT column is unavoidable, the way to do it is to:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;drop the column from the table&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;add it again.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The following example shows how to renumber the id values in the insect
+table using this technique:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;mysql&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;ALTER&lt;/span&gt; &lt;span class="k"&gt;TABLE&lt;/span&gt; &lt;span class="n"&gt;INSECT&lt;/span&gt; &lt;span class="k"&gt;DROP&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;mysql&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;ALTER&lt;/span&gt; &lt;span class="k"&gt;TABLE&lt;/span&gt; &lt;span class="n"&gt;insect&lt;/span&gt;
+    &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;ADD&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="nb"&gt;INT&lt;/span&gt; &lt;span class="n"&gt;UNSIGNED&lt;/span&gt; &lt;span class="k"&gt;NOT&lt;/span&gt; &lt;span class="k"&gt;NULL&lt;/span&gt; &lt;span class="n"&gt;AUTO_INCREMENT&lt;/span&gt; &lt;span class="k"&gt;FIRST&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;ADD&lt;/span&gt; &lt;span class="k"&gt;PRIMARY&lt;/span&gt; &lt;span class="k"&gt;KEY&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h6 id="assign-start-value"&gt;ASSIGN START VALUE&lt;/h6&gt;
+&lt;p&gt;By default, MySQL will start sequence from 1 but you can specify any other number as well at the time of table creation.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="nb"&gt;INT&lt;/span&gt; &lt;span class="n"&gt;UNSIGNED&lt;/span&gt; &lt;span class="k"&gt;NOT&lt;/span&gt; &lt;span class="k"&gt;NULL&lt;/span&gt; &lt;span class="n"&gt;AUTO_INCREMENT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Alternative:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;mysql&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;ALTER&lt;/span&gt; &lt;span class="k"&gt;TABLE&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="n"&gt;AUTO_INCREMENT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="duplicates"&gt;DUPLICATES&lt;/h4&gt;
+&lt;p&gt;The SQL &lt;code&gt;DISTINCT&lt;/code&gt; keyword, which we already have discussed, is used in conjunction with &lt;code&gt;SELECT&lt;/code&gt; statement to eliminate all the duplicate records and fetching only unique records.&lt;/p&gt;
+&lt;p&gt;Syntax:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="k"&gt;DISTINCT&lt;/span&gt; &lt;span class="n"&gt;column1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;column2&lt;/span&gt;&lt;span class="p"&gt;,.....&lt;/span&gt;&lt;span class="n"&gt;columnN&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="k"&gt;table_name&lt;/span&gt;
+&lt;span class="k"&gt;WHERE&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;condition&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="sql-usful-functions"&gt;SQL USFUL FUNCTIONS&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;SQL &lt;code&gt;COUNT&lt;/code&gt; Function - The SQL COUNT aggregate function is used to count the number of rows in a database table.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;SQL &lt;code&gt;MAX&lt;/code&gt; Function - The SQL MAX aggregate function allows us to select the highest (maximum) value for a certain column.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;SQL &lt;code&gt;MIN&lt;/code&gt; Function - The SQL MIN aggregate function allows us to select the lowest (minimum) value for a certain column.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;SQL &lt;code&gt;AVG&lt;/code&gt; Function - The SQL AVG aggregate function selects the average value for certain table column.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;SQL &lt;code&gt;SUM&lt;/code&gt; Function - The SQL SUM aggregate function allows selecting the total for a numeric column.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;SQL &lt;code&gt;SQRT&lt;/code&gt; Functions - This is used to generate a square root of a given number.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;SQL &lt;code&gt;RAND&lt;/code&gt; Function - This is used to generate a random number using SQL command.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;SQL &lt;code&gt;CONCAT&lt;/code&gt; Function - This is used to concatenate any string inside any SQL command.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;SQL &lt;code&gt;Numeric&lt;/code&gt; Functions - Complete list of SQL functions required to manipulate numbers in SQL.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;SQL &lt;code&gt;String&lt;/code&gt; Functions - Complete list of SQL functions required to manipulate strings in SQL.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;&lt;/div&gt;</description><category>Database</category><category>SQL</category><guid>https://pengyin-shan.com/posts/2015/Data%20Science/sql-basics/</guid><pubDate>Sun, 21 Jun 2015 04:00:00 GMT</pubDate></item></channel></rss>

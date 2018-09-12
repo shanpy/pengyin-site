@@ -1,0 +1,425 @@
+<div class="toc">
+<ul>
+<li><a href="#i-2-formulas">I-2: Formulas</a><ul>
+<li><a href="#auto-fill-formula">Auto Fill Formula</a></li>
+<li><a href="#format-cell-for-formula">Format Cell for Formula</a></li>
+<li><a href="#copy-formulas-to-other-cells">Copy Formulas to Other Cells</a></li>
+<li><a href="#variables-and-values">Variables and Values</a><ul>
+<li><a href="#compare-values-in-excel">Compare Values in Excel</a></li>
+<li><a href="#special-characters">Special Characters</a></li>
+</ul>
+</li>
+<li><a href="#reference">Reference</a></li>
+<li><a href="#basic-formulas">Basic Formulas</a><ul>
+<li><a href="#is">IS</a></li>
+<li><a href="#nested-or-simple-if">Nested Or Simple IF</a></li>
+<li><a href="#andornot">AND,OR,NOT</a></li>
+<li><a href="#wildcard">wildcard</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#i-3-calculations">I-3: Calculations</a><ul>
+<li><a href="#sum">SUM</a><ul>
+<li><a href="#practice-question-find-sum-of-last-borrowed-books">Practice Question: find sum of last borrowed books</a></li>
+</ul>
+</li>
+<li><a href="#sumifssum_range-criteria_range1-criteria1-criteria_range2-criteria2-multiple-filter-criteria">SUMIFS(sum_range, criteria_range1, criteria1, criteria_range2, criteria2, ...) - multiple filter criteria</a></li>
+<li><a href="#average">AVERAGE</a></li>
+<li><a href="#count">COUNT</a></li>
+<li><a href="#countifscriteria_range1-criteria1-criteria_range2-criteria2">COUNTIFS(criteria_range1, criteria1, [criteria_range2, criteria2]…)</a></li>
+<li><a href="#delete-extra-digits">Delete Extra Digits</a><ul>
+<li><a href="#round">ROUND</a></li>
+<li><a href="#roundupnumber-num_digits-and-rounddownnumber-num_digits">ROUNDUP(number, num_digits) and ROUNDDOWN(number, num_digits)</a></li>
+<li><a href="#delete-parts-after-decimal-point">Delete parts after decimal point</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#i-5-texts">I-5: Texts</a><ul>
+<li><a href="#strings">Strings</a><ul>
+<li><a href="#combine-string">Combine String</a></li>
+<li><a href="#string-length">String Length</a></li>
+<li><a href="#compare-string">Compare String</a></li>
+<li><a href="#find-location">Find Location</a><ul>
+<li><a href="#practice-question">Practice Question</a></li>
+</ul>
+</li>
+<li><a href="#substring">Substring</a><ul>
+<li><a href="#practice-question_1">Practice Question</a></li>
+</ul>
+</li>
+<li><a href="#find-and-substract-characters-before">Find and Substract Characters Before</a></li>
+<li><a href="#substitute-in-string">Substitute in String</a></li>
+</ul>
+</li>
+<li><a href="#text-function">Text Function</a><ul>
+<li><a href="#second-parameter-normal-format">Second Parameter - Normal Format</a><ul>
+<li><a href="#value-error">Value! Error</a></li>
+</ul>
+</li>
+<li><a href="#second-parameter-self-defined-format">Second Parameter - Self-Defined Format</a></li>
+<li><a href="#second-parameter-pre-defined-format">Second Parameter - Pre-Defined Format</a></li>
+<li><a href="#common-cases">Common Cases</a></li>
+</ul>
+</li>
+<li><a href="#transfer-between-numbers-and-text">Transfer between Numbers and Text</a><ul>
+<li><a href="#number-to-text">Number to Text</a></li>
+<li><a href="#sum-problem">SUM Problem</a></li>
+<li><a href="#text-to-number">Text to Number</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#i-6-search-by-using-formulas">I-6: Search by Using Formulas</a><ul>
+<li><a href="#vlookup-vertical-search">VLOOKUP - Vertical Search</a><ul>
+<li><a href="#common-usage">Common Usage</a><ul>
+<li><a href="#replace-if-to-find-value-providing-range">Replace IF to find value providing range</a></li>
+<li><a href="#return-multiple-columns-in-one-row">Return Multiple Columns in One Row</a></li>
+<li><a href="#return-multiple-record">Return Multiple Record</a></li>
+<li><a href="#lookup-by-multiple-criteria">Lookup by Multiple Criteria</a></li>
+</ul>
+</li>
+<li><a href="#possible-errors">Possible Errors</a></li>
+</ul>
+</li>
+<li><a href="#hlookup-horizontal-search">HLOOKUP - Horizontal Search</a></li>
+<li><a href="#match">MATCH</a><ul>
+<li><a href="#lookup_array">lookup_array</a></li>
+<li><a href="#match_type">match_type</a></li>
+<li><a href="#common-usage_1">Common Usage</a><ul>
+<li><a href="#find-repeated-cell-in-two-rowscolumns">Find Repeated Cell in Two Rows/Columns</a></li>
+</ul>
+</li>
+<li><a href="#retrieve-the-first-record-of-all">Retrieve the First Record of All</a><ul>
+<li><a href="#get-the-record-that-only-showing-once">Get the Record that Only Showing Once</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#index-find-cell-by-relative-position">INDEX - Find Cell by Relative Position</a><ul>
+<li><a href="#return-a-reference-to-the-cell">Return a reference to the cell</a></li>
+<li><a href="#return-real-data">Return Real Data</a></li>
+</ul>
+</li>
+<li><a href="#use-of-match-index">Use of MATCH &amp; INDEX</a><ul>
+<li><a href="#reverse-order-search">Reverse Order Search</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<hr>
+<h2 id="i-2-formulas">I-2: Formulas</h2>
+<blockquote>
+<p>Use Formulas tab to find formula if we need</p>
+</blockquote>
+<h3 id="auto-fill-formula">Auto Fill Formula</h3>
+<ul>
+<li>Use <code>tab</code> to auto-fill formula name when typing</li>
+<li>Use <code>Ctrl + Shift + A</code> to pre-fill all parts of formula</li>
+</ul>
+<h3 id="format-cell-for-formula">Format Cell for Formula</h3>
+<ol>
+<li>Make sure cell has <strong>general</strong> format：right cell then <code>Format Cells</code></li>
+<li>Many such text cells: Data -&gt; Text to Columns -&gt; Delimited -&gt; Uncheck Delimited Character -&gt; Set Regular Column Format</li>
+</ol>
+<blockquote>
+<p>For non-calculating numbers (such as IDs), it is proper to convert cells to text format. Otherwise ending 0s will be eliminated and there is no way to restore it</p>
+</blockquote>
+<h3 id="copy-formulas-to-other-cells">Copy Formulas to Other Cells</h3>
+<ol>
+<li><code>Ctrl + Alt + V</code>: paste with selection</li>
+<li>Curse to extend current cell</li>
+</ol>
+<h3 id="variables-and-values">Variables and Values</h3>
+<h4 id="compare-values-in-excel">Compare Values in Excel</h4>
+<ul>
+<li>smallest: number</li>
+<li>largest: boolean</li>
+<li>Date: transfer to number then compare</li>
+</ul>
+<p><img alt="excel_compare" src="/images/2018/business/excel_compare.png"></p>
+<h4 id="special-characters">Special Characters</h4>
+<ul>
+<li><code>&amp;</code>: combine two data to a next text</li>
+<li>A range<code>single space</code>B range: <em>common</em> cells of A and B</li>
+<li>A range<code>,</code>B range: <em>all</em> cells of A and B</li>
+</ul>
+<h3 id="reference">Reference</h3>
+<blockquote>
+<p>F4 (Fn + F4) is used to switch reference style</p>
+</blockquote>
+<ul>
+<li><code>A1</code> format：relative reference</li>
+<li><code>$A$1</code> format: <em>absolute</em> reference. Used for any fixed value cell</li>
+<li><code>$A1</code> or <code>A$1</code> format： <em>absolute</em> in row or column only</li>
+<li><code>Worksheet!A1</code> format：define name of <em>worksheet</em> to cell</li>
+<li><code>' &amp;a'</code> format: <code>''</code> is used to quote special characters in formula</li>
+</ul>
+<h3 id="basic-formulas">Basic Formulas</h3>
+<blockquote>
+<p>Use "" to wrap criteria</p>
+</blockquote>
+<h4 id="is"><code>IS</code></h4>
+<p><code>ISTEXT</code>, <code>ISERR</code>... format: check format of cell</p>
+<h4 id="nested-or-simple-if">Nested Or Simple <code>IF</code></h4>
+<ul>
+<li><code>=IF(compare2, true_result, IF(compare1_formula, true_result, false_result))</code>- A <em>tree map</em> will help nested IF formula</li>
+<li><code>IF</code> + <code>SUBSTITUTE</code>: transfer cell format: <code>=IF(ISNUMBER(B2),B2, SUBSTITUTE(B2, "'$'", ""))</code></li>
+<li><code>IFERROR</code>: Eliminate error values, such as <em>divide by 0</em>. <code>=IFERROR(A1/B1,0)</code></li>
+</ul>
+<h4 id="andornot"><code>AND</code>,<code>OR</code>,<code>NOT</code></h4>
+<p>Can be combined with IF to avoid too nested IF functions</p>
+<h4 id="wildcard">wildcard</h4>
+<ul>
+<li><code>?</code>: <em>one</em> random character</li>
+<li><code>*</code>: <em>any</em> random characters (<strong>0</strong> - many)</li>
+<li><code>~</code>: escape <code>?</code> and <code>*</code></li>
+</ul>
+<hr>
+<h2 id="i-3-calculations">I-3: Calculations</h2>
+<h3 id="sum">SUM</h3>
+<p><code>SUMIF(filter_range, criteria, sum_range)</code></p>
+<blockquote>
+<p>Excel will search position in filter_range, then sum the same portion in sum_range</p>
+</blockquote>
+<ul>
+<li><code>sum_range</code> can be eliminated if it is the same as <code>filter_range</code></li>
+<li><code>sum_range</code> can cover columns with different type of cells. Excel will automatically filter the cell</li>
+<li>Sum <em>without any error cells</em>: <code>SUMIF(range1, "&lt;=9E+307", range2)</code></li>
+<li>Filtering based on cell: <code>SUMIF(range1, "&gt;="&amp;A1, range2)</code></li>
+</ul>
+<h4 id="practice-question-find-sum-of-last-borrowed-books">Practice Question: find sum of last borrowed books</h4>
+<p><img alt="excel_last_borrow_book" src="/images/2018/business/excel_last_borrow_book.png"></p>
+<h3 id="sumifssum_range-criteria_range1-criteria1-criteria_range2-criteria2-multiple-filter-criteria"><code>SUMIFS(sum_range, criteria_range1, criteria1, criteria_range2, criteria2, ...)</code> - multiple filter criteria</h3>
+<p>Total of sum_range should equal to total of each criteria_range</p>
+<h3 id="average">AVERAGE</h3>
+<p><code>AVERAGEIF(range, criteria, [average_range])</code> and <code>AVERAGEIFS(average_range, criteria_range1, criteria1, [criteria_range2, criteria2], ...)</code></p>
+<blockquote>
+<p>Might need to use absolute in criteria</p>
+</blockquote>
+<h3 id="count">COUNT</h3>
+<p><code>=COUNTIF(Where do you want to look?, What do you want to look for?)</code></p>
+<p>Count Number of Cells based on criteria</p>
+<ul>
+<li>Count number of cells in range: <code>=COUNT(range, criteria)</code> or <code>=COUNTIF(range, "&lt;&gt;"")</code></li>
+<li>Count empty cells (<code>null</code> as content): <code>=COUNTIF(range,"=")</code></li>
+<li>Count non-empty cells(including <code>""</code> as content):<code>=COUNTA(range, [criteria])</code> or <code>=COUNTIF(range,"&lt;&gt;")</code></li>
+<li>Count non-empty cells(excluding <code>""</code> as content):<code>=COUNTIF(range,"*")</code></li>
+<li>Count all empty cells(including <code>""</code> as content): <code>=COUNTBLANK(range)</code> or <code>=COUNTIF(range,"")</code></li>
+</ul>
+<h3 id="countifscriteria_range1-criteria1-criteria_range2-criteria2"><code>COUNTIFS(criteria_range1, criteria1, [criteria_range2, criteria2]…)</code></h3>
+<p>Similar rule as above</p>
+<h3 id="delete-extra-digits">Delete Extra Digits</h3>
+<h4 id="round">ROUND</h4>
+<p><code>ROUND(number, keep_digits)</code> for Number Cell and <code>FIXED(number, [decimals], [no_commas])</code> for Text Cell</p>
+<p><code>keep_digits</code> can be positive, 0 (integer) or negative (0s in integer)</p>
+<h4 id="roundupnumber-num_digits-and-rounddownnumber-num_digits"><code>ROUNDUP(number, num_digits)</code> and <code>ROUNDDOWN(number, num_digits)</code></h4>
+<h4 id="delete-parts-after-decimal-point">Delete parts after decimal point</h4>
+<ul>
+<li><code>TRUNC(range, [digits_after_decimal_point])</code>: no round, just delete</li>
+<li><code>INT(number)</code>: always <em>round down</em> to an integer</li>
+</ul>
+<hr>
+<h2 id="i-5-texts">I-5: Texts</h2>
+<h3 id="strings">Strings</h3>
+<h4 id="combine-string">Combine String</h4>
+<ul>
+<li><code>CONCATENATE(text1, [text2], ...)</code>: no range, just cells</li>
+<li><code>&amp;</code>: no range, just cells</li>
+</ul>
+<h4 id="string-length">String Length</h4>
+<blockquote>
+<p>DBCS include Japanese, Chinese (Simplified), Chinese (Traditional), and Korean. </p>
+</blockquote>
+<ul>
+<li><code>LEN(cell)</code>: count character length</li>
+<li><code>LENB(cell)</code>: count bytes. <strong>Only when a DBCS language is set as the default language</strong>-&gt;2 for Asian Characters</li>
+</ul>
+<h4 id="compare-string">Compare String</h4>
+<ul>
+<li><code>=</code>: not case sensitive. Compare text type ("25" != 25)</li>
+<li><code>EXACT(text1, text2)</code>: no compare text type ("25"=25), case sensitive</li>
+</ul>
+<h4 id="find-location">Find Location</h4>
+<ul>
+<li><code>FIND(find_text, within_text, [start_num])</code>:  case sensitive. don't allow wildcard characters.</li>
+<li><code>SEARCH(find_text,within_text,start_num)</code>: not case sensitive. Allow wild card</li>
+<li><code>FINDB(same)</code> and <code>SEARCHB(same)</code>: return bytes</li>
+</ul>
+<p><code>SEARCHB("?",cell)</code>: find first singe-byte character in cell</p>
+<h5 id="practice-question">Practice Question</h5>
+<p>subtract Chinese characters from <em>ChineseEnglish</em> formatted string: <code>=LEFTB(cell, SEARCHB("?",cell)-1))</code></p>
+<h4 id="substring">Substring</h4>
+<ul>
+<li><code>LEFT(text, [length_of_chars_to_substract])</code>: first <em>length</em> of characters. from most left</li>
+<li><code>RIGHT(text, [length_of_chars_to_substract])</code>: last <em>length</em> of characters. from most right</li>
+<li><code>MID(text, start_num, length_of_chars_to_substract)</code>: start from left</li>
+</ul>
+<h5 id="practice-question_1">Practice Question</h5>
+<p>Split money amount to difference cells</p>
+<p><img alt="excel_split_cell" src="/images/2018/business/excel_split_cell.png"></p>
+<p><img alt="excel_split_cell2" src="/images/2018/business/excel_split_cell_2.png"></p>
+<h4 id="find-and-substract-characters-before">Find and Substract Characters Before</h4>
+<ul>
+<li><code>LEFT(cell, FIND(find_text, within_text, [start_num])-1)</code></li>
+<li><code>RIGHT(cell, LEN(cell)-FIND(find_text, within_text, [start_num]))</code></li>
+</ul>
+<h4 id="substitute-in-string">Substitute in String</h4>
+<p>-<code>SUBSTITUTE(cell, old_text, new_text, [the index of occurrence])</code>: by text: one-to-one
+-<code>SUBSTITUTE(SUBSTITUTE(text, old_text, new_text, index1</code>), old_text, new_text, index2): by text: one-to-many
+- <code>REPLACE(cell, start_num, num_chars, new_text)</code>: by position: find position/length of characters and replace it</p>
+<h3 id="text-function"><code>Text</code> Function</h3>
+<blockquote>
+<p>Shortcut:  Ctrl+1 ( Command+1 on the Mac) -&gt; Not change data itself</p>
+</blockquote>
+<p><code>=TEXT(Value you want to format, "Format code you want to apply")</code>: <em>change</em> the data in cell. Always return <em>text</em> format. Always start from <strong>right</strong>.</p>
+<h4 id="second-parameter-normal-format">Second Parameter - Normal Format</h4>
+<p>Example: <code>=TEXT(C4, "z;$;128;t")</code></p>
+<ol>
+<li><code>format_for_positive_number; format_for_negative_number; format_for_0; format_for_text</code>: cell will be modified based on its correspondence. </li>
+<li>Skip the last few criteria will make format only apply to criteria appearing. For example <code>=TEXT(C4, "z;$")</code> will only apply to non-negative and negative number</li>
+</ol>
+<h5 id="value-error">Value! Error</h5>
+<blockquote>
+<p>Use <code>!</code> or <code>\</code> to escape special characters!</p>
+</blockquote>
+<ol>
+<li>when special characters are used to format a string, such as a,m,y, etc. </li>
+<li>if special format like <code>yyyy</code> is used to too large/small number, Value! error will appear</li>
+</ol>
+<h4 id="second-parameter-self-defined-format">Second Parameter - Self-Defined Format</h4>
+<ul>
+<li>Still no more than four criteria</li>
+<li><code>[judge1]format1;[judge2]format2;format_for_not_satisfy_judge1_and_judge2 ;format_for_text</code>: <code>=TEXT(B2, "[&gt;1000]z;[&lt;-9000]$&amp;TT;128;t")</code></li>
+<li><code>[judge1]format1; format_for_not_satisfy_judge1</code></li>
+<li><code>[judge1]format1; [judge2]format2;format_for_not_satisfy_judge1_and_judge2</code></li>
+</ul>
+<h4 id="second-parameter-pre-defined-format">Second Parameter - Pre-Defined Format</h4>
+<ul>
+<li><code>0</code>: 1 digit. If number has less length than 0s, number will be automatically add 0s from most left digit</li>
+<li><code>0.000</code>: define how many digits after decimal point</li>
+<li><code>?</code>: 1 digit, but no 0s showing on most left digits and non-used 0s after decimal point. <code>Space</code> will be used to make up empty slots after decimal point. </li>
+<li><code>#</code>: 1 digit. No make up empty slots</li>
+<li><code>,</code>: automatically add <code>,</code> for thousands. <em>To make numbers larger than 1000 only show before 1000 part</em>: <code>=TEXT(A1,"0,")</code></li>
+<li>dates: <code>yyyy</code>, <code>mm</code>...</li>
+<li>texts: string from <strong>right</strong>. if a cell is <code>11507</code>, <code>=TEXT(C3,"0\y\e\a\r0\m\o\n\t\h0\d\a\y")</code> will output <code>115year0month7day</code></li>
+</ul>
+<h4 id="common-cases">Common Cases</h4>
+<ul>
+<li>decimal to fraction: <code>= TEXT(B3, "# #/#")</code></li>
+<li>show number in million: <code>=TEXT(B3, "0.0#,,")</code></li>
+</ul>
+<h3 id="transfer-between-numbers-and-text">Transfer between Numbers and Text</h3>
+<ul>
+<li>Number cell: left assign</li>
+<li>Text cell: right assign</li>
+</ul>
+<h4 id="number-to-text">Number to Text</h4>
+<blockquote>
+<p>following functions in Excel 2016 (Windows/Mac) seems not change format showing in tool bar anymore. I need more investigation</p>
+</blockquote>
+<ul>
+<li><code>= TEXT(D3, "@")</code></li>
+<li><code>=D3&amp;""</code></li>
+<li><code>'ddddd</code>: add <code>'</code> before number will transfer cell to text without showing <code>'</code></li>
+</ul>
+<h4 id="sum-problem">SUM Problem</h4>
+<p>To make SUM function work:
+1. cell is in <code>number</code> format
+2. content in cell are pure numerical</p>
+<h4 id="text-to-number">Text to Number</h4>
+<ul>
+<li><code>VALUE(cell)</code>: transfer cell directly</li>
+<li><code>cell+0</code> or <code>--cell</code></li>
+</ul>
+<hr>
+<h2 id="i-6-search-by-using-formulas">I-6: Search by Using Formulas</h2>
+<h3 id="vlookup-vertical-search">VLOOKUP - Vertical Search</h3>
+<p><code>=VLOOKUP(Value_to_look up, range_to_lookup, column_number_in_range_containing_return_value, Approximate Match – 0/FALSE or 1/TRUE)</code></p>
+<blockquote>
+<p>Rule1: Matching data in column has to be unique!
+Rule2: VLOOKUP will automatically search from left to right =&gt; The helper column should be on the most left if no more adjustment. </p>
+</blockquote>
+<ul>
+<li>If no result found, return <code>#N/A</code></li>
+<li>If eliminate last criteria, make sure to add last <code>,</code> for exact match. Otherwise Excel will do approximate match</li>
+<li>Approximate search using number <em>smaller or equal to</em> search value</li>
+<li>Can use wildcard</li>
+</ul>
+<h4 id="common-usage">Common Usage</h4>
+<h5 id="replace-if-to-find-value-providing-range">Replace IF to find value providing range</h5>
+<ol>
+<li>enter the lowest value in new column</li>
+<li>using approximate VLOOKUP: <code>=VLOOKUP(cell_to_look_up, absolute_range_of_lowest_and_matching_value, 2, 1)</code></li>
+</ol>
+<p><img alt="excel_vlookup_1" src="/images/2018/business/excel_vlookup_1.png"></p>
+<h5 id="return-multiple-columns-in-one-row">Return Multiple Columns in One Row</h5>
+<p><code>= VLOOKUP($E$10, $A$2:$C$5, COLUMN(B:B), 0)</code>: use absolute value to look up and use <code>COLUMN()</code> to automatically update column number</p>
+<h5 id="return-multiple-record">Return Multiple Record</h5>
+<blockquote>
+<p>Be creative and flexible about COLUMN and ROW function!</p>
+</blockquote>
+<ol>
+<li>Add a new column, then count occurrence of each record matching the lookup value using <code>$look_up_cell&amp;COUNTIF(range_of_names, $_look_up_cell&amp;"*")</code>. <code>A1</code> is the start of name</li>
+</ol>
+<p><img alt="excel_vlookup_2" src="/images/2018/business/excel_vlookup_2.png"></p>
+<ol>
+<li>Using <code>IFERROR(VLOOKUP($absolute_look_up_cell&amp;(ROW(A1)-row_number),range_of_all,COLUMN(M:M),0),"")</code> to find match with new column</li>
+</ol>
+<p><img alt="excel_vlookup_3" src="/images/2018/business/excel_vlookup_3.png"></p>
+<h5 id="lookup-by-multiple-criteria">Lookup by Multiple Criteria</h5>
+<p><em>IDEA: combine multiple search to one helper column. To avoid combination mistake, add special character "@" in the middle</em></p>
+<ol>
+<li>Adding helper column on most left: <code>=$D10&amp;"@"&amp;$E10&amp;ROW(10:10)</code></li>
+<li>VLOOKUP Function with error prevention:<code>=IFERROR(VLOOKUP($H$14&amp;"@"&amp;$I$14&amp;(ROW(14:14)-4), $B:$F, 2,0),"")</code></li>
+</ol>
+<h4 id="possible-errors">Possible Errors</h4>
+<ol>
+<li>Cell may include hidden space or invisible character at the end of string: use <code>LEN()</code> to judge</li>
+<li>Target cell has different format from target range</li>
+</ol>
+<h3 id="hlookup-horizontal-search">HLOOKUP - Horizontal Search</h3>
+<p><code>HLOOKUP(lookup_value, table_array, row_index_num, [range_lookup])</code></p>
+<p>Same as VLOOKUP, the <strong>helper row should be the first row</strong></p>
+<h3 id="match">MATCH</h3>
+<p><code>MATCH(lookup_value, lookup_array, [match_type])</code>: return <em>relative</em> position of look_up_value <em>in</em> lookup_array. If the cell is repeated in column/row, MATCH function will <strong>only return the position of its first appearance</strong>.</p>
+<h4 id="lookup_array">lookup_array</h4>
+<p>Has to be <em>one row</em> or <em>one column</em></p>
+<h4 id="match_type">match_type</h4>
+<ul>
+<li><code>1</code>: default. Find smaller or equal to look_up_value. The look_up_array <em>has to be ascended sorted.</em></li>
+<li><code>0</code>: the first value equal to look_up_value</li>
+<li><code>-1</code>: Find larger than or equal to look_up_value. The look_up_array <em>has to be descended sorted.</em></li>
+</ul>
+<h4 id="common-usage_1">Common Usage</h4>
+<h5 id="find-repeated-cell-in-two-rowscolumns">Find Repeated Cell in Two Rows/Columns</h5>
+<p>Use <code>ISNA</code> to judge <code>N/A</code>value: <code>=IF(ISNA(MATCH(I10,$C$10:$C$19,0)),"FALSE","TRUE")</code></p>
+<h4 id="retrieve-the-first-record-of-all">Retrieve the First Record of All</h4>
+<blockquote>
+<p>The result of match is equal to the row number if the cell is the first appearance</p>
+</blockquote>
+<ol>
+<li>Helper Column/Row to show the <em>first appearance</em> of all cells: <code>=MATCH(C10,$C$10:$C$19,1)=(ROW(C10)-9)</code>. <em>The row number might need adjustment!</em></li>
+<li>Output cells with <code>TRUE</code> in helper column/row: <code>= IF(G11 = TRUE, C11)</code></li>
+<li>Filter all non-FALSE value</li>
+</ol>
+<h5 id="get-the-record-that-only-showing-once">Get the Record that Only Showing Once</h5>
+<p><code>=IF((MATCH(I10,$C$10:$C19,0)=MATCH(I10,$C$10:$C19,1)), "UNIQUE", "NOT UNIQUE")</code></p>
+<h3 id="index-find-cell-by-relative-position">INDEX - Find Cell by Relative Position</h3>
+<ul>
+<li><code>AREAS(cell)</code>: return how many cell is <strong>referenced</strong></li>
+</ul>
+<h4 id="return-a-reference-to-the-cell">Return a reference to the cell</h4>
+<ul>
+<li><code>INDEX(array, row_num, [column_num])</code>： with row number and/or column number</li>
+<li><code>INDEX(row_array or column_array, number)</code>: the nth cell in a row or a column</li>
+</ul>
+<h4 id="return-real-data">Return Real Data</h4>
+<ul>
+<li><code>INDEX({"array","in","text"}, number)</code>: return real data in array</li>
+</ul>
+<h3 id="use-of-match-index">Use of MATCH &amp; INDEX</h3>
+<h4 id="reverse-order-search">Reverse Order Search</h4>

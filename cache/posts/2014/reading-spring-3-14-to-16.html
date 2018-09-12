@@ -1,0 +1,547 @@
+<p>This post is transferred from my <a href="http://blogpengyin.herokuapp.com/">old Hexo blog site</a>, created on 2014.</p>
+<p>This is a reading note from Spring Framework 3.1 Tutorial pdf, created by <a href="http://www.tutorialspoint.com/spring"><strong>tutorialspoint</strong></a>. This pdf contains information for Spring 3 Core Basics, which is very useful for understanding defination and practive in Spring programming.</p>
+<p>This note includes Chapter 14 to Chapter 16 in tutorial.</p>
+<h1 id="chapter-14-spring-beans-auto-wiring">Chapter 14: Spring Beans Auto-Wiring</h1>
+<p><em>This is an example of my own problem:</em> I tried to use <code>jdbctemplate.update()</code> function to insert data, which is passed from controller by a <em>DAO</em> object.</p>
+<p>No matter how hard I try, even using hard-code for sql statement, I kept getting <code>nested exception: java.lang NullPointerException</code> error. Problem did not get solved until I realize instead of just declare a DAO object and call update method, I should declare a DAO as a <em>class variable</em>, and add <code>@autowired</code> to it, such as:</p>
+<pre class="code literal-block"><span></span><span class="c1">//In xml, we have &lt;bean id=&quot;userDAO&quot; class=&quot;...&quot;&gt;&lt;/bean&gt;</span>
+
+<span class="kn">import</span> <span class="nn">com.sample.userDAO</span><span class="o">;</span>
+
+<span class="nd">@Autowired</span>
+<span class="n">userDAO</span> <span class="n">dao</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">updateInController</span><span class="o">(){</span>
+    <span class="c1">//Object some_object = new Object();</span>
+    <span class="c1">// some_object.setName()...etc</span>
+
+    <span class="c1">//updateOperation() is the method in another class using jdbc.update()</span>
+    <span class="c1">//If I just create a userDAO instance then do following, I will get NullPointerException</span>
+    <span class="n">dao</span><span class="o">.</span><span class="na">updateOperation</span><span class="o">(</span><span class="n">some_object</span><span class="o">);</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>Spring can <em>auto-wire</em> relationships between beans without using <code>&lt;constructor-arg&gt;</code> or <code>&lt;property&gt;</code></p>
+<h2 id="auto-wiring-modes">Auto-wiring Modes</h2>
+<p>You should be <code>autowire</code> attribute of the <code>&lt;bean/&gt;</code> element to specify autowire mode for a bean definition. There are four Auto-wiring modes, which are defined in this following table:
+images/posts/auto-wiring.png </p>
+<p><code>byType</code> or <code>constructor</code> autowiring mode can be used to wire <em>arrays</em> and other <em>typed-collections</em>.</p>
+<h2 id="limitations-with-autowiring">Limitations with Autowiring</h2>
+<p>Autowiring is great to use across a project. However, it do have limitations and you can override it:
+images/posts/autowiring-limitation.png </p>
+<h2 id="autowiring-by-name">Autowiring By Name*</h2>
+<p>Spring container looks at the beans on which has a <code>autowirte</code> attribute in <code>xml</code> configuration file.</p>
+<p>Then it will go to the java bean class for this bean, and find all attributes that have <code>setter</code> for this bean.</p>
+<p>Then it will come back to <code>xml</code> file, check other bean name, until it find <em>one</em> bean that has same <em>class type (i.e. class="...")</em> as this bean's attribute variable <em>name</em>.</p>
+<p>Spring will initialize this bean, based on configuration file. Then Spring will finish previous bean's initialization process.</p>
+<p>If Spring finds more than one bean in <code>xml</code> file, it will report a error.</p>
+<p>Example:</p>
+<p>XML:
+    :::xml
+    <bean id="textEditor" class="com.example.TextEditor" autowire="byName">
+    <property name="name" value="Generic Text Editor"/>
+    </bean></p>
+<pre class="code literal-block"><span></span><span class="c">&lt;!--this bean will be detected since it has same name as the attribute which has a setter--&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;spellChecker&quot;</span> <span class="na">class=</span><span class="s">&quot;com.example.SpellChecker&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</pre>
+
+
+<p>Java:
+    :::java
+    //java bean class for textEditor
+    public class TextEditor{
+        private spellChecker spellChecker; //Spring will find this since it has the same name as spellChecker
+        private String name;</p>
+<pre class="code literal-block"><span></span>    public void setSpellChecker(SpellChecker spellChecker){
+        this.spellChecker = spellChecker;
+    }
+    public SpellChecker getSpellChecker(){
+        return spellChecker;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+    public String getName(){
+        return name;
+    }
+
+    public void spellCheck(){
+        spellChecker.checkSpelling();
+    }
+}
+
+//java bean class for spellChecker
+public class SpellChecker{
+    public spellChecker(){
+        System.out.println(&quot;Inside spellChecker constructor&quot;);
+    }
+    public void checkSpelling(){
+        System.out.println(&quot;checkSpelling in spellChecker class&quot;);
+    }
+}
+//Test class
+public class Test{
+    public static void main(String[] args){
+        ApplicationContext context = new ClassPathXmlApplicationContext(&quot;beans.xml&quot;);
+
+        //In this step, java will do autowire, which include instantiate spellChecker
+        TextEditor te = (TextEditor) context.getBean(&quot;textEditor&quot;);
+        te.spellCheck();
+
+        //Output:
+        //Inside sellChecker constructor
+        //checkSpelling in spellChecker class
+    }
+}
+</pre>
+
+
+<h2 id="autowiring-by-type">Autowiring By Type</h2>
+<p>Spring first check <code>xml</code> configuration file, find a bean with <code>autowire</code> attribute that marked as <code>byType</code>.</p>
+<p>Spring will go to this bean's java class, then find all its atrribute variables that have <code>setter</code>.</p>
+<p>Spring comes back to <code>xml</code> then go through all the beans. As long as it finds <em>one</em> bean that has same <em>name</em> as java class attribute's <em>type</em>. Spring will instantiate this specific bean.</p>
+<p>If Spring finds more than one bean in <code>xml</code> file, it will report a error.</p>
+<p>Example:</p>
+<p>XML:</p>
+<pre class="code literal-block"><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;textEditor&quot;</span> <span class="na">class=</span><span class="s">&quot;com.sample.TextEditor&quot;</span> <span class="na">autowire=</span><span class="s">&quot;byType&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">value=</span><span class="s">&quot;Generic Text Editor&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;xxx&quot;</span> <span class="na">class=</span><span class="s">&quot;com.sample.SpellChecker&quot;</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- Here is different from auto-wiring by name. Although we use a different id, Spring still find its type is SpellChecker, which is the type that the original attribute has, so Spring can recoginize it as same type--&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</pre>
+
+
+<p>Java:</p>
+<pre class="code literal-block"><span></span><span class="c1">//TextEditor.java and SpellChecker.java are the same as above</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="kd">static</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+        <span class="n">ApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="s">&quot;bean.xml&quot;</span><span class="o">);</span>
+        <span class="o">(</span><span class="n">TextEditor</span><span class="o">)</span> <span class="n">te</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextEditor</span><span class="o">)</span> <span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">&quot;textEditor&quot;</span><span class="o">);</span>
+
+        <span class="n">te</span><span class="o">.</span><span class="na">spellCheck</span><span class="o">();</span>
+
+        <span class="c1">//Output:</span>
+        <span class="c1">//Inside sellChecker constructor</span>
+        <span class="c1">//checkSpelling in spellChecker class</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h2 id="autowiring-by-constructor">Autowiring By Constructor</h2>
+<p>Autowirng by <em>constructor</em> is very similar to autowiring by <em>type</em>. The only difference is it works on <em>constructor</em>.</p>
+<p>So now Spring will check <code>xml</code> file with <code>autowire="constructor"</code> attribute, then go to this java bean class and find this bean's constructor parameters.</p>
+<p>Spring comes back to <code>xml</code> and go through all beans. As long as it find <em>one</em> bean that has same <em>name</em> as the <em>type</em> of constructor parameter, Spring will instantiated this bean based on its configuration, then instantiates original bean.</p>
+<p>If Spring find more than one bean which hava same name as original bean's constructor parameter type, it will report an error.</p>
+<p>Example:</p>
+<p>XML:</p>
+<pre class="code literal-block"><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;textEditor&quot;</span> <span class="na">class=</span><span class="s">&quot;com.sample.TextEditor&quot;</span> <span class="na">autowire=</span><span class="s">&quot;constructor&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;constructor-arg</span> <span class="na">value=</span><span class="s">&quot;Generic Text Editor&quot;</span><span class="nt">/&gt;</span>
+    <span class="c">&lt;!--note this value has String type. So when Spring go to construcor, it will try to find a string parameter and put value on it--&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;ttt&quot;</span> <span class="na">class=</span><span class="s">&quot;com.sample.SpellChecker&quot;</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- Here ttt bean has class as SpellChecker and the original bean&#39;s contructor use parameter which also has type as SpellChecker, so Spring can recoginize it as same type--&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</pre>
+
+
+<p>JAVA:</p>
+<pre class="code literal-block"><span></span><span class="kd">private</span> <span class="n">SpellChecker</span> <span class="n">spellChecker</span><span class="o">;</span>
+<span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+
+<span class="c1">//Spring will find a bean that has id as SpellChecker</span>
+<span class="kd">public</span> <span class="nf">TextEditor</span><span class="o">(</span><span class="n">SpellChecker</span> <span class="n">spellChecker</span><span class="o">,</span> <span class="n">String</span> <span class="n">name</span><span class="o">){</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">spellChecker</span> <span class="o">=</span> <span class="n">spellChecker</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="n">SpellChecker</span> <span class="nf">getSpellChecker</span><span class="o">(){</span>
+    <span class="k">return</span> <span class="n">spellChecker</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">(){</span>
+    <span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">spellCheck</span><span class="o">(){</span>
+    <span class="n">spellChecker</span><span class="o">.</span><span class="na">checkSpelling</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="c1">//Assuame SpellChecker.java is the same as example above</span>
+<span class="kd">public</span> <span class="n">Test</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+        <span class="n">ApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClassPathXmlApplicationContext</span><span class="o">();</span>
+        <span class="n">TextEditor</span> <span class="n">te</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextEditor</span><span class="o">)</span> <span class="n">te</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">&quot;beans.xml&quot;</span><span class="o">);</span>
+        <span class="n">te</span><span class="o">.</span><span class="na">spellCheck</span><span class="o">();</span>
+
+        <span class="c1">//Output:</span>
+        <span class="c1">//Inside sellChecker constructor</span>
+        <span class="c1">//checkSpelling in spellChecker class</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h1 id="chapter-15-spring-annotation-based-configuration">Chapter 15: Spring Annotation Based Configuration</h1>
+<p>Instead of using <code>xml</code> to do <em>auto-wiring</em>, you can use move the auto-wiring part to bean's <code>java class</code>.</p>
+<p>Since annotation is performed <em>before</em> xml configuration, auto-writing in xml can <em>override</em> annotation.</p>
+<p>To add anonotation, make sure you put <code>&lt;context:annotation-config/&gt;</code> in <code>&lt;beans&gt;&lt;/beans&gt;</code> in xml file, then add your bean configuration after this line.</p>
+<p>There are four types of annotation:</p>
+<ul>
+<li>
+<p><code>@Required</code>: apply to <code>setter</code> methods</p>
+</li>
+<li>
+<p><code>@Autowired</code>: apply to <code>settter</code> methods or <code>non-setter</code> methods or <code>constructors</code> or <code>properties</code>.</p>
+</li>
+<li>
+<p><code>@Qualifier</code>: apply with <code>@Autowirted</code></p>
+</li>
+<li>
+<p><code>@JSO-250 Annotations</code>: includes <code>@Resource</code>, <code>@PostConstruct</code> adn <code>@PreDestroy</code></p>
+</li>
+</ul>
+<h2 id="required-annotation">@Required Annotation</h2>
+<p><code>@Required</code> applys to <code>setter</code>. It means a configuration in <code>xml</code> for this attribute <em>type</em> must be declared. Otherwise it will report <code>BeanInitializationException</code> error.</p>
+<p>Example:</p>
+<p>XML:</p>
+<pre class="code literal-block"><span></span><span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">&quot;...&quot;</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- Must sure you include this for annotation--&gt;</span>
+    <span class="nt">&lt;context:annotation-config/&gt;</span>
+
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;student&quot;</span> <span class="na">class=</span><span class="s">&quot;com.test.Student&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">value=</span><span class="s">&quot;Tim&quot;</span><span class="nt">/&gt;</span>
+
+        <span class="c">&lt;!--Comment this out. @Required will raise error message because of this--&gt;</span>
+        <span class="c">&lt;!--&lt;property name=&quot;age&quot; value=&quot;11&quot;/&gt;</span>
+<span class="c">    &lt;/bean&gt;</span>
+<span class="c">&lt;/beans&gt;</span>
+</pre>
+
+
+<p>JAVA:</p>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Student</span><span class="o">{</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">age</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+
+    <span class="nd">@Required</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setAge</span><span class="o">(</span><span class="n">Integer</span> <span class="n">aga</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">age</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">getAge</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="n">age</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Required</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">//Now if we initialize bean &quot;student&quot;, we will get a error message, said Property &#39;age&#39; is required for bean &quot;student&quot;</span>
+</pre>
+
+
+<h2 id="autowired-annotation">@Autowired Annotation</h2>
+<h3 id="autowired-on-setter-methods">@Autowired on Setter Methods</h3>
+<p>Instead of put <code>&lt;property&gt;</code> in <code>xml</code> file, you can use <code>@Autowired</code> on setter to do a <em>byType autowiring</em>.</p>
+<p>Example:</p>
+<p>XML:</p>
+<pre class="code literal-block"><span></span><span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">&quot;...&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;context:annotation-config/&gt;</span>
+
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;textEditor&quot;</span> <span class="na">class=</span><span class="s">&quot;com.sample.TextEditor&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;spellChecker&quot;</span> <span class="na">class=</span><span class="s">&quot;com.sample.SpellChecker&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+<span class="nt">&lt;/beans&gt;</span>
+</pre>
+
+
+<p>JAVA:</p>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="n">TextEditor</span><span class="o">{</span>
+    <span class="kd">private</span> <span class="n">SpellChecker</span> <span class="n">spellChecker</span><span class="o">;</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setSpellChecker</span><span class="o">(</span><span class="n">SpellChecker</span> <span class="n">spellChecker</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">spellChecker</span> <span class="o">=</span> <span class="n">spellChecker</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">SpellChecker</span> <span class="nf">getSpellChecker</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="n">spellChecker</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">spellCheck</span><span class="o">(){</span>
+        <span class="n">spellChecker</span><span class="o">.</span><span class="na">checkSpelling</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">//Assume SpellChecker.java is the same as exmaple above</span>
+<span class="c1">//Assume main class is the same as example above</span>
+
+<span class="c1">//Output:</span>
+<span class="c1">//Inside sellChecker constructor</span>
+<span class="c1">//checkSpelling in spellChecker class</span>
+</pre>
+
+
+<h3 id="autowired-on-properties">@Autowired on Properties</h3>
+<p>Instead of creating a <code>setter</code>, you can put <code>@Autowired</code> annotation on the property/attribute declaration.</p>
+<p>In <code>xml</code>, after you configure using <code>&lt;property&gt;</code>, Spring will automatically create a <code>setter</code> for this attribute, using the configuration in <code>xml</code> file for setter's bean. If you define a value in <code>&lt;property&gt;</code>, the value will be passed.</p>
+<p>When Spring search for corresponding setter bean in <code>xml</code> file, it will refer <code>id</code> in each beans.</p>
+<p>Example:</p>
+<p>XML:</p>
+<pre class="code literal-block"><span></span><span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">&quot;...&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;context:annotation-config/&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;textEditor&quot;</span> <span class="na">class=</span><span class="s">&quot;com.sample.TextEditor&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;spellChecker&quot;</span> <span class="nt">/&gt;</span>
+        <span class="c">&lt;!-- You should do &lt;property name=&#39;test&#39; value=&quot;ttt&quot;/&gt; if SpellChecker has a String attribute called test and you want its value to be &quot;ttt&quot;--&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;spellChecker&quot;</span> <span class="na">class=</span><span class="s">&quot;com.sample.SpellChecker&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+<span class="nt">&lt;/beans&gt;</span>
+</pre>
+
+
+<p>JAVA:</p>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="n">TextEditor</span><span class="o">{</span>
+    <span class="nd">@Autowried</span>
+    <span class="kd">private</span> <span class="n">SpellChecker</span> <span class="n">spellChecker</span><span class="o">;</span>
+    <span class="c1">//Now Spring will set for a bean with id &quot;spellChecker&quot;, and create setter based on that bean</span>
+
+    <span class="kd">public</span> <span class="nf">TextEditor</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">prinlnt</span><span class="o">(</span><span class="s">&quot;construtor for TextEditor&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">SpellChecker</span> <span class="nf">getSpellChecker</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="n">spellChecker</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">spellCheck</span><span class="o">(){</span>
+        <span class="n">spellChecker</span><span class="o">.</span><span class="na">checkSpelling</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">//Now, if we run Text.java in example above, we will get:</span>
+<span class="c1">//construtor for TextEditor.    Since we have constructor now, when we instanitated a TextEditor bean, constructor will be called first.</span>
+<span class="c1">//Inside sellChecker constructor    This is in SpellChecker.java, since we call spellCheck() function</span>
+<span class="c1">//checkSpelling in spellChecker class</span>
+</pre>
+
+
+<h3 id="autowired-on-constructors">@Autowired on Constructors*</h3>
+<p><code>@Autowired</code> on constructor means even if no <code>&lt;constructor-arg&gt;</code> exists, Spring should check if there is any bean that has same <code>id</code> as constructor's <em>parameter name</em>.</p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Assume bean.xml is the same as above</span>
+<span class="kd">public</span> <span class="n">TextEditor</span><span class="o">{</span>
+        <span class="kd">private</span> <span class="n">SpellChecker</span> <span class="n">spellChecker</span><span class="o">;</span>
+
+        <span class="nd">@Autowired</span>
+        <span class="kd">public</span> <span class="nf">TextEditor</span><span class="o">(</span><span class="n">SpellChecker</span> <span class="n">spellChecker</span><span class="o">){</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;TextEditor Constructor&quot;</span><span class="o">);</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">spellChecker</span> <span class="o">=</span> <span class="n">spellChecker</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="o">}</span>
+
+<span class="c1">//If we do same thing in test.java we will get:</span>
+<span class="c1">//TextEditor Constructor     This is because we call this first in construtor</span>
+<span class="c1">//Inside sellChecker constructor</span>
+<span class="c1">//checkSpelling in spellChecker class</span>
+</pre>
+
+
+<h3 id="autowired-with-requiredfalse-option">@Autowired with (required=false) Option</h3>
+<p>When you add <code>@Autowired</code> to setter, you can add use <code>@Autowired(required=false)</code> to make sure if this setter doesn't has a bean in <code>xml</code> file, it is still fine.</p>
+<h3 id="qualifier-annotation">@Qualifier Annotation</h3>
+<p>You can use <code>@Qualifier</code> with <code>@Autowire</code> to select <em>only one</em> bean if you have many beans with <em>same type</em>. This should be added on properties.</p>
+<p>Example:</p>
+<p>XML:</p>
+<pre class="code literal-block"><span></span><span class="nt">&lt;context:annotation-config/&gt;</span>
+
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;all&quot;</span> <span class="na">class=</span><span class="s">&quot;com.sample.All&quot;</span><span class="nt">&gt;&lt;/bean&gt;</span>
+
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;item1&quot;</span> <span class="na">class=</span><span class="s">&quot;com.sample.Item&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">value=</span><span class="s">&quot;Tim&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;item2&quot;</span> <span class="na">class=</span><span class="s">&quot;com.sample.Item&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">value=</span><span class="s">&quot;Jane&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</pre>
+
+
+<p>JAVA:</p>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">All</span><span class="o">{</span>
+    <span class="nd">@Autowired</span>
+    <span class="nd">@Qualifier</span><span class="o">(</span><span class="s">&quot;item1&quot;</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">Item</span> <span class="n">item</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">All</span><span class="o">(){</span>
+
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">printName</span><span class="o">(</span><span class="n">Item</span> <span class="n">item</span><span class="o">){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">prinlnt</span><span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+        <span class="c1">//If you test it, this should output &quot;Tim&quot; because we only autowire with &quot;item1&quot;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h2 id="spring-jsp-250-annotations">Spring JSP-250 Annotations</h2>
+<h3 id="postcontruct-and-predestroy-annotations">@PostContruct and @PreDestroy Annotations</h3>
+<p><code>@PostConstruct</code> is to be added on the method that <code>init=XXX</code> in <code>xml</code> file.</p>
+<p><code>@PreDestroy</code> is to be added on the method that <code>destroy=XXX</code> in <code>xml</code> file.</p>
+<h3 id="resource">@Resource</h3>
+<p>Follows <em>byName</em> convention, it takes a <em>self-defined</em> name or default <em>property</em> or <em>setter</em> name in java file, then come to <code>xml</code> file to find the bean with same name.</p>
+<p>It can be added on <code>properties</code> or <code>setters</code>.</p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Now it will try to find bean with name &quot;XXX&quot;. If name is not defined, it will find bean with name &quot;spellChecker&quot;</span>
+<span class="nd">@Resource</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;XXX&quot;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setSpellChecker</span><span class="o">(</span><span class="n">SpellChecker</span> <span class="n">spellChecker</span><span class="o">){</span>
+    <span class="c1">//...</span>
+<span class="o">}</span>
+</pre>
+
+
+<h1 id="chapter-16-spring-java-based-configuration">Chapter 16: Spring Java Based Configuration</h1>
+<p>Java based configuration enables you to write most of your Spring configuration without xml.</p>
+<h2 id="configuration-and-bean">@Configuration and @Bean</h2>
+<p><code>@Configuration</code> applys to a <code>class</code>, which means this java class is used to configure Spring beans (i.e. It is a <code>IoC Container</code>).</p>
+<p><code>@Bean</code> applys to <code>properties</code>/<code>methods</code> inside configuration class. It automatically pick up bean ID and returns actual bean.</p>
+<p>A <code>@Configuration</code> class can have more than one <code>@Bean</code>.</p>
+<p>Use <code>AnnotationConfigApplicationContext</code> to get context.</p>
+<p>You can do <code>context.register();</code> to load more than one configuration class to one context:</p>
+<pre class="code literal-block"><span></span><span class="c1">//If you only load one java configuration class here, you can use ApplicationContext ctx = new AnnotationConfigApplicationContext();</span>
+<span class="n">AnnotationConfigApplicationContext</span> <span class="n">ctx</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AnnotationConfigApplicationContext</span><span class="o">();</span>
+
+<span class="n">ctx</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="n">AppConfig</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">OtherAppConfig</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="n">ctx</span><span class="o">.</span><span class="na">refresh</span><span class="o">();</span>
+
+<span class="n">Item1</span> <span class="n">item</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="n">ItemOne</span><span class="o">.</span><span class="na">class</span><span class="o">);</span> <span class="c1">//ItemOne should be marked with @Bean</span>
+</pre>
+
+
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="c1">//This is not HelloWorld.java. This is the special Spring configuration class</span>
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloWorldConfig</span><span class="o">{</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="n">HelloWorld</span> <span class="nf">helloWorld</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">HelloWorld</span><span class="o">();</span>
+        <span class="c1">//Since this is a bean, Spring will find HelloWorld.java for instantiation</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloWorld</span><span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">message</span><span class="o">;</span>
+    <span class="c1">//Assume we have getter and setter for message</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span><span class="o">{</span>
+        <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+            <span class="n">ApplicationContext</span> <span class="n">ctx</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AnnotationConfigApplicationContext</span><span class="o">(</span><span class="n">HelloWorldConfig</span><span class="o">.</span><span class="na">class</span><span class="o">);</span> <span class="c1">//Find Config Class</span>
+
+            <span class="n">HelloWorld</span> <span class="n">hw</span> <span class="o">=</span> <span class="o">(</span><span class="n">HelloWorld</span><span class="o">)</span> <span class="n">ctx</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="n">HelloWorld</span><span class="o">.</span><span class="na">class</span><span class="o">);</span> <span class="c1">//Find Bean</span>
+            <span class="c1">//Now HelloWorld getter and setter will work if we call them</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h2 id="injecting-bean-dependencies">Injecting Bean Dependencies</h2>
+<p>To mark one bean has <em>dependency</em> with another bean, just <em>call</em> this bean from anther bean.</p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TextEditorConfig</span><span class="o">{</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="n">TextEditor</span> <span class="nf">textEditor</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">TextEditor</span><span class="o">(</span><span class="n">spellChecker</span><span class="o">());</span>
+        <span class="c1">//This means TextEditor has constrctor-arg or property that needs to call spellChecker</span>
+    <span class="o">}</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="n">SpellChecker</span> <span class="nf">spellChecker</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">SpellChecker</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">publc</span> <span class="kd">class</span> <span class="nc">TextEditor</span><span class="o">{</span>
+    <span class="kd">private</span> <span class="n">SpellChecker</span> <span class="n">spellChecker</span><span class="o">;</span> <span class="c1">//You still need to define another bean(spellChecker) in this bean class</span>
+
+    <span class="kd">public</span> <span class="nf">TextEditor</span><span class="o">(</span><span class="n">SpellChecker</span> <span class="n">spellChecker</span><span class="o">){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">our</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;TextEditor Constructor&quot;</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">spellChecker</span> <span class="o">=</span> <span class="n">spellChecker</span><span class="o">;</span>
+        <span class="c1">//You needs to put spellChecker as constructor parameter here, because you define this way in config java class</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">spellCheck</span><span class="o">(){</span>
+        <span class="n">spellChecker</span><span class="o">.</span><span class="na">checkSpelling</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">//Assume we SpellCheck.java is the same as examples before with a constrctor</span>
+<span class="c1">//Assume Test.java is the same as example before</span>
+<span class="c1">//Output should be:</span>
+<span class="c1">//SpellChecker Constructor  This comes first because since spellChecker is constructor parameter, it goes to instantiate this bean first</span>
+<span class="c1">//TextEditor Constructor</span>
+<span class="c1">//CheckSpelling</span>
+</pre>
+
+
+<h2 id="import-annotation">@Import Annotation</h2>
+<p>You can use <code>@Import</code> for beans from another configuration class.</p>
+<p>When you define class to ApplicationContext, only non-import bean needs to be defined.</p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AConfig</span><span class="o">{</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="n">A</span> <span class="nf">a</span><span class="o">(){</span>
+        <span class="c1">//Assume there exists a A class</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="nd">@Configuration</span>
+<span class="nd">@Import</span><span class="o">(</span><span class="n">AConfig</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BConfig</span><span class="o">{</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="n">B</span> <span class="nf">a</span><span class="o">(){</span>
+    <span class="c1">//Assume there exists a B class</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="c1">//main class</span>
+<span class="n">ApplicationContext</span> <span class="n">ctx</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AnnotationConfigApplicationContext</span><span class="o">(</span><span class="n">BConfig</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+<span class="c1">//Both AConfig and BConfig are available</span>
+<span class="n">A</span> <span class="n">a</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="n">A</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="n">B</span> <span class="n">b</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="n">B</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</pre>
+
+
+<h2 id="init-and-destroy">Init and Destroy</h2>
+<p>You can use <code>initMethod</code> and <code>destoryMethod</code> with <code>@Bean</code> for initialization and destroy of the bean:</p>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Foo</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">(){</span>
+    <span class="c1">//...</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">cleanup</span><span class="o">(){</span>
+    <span class="c1">//...</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">FooConfig</span><span class="o">{</span>
+    <span class="nd">@Bean</span><span class="o">(</span><span class="n">initMethod</span><span class="o">=</span><span class="s">&quot;init&quot;</span><span class="o">,</span> <span class="n">destroyMethod</span><span class="o">=</span><span class="s">&quot;cleanup&quot;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">Foo</span> <span class="n">foo</span><span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">Foo</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h2 id="bean-scope">Bean Scope</h2>
+<p>Default scope is <code>singleton</code>. You can use <code>@Scope</code> to define other scopes:</p>
+<pre class="code literal-block"><span></span><span class="nd">@Bean</span>
+<span class="nd">@Scope</span><span class="o">(</span><span class="s">&quot;prototype&quot;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="n">Foo</span> <span class="nf">foo</span><span class="o">(){</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="n">Foo</span><span class="o">();</span>
+<span class="o">}</span>
+</pre>

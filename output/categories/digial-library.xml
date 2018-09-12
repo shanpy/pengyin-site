@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Pengyin's Corner (Posts about Digial Library)</title><link>https://pengyin-shan.com/</link><description></description><atom:link type="application/rss+xml" href="https://pengyin-shan.com/categories/digial-library.xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Tue, 11 Sep 2018 20:57:15 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Dive into Hydra and My Thoughts</title><link>https://pengyin-shan.com/posts/2015/Others/dive-into-hydra-and-my-thoughts/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;p&gt;&lt;em&gt;This post is being updated while I'm learning more about Hydra&lt;/em&gt;&lt;/p&gt;
+&lt;h4 id="main-idea"&gt;Main Idea&lt;/h4&gt;
+&lt;p&gt;I used to create a small Spring MVC web app &lt;a href="https://github.com/shanpy/RDFExperiment"&gt;RDF Experiment&lt;/a&gt; to experiment the ideas behind Hydra. Following is a graph about my assumption of Hydra Idea:&lt;/p&gt;
+&lt;p&gt;../images/articles/2015/digital_library/ProjectHydra.png &lt;/p&gt;
+&lt;p&gt;Behind this large frame, there are lots of small classes/methods that will push through stages above.&lt;/p&gt;
+&lt;h5 id="key-concerns"&gt;Key Concerns&lt;/h5&gt;
+&lt;p&gt;Following key concerns should be evaluated carefully during the processes above:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;When parsing RDF file to Model, what are the key properties which should be kept? What are properties that should be ignored? How client and domain expert think about your solution?&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;What's the best way of modeling Fedora and Solr such that user can use different way of searching, and getting best result? Is there any possibility to shorten result list, while not losing necessary close-results? Is there any way to shorten the searching time?&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Is there any visualization job can be done to let user understand more about results?&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="problems-and-thoughts"&gt;Problems and Thoughts&lt;/h4&gt;
+&lt;h5 id="installation"&gt;Installation&lt;/h5&gt;
+&lt;p&gt;Although RubyInstaller is available in Windows, I still encountered lots of unexpected errors when setting up environment in Windows 10. I took much less time in Linux. I used to run CygWin for virtual Linux environment in Windows, but it's not work well for any environment setup process, including Python and RoR.&lt;/p&gt;
+&lt;p&gt;If anyone is like me who are starting a taste of Hydra, I suggest using Unix-Based system first.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Update on 8/12/15&lt;/em&gt;: I created a &lt;a href="http://pengyin-shan.com/blog/setting-up-ror-hydra-environment-problems-and-solutions"&gt;post&lt;/a&gt; talking about installation of RoR and Hydra. If you need to install RoR or Hydra, feel free to use this post.&lt;/p&gt;
+&lt;h5 id="ror"&gt;RoR&lt;/h5&gt;
+&lt;p&gt;Since both Spring and Rails framework are holding MVC structure, it's not hard to transfer idea from Spring to RoR. Subfolders in &lt;code&gt;app&lt;/code&gt; folder self-explained themselves:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;controllers&lt;/code&gt;, &lt;code&gt;models&lt;/code&gt;, &lt;code&gt;views&lt;/code&gt; are folders for MVC structure.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;assets&lt;/code&gt; has static resources.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;helpers&lt;/code&gt; is special for RoR. Since &lt;code&gt;helper&lt;/code&gt; is targeted to for variables talking before controller and view, they are very similar to &lt;code&gt;model attributes&lt;/code&gt; in Spring MVC framework.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The basic structure of Hydra-Demo is similar to the a Node.js app, and &lt;code&gt;Gemfile&lt;/code&gt; is similar to &lt;code&gt;requirements.txt&lt;/code&gt; file in Python.&lt;/p&gt;
+&lt;h5 id="deployment"&gt;Deployment&lt;/h5&gt;
+&lt;p&gt;Unfortunately, although Hydra is can be deployed on development environment easily for a single developer, there's no hosting platform that fully host a production environment of it. Following problem needs to be considered:&lt;/p&gt;
+&lt;p&gt;First, the default database needs to be changed in &lt;code&gt;database.yml&lt;/code&gt;. Obviously not a lot of institutions will use SQLite3 (Default) in production environment.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Solution&lt;/em&gt;: I have tried to replace it by MySQL and PostgreSQL, and these two solution all work. I believe other RDBMS should also work well. Just need to change &lt;code&gt;Gemfile&lt;/code&gt;. Replace &lt;code&gt;gem 'sqlite3'&lt;/code&gt; to &lt;code&gt;gem 'pg'&lt;/code&gt; or &lt;code&gt;gem 'mysql2'&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;database.yml&lt;/code&gt; can be changed as following for development purpose:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;default: &amp;amp;default
+adapter: postgresql
+pool: 5
+development:
+  &amp;lt;&amp;lt;: *default
+  url: postgresql_url_or_environment_virable
+  database: database_name
+  username:
+  pasword:
+test: #...
+production: #...
+&lt;/pre&gt;
+
+
+&lt;p&gt;Second problem is the host of fedora commons. As a single developer, I cannot find a cloud-hosted fedora to make calls, which cause me the problem of hosting hydra demo on cloud.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Solution&lt;/em&gt;: Since fedora commons has pretty good deployment guideline, I will try to deploy one on Amazon AWS, then adjust &lt;code&gt;fedora.yml&lt;/code&gt; in hydra-demo when moving to cloud.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Update 08/10/15&lt;/em&gt;: When I tried to deploy Fedora 4 on my local machine using Jetty 8, I got unexpected error message, such as  &lt;code&gt;Problem processing jar entry org/fcrepo/kernel/modeshape/observer/GetNamespacedProperties.class&lt;/code&gt; &lt;code&gt;java.lang.ArrayIndexOutOfBoundsException: 16680&lt;/code&gt;. It happens to lots of fedora classes, such as &lt;code&gt;org/fcrepo/http/commons/api/rdf/HttpTripleUtil.class&lt;/code&gt;. I need to figure out this problem before deploying fedora to cloud platform. Tomcat 7 gave no error message, but still unable to deploy it.&lt;/p&gt;&lt;/div&gt;</description><category>Digial Library</category><category>Hydra</category><guid>https://pengyin-shan.com/posts/2015/Others/dive-into-hydra-and-my-thoughts/</guid><pubDate>Sun, 09 Aug 2015 04:00:00 GMT</pubDate></item></channel></rss>

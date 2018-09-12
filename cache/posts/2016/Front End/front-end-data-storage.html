@@ -1,0 +1,59 @@
+<h1 id="reference-list">Reference List</h1>
+<ul>
+<li>
+<p><a href="http://www.w3schools.com/html/html5_webstorage.asp">HTML Local Storage</a> from <em>w3schools.com</em></p>
+</li>
+<li>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">Window.localStorage</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage">Window.sessionStorage</a> from MDN</p>
+</li>
+<li>
+<p><a href="http://www.tutorialspoint.com/javascript/javascript_cookies.htm">JavaScript and Cookies</a> from <em>Tutorialspoint.com</em></p>
+</li>
+<li>
+<p><a href="http://www.tutorialspoint.com/html5/html5_web_storage.htm">HTML5 - Web Storage</a> from <em>Tutorialspoint.com</em></p>
+</li>
+</ul>
+<h1 id="cookie">Cookie</h1>
+<p>Cookie is the most efficient method of remembering and tracking small amount of information in client side.</p>
+<h1 id="web-storage">Web Storage</h1>
+<p>Web storage is for large amount of data.</p>
+<p>So far, Web storage is widely supported by most browsers, from IE8 to most of mobile browser(except Opera Mini). So when I needs to store a large amount of data with capability requirement for most browsers, this is currently my best choice.</p>
+<p>There are two parts of web storage: <strong>local storage</strong> and <strong>session storage</strong>.</p>
+<p>Data for web storage are passed by <code>key-value</code> pair.</p>
+<h2 id="local-storage">Local Storage</h2>
+<p>Compared to session storage, local storage has <strong>no expiration time</strong>.</p>
+<h3 id="usage">Usage</h3>
+<p><code>localStorage</code> object can be used directly. Like <code>window.localStorage</code>.</p>
+<p>To remove a key-value pair, use <code>remove('key')</code>, like <code>localStorage.remove('lastname')</code>.</p>
+<p>to clear all key-value pair, use <code>localStorage.clear()</code>.</p>
+<h4 id="getitem-and-setitem"><code>getItem</code> and <code>setItem</code></h4>
+<p><code>getItem('key','value') and setItem('key','value')</code> is used to get/set data item.</p>
+<p>Here is an example from W3CSchool:</p>
+<pre class="code literal-block"><span></span><span class="c1">// Store</span>
+<span class="nx">localStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s2">&quot;lastname&quot;</span><span class="p">,</span> <span class="s2">&quot;Smith&quot;</span><span class="p">);</span>
+<span class="c1">// Retrieve</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;result&quot;</span><span class="p">).</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">localStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s2">&quot;lastname&quot;</span><span class="p">);</span>
+</pre>
+
+
+<h4 id="use-direct-attribute">Use direct attribute</h4>
+<p>Another way is to assign attribute to <code>localStorage</code> object:</p>
+<pre class="code literal-block"><span></span><span class="c1">// Store</span>
+<span class="nx">localStorage</span><span class="p">.</span><span class="nx">lastname</span> <span class="o">=</span> <span class="s2">&quot;Smith&quot;</span><span class="p">;</span>
+<span class="c1">// Retrieve</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;result&quot;</span><span class="p">).</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">localStorage</span><span class="p">.</span><span class="nx">lastname</span><span class="p">;</span>
+</pre>
+
+
+<h2 id="session-storage">Session Storage</h2>
+<p>Following a difference between local storage and session storage:</p>
+<ul>
+<li>
+<p>For session storage, data are lost after <strong>session end</strong>. i.e. data are delete after use close a browser window/tab.</p>
+</li>
+<li>
+<p>For session storage, opening a page in <em>new tab or window</em> will cause a new session to be <strong>initiated</strong>.</p>
+</li>
+</ul>
+<h3 id="usage_1">Usage</h3>
+<p>The way to use session storage is the same as the way to use local storage, except the object is now <code>window.sessionStorage</code>.</p>

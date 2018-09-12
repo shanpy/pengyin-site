@@ -1,0 +1,223 @@
+<p>This post is transferred from my <a href="http://blogpengyin.herokuapp.com/">old Hexo blog site</a>, created on 2014.</p>
+<p>This is a reading note from Spring Framework 3.1 Tutorial pdf, created by <a href="http://www.tutorialspoint.com/spring"><strong>tutorialspoint</strong></a>. This pdf contains information for Spring 3 Core Basics, which is very useful for understanding defination and practive in Spring programming.</p>
+<p>This note includes Chapter 21 in tutorial.</p>
+<h1 id="spring-transaction-management">Spring Transaction Management</h1>
+<p>A <strong>Database Transaction</strong> is a sequence of actions that are treated as a single unit of work. <em>You either run all of actions once, or you don't run any of them</em>.</p>
+<h2 id="four-properties-about-database">Four Properties About Database**</h2>
+<p>There are four key property that a transaction must have, called <strong>ACID</strong>:</p>
+<ul>
+<li>
+<p><code>Atomicity</code>: A transaction must be treated as <em>a single unit of operation</em>, which means either the entire sequence of operations is <em>successful</em> or <em>unsuccessful</em>.</p>
+</li>
+<li>
+<p><code>Consistency</code>: This represents the consistency of the referential integrity of the database, unique primary keys in tables etc. <em>All the rules must be applied for transactions, so that all data is complete.</em> For example, all B-Tree index or double-linked list must be right after a transaction.</p>
+</li>
+<li>
+<p><code>Isolation</code>: There may be <em>many</em> transactions processing with the <em>same</em> data set at the <em>same</em> time, each transaction should be <em>isolated</em> from others to prevent the data corruption.</p>
+</li>
+<li>
+<p><code>Durability</code>: Once a transaction has completed, the results of this transaction has to be <em>permanent</em> and <em>cannot be earased from the database</em> due to system failure.</p>
+</li>
+</ul>
+<h2 id="a-typical-sequence-of-transaction">A Typical Sequence of Transaction</h2>
+<p>Begin the transaction using begining transaction command</p>
+<p>Perfom <code>deleted</code>, <code>update</code> or <code>insert</code> operations using SQL queries.</p>
+<p>If all the operation are successful then perfom <code>commit</code> otherwise <code>rollback</code> all the operations.</p>
+<p>Spring transaction support aims to provide an alternative to <code>EJB</code> transactions by adding transaction capabilities to <code>POJO</code>s.</p>
+<p>Spring supports both <code>programmatic</code> and <code>declarative</code> transaction management.</p>
+<p>Spring transaction management can be implemented <em>without</em> a need of application server.</p>
+<h2 id="local-vs-global-transactions">Local vs Global Transactions</h2>
+<p><code>Local Transaction</code> is specific to a <em>single</em> transaction resource such as a JDBC connection, whereas <code>Global Transactions</code> can span <em>multiple</em> transaction resources like transaction in a Distributed System.</p>
+<p><code>Local Transaction</code> is useful in a centralized computing environment where application components and resources are located at <em>a single site</em> and transaction management only involves a <em>local data manager</em> runing on a <em>single machine</em>. Local transactions are easier to implement.</p>
+<p><code>Global Transaction</code> management is required in a <em>distributed</em> computing environment where all the resources are distributed across <em>multiple systems</em>. In such a case transaction management needs to be done both <em>at local and global events</em>. A distributed or a global transaction is executed across multiple systems, and its execution requires <em>coordination</em> between the global transaction management system and all the local data managers of all the involved systems.</p>
+<h2 id="programmatic-vs-declarative">Programmatic vs Declarative</h2>
+<p>Spring supports two type of transaction management:</p>
+<ul>
+<li>
+<p><code>Programmatic Transaction Management</code>: You manage the transaction with the help of programming. This ways has most <em>flexibility</em>, but it is <em>difficult to maintain</em>.</p>
+</li>
+<li>
+<p><code>Declarative Transaction Management</code>: You <em>seperate</em> transaction management from the <em>business code</em>. You only use <code>xml</code> based configuration to manage transactions. This is more preferable. Spring supports declarative transaction management through the Spring AOP framework.</p>
+</li>
+</ul>
+<h2 id="spring-transaction-abstractions">Spring Transaction Abstractions</h2>
+<p>The key to Spring transaction is: <code>org.springframework.transaction.PlatformTransactionManager</code> interface.
+images/posts/PlatformTransactionManager.png </p>
+<p><code>TransactionDefinition</code> is the core interface of the transaction support in Spring.
+images/posts/TransactionDefinition.png </p>
+<p><code>TransactionStatus</code> interface is used to control transaction execution and query transaction status.
+images/posts/TransactionStatus.png </p>
+<h2 id="programmatic-transaction-management">Programmatic Transaction Management</h2>
+<p>The generate process of <code>Programmatic Transaction Management</code> is:</p>
+<ul>
+<li>
+<p>Use an instance of <code>TransactionDefinition</code> with appropriate transaction attributes to start a new transaction.</p>
+</li>
+<li>
+<p>Start your transaction by calling <code>getTransaction()</code> method, which returns an instance of <code>TransactionStatus</code>.</p>
+</li>
+<li>
+<p><code>TransactionStatus</code> objects helps in tracking the current status of transaction.</p>
+</li>
+<li>
+<p>If everything goes fine, you can use <code>commit()</code> method of <code>PlatformTransactionManager</code> to commit the transaction, otherwise use <code>rollback()</code> to rollback the complate operation.</p>
+</li>
+</ul>
+<p>Example:</p>
+<p>XML:</p>
+<pre class="code literal-block"><span></span><span class="c">&lt;!--Initialization for data source --&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;dataSource&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.jdbc.datasource.DriverManagerDataSource&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;driverClassName&quot;</span> <span class="na">value=</span><span class="s">&quot;com.mysql.jdbc.Driver&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;url&quot;</span> <span class="na">value=</span><span class="s">&quot;jdbc:mysql://localhost:3306/TEST&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;username&quot;</span> <span class="na">value=</span><span class="s">&quot;root&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;password&quot;</span> <span class="na">value=</span><span class="s">&quot;password&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="c">&lt;!--Initialization for TransactionManager --&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;transactionManager&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.jdbc.datasource.DataSourceTransactionManger&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;dataSource&quot;</span> <span class="na">ref=</span><span class="s">&quot;dataSource&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="c">&lt;!--Defination of studentDaoImpl bean--&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;studentDaoImpl&quot;</span> <span class="na">class=</span><span class="s">&quot;com.sample.StudentDaoImpl&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;dataSource&quot;</span> <span class="na">ref=</span><span class="s">&quot;dataSource&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;transactionManager&quot;</span> <span class="na">ref=</span><span class="s">&quot;transactionManager&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</pre>
+
+
+<p>JAVA:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Assume we have a StudentDao interface, a student class with getters and setters, and a studentMapper class</span>
+<span class="c1">//Assume we have a Student table and a Marks table</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">StudentDaoImpl</span> <span class="kd">implements</span> <span class="n">StudentDao</span><span class="o">{</span>
+    <span class="kd">private</span> <span class="n">DataSouce</span> <span class="n">dataSource</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">JdbcTemplate</span> <span class="n">jdbcTemplateObject</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">PlatformTransactionManager</span> <span class="n">transactionManager</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setDataSource</span><span class="o">(</span><span class="n">DataSource</span> <span class="n">dataSource</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">dataSource</span> <span class="o">=</span> <span class="n">dataSource</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">jdbcTemplateObject</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JdbcTemplate</span><span class="o">(</span><span class="n">dataSource</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="c1">//Differnet from examples before, we need to set up TransactionManager</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setTransactionManager</span><span class="o">(</span><span class="n">PlatformTransacionManager</span> <span class="n">tansactionManager</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">transactionManager</span> <span class="o">=</span> <span class="n">transactionManager</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">create</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">Integer</span> <span class="n">age</span><span class="o">){</span>
+        <span class="c1">//Start Transaction</span>
+        <span class="n">TransactionDefination</span> <span class="n">def</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DefaultTransactionDefinition</span><span class="o">();</span>
+        <span class="n">TransactionStatus</span> <span class="n">status</span> <span class="o">=</span> <span class="n">transactionManager</span><span class="o">.</span><span class="na">getTransaction</span><span class="o">(</span><span class="n">def</span><span class="o">);</span>
+
+        <span class="k">try</span><span class="o">{</span>
+            <span class="n">String</span> <span class="n">SQL1</span> <span class="o">=</span> <span class="s">&quot;insert into Student (name,age) values (?,?)&quot;</span><span class="o">;</span>
+            <span class="n">jdbcTemplateObject</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="n">SQL1</span><span class="o">,</span> <span class="n">name</span><span class="o">,</span> <span class="n">age</span><span class="o">);</span>
+
+            <span class="c1">//Get latest student id from student table</span>
+            <span class="n">String</span> <span class="n">SQL2</span> <span class="o">=</span> <span class="s">&quot;select max(id) from Student&quot;</span><span class="o">;</span>
+            <span class="kt">int</span> <span class="n">sid</span> <span class="o">=</span> <span class="n">jdbcTemplateObject</span><span class="o">.</span><span class="na">queryForInt</span><span class="o">(</span><span class="n">SQL2</span><span class="o">);</span>
+
+            <span class="n">String</span> <span class="n">SQL3</span> <span class="o">=</span> <span class="s">&quot;insert into Marks(sid, marks, year) &quot;</span> <span class="o">+</span> <span class="s">&quot;values (?,?,?)&quot;</span><span class="o">;</span>
+            <span class="n">jdbcTemplateObject</span><span class="o">.</span><span class="na">udpate</span><span class="o">(</span><span class="n">SQL3</span><span class="o">,</span> <span class="n">sid</span><span class="o">,</span> <span class="n">marks</span><span class="o">,</span> <span class="n">year</span><span class="o">);</span>
+
+            <span class="n">transactionManager</span><span class="o">.</span><span class="na">commit</span><span class="o">(</span><span class="n">status</span><span class="o">);</span> <span class="c1">//Make sure you commit after sql operation!</span>
+        <span class="o">}</span>
+        <span class="k">catch</span><span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Student</span><span class="o">&gt;</span> <span class="nf">listStudents</span><span class="o">(){</span>
+        <span class="n">String</span> <span class="n">SQL</span> <span class="o">=</span> <span class="s">&quot;select * from Student, Marks where Student.id = Marks.sid&quot;</span><span class="o">;</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Student</span><span class="o">&gt;</span> <span class="n">students</span> <span class="o">=</span> <span class="n">jdbcTemplateObject</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="n">SQL</span><span class="o">,</span> <span class="k">new</span> <span class="n">StudentMapper</span><span class="o">());</span>
+        <span class="k">return</span> <span class="n">students</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+    <span class="n">ApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="s">&quot;beans.xml&quot;</span><span class="o">);</span>
+
+    <span class="n">StudentDaoImpl</span> <span class="n">studetnDaoImpl</span> <span class="o">=</span> <span class="o">(</span><span class="n">StudentDaoImpl</span><span class="o">)</span><span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">&quot;studentDapImpl&quot;</span><span class="o">);</span>
+    <span class="c1">//Now you can dp studentDaoImpl.create(), etc.</span>
+<span class="o">}</span>
+</pre>
+
+
+<h2 id="declarative-transaction-management">Declarative Transaction Management</h2>
+<p>If you use <code>Declarative Transaction Management</code>, you only use <code>Annotations</code> or <code>XML</code> based configuration to manage the transactions. Steps are:</p>
+<ul>
+<li>
+<p>Add <code>&lt;tx:advice /&gt;</code> tag in <code>XML</code> file, which creates a transaction-handling advice and ame time we define a <em>pointcut</em> that matches all methods we wish to make transactional and reference the transactional advice.</p>
+</li>
+<li>
+<p>If a method name has been included in the transactional configuration then created advice will begin the transaction <em>before</em> calling the method.</p>
+</li>
+<li>
+<p>Target method should be in a <code>Try/Catch</code> block.</p>
+</li>
+<li>
+<p>If the method finishes normally, the AOP advice <code>commits</code> the transaction successfully otherwise it performs a <code>rollback</code>.</p>
+</li>
+</ul>
+<p>Example:</p>
+<p>XML:</p>
+<pre class="code literal-block"><span></span><span class="c">&lt;!--Data Source Setup is the same as example above--&gt;</span>
+<span class="nt">&lt;tx:advice</span> <span class="na">id=</span><span class="s">&quot;txAdivce&quot;</span> <span class="na">transaction-manager=</span><span class="s">&quot;transactionManager&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tx:attribute&gt;</span>
+    <span class="nt">&lt;tx:method</span> <span class="na">name=</span><span class="s">&quot;create&quot;</span><span class="nt">/&gt;</span> <span class="c">&lt;!--Transaction will begin before calling this method--&gt;</span>
+    <span class="nt">&lt;/tx:attribute&gt;</span>
+<span class="nt">&lt;/tx:advice&gt;</span>
+
+<span class="nt">&lt;aop:config&gt;</span>
+    <span class="nt">&lt;aop:pointcut</span> <span class="na">id=</span><span class="s">&quot;createOperation&quot;</span> <span class="na">express=</span><span class="s">&quot;execution(*com.sample.StudentDaoImpl.create(...))&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;aop:advisor</span> <span class="na">advice-ref=</span><span class="s">&quot;txAdvice&quot;</span> <span class="na">point-cut=</span><span class="s">&quot;createOperation&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/aop:config&gt;</span>
+<span class="c">&lt;!--TransactionManager and StudentDaoImpl are the same as example above--&gt;</span>
+</pre>
+
+
+<p>JAVA:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Assume we have a StudentDao interface, a student class with getters and setters, and a studentMapper class</span>
+<span class="c1">//Assume we have a Student table and a Marks table</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">StudentDaoImpl</span> <span class="kd">implements</span> <span class="n">StudentDao</span><span class="o">{</span>
+    <span class="kd">private</span> <span class="n">JdbcTemplate</span> <span class="n">jdbcTemplateObject</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setDataSource</span><span class="o">(</span><span class="n">DataSource</span> <span class="n">dataSource</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">dataSource</span> <span class="o">=</span> <span class="n">dataSource</span><span class="o">;</span>
+        <span class="c1">//No need to declare dataSource in java class</span>
+    <span class="o">}</span>
+    <span class="c1">//No need to set up TransactionManager in java class</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">create</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">Integer</span> <span class="n">age</span><span class="o">){</span>
+        <span class="c1">//No need to set up Transaction</span>
+        <span class="k">try</span><span class="o">{</span>
+            <span class="n">String</span> <span class="n">SQL1</span> <span class="o">=</span> <span class="s">&quot;insert into Student (name,age) values (?,?)&quot;</span><span class="o">;</span>
+            <span class="n">jdbcTemplateObject</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="n">SQL1</span><span class="o">,</span> <span class="n">name</span><span class="o">,</span> <span class="n">age</span><span class="o">);</span>
+
+            <span class="c1">//Get latest student id from student table</span>
+            <span class="n">String</span> <span class="n">SQL2</span> <span class="o">=</span> <span class="s">&quot;select max(id) from Student&quot;</span><span class="o">;</span>
+            <span class="kt">int</span> <span class="n">sid</span> <span class="o">=</span> <span class="n">jdbcTemplateObject</span><span class="o">.</span><span class="na">queryForInt</span><span class="o">(</span><span class="n">SQL2</span><span class="o">);</span>
+
+            <span class="n">String</span> <span class="n">SQL3</span> <span class="o">=</span> <span class="s">&quot;insert into Marks(sid, marks, year) &quot;</span> <span class="o">+</span> <span class="s">&quot;values (?,?,?)&quot;</span><span class="o">;</span>
+            <span class="n">jdbcTemplateObject</span><span class="o">.</span><span class="na">udpate</span><span class="o">(</span><span class="n">SQL3</span><span class="o">,</span> <span class="n">sid</span><span class="o">,</span> <span class="n">marks</span><span class="o">,</span> <span class="n">year</span><span class="o">);</span>
+
+            <span class="c1">//No need to commit after sql operation!</span>
+        <span class="o">}</span>
+        <span class="k">catch</span><span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Student</span><span class="o">&gt;</span> <span class="nf">listStudents</span><span class="o">(){</span>
+        <span class="n">String</span> <span class="n">SQL</span> <span class="o">=</span> <span class="s">&quot;select * from Student, Marks where Student.id = Marks.sid&quot;</span><span class="o">;</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Student</span><span class="o">&gt;</span> <span class="n">students</span> <span class="o">=</span> <span class="n">jdbcTemplateObject</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="n">SQL</span><span class="o">,</span> <span class="k">new</span> <span class="n">StudentMapper</span><span class="o">());</span>
+        <span class="k">return</span> <span class="n">students</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+    <span class="n">ApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="s">&quot;beans.xml&quot;</span><span class="o">);</span>
+
+    <span class="n">StudentDaoImpl</span> <span class="n">studetnDaoImpl</span> <span class="o">=</span> <span class="o">(</span><span class="n">StudentDaoImpl</span><span class="o">)</span><span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">&quot;studentDapImpl&quot;</span><span class="o">);</span>
+    <span class="c1">//Now you can dp studentDaoImpl.create(), etc.</span>
+<span class="o">}</span>
+</pre>

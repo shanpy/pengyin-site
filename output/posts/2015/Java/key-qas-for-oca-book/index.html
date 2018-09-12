@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " vocab="http://ogp.me/ns" lang="en">
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]--><!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]--><!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]--><!--[if gt IE 8]><!--><!--<![endif]--><head>
+<meta charset="utf-8">
+<meta name="description" content="This post records all Q&amp;As which are important and be easy to make mistake for me. Most of Q&amp;As are taken from OCA Java SE 7 Certification Guide from Manning.">
+<!-- http://t.co/dKP3o1e --><meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Important Q&amp;A for OCA Java SE7 Certification Guide | Pengyin's Corner</title>
+<link href="../../../../assets/css/all.css" rel="stylesheet" type="text/css">
+<!-- Webfonts --><link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+<!-- Load Modernizr --><script src="//mmistakes.github.io/hpstr-jekyll-theme/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script><link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../rss.xml">
+<link rel="canonical" href="https://pengyin-shan.com/posts/2015/Java/key-qas-for-oca-book/">
+<!--[if lt IE 9]><script src="../../../../assets/js/html5.js"></script><![endif]--><meta name="description" content="This post records all Q&amp;As which are important and be easy to make mistake for me. Most of Q&amp;As are taken from OCA Java SE 7 Certification Guide from Manning.">
+<meta name="author" content="Pengyin(Wendy) Shan">
+<link rel="prev" href="../manning-oca-java-se7-reading-note-chapter-1/" title="Manning OCA Java SE 7 Reading Note: Chapter 1" type="text/html">
+<link rel="next" href="../jstl-reference-sheet/" title="JSTL Reference Sheet" type="text/html">
+<meta property="og:site_name" content="Pengyin's Corner">
+<meta property="og:title" content="Important Q&amp;A for OCA Java SE7 Certification Guide">
+<meta property="og:url" content="https://pengyin-shan.com/posts/2015/Java/key-qas-for-oca-book/">
+<meta property="og:description" content="This post records all Q&amp;As which are important and be easy to make mistake for me. Most of Q&amp;As are taken from OCA Java SE 7 Certification Guide from Manning.">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-01-13T00:00:00-05:00">
+<meta property="article:tag" content="Java">
+</head>
+<body id="post-index" class="feature">
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    
+
+    <nav id="dl-menu" class="dl-menuwrapper" role="navigation"><button class="dl-trigger">Open Menu</button>
+    <ul class="dl-menu">
+<li><a href="../../../">My Knowledge Base</a></li>
+            <li><a href="https://www.linkedin.com/in/pengyinshan">My LinkedIn</a></li>
+            <li><a href="../../../../categories/">Tags and Categories</a></li>
+            <li><a href="../../../../rss.xml">RSS feed</a></li>
+            <li><a href="../../../../archive.html">Archive</a></li>
+    
+    
+    </ul></nav><div class="entry-header">
+<!-- /.image-credit -->
+    <div class="entry-image">
+      <img src="../../../../bk.JPG" alt="Latest Posts">
+</div>
+<!-- /.entry-image -->
+      
+  <div class="header-title">
+    <div class="header-title-wrap">
+    <h1 id="brand"><a href="https://pengyin-shan.com/" title="Pengyin's Corner" rel="home">
+    Pengyin's Corner</a></h1>
+      <h2>Be Passionate.</h2>
+    </div>
+<!-- /.header-title-wrap -->
+  </div>
+<!-- /.header-title -->
+
+</div>
+<!-- /.entry-header -->
+
+    <div id="main" role="main">
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><div class="entry-meta">
+            <span class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2015-01-13T00:00:00-05:00" itemprop="datePublished" title="2015-01-13">2015-01-13</time></a></span>  ·  
+            <span class="byline author vcard">Pengyin(Wendy) Shan</span>  ·  
+                <span class="commentline">
+        
+    <a href="#disqus_thread" data-disqus-identifier="cache/posts/2015/Java/key-qas-for-oca-book.html">Comments</a>
+
+</span>  ·  
+            
+        <span class="sourceline"><a href="index.md" id="sourcelink">Source</a></span>  ·  
+
+                <meta name="description" itemprop="description" content="This post records all Q&amp;As which are important and be easy to make mistake for me. Most of Q&amp;As are taken from OCA Java SE 7 Certification Guide from Manning.">
+</div>
+        
+
+    
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Important Q&amp;A for OCA Java SE7 Certification Guide</a></h1>
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<h3 id="qas-from-chapter-1-oca-guide-from-manning">Q&amp;As from Chapter 1, OCA Guide from Manning</h3>
+<h4 id="q1-which-codes-can-be-complied-as-main-method">Q1: which code(s) can be complied as <code>main</code> method?</h4>
+<p>a.</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">EJava</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">sun</span><span class="o">[])</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sun</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="n">sun</span><span class="o">[</span><span class="mi">2</span><span class="o">]);</span>
+<span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>b.</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">EJava</span> <span class="o">{</span>
+<span class="kd">static</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">phone</span><span class="o">[])</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">phone</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="n">phone</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span>
+<span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>c.</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">EJava</span> <span class="o">{</span>
+<span class="kd">static</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">arguments</span><span class="o">[])</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">arguments</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="n">arguments</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span>
+<span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>d.</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">EJava</span> <span class="o">{</span>
+<span class="kd">static</span> <span class="kt">void</span> <span class="kd">public</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="n">args</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span>
+<span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>A1: a,b</p>
+<blockquote>
+<p>The problem of c is <code>main</code> method only accept one-dimention String array.</p>
+<p>The problem of d is <em><em>only <code>public</code> and <code>static</code> can change position. <code>void</code> must be the last modifier for <code>main</code> method</em>.</em></p>
+</blockquote>
+<h4 id="q2-which-of-the-following-examples-define-the-correct-java-class-structure">Q2: Which of the following examples define the correct Java class structure?</h4>
+<p>a.</p>
+<pre class="code literal-block"><span></span><span class="err">#</span><span class="n">connect</span> <span class="n">java</span> <span class="n">compiler</span><span class="o">;</span>
+<span class="err">#</span><span class="n">connect</span> <span class="n">java</span> <span class="n">virtual</span> <span class="n">machine</span><span class="o">;</span>
+<span class="kd">class</span> <span class="nc">EJavaGuru</span> <span class="o">{}</span>
+</pre>
+
+
+<p>b.</p>
+<pre class="code literal-block"><span></span><span class="kn">package</span> <span class="nn">java</span> <span class="n">compiler</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java</span> <span class="n">virtual</span> <span class="n">machine</span><span class="o">;</span>
+<span class="kd">class</span> <span class="nc">EJavaGuru</span> <span class="o">{}</span>
+</pre>
+
+
+<p>c.</p>
+<pre class="code literal-block"><span></span><span class="kn">import</span> <span class="nn">javavirtualmachine.</span><span class="err">`</span><span class="o">*</span><span class="err">`</span><span class="o">;</span>
+<span class="kn">package</span> <span class="nn">javacompiler</span><span class="o">;</span>
+<span class="kd">class</span> <span class="nc">EJavaGuru</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">method1</span><span class="o">()</span> <span class="o">{}</span>
+    <span class="kt">int</span> <span class="n">count</span><span class="o">;</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>d.</p>
+<pre class="code literal-block"><span></span><span class="kn">package</span> <span class="nn">javacompiler</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javavirtualmachine.*</span><span class="o">;</span> <span class="kd">class</span> <span class="nc">EJavaGuru</span> <span class="o">{</span>
+          <span class="kt">void</span> <span class="nf">method1</span><span class="o">()</span> <span class="o">{}</span>
+            <span class="kt">int</span> <span class="n">count</span><span class="o">;</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>e.</p>
+<pre class="code literal-block"><span></span><span class="err">#</span><span class="kn">package</span> <span class="nn">javacompiler</span><span class="o">;</span> <span class="n">$import</span> <span class="n">javavirtualmachine</span><span class="o">;</span> <span class="kd">class</span> <span class="nc">EJavaGuru</span> <span class="o">{</span>
+          <span class="kt">void</span> <span class="nf">method1</span><span class="o">()</span> <span class="o">{}</span>
+<span class="kt">int</span> <span class="n">count</span><span class="o">;</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>f.</p>
+<pre class="code literal-block"><span></span><span class="kn">package</span> <span class="nn">javacompiler</span><span class="o">;</span> <span class="kn">import</span> <span class="nn">javavirtualmachine</span><span class="o">;</span> <span class="n">Class</span> <span class="n">EJavaGuru</span> <span class="o">{</span>
+          <span class="kt">void</span> <span class="nf">method1</span><span class="o">()</span> <span class="o">{}</span>
+<span class="kt">int</span> <span class="n">count</span><span class="o">;</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>A2: d</p>
+<blockquote>
+<p>Problem of f is : <strong>Java is case-sensitive</strong>.</p>
+</blockquote>
+<h4 id="q3-which-of-the-following-options-when-inserted-at-insert-code-here-will-print-out-ejavaguru">Q3. Which of the following options, when inserted at //INSERT CODE HERE, will print out EJavaGuru?</h4>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">EJavaGuru</span> <span class="o">{</span>
+    <span class="c1">// INSERT CODE HERE</span>
+    <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"EJavaGuru"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<ul>
+<li>
+<p>a. <code>public void main (String[] args)</code></p>
+</li>
+<li>
+<p>b. <code>public void main(String args[])</code></p>
+</li>
+<li>
+<p>c. <code>static public void main (String[] array)</code></p>
+</li>
+<li>
+<p>d. <code>public static void main (String args)</code></p>
+</li>
+<li>
+<p>e. <code>static public main (String args[])</code></p>
+</li>
+</ul>
+<p>A3: c</p>
+<blockquote>
+<p><strong>Extra space is ignored by java compiler</strong>.</p>
+</blockquote>
+<h4 id="q4-given-the-following-code-select-the-correct-options">Q4: Given the following code, select the correct options:</h4>
+<pre class="code literal-block"><span></span><span class="kn">package</span> <span class="nn">com.ejavaguru.courses</span><span class="o">;</span>
+<span class="kd">class</span> <span class="nc">Course</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="n">courseName</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setCourseName</span><span class="o">(</span><span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">courseName</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<ul>
+<li>
+<p>a. You can’t define a method argument as a private variable.</p>
+</li>
+<li>
+<p>b. A method argument should be defined with either public or default accessibility.</p>
+</li>
+<li>
+<p>c. For overridden methods, method arguments should be defined with protected accessibility.</p>
+</li>
+<li>
+<p>d. None of the above.</p>
+</li>
+</ul>
+<p>A4: a</p>
+<blockquote>
+<p><strong>Method argument cannot have any access modifier</strong>.</p>
+</blockquote>
+<h3 id="qas-from-chapter-2-oca-guide-from-manning">Q&amp;As from Chapter 2, OCA Guide from Manning</h3>
+<h4 id="q1-lets-use-the-primitive-variables-basedecimal-octval-hexval-and-binval-defined-earlier-in-this-section-and-introduce-additional-code-for-printing-the-values-of-all-these-variables-determine-the-output-of-the-following-code">Q1. Let’s use the primitive variables baseDecimal, octVal, hexVal, and binVal defined earlier in this section and introduce additional code for printing the values of all these variables. Determine the output of the following code:</h4>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">TwistInTaleNumberSystems</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span> <span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">baseDecimal</span> <span class="o">=</span> <span class="mi">267</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">octVal</span> <span class="o">=</span> <span class="mo">0413</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">hexVal</span> <span class="o">=</span> <span class="mh">0x10B</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">binVal</span> <span class="o">=</span> <span class="mb">0b100001011</span><span class="o">;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span> <span class="o">(</span><span class="n">baseDecimal</span> <span class="o">+</span> <span class="n">octVal</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span> <span class="o">(</span><span class="n">hexVal</span> <span class="o">+</span> <span class="n">binVal</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>A1: 267, 267</p>
+<blockquote>
+<p><code>System.out.println()</code> always print out decimal value so all oct, hex and binaray needs to be changed to decimal value. Note the way to calculate binary is use the n square of 2.</p>
+</blockquote>
+<h4 id="q2-select-all-incorrect-statements">Q2. Select all incorrect statements:</h4>
+<p>a. A programmer can’t define a new primitive data type.</p>
+<p>b. A programmer can define a new primitive data type.</p>
+<p>c. Once assigned, the value of a primitive can’t be modified.</p>
+<p>d. A value can’t be assigned to a primitive variable.</p>
+<p>A2: b,c,d</p>
+<blockquote>
+<p>Note you <strong>can modify value of primary type after it is assigned</strong>.</p>
+</blockquote>
+<h4 id="q3-which-of-the-operations-are-correct-for-the-following-code">Q3. Which of the operations are correct for the following code?</h4>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Prim</span> <span class="o">{</span> <span class="c1">//line1</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span> <span class="c1">//line 2</span>
+  <span class="kt">char</span> <span class="n">a</span> <span class="o">=</span> <span class="sc">'a'</span><span class="o">;</span> <span class="c1">//3</span>
+  <span class="kt">char</span> <span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span><span class="o">;</span> <span class="c1">//4</span>
+  <span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="sc">'1'</span><span class="o">;</span> <span class="c1">//5</span>
+  <span class="n">integer</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">1000</span><span class="o">;</span> <span class="c1">//6</span>
+  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(++</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">++</span> <span class="o">*</span> <span class="n">c</span> <span class="o">-</span> <span class="n">d</span><span class="o">);</span> <span class="c1">//7</span>
+  <span class="o">}</span>
+  <span class="o">}</span>
+</pre>
+
+
+<p>a. Code at line 4 fails to compile.</p>
+<p>b. Code at line 5 fails to compile.</p>
+<p>c. Code at line 6 fails to compile.</p>
+<p>d. Code at line 7 fails to compile.</p>
+<p>A3: a,c,d</p>
+<blockquote>
+<p>Note <code>Integer</code> is <em>not</em> a valid java primary data type!</p>
+</blockquote>
+<h4 id="q4-which-of-the-following-options-contain-correct-code-to-declare-and-initialize-variables-to-store-whole-numbers">Q4. Which of the following options contain correct code to declare and initialize variables to store whole numbers?</h4>
+<p>a. bit a=0;</p>
+<p>b. integer a2 = 7;</p>
+<p>c. long a3 = 0x10C;</p>
+<p>d. short a4 = 0512;</p>
+<p>e. double a5 = 10;</p>
+<p>f. byte a7 = -0;</p>
+<p>g. long a8 = 123456789;</p>
+<p>A4: c,d,f,g</p>
+<blockquote>
+<p>Note <code>double</code> can <em>only</em> store <strong>decimal</strong> value. Also <code>byte a7 = 0</code> is valid.</p>
+<p><code>bit</code> and <code>integer</code> are not primary data type for java.</p>
+</blockquote>
+<h4 id="q5-if-the-functionality-of-the-operators-and-were-to-be-swapped-in-java-for-the-code-on-line-numbers-4-5-and-6-what-would-be-the-result-of-the-following-code">Q5.  If the functionality of the operators = and &gt; were to be swapped in Java (for the code on line numbers 4, 5, and 6), what would be the result of the following code?</h4>
+<pre class="code literal-block"><span></span><span class="kt">boolean</span> <span class="n">myBool</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+<span class="kt">int</span> <span class="n">yourInt</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">hisFloat</span> <span class="o">=</span> <span class="mf">19.54f</span><span class="o">;</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">hisFloat</span> <span class="o">&gt;</span> <span class="n">yourInt</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">yourInt</span> <span class="o">=</span> <span class="mi">10</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">myBool</span> <span class="o">&gt;</span> <span class="kc">false</span><span class="o">);</span>
+</pre>
+
+
+<p>a. true true false</p>
+<p>b. 10.0 false false</p>
+<p>c. false false false</p>
+<p>d. Compilation error</p>
+<p>A5: b</p>
+<blockquote>
+<p><code>swapped</code> means change the function of <code>=</code> and <code>&gt;</code>. Note <code>System.out.println(assignment expression)</code> is acceptable in Java.</p>
+</blockquote>
+<h4 id="qas-from-chapter-3-oca-guide-from-manning">Q&amp;As from Chapter 3, OCA Guide from Manning</h4>
+<h4 id="q1-which-of-the-following-methods-correctly-accepts-three-whole-numbers-as-method-arguments-and-returns-their-sum-as-a-decimal-number">Q1: Which of the following methods correctly accepts three whole numbers as method arguments and returns their sum as a decimal number?</h4>
+<p>a.</p>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">addNumbers</span><span class="o">(</span><span class="kt">byte</span> <span class="n">arg1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">arg2</span><span class="o">,</span> <span class="kt">int</span> <span class="n">arg3</span><span class="o">)</span> <span class="o">{</span>
+<span class="kt">double</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">arg1</span> <span class="o">+</span> <span class="n">arg2</span> <span class="o">+</span> <span class="n">arg3</span><span class="o">;</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>b.</p>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="kt">double</span> <span class="nf">subtractNumbers</span><span class="o">(</span><span class="kt">byte</span> <span class="n">arg1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">arg2</span><span class="o">,</span> <span class="kt">int</span> <span class="n">arg3</span><span class="o">)</span> <span class="o">{</span>
+<span class="kt">double</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">arg1</span> <span class="o">+</span> <span class="n">arg2</span> <span class="o">+</span> <span class="n">arg3</span><span class="o">;</span>
+<span class="k">return</span> <span class="n">sum</span><span class="o">;</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>c.</p>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="kt">double</span> <span class="nf">numbers</span><span class="o">(</span><span class="kt">long</span> <span class="n">arg1</span><span class="o">,</span> <span class="kt">byte</span> <span class="n">arg2</span><span class="o">,</span> <span class="kt">double</span> <span class="n">arg3</span><span class="o">)</span> <span class="o">{</span>
+<span class="k">return</span> <span class="n">arg1</span> <span class="o">+</span> <span class="n">arg2</span> <span class="o">+</span> <span class="n">arg3</span><span class="o">;</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>d.</p>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="kt">float</span> <span class="nf">wakaWakaAfrica</span><span class="o">(</span><span class="kt">long</span> <span class="n">a1</span><span class="o">,</span> <span class="kt">long</span> <span class="n">a2</span><span class="o">,</span> <span class="kt">short</span> <span class="n">a977</span><span class="o">)</span> <span class="o">{</span>
+<span class="kt">double</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">a1</span> <span class="o">+</span> <span class="n">a2</span> <span class="o">+</span> <span class="n">a977</span><span class="o">;</span>
+<span class="k">return</span> <span class="o">(</span><span class="kt">float</span><span class="o">)</span><span class="n">sum</span><span class="o">;</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>A1: b,d</p>
+<blockquote>
+<p>On option d, note that <code>double</code> can accept <code>long</code> and <code>short</code> assignment. There is no data size problem.</p>
+</blockquote>
+<h4 id="q2-which-of-the-following-statements-are-true">Q2: Which of the following statements are true?</h4>
+<p>a. If the return type of a method is <code>int</code> , the method can return a value of type <code>byte</code> .</p>
+<p>b. A method may or may not return a value.</p>
+<p>c. If the return type of a method is void , it can define a return statement without a value, as follows: <code>return;</code></p>
+<p>d. A method may or may not accept any method arguments.</p>
+<p>e. A method must accept at least one method argument or define its return type.</p>
+<p>f. A method whose return type is String can’t return <code>null</code>.</p>
+<p>A2: a, b, c, d</p>
+<blockquote>
+<p>Note for opation a, since <code>byte</code> can be transferred succesfully to <code>int</code> without casting, it is safe to return <code>byte</code>.</p>
+</blockquote>
+<h4 id="q3-given-the-following-code">Q3: Given the following code,</h4>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">Course</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">enroll</span><span class="o">(</span><span class="kt">long</span> <span class="n">duration</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"long"</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kt">void</span> <span class="nf">enroll</span><span class="o">(</span><span class="kt">int</span> <span class="n">duration</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"int"</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kt">void</span> <span class="nf">enroll</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"String"</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kt">void</span> <span class="nf">enroll</span><span class="o">(</span><span class="n">Object</span> <span class="n">o</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Object"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>what is the output of the following code?</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">EJavaGuru</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+    <span class="n">Course</span> <span class="n">course</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Course</span><span class="o">();</span>
+    <span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+    <span class="n">course</span><span class="o">.</span><span class="na">enroll</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+    <span class="n">course</span><span class="o">.</span><span class="na">enroll</span><span class="o">(</span><span class="s">"Object"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>a. Compilation error</p>
+<p>b. Runtime exception</p>
+<p>c. "int" "String"</p>
+<p>d. "long" "Object"</p>
+<p>A3: c</p>
+<blockquote>
+<p>About using <code>Object</code> parameter here: although <code>Object</code> is a generally type of other type, since there exist other methods that take more <strong>sepecified parameter</strong>, there will be not runtime error.</p>
+<p>The way to get c option is:
+- Java found <code>char</code> can use methods that have parameter type <code>int</code> and <code>long</code>.
+- Java found <strong>closest</strong> type for char is <code>int</code>, so Java call method which takes <code>int</code>.</p>
+</blockquote>
+<h4 id="q4-select-the-incorrect-options">Q4: Select the incorrect options:</h4>
+<p>a. If a user defines a private constructor for a public class, Java creates a public default constructor for the class.</p>
+<p>b. A class that gets a default constructor doesn’t have overloaded constructors.
+c. A user can overload the default constructor of a class.</p>
+<p>d. The following class is eligible for a default constructor:</p>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">EJava</span> <span class="o">{}</span>
+<span class="err">```</span>
+<span class="o">-</span> <span class="n">e</span><span class="o">.</span> <span class="n">The</span> <span class="n">following</span> <span class="kd">class</span> <span class="nc">is</span> <span class="n">also</span> <span class="n">eligible</span> <span class="k">for</span> <span class="n">a</span> <span class="k">default</span> <span class="n">constructor</span><span class="o">:</span>
+<span class="err">```</span>
+<span class="kd">class</span> <span class="nc">EJava</span> <span class="o">{</span>
+<span class="kt">void</span> <span class="nf">EJava</span><span class="o">()</span> <span class="o">{}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>A4: a,c</p>
+<blockquote>
+<p><strong>Note we need incorrect options here!</strong></p>
+<ul>
+<li>
+<p>b is right, <strong>Default controller can not exist as the same time as user-defined controller</strong>, so it doesn't have overloaded constructors.</p>
+</li>
+<li>
+<p>c is not right, similarly, we can not overload default controller becuase if we do, the default controller will disappear.</p>
+</li>
+</ul>
+</blockquote>
+<h3 id="qas-from-chapter-7-oca-guide-from-manning">Q&amp;As from Chapter 7, OCA Guide from Manning</h3>
+<h4 id="q1-examine-the-following-code-and-select-the-correct-options">Q1: Examine the following code and select the correct option(s):</h4>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">EJavaGuruExcep2</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+<span class="n">EJavaGuruExcep2</span> <span class="n">var</span> <span class="o">=</span> <span class="k">new</span> <span class="n">EJavaGuruExcep2</span><span class="o">();</span>
+<span class="n">var</span><span class="o">.</span><span class="na">printArrValues</span><span class="o">(</span><span class="n">args</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="kt">void</span> <span class="nf">printArrValues</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">arr</span><span class="o">)</span> <span class="o">{</span>
+<span class="k">try</span> <span class="o">{</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">arr</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">+</span> <span class="s">":"</span> <span class="o">+</span> <span class="n">arr</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span>
+<span class="o">}</span>
+<span class="k">catch</span> <span class="o">(</span><span class="n">NullPointerException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"NullPointerException"</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="k">catch</span> <span class="o">(</span><span class="n">IndexOutOfBoundsException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"IndexOutOfBoundsException"</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="k">catch</span> <span class="o">(</span><span class="n">ArrayIndexOutOfBoundsException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"ArrayIndexOutOfBoundsException"</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>a. If the class EJavaGuruExcep2 is executed using the following command, it prints <code>NullPointerException</code> : javaEJavaGuruExcep2</p>
+<p>b. If the class EJavaGuruExcep2 is executed using the following command, it prints <code>IndexOutOfBoundsException</code> : javaEJavaGuruExcep2</p>
+<p>c. If the class EJavaGuruExcep2 is executed using the following command, it prints <code>ArrayIndexOutOfBoundsException</code>: javaEJavaGuruExcep2one
+d. The code will fail to compile.</p>
+<p>A1: d</p>
+<blockquote>
+<p><strong>If you try to catch an exception from its dervied class after the exception of base class, the code will note compile.</strong></p>
+<p>Here <code>ArrayIndexOutOfBoundsException</code> is a derived class of <code>IndexOutOfBoundsException</code>, so it should be throwed out first. The code will fail to compile otherwise.</p>
+</blockquote>
+<h4 id="q2-what-is-the-output-of-the-following-code">Q2: What is the output of the following code?</h4>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">EJava</span> <span class="o">{</span>
+<span class="kt">void</span> <span class="nf">method</span><span class="o">()</span> <span class="o">{</span>
+<span class="k">try</span> <span class="o">{</span>
+<span class="n">guru</span><span class="o">();</span>
+<span class="k">return</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="k">finally</span> <span class="o">{</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"finally 1"</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="o">}</span>
+<span class="kt">void</span> <span class="nf">guru</span><span class="o">()</span> <span class="o">{</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"guru"</span><span class="o">);</span>
+<span class="k">throw</span> <span class="k">new</span> <span class="n">StackOverflowError</span><span class="o">();</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+<span class="n">EJava</span> <span class="n">var</span> <span class="o">=</span> <span class="k">new</span> <span class="n">EJava</span><span class="o">();</span>
+<span class="n">var</span><span class="o">.</span><span class="na">method</span><span class="o">();</span>
+<span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>a. guru finally 1</p>
+<p>b. guru finally 1 Exception in thread "main" java.lang.
+StackOverflowError</p>
+<p>c. guru Exception in thread "main" java.lang.StackOverflowError</p>
+<p>d. guru</p>
+<p>e. The code fails to compile.</p>
+<p>A2: b</p>
+<blockquote>
+<p><code>throw</code> in code means <strong>an exception must be throwed out</strong></p>
+</blockquote>
+<h4 id="q3-what-is-the-output-of-the-following-code">Q3: What is the output of the following code?</h4>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">TryFinally</span> <span class="o">{</span>
+<span class="kt">int</span> <span class="nf">tryAgain</span><span class="o">()</span> <span class="o">{</span>
+<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+<span class="k">try</span> <span class="o">{</span>
+<span class="o">++</span><span class="n">a</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="k">finally</span> <span class="o">{</span>
+<span class="n">a</span><span class="o">++;</span>
+<span class="o">}</span>
+<span class="k">return</span> <span class="n">a</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">new</span> <span class="n">TryFinally</span><span class="o">().</span><span class="na">tryAgain</span><span class="o">());</span>
+<span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>a. 10</p>
+<p>b. 11</p>
+<p>c. 12</p>
+<p>d. Compile Error</p>
+<p>e. Runtime Error</p>
+<p>A3. c</p>
+<blockquote>
+<ul>
+<li>It is OK to have <code>try</code> block <strong>without</strong> a <code>catch</code> block.</li>
+<li>"Primary Number Passing Problem" only happens if there is any <code>return</code> in <code>try/catch</code> block. Here since the only <code>return</code> is at the end of method, both <code>try</code> and <code>finally</code> are able to modify value.</li>
+<li>Note if there is a <code>return</code> at the end of method block, <code>try</code> and <code>catch</code> cannot have <code>return</code> at the same time.</li>
+</ul>
+</blockquote>
+<h4 id="q4-which-of-the-following-statements-are-true">Q4: Which of the following statements are true?</h4>
+<p>a. A user-defined class may not throw an <code>IllegalStateException</code> . It must be thrown only by Java API classes.</p>
+<p>b. <code>System.out.println</code> will throw <code>NullPointerException</code> if an uninitialized instance variable of type String is passed to it to print its value.</p>
+<p>c. <code>NumberFormatException</code> is thrown by multiple methods from the Java API when invalid numbers are passed on as String s to be converted to the specified number format.</p>
+<p>d. <code>ExceptionInInitializerError</code> may be thrown by the JVM when a static initializer in your code throws a <code>NullPointerException</code>.</p>
+<p>A4. c,d</p>
+<blockquote>
+<p>Note the problem of <code>b</code> is <code>System.out.println</code> will print <code>null</code> in option b. When a string is not initialized, it has default value <code>null</code>. It will throw <code>NullPointerException</code> error when you try to access a method using the <code>null</code> variable.</p>
+</blockquote>
+<h4 id="q5-given-that-filetxt-doesnt-exist-on-your-system-what-is-the-output-of-the-following-code">Q5. Given that <code>file.txt</code> doesn’t exist on your system, what is the output of the following code?</h4>
+<pre class="code literal-block"><span></span><span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MultipleExceptions</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+<span class="n">FileInputStream</span> <span class="n">fis</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="k">try</span> <span class="o">{</span>
+    <span class="n">fis</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="s">"file.txt"</span><span class="o">);</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"File Opened"</span><span class="o">);</span>
+    <span class="n">fis</span><span class="o">.</span><span class="na">read</span><span class="o">();</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Read File"</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="k">finally</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"finally"</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="k">catch</span> <span class="o">(</span><span class="n">FileNotFoundException</span> <span class="n">fnfe</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"File not found"</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">ioe</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"File Closing Exception"</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Next task.."</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>a. The code prints:</p>
+<pre class="code literal-block"><span></span><span class="n">File</span> <span class="n">not</span> <span class="n">found</span>
+<span class="k">finally</span>
+<span class="n">Next</span> <span class="n">task</span><span class="o">..</span>
+</pre>
+
+
+<p>b. The code prints:</p>
+<pre class="code literal-block"><span></span><span class="n">File</span> <span class="n">Opened</span>
+<span class="n">File</span> <span class="n">Closing</span> <span class="n">Exception</span>
+<span class="k">finally</span>
+<span class="n">Next</span> <span class="n">task</span><span class="o">..</span>
+</pre>
+
+
+<p>c. The code prints <code>File not found</code></p>
+<p>d. The code fails to compile</p>
+<p>A5. d</p>
+<blockquote>
+<p>The code cannot compile because <strong>finally block cannot be put before catch block</strong>.</p>
+</blockquote>
+<h4 id="q6-given-that-playerstxt-exists-on-your-system-and-that-the-assignment-of-players-shown-in-bold-doesnt-throw-any-exceptions-what-is-the-output-of-the-following-code">Q6. Given that <code>players.txt</code> exists on your system and that the assignment of players, shown in bold, doesn’t throw any exceptions, what is the output of the following code?</h4>
+<pre class="code literal-block"><span></span><span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TwistInTaleNestedTryCatch</span> <span class="o">{</span>
+<span class="kd">static</span> <span class="n">FileInputStream</span> <span class="n">players</span><span class="o">,</span> <span class="n">coach</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+<span class="k">try</span> <span class="o">{</span>
+<span class="n">players</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="s">"players.txt"</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"players.txt found"</span><span class="o">);</span>
+<span class="k">try</span> <span class="o">{</span>
+<span class="n">coach</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+<span class="o">}</span>
+<span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"coach.txt not found"</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="o">}</span>
+<span class="k">catch</span> <span class="o">(</span><span class="n">FileNotFoundException</span> <span class="n">fnfe</span><span class="o">)</span> <span class="o">{</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"players.txt not found"</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="k">catch</span> <span class="o">(</span><span class="n">NullPointerException</span> <span class="n">ne</span><span class="o">)</span> <span class="o">{</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"NullPointerException"</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>a. The code prints:</p>
+<pre class="code literal-block"><span></span><span class="n">players</span><span class="o">.</span><span class="na">txt</span> <span class="n">found</span>
+<span class="n">NullPointerException</span>
+</pre>
+
+
+<p>b. The code prints:</p>
+<pre class="code literal-block"><span></span><span class="n">players</span><span class="o">.</span><span class="na">txt</span> <span class="n">found</span>
+<span class="n">coach</span><span class="o">.</span><span class="na">txt</span> <span class="n">not</span> <span class="n">found</span>
+</pre>
+
+
+<p>c. The code throws a runtime exception.</p>
+<p>d. The code fail to compile.</p>
+<p>A6. a</p>
+<blockquote>
+<p>Since <code>coach</code> is a <code>static</code> variable <strong>which hasn't been initialized</strong>, a call to use <strong>a method</strong> of <code>coach</code> will throw <code>NullPointerException</code>.</p>
+</blockquote>
+<h3 id="qas-from-chapter-4-oca-guide-from-manning">Q&amp;As from Chapter 4, OCA Guide from Manning</h3>
+<h4 id="q1-which-of-the-following-are-valid-lines-of-code-to-define-a-multidimensional-int-array">Q1: Which of the following are valid lines of code to define a <code>multidimensional int array</code>?</h4>
+<p>a. <code>int[][] array1 = {{1, 2, 3}, {}, {1, 2,3, 4, 5}};</code></p>
+<p>b. <code>int[][] array2 = new array() {{1, 2, 3}, {}, {1, 2,3, 4, 5}}</code></p>
+<p>c. <code>int[][] array3 = {1, 2, 3}, {0}, {1, 2,3, 4, 5};</code></p>
+<p>d. <code>int[][] array5 = new int[2][];</code></p>
+<p>A1. a,d</p>
+<blockquote>
+<p>The option b is wrong. <code>new array()</code> is not valid</p>
+</blockquote>
+<h4 id="q2-which-of-the-following-statements-are-correct">Q2. Which of the following statements are correct?</h4>
+<p>a. By default, an ArrayList creates an array with an initial size of 16 to store its elements.</p>
+<p>b. Because ArrayList stores
+only objects, you can’t pass an element of an ArrayList to a switch construct.</p>
+<p>c. Calling <code>clear()</code> and <code>remove()</code> on an ArrayList will remove all its elements.</p>
+<p>d. If you frequently add elements to an ArrayList , specifying a larger capacity will improve the code efficiency.</p>
+<p>e. Calling the method <code>clone()</code> on an ArrayList creates its shallow copy; that is, it doesn’t clone the individual list elements.</p>
+<p>A2. d,e</p>
+<blockquote>
+<p>Option a is not right. <code>ArrayList</code> has size <code>10</code>. <code>StringBuilder</code> has size <code>16</code>.
+Option c is right. You can specify a larger capacity of <code>ArrayList</code></p>
+</blockquote>
+<h4 id="q3-what-is-the-output-of-the-following-code_1">Q3. What is the output of the following code?</h4>
+<pre class="code literal-block"><span></span><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span> <span class="c1">//Line 1</span>
+<span class="kd">class</span> <span class="nc">EJavaGuruArrayList</span> <span class="o">{</span> <span class="c1">//Line2</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span> <span class="c1">//Line 3</span>
+    <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">ejg</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span> <span class="c1">//Line 4</span>
+    <span class="n">ejg</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"One"</span><span class="o">);</span> <span class="c1">//Line 5</span>
+    <span class="n">ejg</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"Two"</span><span class="o">);</span> <span class="c1">//Line 6</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">ejg</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="s">"One"</span><span class="o">)));</span> <span class="c1">//Line 7</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">ejg</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="s">"Two"</span><span class="o">));</span> <span class="c1">//Line 8</span>
+    <span class="n">ejg</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span> <span class="c1">//Line 9</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">ejg</span><span class="o">);</span> <span class="c1">//Line 10</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">ejg</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">1</span><span class="o">));</span> <span class="c1">//Line 11</span>
+<span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>a. Line 7 prints true</p>
+<p>b. Line 7 prints false</p>
+<p>c. Line 8 prints -1</p>
+<p>d. Line 8 prints 1</p>
+<p>e. Line 9 removes all elements of the list ejg</p>
+<p>f. Line 9 sets the list ejg to null</p>
+<p>g. Line 10 prints null</p>
+<p>h. Line 10 prints []</p>
+<p>i. ine 10 prints a value similar to ArrayList@16356</p>
+<p>j. Line 11 throws an exception</p>
+<p>k. Line 11 prints null</p>
+<p>A3: a,d,e,h,k</p>
+<blockquote>
+<p>Option a is right. When <code>contains()</code> is used for String, it call <code>equals()</code> first, which for String, if using <code>new()</code>, means same reference.</p>
+<p>Option h is right. When calling <code>System.out.println()</code>, <code>toString()</code> method is automatically called. For <code>ArrayList</code>, <code>toString()</code> method will print out String value. Since ejg has been cleared, <code>null</code> value will be print out.</p>
+</blockquote>
+<h4 id="q4-what-is-the-output-of-the-following-code">Q4. What is the output of the following code?</h4>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">EJavaGuruString</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">ejg1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="s">"E Java"</span><span class="o">);</span>
+        <span class="n">String</span> <span class="n">ejg2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="s">"E Java"</span><span class="o">);</span>
+        <span class="n">String</span> <span class="n">ejg3</span> <span class="o">=</span> <span class="s">"E Java"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">ejg4</span> <span class="o">=</span> <span class="s">"E Java"</span><span class="o">;</span>
+        <span class="k">do</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">ejg1</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">ejg2</span><span class="o">));</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">ejg3</span> <span class="o">==</span> <span class="n">ejg4</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>a. true printed once</p>
+<p>b. false printed once</p>
+<p>c. true printed in an infinite loop</p>
+<p>d. false printed in an infinite loop</p>
+<p>A4. c</p>
+<blockquote>
+<p>String <code>ejg3</code> and <code>ejg4</code> are not created with <code>new()</code>, so Java will find them same in String pool, which gives out a infinite loop.</p>
+</blockquote>
+<h4 id="q5-what-is-the-output-of-the-following-code">Q5. What is the output of the following code?</h4>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">EJavaGuruStringBuilder</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+        <span class="n">StringBuilder</span> <span class="n">ejg</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">(</span><span class="mi">10</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="s">"SUN"</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">5</span><span class="o">);</span>
+        <span class="n">ejg</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">ejg</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">6</span><span class="o">));</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">ejg</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>a. 12S512S5</p>
+<p>b. 12S12S</p>
+<p>c. 1025102S</p>
+<p>d. Runtime exception</p>
+<p>A5. a</p>
+<blockquote>
+<p><code>ejg.delete(3, 6)</code> means <code>ejg</code> is now <code>12S5</code>. <strong>last index is exclusive.</strong></p>
+</blockquote>
+<h4 id="q6-what-is-the-output-of-the-following-code">Q6. What is the output of the following code?</h4>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">EJavaGuruString2</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">ejg</span> <span class="o">=</span> <span class="s">"game"</span><span class="o">;</span>
+        <span class="n">ejg</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="sc">'a'</span><span class="o">,</span> <span class="sc">'Z'</span><span class="o">).</span><span class="na">trim</span><span class="o">().</span><span class="na">concat</span><span class="o">(</span><span class="s">"Aa"</span><span class="o">);</span>
+        <span class="n">ejg</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">ejg</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>a. gZmeAZ</p>
+<p>b. gZmeAa</p>
+<p>c. gZm</p>
+<p>d. gZ</p>
+<p>e. game</p>
+<p>A6. e</p>
+<blockquote>
+<p>String is <strong>immmutable</strong>. Since <code>ejg</code> has been initialized, no operation can modify its value.</p>
+</blockquote>
+<h4 id="q7-lets-modify-some-of-the-code-used-in-the-previous-section-execute-this-code-on-your-system-which-answer">Q7. Let’s modify some of the code used in the previous section. Execute this code on your system. Which answer</h4>
+<pre class="code literal-block"><span></span><span class="n">String</span> <span class="n">letters</span> <span class="o">=</span> <span class="s">"ABCAB"</span><span class="o">;</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">letters</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">2</span><span class="o">).</span><span class="na">startsWith</span><span class="o">(</span><span class="sc">'A'</span><span class="o">));</span>
+</pre>
+
+
+<p>a. true</p>
+<p>b. false</p>
+<p>c. AB</p>
+<p>d. ABC</p>
+<p>e. Compilation error</p>
+<p>A7. e</p>
+<blockquote>
+<p><code>startsWith()</code> only accept <code>String</code> as argument</p>
+</blockquote>
+<h4 id="q8-modify-some-of-the-code-used-in-the-previous-example-as-follows">Q8. Modify some of the code used in the previous example as follows:</h4>
+<pre class="code literal-block"><span></span><span class="c1">//Line1</span>
+    <span class="n">String</span> <span class="n">multiStrArr</span><span class="o">[][]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">[][]{</span>
+<span class="c1">//Line2</span>
+        <span class="o">{</span><span class="s">"A"</span><span class="o">,</span> <span class="s">"B"</span><span class="o">},</span>
+<span class="c1">//Line3</span>
+        <span class="kc">null</span><span class="o">,</span>
+<span class="c1">//Line4</span>
+        <span class="o">{</span><span class="s">"Jan"</span><span class="o">,</span> <span class="s">"Feb"</span><span class="o">,</span> <span class="kc">null</span><span class="o">},</span>
+<span class="c1">//Line5</span>
+    <span class="o">};</span>
+</pre>
+
+
+<p>Which of the following individual options are true for the previous code?
+a. Code on line 4 is the same as <code>{"Jan", "Feb", null, null}</code>,</p>
+<p>b. No value is stored at <code>multiStrArr[2][2]</code></p>
+<p>c. No value is stored at <code>multiStrArr[1][1]</code></p>
+<p>d. Array <code>multiStrArr</code> is asymmetric.</p>
+<p>A8. a,d</p>
+<blockquote>
+<p>The probem if option c is, <code>multiStrArr[1][1]</code> does not exist, so we cannot say "no value is stored"</p>
+</blockquote>
+<h4 id="q9-what-is-the-output-of-the-following-code">Q9. What is the output of the following code?</h4>
+<pre class="code literal-block"><span></span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">myArrList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;();</span>
+<span class="n">String</span> <span class="n">one</span> <span class="o">=</span> <span class="s">"One"</span><span class="o">;</span>
+<span class="n">String</span> <span class="n">two</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="s">"Two"</span><span class="o">);</span>
+<span class="n">myArrList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">one</span><span class="o">);</span>
+<span class="n">myArrList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">two</span><span class="o">);</span>
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">yourArrList</span> <span class="o">=</span> <span class="n">myArrList</span><span class="o">;</span>
+<span class="n">one</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="s">"O"</span><span class="o">,</span> <span class="s">"B"</span><span class="o">);</span>
+<span class="err">\</span><span class="o">***********</span><span class="err">\</span>
+<span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">val</span> <span class="o">:</span> <span class="n">myArrList</span><span class="o">)</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">val</span> <span class="o">+</span> <span class="s">":"</span><span class="o">);</span>
+<span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">val</span> <span class="o">:</span> <span class="n">yourArrList</span><span class="o">)</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">val</span> <span class="o">+</span> <span class="s">":"</span><span class="o">);</span>
+</pre>
+
+
+<p>a. <code>One:Two:One:Two:</code></p>
+<p>b. <code>Bne:Two:Bne:Two:</code></p>
+<p>c. <code>One:Two:Bne:Two:</code></p>
+<p>d. <code>Bne:Two:One:Two:</code></p>
+<p>A9. a</p>
+<blockquote>
+<p>We cannot change the value of String after it has been initialized.</p>
+</blockquote>
+<h3 id="qas-from-chapter-6-oca-guide-from-manning">Q&amp;As from Chapter 6, OCA Guide from Manning</h3>
+<h4 id="q1-lets-modify-the-code-used-in-the-previous-example-as-follows-which-of-the-options-is-correct-for-this-modified-code">Q1. Let’s modify the code used in the previous example as follows. Which of the options is correct for this modified code?</h4>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">Employee</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">address</span><span class="o">;</span>
+    <span class="kd">protected</span> <span class="n">String</span> <span class="n">phoneNumber</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">float</span> <span class="n">experience</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Programmer</span> <span class="kd">extends</span> <span class="n">Employee</span> <span class="o">{</span>
+    <span class="n">Programmer</span> <span class="o">(</span><span class="n">String</span> <span class="n">val</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">val</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Office</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+        <span class="k">new</span> <span class="n">Programmer</span> <span class="o">(</span><span class="s">"Harry"</span><span class="o">).</span><span class="na">getName</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>a. The class <code>Office</code> prints <code>Harry</code> .</p>
+<p>b. The derived class <code>Programmer</code> can’t define a getter method for a variable defined in its base class <code>Employee</code>.</p>
+<p>c. The derived class <code>Programmer</code> can’t access variables of its base class in its constructors.</p>
+<p>d. <code>new Programmer ("Harry").getName();</code> isn’t the right way to create an object of class <code>Programmer</code> .</p>
+<p>e. Compilation error.</p>
+<p>A1. e. <code>name</code> is <code>private</code>.</p>
+<h4 id="q2-lets-modify-the-definition-of-the-employee-and-programmer-classes-as-follows-what-is-the-output-of-class-twistintale3">Q2. Let’s modify the definition of the <code>Employee</code> and <code>Programmer</code> classes as follows. What is the output of class <code>TwistInTale3</code> ?</h4>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">Employee</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="s">"Emp"</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">address</span> <span class="o">=</span> <span class="s">"EmpAddress"</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Programmer</span> <span class="kd">extends</span> <span class="n">Employee</span><span class="o">{</span>
+    <span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="s">"Prog"</span><span class="o">;</span>
+    <span class="kt">void</span> <span class="nf">printValues</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">+</span> <span class="s">":"</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">address</span> <span class="o">+</span> <span class="s">":"</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="kd">super</span><span class="o">.</span><span class="na">name</span> <span class="o">+</span> <span class="s">":"</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="kd">super</span><span class="o">.</span><span class="na">address</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">TwistInTale3</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+        <span class="k">new</span> <span class="n">Programmer</span><span class="o">().</span><span class="na">printValues</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>a. <code>Prog:null:Emp:EmpAddress</code></p>
+<p>b. <code>Prog:EmpAddress:Emp:EmpAddress</code></p>
+<p>c. <code>Prog::Emp:EmpAddress</code></p>
+<p>d. Compilation error</p>
+<p>A2. b. If a <code>this</code> in derviced class cannot find variable, it will go back to its base class for the value.</p>
+<h4 id="q3-examine-the-following-code-and-select-the-correct-method-declaration-to-be-inserted-at-insert-code-here">Q3. Examine the following code and select the correct method declaration to be inserted at <code>//INSERT CODE HERE</code>:</h4>
+<pre class="code literal-block"><span></span><span class="kd">interface</span> <span class="nc">Movable</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">move</span><span class="o">();</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Person</span> <span class="kd">implements</span> <span class="n">Movable</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">move</span><span class="o">()</span> <span class="o">{</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Person move"</span><span class="o">);</span> <span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Vehicle</span> <span class="kd">implements</span> <span class="n">Movable</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">move</span><span class="o">()</span> <span class="o">{</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Vehicle move"</span><span class="o">);</span> <span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+    <span class="c1">// INSERT CODE HERE</span>
+    <span class="n">movable</span><span class="o">.</span><span class="na">move</span><span class="o">();</span>
+<span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>a. <code>void walk(Movable movable) {</code></p>
+<p>b. <code>void walk(Person movable) {</code></p>
+<p>c. <code>void walk(Vehicle movable) {</code></p>
+<p>d. <code>void walk() {</code></p>
+<p>A3. a. b. c.</p>
+<blockquote>
+<p>Note option a is available. Although you cannot create instance for a <code>interface</code>, it's ok to put it as a <strong>type of method parameter</strong>.</p>
+</blockquote>
+<h4 id="q4-examine-the-following-code">Q4. Examine the following code:</h4>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">Programmer</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">print</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Programmer - Mala Gupta"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Author</span> <span class="kd">extends</span> <span class="n">Programmer</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">print</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Author - Mala Gupta"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">TestEJava</span> <span class="o">{</span>
+    <span class="n">Programmer</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Programmer</span><span class="o">();</span>
+    <span class="c1">// INSERT CODE HERE</span>
+    <span class="n">a</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>Which of the following lines of code can be individually inserted at <code>//INSERT CODE</code>? HERE so that the output of the code is as follows:</p>
+<pre class="code literal-block"><span></span><span class="n">Programmer</span> <span class="o">-</span> <span class="n">Mala</span> <span class="n">Gupta</span>
+<span class="n">Author</span> <span class="o">-</span> <span class="n">Mala</span> <span class="n">Gupta</span>
+</pre>
+
+
+<p>a. <code>Programmer b = new Programmer();</code></p>
+<p>b. <code>Programmer b = new Author();</code></p>
+<p>c. <code>Author b = new Author();</code></p>
+<p>d. <code>Author b = new Programmer();</code></p>
+<p>e. <code>Programmer b = ((Author)new Programmer());</code></p>
+<p>f. <code>Author b = ((Author)new Programmer());</code></p>
+<p>A4. b.c</p>
+<blockquote>
+<p>Problem of option e: Will compile but has <code>classCastException</code> error. <strong>Base class cannot be cast to derived class. Opposite is fine</strong></p>
+<p>Problem of opetion f: same reason as option e.</p>
+</blockquote>
+<h4 id="q5-given-the-following-code-which-of-the-options-when-applied-individually-will-make-it-compile-successfully">Q5. Given the following code, which of the options, when applied individually, will make it compile successfully?</h4>
+<pre class="code literal-block"><span></span><span class="n">Line1</span><span class="o">&gt;</span> <span class="kd">interface</span> <span class="nc">Employee</span> <span class="o">{}</span>
+<span class="n">Line2</span><span class="o">&gt;</span> <span class="kd">interface</span> <span class="nc">Printable</span> <span class="kd">extends</span> <span class="n">Employee</span> <span class="o">{</span>
+<span class="n">Line3</span><span class="o">&gt;</span>    <span class="n">String</span> <span class="nf">print</span><span class="o">();</span>
+<span class="n">Line4</span><span class="o">&gt;</span> <span class="o">}</span>
+<span class="n">Line5</span><span class="o">&gt;</span> <span class="kd">class</span> <span class="nc">Programmer</span> <span class="o">{</span>
+<span class="n">Line6</span><span class="o">&gt;</span>    <span class="n">String</span> <span class="nf">print</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span><span class="o">(</span><span class="s">"Programmer - Mala Gupta"</span><span class="o">);</span> <span class="o">}</span>
+<span class="n">Line7</span><span class="o">&gt;</span> <span class="o">}</span>
+<span class="n">Line8</span><span class="o">&gt;</span> <span class="kd">class</span> <span class="nc">Author</span> <span class="kd">extends</span> <span class="n">Programmer</span> <span class="kd">implements</span> <span class="n">Printable</span><span class="o">,</span> <span class="n">Employee</span> <span class="o">{</span>
+<span class="n">Line9</span><span class="o">&gt;</span>    <span class="n">String</span> <span class="nf">print</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span><span class="o">(</span><span class="s">"Author - Mala Gupta"</span><span class="o">);</span> <span class="o">}</span>
+<span class="n">Line10</span><span class="o">&gt;</span> <span class="o">}</span>
+</pre>
+
+
+<p>a. Modify code on line <code>2</code> to: <code>interface Printable{</code></p>
+<p>b. Modify code on line <code>3</code> to: <code>public String print();</code></p>
+<p>c. Define the accessibility of the print methods to <code>public</code> on lines <code>6</code> and <code>9</code>.</p>
+<p>d. Modify code on line <code>8</code> so that it implements only the interface <code>Printable</code></p>
+<p>A5. c</p>
+<blockquote>
+<p>Option a, b, d won't cause compile error, but also won't fix compile error.</p>
+<p>Option c: Since all interface method are implictly <code>public</code> and <code>abstract</code>, the problem of the code is <code>print()</code> has to be <code>public</code></p>
+</blockquote>
+<h3 id="qas-from-chapter-5-oca-guide-from-manning">Q&amp;As from Chapter 5, OCA Guide from Manning</h3>
+<h4 id="q1-lets-modify-the-code-used-in-the-previous-example-as-follows-what-is-the-output-of-this-code">Q1. Let’s modify the code used in the previous example as follows. What is the output of this code?</h4>
+<pre class="code literal-block"><span></span><span class="n">String</span> <span class="n">day</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="s">"SUN"</span><span class="o">);</span>
+<span class="k">switch</span> <span class="o">(</span><span class="n">day</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="s">"MON"</span><span class="o">:</span>
+    <span class="k">case</span> <span class="s">"TUE"</span><span class="o">:</span>
+    <span class="k">case</span> <span class="s">"WED"</span><span class="o">:</span>
+    <span class="k">case</span> <span class="s">"THU"</span><span class="o">:</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Time to work"</span><span class="o">);</span>
+    <span class="k">break</span><span class="o">;</span>
+    <span class="k">case</span> <span class="s">"FRI"</span><span class="o">:</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Nearing weekend"</span><span class="o">);</span>
+    <span class="k">break</span><span class="o">;</span>
+    <span class="k">case</span> <span class="s">"SAT"</span><span class="o">:</span>
+    <span class="k">case</span> <span class="s">"SUN"</span><span class="o">:</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Weekend!"</span><span class="o">);</span>
+    <span class="k">break</span><span class="o">;</span>
+    <span class="k">default</span><span class="o">:</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Invalid day?"</span><span class="o">);</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>a. Time to work</p>
+<p>b. Nearing weekend</p>
+<p>c. Weekend!</p>
+<p>d. Invalid day?</p>
+<p>A1. c</p>
+<blockquote>
+<p>String is special for <code>switch</code> case parameter. <code>switch</code> only compare <strong>value of String</strong> when it use String as case parameter.</p>
+</blockquote>
+<h4 id="q2-whats-the-output-of-the-following-code">Q2. What’s the output of the following code?</h4>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">Loop2</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+        <span class="k">do</span>
+            <span class="k">while</span> <span class="o">(</span><span class="n">i</span><span class="o">++</span> <span class="o">&lt;</span> <span class="mi">15</span><span class="o">)</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">20</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>a. 10</p>
+<p>b. 30</p>
+<p>c. 31</p>
+<p>d. 32</p>
+<p>A2. d</p>
+<blockquote>
+<p>Process:
+- <code>i=10</code> -&gt; <code>10&lt;15</code> -&gt; <code>i++</code> -&gt; <code>i=i+20</code>
+- <code>i=31</code> -&gt; <code>31&gt;15</code> -&gt; <code>i++</code>
+- Print out <code>i=32</code>
+- <strong>Note</strong> for i++, alough going out of loop, you still need <code>++</code> operation.</p>
+</blockquote>
+<h4 id="q3-whats-the-output-of-the-following-code">Q3. What’s the output of the following code?</h4>
+<pre class="code literal-block"><span></span><span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">a</span><span class="o">++</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"true"</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"false"</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"ABC"</span><span class="o">);</span>
+</pre>
+
+
+<p>a. true false ABC</p>
+<p>b. false ABC</p>
+<p>c. true ABC</p>
+<p>d. compile error</p>
+<p>A3: b</p>
+<blockquote>
+<p>Just need to know only <code>{}</code> will not cause compile error.</p>
+</blockquote>
+<h4 id="q4-given-the-following-code-which-of-the-following-lines-of-code-can-individually-replace-the-insert-code-here-line-so-that-the-code-compiles-successfully">Q4. Given the following code, which of the following lines of code can individually replace the <code>//INSERT CODE HERE</code> line so that the code compiles successfully?</h4>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">EJavaGuru</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">getVal</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="mi">100</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+        <span class="kd">final</span> <span class="kt">int</span> <span class="n">num2</span> <span class="o">=</span> <span class="mi">20</span><span class="o">;</span>
+        <span class="k">switch</span> <span class="o">(</span><span class="n">num</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// INSERT CODE HERE</span>
+            <span class="k">break</span><span class="o">;</span>
+            <span class="k">default</span><span class="o">:</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"default"</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>a. <code>case 10*3: System.out.println(2);</code></p>
+<p>b. <code>case num: System.out.println(3);</code></p>
+<p>c. <code>case 10/3: System.out.println(4);</code></p>
+<p>d. <code>case num2: System.out.println(5);</code></p>
+<p>A4. a, c, d</p>
+<blockquote>
+<p>If you use <code>/</code> for <code>case</code> parameter, Java will <strong>disard</strong> decimal parts, only leave integer.</p>
+</blockquote>
+<h4 id="q5-whats-the-output-of-the-following-code">Q5. What’s the output of the following code?</h4>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">EJavaGuru</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">120</span><span class="o">;</span>
+    <span class="k">switch</span> <span class="o">(</span><span class="n">num</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">default</span><span class="o">:</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"default"</span><span class="o">);</span>
+        <span class="k">case</span> <span class="mi">0</span><span class="o">:</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"case1"</span><span class="o">);</span>
+        <span class="k">case</span> <span class="mi">10</span><span class="o">*</span><span class="mi">2</span><span class="o">-</span><span class="mi">20</span><span class="o">:</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"case2"</span><span class="o">);</span>
+        <span class="k">break</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>a. default case1 case2</p>
+<p>b. case1 case2</p>
+<p>c. case2</p>
+<p>d. compile error</p>
+<p>A5. d.</p>
+<blockquote>
+<p>Note. last <code>case</code> equasl to <code>case 0</code>. <strong>Duplicate case will get compile error.</strong></p>
+</blockquote>
+<h4 id="q6-whats-the-output-of-the-following-code">Q6. What’s the output of the following code?</h4>
+<pre class="code literal-block"><span></span><span class="kd">class</span> <span class="nc">EJavaGuru5</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="k">for</span> <span class="o">(;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">;</span> <span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">5</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="o">)</span> <span class="k">continue</span><span class="o">;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>a. Compilation error</p>
+<p>b. 0 5</p>
+<p>c. 0 5 10</p>
+<p>d. 10</p>
+<p>e. 0 1 5</p>
+<p>f. 5</p>
+<p>A6. f</p>
+<blockquote>
+<p>It is fine to <strong>skip start value in <code>for</code> loop</strong>, as long as you initailize start value before.</p>
+</blockquote>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../categories/java/" rel="tag">Java</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../manning-oca-java-se7-reading-note-chapter-1/" rel="prev" title="Manning OCA Java SE 7 Reading Note: Chapter 1">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../jstl-reference-sheet/" rel="next" title="JSTL Reference Sheet">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="pengyinsnotes",
+            disqus_url="https://pengyin-shan.com/posts/2015/Java/key-qas-for-oca-book/",
+        disqus_title="Important Q&A for OCA Java SE7 Certification Guide",
+        disqus_identifier="cache/posts/2015/Java/key-qas-for-oca-book.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="pengyinsnotes";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+    
+    <div class="footer-wrapper">
+        <footer role="contentinfo"><p>Contents © 2018         <a href="mailto:pengyin.shan@outlook.com">Pengyin(Wendy) Shan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+        </footer>
+</div>
+
+    
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script src="../../../../assets/js/scripts.min.js"></script>
+</body>
+</html>

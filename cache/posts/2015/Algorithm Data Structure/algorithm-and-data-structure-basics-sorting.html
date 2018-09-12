@@ -1,0 +1,109 @@
+<h3 id="reference-list">Reference List</h3>
+<ul>
+<li>
+<p><strong>Introduction to Algorithms (Third Edition/Chinese Version)</strong>, written by <em>Thomas H.Cormen</em>, <em>Charles E.Leiserson</em>, <em>Ronald L.Rivest</em> and <em>Clifford Stein</em>, and translated by <em>Jianping Yin</em>, <em>Yun Xu</em>, <em>Gang Wang</em>, <em>Xiaoguang Liu</em>, <em>Ming Su</em>, <em>Hengming Zou</em> and <em>HongZhi Wang</em>.</p>
+</li>
+<li>
+<p><strong>Data Structures and Algorithms in Java (Second Edition/Chinese Version)</strong>, written by <em>Robert Lafore</em>, and translated by <em>Xiaoyun Ji</em>, <em>Yan Zhao</em>, <em>Xi Zeng</em> and <em>Xiaohan Di</em>.</p>
+</li>
+</ul>
+<h3 id="terminology-runtime-analysis">Terminology &amp; Runtime Analysis</h3>
+<p><em>This part serves as a reading note for Introduction to Algorithms (Third Edition), Chapter 1 and Chapter 2, to clarify some basic terms of Algorithms</em>.</p>
+<p><code>Algorithm</code> is the process of reading a value or a collection of value as <strong>input</strong>, and product a value or a collection of value as <strong>output</strong>.</p>
+<p>A sequence of input (with constrains) from a algorithm question is called a <code>instance</code> of that question.</p>
+<h4 id="runtime-analysis">Runtime Analysis</h4>
+<p>From the book <em>Introduction to Algorithms</em>, the reason we are focusing on <strong>worst case running time</strong> is:</p>
+<ol>
+<li>
+<p>The worst running time gives a upper limitation running time for any input.</p>
+</li>
+<li>
+<p>For some special algorithms, users can easily get worst case, such as searching for record which may not exist in database.</p>
+</li>
+<li>
+<p>There is lots of times that the <em>average running time</em> is the same as the <em>worst running time</em>.</p>
+</li>
+</ol>
+<h3 id="basic-insertion-sort-with-analysis-for-algorithm-questions">Basic Insertion Sort, with Analysis for Algorithm Questions</h3>
+<p>Insertion sort is very useful for a <strong>small</strong> amount of input.</p>
+<p>In book <em>Introduction to Algorithms</em>, insertion sort is described as the same process of someone sorting a group of pokers in a poker game. All elements on one side of your current item (i.e. the item that is supposed to be sorted) is in order.</p>
+<p>Pseudo-code for Insertion Sort:</p>
+<pre class="code literal-block"><span></span>/*
+* In following code<span class="p">,</span> <span class="k">left</span> side of <span class="nb">key</span> <span class="k">is</span> always being sorted<span class="p">,</span> <span class="k">in</span> acceding order.
+* In comparing process<span class="p">,</span> starting from the element <span class="k">on</span> the <span class="k">left</span> of <span class="nb">key</span><span class="p">,</span> then moving towards <span class="k">start</span> of array.
+*/
+<span class="k">for</span> <span class="k">j</span><span class="p">=</span><span class="m">2</span> <span class="k">to</span> A.length
+    <span class="nb">key</span> <span class="p">=</span> A[<span class="k">j</span>]
+    <span class="k">i</span> <span class="p">=</span> <span class="k">j</span><span class="m">-1</span>
+
+    <span class="sr">//</span>This loops means <span class="k">all</span> sorted elements begin <span class="k">to</span> move one space <span class="k">to</span> <span class="k">end</span> of array<span class="p">,</span> <span class="k">so</span> that <span class="nb">key</span> can be inserted <span class="k">to</span> gap
+    <span class="k">while</span> <span class="k">i</span><span class="p">&gt;</span><span class="m">0</span> and A[<span class="k">i</span>] <span class="p">&gt;</span> <span class="nb">key</span>
+        A[<span class="k">i</span><span class="p">+</span><span class="m">1</span>] <span class="p">=</span> A[<span class="k">i</span>]
+        <span class="k">i</span> <span class="p">=</span> <span class="k">i</span><span class="m">-1</span>
+    A[<span class="k">i</span><span class="p">+</span><span class="m">1</span>] <span class="p">=</span> <span class="nb">key</span>
+</pre>
+
+
+<h3 id="basic-selection-sort">Basic Selection Sort</h3>
+<p>To perform selection sort, you are given a array of numbers: <code>A</code>.</p>
+<ol>
+<li>
+<p>You find the smallest element in A, then exchange this element with the element in A[0]</p>
+</li>
+<li>
+<p>Starting from A[1], find the smallest element then changing with A[1]</p>
+</li>
+<li>
+<p>Continue this process until you reach A[A.length-1]</p>
+</li>
+</ol>
+<p>Code in Java:</p>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">selectionSort</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">){</span>
+    <span class="kt">int</span> <span class="n">out</span><span class="o">,</span> <span class="n">in</span><span class="o">,</span> <span class="n">min</span><span class="o">;</span>
+
+    <span class="k">for</span><span class="o">(</span><span class="n">out</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">out</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="n">out</span><span class="o">++){</span>
+        <span class="n">min</span> <span class="o">=</span> <span class="n">A</span><span class="o">[</span><span class="n">out</span><span class="o">];</span>
+        <span class="k">for</span><span class="o">(</span><span class="n">in</span><span class="o">=</span><span class="n">out</span><span class="o">+</span><span class="mi">1</span><span class="o">;</span> <span class="n">in</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">in</span><span class="o">++){</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">in</span><span class="o">]&lt;</span><span class="n">min</span><span class="o">)</span>
+                <span class="n">min</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">in</span><span class="o">];</span>
+            <span class="n">swap</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">out</span><span class="o">],</span> <span class="n">min</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3 id="basic-merge-sort">Basic Merge Sort</h3>
+<p>Merge sort uses <code>divide-and-concur</code> mode:</p>
+<ol>
+<li>
+<p>Divide original question to smaller questions. For each sub-question, it is a instance of original question.</p>
+</li>
+<li>
+<p>Solution these sub-questions by using <code>recursion</code>. When the sub-question is small enough, solve this sub-question.</p>
+</li>
+<li>
+<p>Concur/Merge these sub-solutions to the solution of original question.</p>
+</li>
+</ol>
+<p>The process of merge sort is:</p>
+<ol>
+<li>
+<p>Divide the array of <code>n</code> elements to two sub-array. Each sub-array should have <code>n/2</code> elements.</p>
+</li>
+<li>
+<p>Recursively repeating the first step to sub-arrays until each sub-array only have one element (i.e. Being sorted already).</p>
+</li>
+<li>
+<p>Merge all sorted arrays to one sorted array.</p>
+</li>
+</ol>
+<p>The merge process is the key part of merge sort. From <em>Introduction to Algorithms</em>, A function <code>merge(A, p, q, r)</code> can be used to perform merge process, where <code>A</code> is the array, and <code>p &lt;= q &lt;= r</code>. This process assumes that <code>A[p:q]</code> and <code>A[q+1:r]</code> has been sorted. At the end of merge process, <code>A[p:r]</code> should be sorted.</p>
+<p>In <em>Introduction to Algorithms</em>, a <strong>poker example</strong> is used to describe the merge process. The merge process is to chose a smaller one from the top of two piled poker, and put that poker to a new pile. Repeat this process until one pile is empty.</p>
+<p>Since we most perform <code>n</code> steps to merge, the running time of merge is $theta (n)$.</p>
+<p>For Merge Sort in Java, please refer to <a href="./blog/algorithm-and-data-structure-basics-recursion">this post</a>.</p>
+<h3 id="tips-and-comments">Tips and Comments</h3>
+<ul>
+<li>From <em>Introduction to Algorithms</em>, if you have a binary number, moving all digits one position to left means multiplying it by two. if you move all digits <em>k</em> position to left, you multiply origin number by $2^k$.</li>
+</ul>
+<p>Other parts are working in process :)</p>

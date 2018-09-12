@@ -1,0 +1,257 @@
+<p>There are five types of JSTL tag Library:</p>
+<ul>
+<li>
+<p>Core Tags</p>
+</li>
+<li>
+<p>Formatting Tags</p>
+</li>
+<li>
+<p>SQL Tags</p>
+</li>
+<li>
+<p>JSTL Functions</p>
+</li>
+<li>
+<p>XML Tags (I skip this part)</p>
+</li>
+</ul>
+<p>Before you use JSTL library, you need to download it and put it to <code>webapps\ROOT\WEB-INF\lib</code> directoy.</p>
+<h2 id="core-tages">Core Tages</h2>
+<p>Make sure you include core tag library in your JSP file: <code>&lt;%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %&gt;</code></p>
+<p>Following tags are common core tags with an explaination of their usage:</p>
+<p><code>&lt;c:out&gt;</code>: Display the result of an expression. Similar to <code>&lt;%= %&gt;</code> exception you use a <code>.</code> notation to access property now.</p>
+<blockquote>
+<p>Example: <code>&lt;c:out value="person.age"/&gt;</code></p>
+</blockquote>
+<p><code>&lt;c:set&gt;</code>: Evaluates an expression and uses the result to set a value of a <strong>JavaBean</strong> or a <strong>java.util.Map</strong> object.</p>
+<blockquote>
+<p>Example: <code>&lt;c:set var="var_name" value="${person.age}"/&gt;</code></p>
+</blockquote>
+<p><code>&lt;c:remove&gt;</code>: Remove a variable from either a specified scope or the first scope where the variable is found.</p>
+<blockquote>
+<p>Example: <code>&lt;c:remove var="var_name"/&gt;</code></p>
+</blockquote>
+<p><code>&lt;c:catch&gt;</code>: Catches any throwable error and optionally expost it.</p>
+<blockquote>
+<p>You can combine it with <c:if></p>
+</blockquote>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">c:catch</span> <span class="na">var</span><span class="o">=</span><span class="s">&quot;exception&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>${person.age}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">c:catch</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">c:if</span> <span class="na">test</span><span class="o">=</span><span class="s">&quot;${exception!=null}&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>The exception is: ${exception}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">c:if</span><span class="p">&gt;</span>
+</pre>
+
+
+<p><code>&lt;c:if&gt;</code>:Display content only if <code>test</code> is passed. <code>&lt;c:choose&gt;</code> ,<code>&lt;c:when&gt;</code> ,<code>c:otherwise&gt;</code> ususally are used together to create (nested) if-else loop</p>
+<blockquote>
+<p>Example: <code>&lt;c:if test="${person.age&gt;20}"&gt;Hello World!&lt;/c:if&gt;</code></p>
+</blockquote>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">c:choose</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">c:when</span> <span class="na">test</span><span class="o">=</span><span class="s">&quot;${person.age&gt;18}&quot;</span><span class="p">&gt;</span>
+        Adult
+    <span class="p">&lt;/</span><span class="nt">c:when</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">c:when</span> <span class="na">test</span><span class="o">=</span><span class="s">&quot;${12&lt;person.age&lt;18}&quot;</span><span class="p">&gt;</span>
+        Junior
+    <span class="p">&lt;/</span><span class="nt">c:when</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">c:otherwise</span><span class="p">&gt;</span>
+        Child
+    <span class="p">&lt;/</span><span class="nt">c:otherwise</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">c:choose</span><span class="p">&gt;</span>
+</pre>
+
+
+<p><code>&lt;c:import&gt;</code>: Work like <code>&lt;include&gt;</code>, takes an url and allows for inclusion of content from a differenet website or an FTP server.</p>
+<blockquote>
+<p>Example: <code>&lt;c:import var="var_name" url="http://pengyin-shan.com"/&gt;</code> fetches complete content from this website and would store in variable data.</p>
+</blockquote>
+<p><code>&lt;c:forEach&gt;</code>: Iterates over a collection of objects. Work like <strong>for</strong>, <strong>while</strong> or <strong>do-while</strong> in Java. Possiable Parameters:</p>
+<ul>
+<li>
+<p><code>begin</code>: Element to start with. 0 means the first item</p>
+</li>
+<li>
+<p><code>end</code>: Element to end with. 0 means the first item</p>
+</li>
+<li>
+<p><code>step</code>: Process every step items. Default is 1.</p>
+</li>
+<li>
+<p><code>var</code>: Name of variable for current item</p>
+</li>
+<li>
+<p><code>varStatus</code>: Name of variable for current loop status. Works like <code>i</code> or <code>count</code> in java.</p>
+</li>
+</ul>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">c:forEach</span> <span class="na">items</span><span class="o">=</span><span class="s">&quot;${people}&quot;</span> <span class="na">var</span><span class="o">=</span><span class="s">&quot;person&quot;</span> <span class="na">varStatus</span><span class="o">=</span><span class="s">&quot;theCount&quot;</span><span class="p">&gt;</span>
+${theCount.index}
+<span class="p">&lt;/</span><span class="nt">c:forEach</span><span class="p">&gt;</span>
+</pre>
+
+
+<p>Note: <code>{varStatus.index}</code> starts from <strong>0</strong>. <code>{varStatus.count}</code> starts from <strong>1</strong>.</p>
+<p><code>&lt;c:forTokens&gt;</code>: Similar as <code>&lt;c:forEach&gt;</code>. It is used to break a string into tokens and iterate through each of the tokens. Requested Parameter: <strong>delims</strong>, define character that is used for division.</p>
+<p><code>&lt;c:url&gt;</code> formats a URL string and optionally put to a variable and print to page</p>
+<p><code>&lt;c:param&gt;</code> allows proper URL request parameter to be specified with URL. Usually work with <code>&lt;c:url&gt;</code></p>
+<p><code>&lt;c:redirect&gt;</code> automatically re-direct page to another URL</p>
+<blockquote>
+<p>Example: <code>&lt;c:forTokens items="a,b,c" delims="," var="charName"&gt;${charName}&lt;/c:forTokens&gt;</code></p>
+</blockquote>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">c:url</span> <span class="na">var</span><span class="o">=</span><span class="s">&quot;testUrl&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;/index.jsp&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">c:param</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;id&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;1234&quot;</span><span class="p">/&gt;</span>
+<span class="p">&lt;/</span><span class="nt">c:url</span><span class="p">&gt;</span>
+#now testUrl is: /index.jsp?id=1234
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;&lt;c:url value=${testUrl}&quot;</span><span class="p">&gt;</span>Test<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">c:redirect</span> <span class="na">url</span><span class="o">=</span><span class="s">&quot;${testUrl}&quot;</span><span class="p">/&gt;</span>
+</pre>
+
+
+<h2 id="formatting-tags">Formatting Tags</h2>
+<p>Make sure you include formatting tag library in your JSP file: <code>&lt;%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %&gt;</code></p>
+<p>Following tags are common formatting tags with an explaination of their usage:</p>
+<p><code>&lt;fmt:formatNumber&gt;</code>: format numbers, percentages and currencies. It has lots of parameters for configuration. You can view <a href="http://www.tutorialspoint.com/jsp/jstl_format_formatnumber_tag.htm">here</a> for detail.</p>
+<blockquote>
+<p>Example: <code>&lt;p&gt;Number is: &lt;fmt:formatNumber value="${balance}" maxIntegerDigits="3" maxFactionDigits="3" pattern="###.###E0"&gt;&lt;/p&gt;</code></p>
+</blockquote>
+<p><code>&lt;fmt:formatDate&gt;</code>: Similarly but just for date. For example, you can set timezone using this tag. You can view detail <a href="http://www.tutorialspoint.com/jsp/jstl_format_formatdate_tag.htm">here</a>.</p>
+<p><code>&lt;fmt:parseNumber&gt;</code>: parse numbers, percentages and currencies. You are given a number and this tag can parse number to certain format. You can view <a href="http://www.tutorialspoint.com/jsp/jstl_format_parsenumber_tag.htm">here</a> for useful parameters.</p>
+<blockquote>
+<p>Example: <code>&lt;fmt:parseNumber var="i" type="number" value="${balance}" integerOnly="true"/&gt;</code></p>
+</blockquote>
+<p><code>&lt;fmt:parseDate&gt;</code>:Similary, but just for Date. For example, you can set date as "YYYY-MM-DD" format. You can view detail <a href="http://www.tutorialspoint.com/jsp/jstl_format_parsedate_tag.htm">here</a>.</p>
+<p><code>&lt;fmt:message&gt;</code> tag maps key to localized message</p>
+<p><code>&lt;fmt:bundle&gt;</code> often being used with <code>&lt;fmt:message&gt;</code>. It will find a java class which extend ListResourceBunder, and use it for message</p>
+<p><code>&lt;fmt:setBundle&gt;</code> is similar to <code>&lt;fmt:bundle&gt;</code> except it not wraps <code>&lt;fmt:message&gt;</code></p>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Example</span> <span class="kd">extends</span> <span class="n">ListResouceBundle</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="n">Object</span><span class="o">[][]</span> <span class="nf">getContents</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="n">contents</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">static</span> <span class="kd">final</span> <span class="n">Object</span><span class="o">[][]</span> <span class="n">contents</span> <span class="o">=</span> <span class="o">{</span>
+        <span class="o">{</span><span class="s">&quot;count.one&quot;</span><span class="o">,</span><span class="s">&quot;One&quot;</span><span class="o">},</span>
+        <span class="o">{</span><span class="s">&quot;count.two&quot;</span><span class="o">,</span><span class="s">&quot;Two&quot;</span><span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="o">:::</span><span class="n">html</span>
+<span class="o">&lt;</span><span class="n">fmt</span><span class="o">:</span><span class="n">bundle</span> <span class="n">basedname</span><span class="o">=</span><span class="s">&quot;com.pengyinshan.Example&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">fmt</span><span class="o">:</span><span class="n">message</span> <span class="n">key</span><span class="o">=</span><span class="s">&quot;count.one&quot;</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">fmt</span><span class="o">:</span><span class="n">message</span> <span class="n">key</span><span class="o">=</span><span class="s">&quot;count.two&quot;</span><span class="o">/&gt;</span>
+        <span class="err">#</span><span class="k">if</span> <span class="n">you</span> <span class="n">use</span> <span class="o">&lt;</span><span class="n">fmt</span><span class="o">:</span><span class="n">setBundle</span><span class="o">&gt;,</span> <span class="o">&lt;</span><span class="n">fmt</span><span class="o">:</span><span class="n">message</span><span class="o">&gt;</span> <span class="n">will</span> <span class="n">be</span> <span class="n">outside</span>
+<span class="o">&lt;/</span><span class="n">fmt</span><span class="o">:</span><span class="n">bundle</span><span class="o">&gt;</span>
+</pre>
+
+
+<p><code>&lt;fmt:setLocale&gt;</code> is similar as <code>&lt;fmt:setBundle&gt;</code>. You need to specify class Name. Tag will find the scale that corresponds to this name
+<code>&lt;fmt:requestCoding&gt;</code> set up encoding. You don't need extra class for it</p>
+<p>Assume we have same example:</p>
+<pre class="code literal-block"><span></span><span class="n">publc</span> <span class="kd">class</span> <span class="nc">Exmple_en_us</span> <span class="kd">extends</span> <span class="n">ListResourceBundle</span><span class="o">{</span>
+    <span class="c1">//...</span>
+<span class="o">}</span>
+
+<span class="o">:::</span><span class="n">html</span>
+<span class="o">&lt;</span><span class="n">fmt</span><span class="o">:</span><span class="n">requestEncoding</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;en_us&quot;</span><span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="n">fmt</span><span class="o">:</span><span class="n">setLocale</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;en_us&quot;</span><span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="n">fmt</span><span class="o">:</span><span class="n">bundle</span> <span class="n">basedname</span><span class="o">=</span><span class="s">&quot;com.pengyinshan.Example&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">fmt</span><span class="o">:</span><span class="n">bundle</span><span class="o">&gt;</span>
+</pre>
+
+
+<p><code>&lt;fmt:timeZone&gt;</code> and <code>&lt;fmt:setTimeZone&gt;</code> are used to specify timezone in body.</p>
+<p>They are oftern used above <code>&lt;fmt:formatDate&gt;</code></p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">fmt:setTimeZone</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;EST&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">fmt:formatDate</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;${now}&quot;</span> <span class="na">timeStyle</span><span class="o">=</span><span class="s">&quot;long&quot;</span> <span class="na">dateStyle</span><span class="o">=</span><span class="s">&quot;long&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;both&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;/</span><span class="nt">fmt:setTimeZone</span><span class="p">&gt;</span>
+</pre>
+
+
+<h2 id="sql-tags">SQL Tags</h2>
+<p>Make sure you include sql tag library in your JSP file: <code>&lt;%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %&gt;</code></p>
+<p>Following tags are common sql tags with an explaination of their usage:</p>
+<p><code>&lt;sql:setDateSource&gt;</code>: Takes several parameters and set data source.</p>
+<blockquote>
+<p>For example: <code>&lt;sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/TEST" user="user_id"password="mypassword"/&gt;</code></p>
+</blockquote>
+<p><code>&lt;sql:query&gt;</code>: Take several parameters and run a query. You can put result to a variable and use it as <code>var.id</code>, <code>var.last</code>, <code>var.name</code>, etc. You may want to use <code>&lt;c:forEach&gt;</code> for result.</p>
+<blockquote>
+<p>For example:</p>
+</blockquote>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">sql:query</span> <span class="na">dataSource</span><span class="o">=</span><span class="s">&quot;${snapshot}&quot;</span> <span class="na">var</span><span class="o">=</span><span class="s">&quot;result&quot;</span><span class="p">&gt;</span>
+SELECT * from Employees;
+<span class="p">&lt;/</span><span class="nt">sql:query</span><span class="p">&gt;</span>
+</pre>
+
+
+<p><code>&lt;sql:udpate&gt;</code>: Use for sql query that does not return value, such as <strong>insert</strong>, <strong>update</strong> or <strong>delete</strong>.</p>
+<p>For example:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">sql:update</span> <span class="na">dataSource</span><span class="o">=</span><span class="s">&quot;${snapshot}&quot;</span> <span class="na">var</span><span class="o">=</span><span class="s">&quot;count&quot;</span><span class="p">&gt;</span>
+   INSERT INTO Employees VALUES (104, 2, &#39;Nuha&#39;, &#39;Ali&#39;);
+<span class="p">&lt;/</span><span class="nt">sql:update</span><span class="p">&gt;</span>
+</pre>
+
+
+<p><code>&lt;sql:param&gt;</code>: Use for fill parameter to <code>&lt;sql:update&gt;</code> or <code>&lt;sql:query&gt;</code> if need.</p>
+<p><code>&lt;sql:dateParam&gt;</code>: Similaly but specailly used to modify date/timestamp.</p>
+<p>The sequence of tags corresponding to sequnce of <em>?</em> in query.</p>
+<p>For example:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">sql:update</span> <span class="na">dataSource</span><span class="o">=</span><span class="s">&quot;${snapshot}&quot;</span> <span class="na">var</span><span class="o">=</span><span class="s">&quot;count&quot;</span><span class="p">&gt;</span>
+  Update Employees Set Dob = ? WHERE Id = ?
+  <span class="p">&lt;</span><span class="nt">sql:dateParam</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;&lt;%=DoB%&gt;&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;DATE&quot;</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">sql:param</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;${empId}&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;/</span><span class="nt">sql:update</span><span class="p">&gt;</span>
+</pre>
+
+
+<p><code>&lt;sql:transaction&gt;</code>: Wrap some <code>&lt;sql:update&gt;</code> and <code>&lt;sql:query&gt;</code> to create transaction.</p>
+<p>For Example:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">sql:transaction</span> <span class="na">dataSource</span><span class="o">=</span><span class="s">&quot;${snapshot}&quot;</span><span class="p">&gt;</span>
+#<span class="p">&lt;</span><span class="nt">sql:update</span><span class="p">&gt;</span>....
+<span class="p">&lt;/</span><span class="nt">sql:transaction</span><span class="p">&gt;</span>
+</pre>
+
+
+<h2 id="jstl-functions">JSTL Functions</h2>
+<p>Make sure you include function tag library in your JSP file: <code>&lt;%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %&gt;</code></p>
+<p>Normally JSTL functions are used within <strong>${}</strong>.</p>
+<p>Following tags are common function tags with an explaination of their usage:</p>
+<p><code>&lt;fn:contains&gt;</code>: Equals to <code>boolean contains(java.lang.String, java.lang.String)</code>.</p>
+<p><code>&lt;fn:containsIgnoreCase&gt;</code>: Similar but just ignore case problem.</p>
+<blockquote>
+<p>Example:</p>
+</blockquote>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">c:if</span> <span class="na">test</span><span class="o">=</span><span class="s">&quot;${fn:contains(var_name,&#39;test&#39;)}&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Found &quot;test&quot; in variable<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">c:if</span><span class="p">&gt;</span>
+</pre>
+
+
+<p><code>&lt;fn:endsWith&gt;</code>: Determines whether an input string ends with a specified suffix. Equals to <code>boolean endsWith(java.lang.String, java.lang.String)</code>.</p>
+<p><code>&lt;fn:startWith&gt;</code>: Similar but it work with prefix.</p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">c:if</span> <span class="na">test</span><span class="o">=</span><span class="s">&quot;${fn:endsWith(var_name, &#39;123&#39;)}&quot;</span><span class="p">&gt;</span>
+   <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>String ends with 123<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">c:if</span><span class="p">&gt;</span>
+</pre>
+
+
+<p><code>&lt;fn:indexOf&gt;</code>: Returns the index within a string of a specified substring. Equals to <code>int indexOf(java.lang.String, java.lang.String)</code>.</p>
+<p><code>&lt;fn:length&gt;</code>: Returns the length of a string. Equals to <code>int length(java.lang.Object)</code>.</p>
+<p><code>&lt;fn:split&gt;</code>: splits a string into an array of substrings. Equals to <code>java.lang.String[] split(java.lang.String, java.lang.String)</code>.</p>
+<p><code>&lt;fn:join&gt;</code>: Concatenates all the elements of an array into a string with a specified separator. Equals to <code>String join (java.lang.String[], java.lang.String)</code>.</p>
+<p><code>&lt;fn:replace&gt;</code>: replace <strong>all occurrences</strong> of a string with another string.</p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">c:set</span> <span class="na">var</span><span class="o">=</span><span class="s">&quot;string1&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;This is first String.&quot;</span><span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">c:set</span> <span class="na">var</span><span class="o">=</span><span class="s">&quot;string2&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;${fn:split(string1, &#39; &#39;)}&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">c:set</span> <span class="na">var</span><span class="o">=</span><span class="s">&quot;string3&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;${fn:join(string2, &#39;-&#39;)}&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">c:set</span> <span class="na">var</span><span class="o">=</span><span class="s">&quot;string4&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;${fn:replace(string3, &#39;-&#39; , &#39;+&#39;)}&quot;</span> <span class="p">/&gt;</span>
+</pre>
+
+
+<p><code>&lt;fn:substring&gt;</code>: Returns a subset of a string specified by start and end index. Equals to <code>java.lang.String substring(java.lang.String, int, int)</code>.</p>
+<p><code>&lt;fn:substringAfter&gt;</code>: Returns the part of a string after a specified substring. Example: <code>&lt;c:set var="string2" value="${fn:substringAfter(string1, 'is')}" /&gt;</code>. Note <code>is</code> here is <strong>included</strong> in result.</p>
+<p><code>&lt;fn:substringBefore&gt;</code>: Returns the part of a string before a specified substring. Example is similar as above. Note <code>is</code> here is <strong>excluded</strong> in result.</p>
+<p><code>&lt;fn:toLowerCase&gt;</code> and <code>&lt;fn:toUpperCase&gt;</code>:take a string and transfer its case. For example: <code>&lt;c:set var="string2" value="${fn:toLowerCase(string1)}" /&gt;</code>.</p>
+<p><code>&lt;fn:trim&gt;</code>: Removes white space from <strong>both ends</strong> of a string. Example: <code>&lt;c:set var="string1" value="This is first String         "/&gt;</code>.</p>

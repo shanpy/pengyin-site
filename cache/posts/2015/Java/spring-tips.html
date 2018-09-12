@@ -1,0 +1,105 @@
+<hr>
+<p>In Spring MVC, if AJAX pass back a <code>String</code>, use <code>JSON.parse()</code> to transfer it to JSON object first.</p>
+<hr>
+<h3 id="use-session-object-in-controller">Use Session Object in Controller</h3>
+<p>Way1:</p>
+<pre class="code literal-block"><span></span><span class="err">\\</span><span class="o">...(...</span><span class="na">HttpSession</span> <span class="n">sessionObj</span><span class="o">){</span>
+    <span class="n">sessionobj</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="err">&#39;</span><span class="n">name_of_attribute</span><span class="err">&#39;</span><span class="o">,</span> <span class="n">attribute_object</span><span class="o">);</span>
+    <span class="k">return</span> <span class="s">&quot;redirect:/...&quot;</span><span class="o">;</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>Way2:</p>
+<pre class="code literal-block"><span></span><span class="err">\\</span><span class="o">...(...</span><span class="na">HttpSevletRequest</span> <span class="n">req</span><span class="o">){</span>
+    <span class="n">HttpSession</span> <span class="n">session</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="na">getSession</span><span class="o">();</span>
+    <span class="n">Object_Type</span> <span class="n">obj</span> <span class="o">=</span> <span class="o">(</span><span class="n">Object_Type</span><span class="o">)</span><span class="n">session</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">&quot;name_of_attribute&quot;</span><span class="o">);</span>
+    <span class="c1">//Object_Type: int, String, float, etc</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>Different from <code>flash attribute</code>, if we use session, attribute in front-end will not be erased after reloading.</p>
+<hr>
+<h2 id="spring-mvc-form-tips">Spring MVC Form Tips</h2>
+<h3 id="spring-form-validation">Spring Form Validation:</h3>
+<p>Way 1:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">form:form</span> <span class="err">...</span> <span class="na">onsubmit</span><span class="o">=</span><span class="s">&#39;return valid()&#39;</span><span class="p">&gt;</span>
+    <span class="c">&lt;!--. Code... --&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form:form</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="kd">function</span> <span class="nx">valid</span><span class="p">(){</span>
+    <span class="c1">//...return true;</span>
+    <span class="c1">//...return false;</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre>
+
+
+<p>Way 2:</p>
+<pre class="code literal-block"><span></span><span class="p">&lt;</span><span class="nt">form:form</span> <span class="err">...</span><span class="p">&gt;</span>
+    <span class="c">&lt;!--. Code... --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;valid(event)&quot;</span><span class="p">&gt;</span>Submit<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="kd">function</span> <span class="nx">valid</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+    <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();;</span>
+
+    <span class="c1">//...Add Validation JavaScript</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#form_id&#39;</span><span class="p">).</span><span class="nx">submit</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre>
+
+
+<h3 id="submit-spring-form-in-jquery">Submit Spring Form in jQuery:</h3>
+<pre class="code literal-block"><span></span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#Form_ID&#39;</span><span class="p">).</span><span class="nx">submit</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+        <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+        <span class="c1">//...</span>
+        <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span><span class="nx">v</span><span class="p">){</span>
+                <span class="kd">var</span> <span class="nx">all_inputs</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">v</span><span class="p">);</span> <span class="c1">//value of &lt;form:input&gt;</span>
+                <span class="c1">//The is a way of get Spring form input value in JavaScript</span>
+                <span class="c1">//i is index, v is value. You can use this method to iterate JSON object</span>
+            <span class="p">})</span>
+    <span class="p">});</span>
+</pre>
+
+
+<blockquote>
+<p>If you add <code>value</code> attribute for <code>&lt;form:input&gt;</code>, you may got <code>No Such Element</code> error</p>
+<p>If you are using Eclipse, comment your unwanted Spring code will not work! You should remove unwanted Spring code instead of commenting them, because Eclipse will compile Spring code anyway, and you may get error because of that.</p>
+</blockquote>
+<hr>
+<h2 id="spring-and-ajax">Spring and AJAX</h2>
+<p>I wrote any post about Spring and AJAX <a href="http://pengyin-shan.com/ajax-and-spring-mvc-controller.html">here</a>.
+Post Method in jQuery:</p>
+<pre class="code literal-block"><span></span><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+        <span class="nx">contentType</span><span class="o">:</span> <span class="s2">&quot;application/json; charset = urf-8;&quot;</span>
+        <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;...&#39;</span><span class="p">,</span>
+        <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+        <span class="nx">data</span><span class="o">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">json_obj</span><span class="p">),</span>
+        <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nx">textStatus</span><span class="p">,</span> <span class="nx">jqXHR</span><span class="p">){</span>
+            <span class="c1">//...;</span>
+        <span class="p">},</span>
+        <span class="nx">error</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">jqXHR</span><span class="p">,</span> <span class="nx">textStatus</span><span class="p">,</span> <span class="nb">Error</span><span class="p">){</span>
+            <span class="c1">//...;</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+</pre>
+
+
+<p>Post Method in Spring Controller:</p>
+<pre class="code literal-block"><span></span><span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">&quot;/your_mapping_url&quot;</span><span class="o">,</span> <span class="n">method</span><span class="o">={</span><span class="n">RequestMethod</span><span class="o">:</span> <span class="n">POST</span><span class="o">})</span>
+<span class="kd">public</span> <span class="nd">@ResponseBody</span> <span class="n">String</span><span class="o">/</span><span class="n">ModelAndView</span> <span class="o">(</span><span class="nd">@RequestBoday</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">json_obj</span><span class="o">){</span>
+    <span class="c1">//...You may want to parse json_obj to JSONObject</span>
+<span class="o">}</span>
+</pre>
+
+
+<blockquote>
+<p>In Java, a <code>Gson</code> library from <a href="https://code.google.com/p/google-gson/">Google</a> can transfer Java <code>Object</code> to <code>JSONObject</code> directly.</p>
+<p>Example:</p>
+</blockquote>
+<pre class="code literal-block"><span></span><span class="n">Gson</span> <span class="n">gson</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Gson</span><span class="o">();</span>
+<span class="n">String</span> <span class="n">json_str</span> <span class="o">=</span> <span class="n">gson</span><span class="o">.</span><span class="na">toJson</span><span class="o">(</span><span class="n">Object_Instance</span><span class="o">);</span>
+</pre>

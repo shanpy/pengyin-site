@@ -1,0 +1,213 @@
+<p>This post is transferred from my <a href="http://blogpengyin.herokuapp.com/">old Hexo blog site</a>, created on 2014.</p>
+<p>This is a reading note from Spring Framework 3.1 Tutorial pdf, created by <a href="http://www.tutorialspoint.com/spring"><strong>tutorialspoint</strong></a>. This pdf contains information for Spring 3 Core Basics, which is very useful for understanding defination and practive in Spring programming.</p>
+<p>This note includes Chapter 20 in tutorial.</p>
+<h1 id="spring-jdbc-framework">Spring JDBC Framework</h1>
+<p>Spring JDBC Framework takes care of all the low-level details starting from opening the connection, prepare and execute the SQL statement, process exceptions, handing transactions and finally close the connection.</p>
+<p><code>JDBCTemplate</code> is the most popular approach of using Spring JDBC framework.</p>
+<h2 id="jdbc-template-class">JDBC Template Class</h2>
+<p>The <code>JdbcTemplate</code> class executes SQL queries, update statements and stored procedure calls, performs iteration over <code>ResultSets</code> and extraction of returned parameter values. It also catches <code>JDBC exceptions</code> and translates them to the generic, more informative, exception hierarchy defined in the <code>org.springframework.dao</code> package.</p>
+<p>Since instance of <code>JdbcTemplate</code> classes are <em>threadsafe</em> once it is configured, you can just configure <em>one</em> instance of <code>JdbcTemplate</code>, then <em>inject</em> it to different <code>DAO</code>s.</p>
+<p>A comment practice is to configure a <code>DataSource</code> in your spring configuration file, then <em>inject</em> that bean to your <code>DAO</code> classes. For example:</p>
+<pre class="code literal-block"><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;dataSource&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.jdbc.datasource.DriverManagerDataSource&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;driverClassName&quot;</span> <span class="na">value=</span><span class="s">&quot;com.mysql.jdbc.Driver&quot;</span><span class="nt">&gt;</span> <span class="c">&lt;!--MySQL here as an example --&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;url&quot;</span> <span class="na">value=</span><span class="s">&quot;jdbc:mysql://localhost:3306/TEST&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;username&quot;</span> <span class="na">value=</span><span class="s">&quot;root&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;password&quot;</span> <span class="na">value=</span><span class="s">&quot;password&quot;</span><span class="nt">/&gt;</span>
+    <span class="c">&lt;!--You need URL, username and password --&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</pre>
+
+
+<h2 id="executing-sql-statements">Executing SQL Statements</h2>
+<p><code>DAO</code> means <code>Data Access Object</code>. DAO often implements an <code>interface</code>, which provides ablity to read/write data from database. Other parts of application access DAO.</p>
+<p>The way to achieve CRUD(Create, Read, Update and Delete) operation is (Assume <code>SQL</code> ia a SQL statement):</p>
+<p><em>Query</em>:</p>
+<ul>
+<li>
+<p>Query for Integer: <code>jdbcTemplateObject.queryForInt(SQL);</code></p>
+</li>
+<li>
+<p>Query for Long: <code>jdbcTemplateObject.queryForLong(SQL);</code></p>
+</li>
+<li>
+<p>Query for Int, with a <em>bind variable</em>: <code>jdbcTemplateObject.queryForInt(SQL, new Object[]{10});</code></p>
+</li>
+<li>
+<p>Query for String, with a <em>bind variable</em>: <code>jdbcTemplateObject.queryForInt(SQL, new Object[]{10}, String.class);</code></p>
+</li>
+<li>
+<p>Query with <code>ObjectMapper</code>. This <code>ObejctMapper</code> will be returned after query finishes:</p>
+</li>
+</ul>
+<blockquote>
+<pre class="code literal-block"><span></span><span class="c1">//Assume we want a Studnet object being returned</span>
+<span class="n">Student</span> <span class="n">student</span> <span class="o">=</span> <span class="n">jdbcTemplateObject</span><span class="o">.</span><span class="na">queryForObject</span><span class="o">(</span><span class="n">SQL</span><span class="o">,</span> <span class="k">new</span> <span class="n">Object</span><span class="o">[]{</span><span class="mi">10</span><span class="o">},</span> <span class="k">new</span> <span class="n">StudentMapper</span><span class="o">());</span>
+</pre>
+
+
+</blockquote>
+<pre class="code literal-block"><span></span>public class StudentMapper implements RowMapper&lt;student&gt;{
+    public Student mapRow(ResultSet rs, int rowNum) throws SQLException{
+        Student student = new Student();
+        student.setName(rs.getSring(&quot;name&quot;));
+        student.setId(rs.getInt(&quot;id&quot;));
+        //Just apply these to setters
+        return Student;
+    }
+}
+</pre>
+
+
+<ul>
+<li>Query with <code>ObjectMapper</code>, return <em>multiple objects</em>:</li>
+</ul>
+<blockquote></blockquote>
+<pre class="code literal-block"><span></span><span class="n">List</span><span class="o">&lt;</span><span class="n">Student</span><span class="o">&gt;</span> <span class="n">students</span> <span class="o">=</span> <span class="n">jdbcTemplateObject</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="n">SQL</span><span class="o">,</span><span class="k">new</span> <span class="n">StudentMapper</span><span class="o">());</span>
+<span class="c1">//StudentMapper class is the same as example above</span>
+</pre>
+
+
+<p><em>Insert</em>: SQL Statement: <code>insert into Student(name,age) values (?,?)</code>. JDBCTemplate: <code>jdbcTemplateObject.update(SQL, new Object[]{"Tim", 11});</code>. If you want to insert more, just add more field and and key/value pair to SQL statement and JDBCTemplate.</p>
+<p><em>Update</em>: SQL Statement: <code>update Student set name=? where id=?</code>. JDBCTemplate: <code>jdbcTemplateObject.update(SLQ, new Object[]{"Time",1});</code></p>
+<p><em>Delete</em>: SQL Statement: <code>delete Student where id=?</code>. JDBCTemplate: <code>jdbcTemplateObject.update(SQL, new Object[]{10});</code></p>
+<p><em>Create</em>: SQL Statement: <code>CREATE TABLE STUDENT(</code> + <code>ID  INT NOT NULL AUTO_INCREMENT</code>, etc. JDBCTemplate: <code>jdbcTemplateObject.execute(SQL);</code></p>
+<p>Example:</p>
+<p>XML:</p>
+<pre class="code literal-block"><span></span><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;dataSource&quot;</span> <span class="na">class=</span><span class="s">&quot;org.springframework.jdbc.datasource.DriverManagerDataSource&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;driverClassName&quot;</span> <span class="na">value=</span><span class="s">&quot;com.mysql.jdbc.Driver&quot;</span><span class="nt">&gt;</span> <span class="c">&lt;!--MySQL here as an example --&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;url&quot;</span> <span class="na">value=</span><span class="s">&quot;jdbc:mysql://localhost:3306/TEST&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;username&quot;</span> <span class="na">value=</span><span class="s">&quot;root&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;password&quot;</span> <span class="na">value=</span><span class="s">&quot;password&quot;</span><span class="nt">/&gt;</span>
+    <span class="c">&lt;!--You need URL, username and password --&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">&quot;studentDAOImpl&quot;</span> <span class="na">class=</span><span class="s">&quot;com.sample.StudentDAOImpl&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;datSource&quot;</span> <span class="na">ref=</span><span class="s">&quot;dataSource&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</pre>
+
+
+<p>JAVA:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Assume we have a Student class with getter and setter for id, name and age attribute.</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">StudentMapper</span> <span class="kd">implements</span> <span class="n">RowMapper</span><span class="o">&lt;</span><span class="n">Student</span><span class="o">&gt;{</span>
+    <span class="kd">public</span> <span class="n">Student</span> <span class="nf">mapRow</span><span class="o">(</span><span class="n">ResultSet</span> <span class="n">rs</span><span class="o">,</span> <span class="kt">int</span> <span class="n">rowNum</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">SQLException</span><span class="o">{</span>
+        <span class="n">Student</span> <span class="n">student</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Student</span><span class="o">();</span>
+        <span class="n">student</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getSring</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">));</span>
+        <span class="n">student</span><span class="o">.</span><span class="na">setId</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">&quot;id&quot;</span><span class="o">));</span>
+        <span class="n">student</span><span class="o">.</span><span class="na">setAge</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">&quot;age&quot;</span><span class="o">));</span>
+        <span class="k">return</span> <span class="n">Student</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="o">}</span>
+
+<span class="kn">import</span> <span class="nn">javax.sql.DataSource</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.jdbc.core.JdbcTemplate</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">StudentDAO</span><span class="o">{</span>
+    <span class="c1">//Initialize database resource. i.e. connection</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setDataSource</span><span class="o">(</span><span class="n">DataSource</span> <span class="n">ds</span><span class="o">);</span>
+
+    <span class="c1">//Create Record</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">create</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">Integer</span> <span class="n">age</span><span class="o">);</span>
+
+    <span class="c1">//Get One Record from Id</span>
+    <span class="kd">public</span> <span class="n">Student</span> <span class="nf">getStudent</span><span class="o">(</span><span class="n">Integer</span> <span class="n">id</span><span class="o">);</span>
+
+    <span class="c1">//Get All Records</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Student</span><span class="o">&gt;</span> <span class="nf">listStudents</span><span class="o">();</span>
+
+    <span class="c1">//Delete A Record from Id</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">delete</span><span class="o">(</span><span class="n">Integer</span> <span class="n">id</span><span class="o">)();</span>
+
+    <span class="c1">//Update a Record from Id</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">(</span><span class="n">Integer</span> <span class="n">id</span><span class="o">,</span> <span class="n">Integer</span> <span class="n">age</span><span class="o">)();</span>
+<span class="o">}</span>
+
+<span class="kn">import</span> <span class="nn">javax.sql.DataSource</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.jdbc.core.JdbcTemplate</span><span class="o">;</span>
+
+<span class="c1">//This class is the JDBCTemplate class, which is used to implement DAO interface above</span>
+
+<span class="n">publc</span> <span class="kd">class</span> <span class="nc">StudentDAOImpl</span> <span class="kd">implements</span> <span class="n">StudentDAO</span><span class="o">{</span>
+    <span class="kd">private</span> <span class="n">DataSource</span> <span class="n">dataSource</span><span class="o">;</span> <span class="c1">//we define this in beans.xml</span>
+    <span class="kd">private</span> <span class="n">JdbcTemplate</span> <span class="n">jdbcTemplateObject</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setDataSource</span><span class="o">(</span><span class="n">DataSource</span> <span class="n">dataSource</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">dataSource</span> <span class="o">=</span> <span class="n">dataSource</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">jdbcTemplateObject</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JdbcTemplate</span><span class="o">(</span><span class="n">dataSource</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">create</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">Integer</span> <span class="n">age</span><span class="o">){</span>
+        <span class="n">String</span> <span class="n">SQL</span> <span class="o">=</span> <span class="s">&quot;insert into Student(name,age) values (?,?)&quot;</span><span class="o">;</span>
+        <span class="n">jdbcTemplateObject</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="n">SQL</span><span class="o">,</span> <span class="n">name</span><span class="o">,</span> <span class="n">age</span><span class="o">);</span>
+        <span class="k">return</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">Student</span> <span class="nf">getStudent</span><span class="o">(</span><span class="n">Integer</span> <span class="n">id</span><span class="o">){</span>
+        <span class="c1">//Same as update example above</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Student</span><span class="o">&gt;</span> <span class="nf">listStudents</span><span class="o">(){</span>
+        <span class="c1">//Same as query example above</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">delete</span><span class="o">(</span><span class="n">Integer</span> <span class="n">id</span><span class="o">)(){</span>
+        <span class="c1">//Same as delete example above;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">(</span><span class="n">Integer</span> <span class="n">id</span><span class="o">,</span> <span class="n">Integer</span> <span class="n">age</span><span class="o">)(){</span>
+        <span class="c1">//Same as udpat example above;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span><span class="o">{</span>
+    <span class="n">publc</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+        <span class="n">ApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="s">&quot;beans.xml&quot;</span><span class="o">);</span>
+
+        <span class="n">StudentDAOImpl</span> <span class="n">studentDaoImpl</span> <span class="o">=</span> <span class="o">(</span><span class="n">StudentDAOImpl</span><span class="o">)</span> <span class="n">context</span><span class="o">.</span><span class="na">getBeans</span><span class="o">(</span><span class="s">&quot;studentDAOImpl&quot;</span><span class="o">);</span>
+        <span class="c1">//Note we don&#39;t need to get dataSource bean. Spring does that automatically</span>
+
+        <span class="n">studentDaoImpl</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="s">&quot;Tim&quot;</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+        <span class="c1">//You can now use DAO operation</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>There are other JDBC framework prepared by Spring, such as <code>NamedParameterJdbcTemplate</code> and <code>SimpleJdbcTemplate</code> classes.</p>
+<h2 id="stored-procedure">Stored Procedure</h2>
+<p><code>SimpleJdbcCall</code> class is used to call a <em>stored procedure</em> with <code>IN</code> and <code>OUT</code> parameters.</p>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="kn">import</span> <span class="nn">javax.sql.DataSource</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.jdbc.core.JdbcTemplate</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.jdbc.core.namedparam.MapSqlParameterSource</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.jdbc.core.namedparam.SqlParameterSource</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.jdbc.core.simple.SimpleJdbcCall</span><span class="o">;</span>
+
+<span class="c1">//bean.xml, Student.java, StudentMapper.java and StudentDAO.java are the same as example above</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">StudentDAOImpl</span> <span class="kd">implements</span> <span class="n">StudentDAO</span><span class="o">{</span>
+    <span class="kd">private</span> <span class="n">DataSource</span> <span class="n">dataSource</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">SimpleJdbcCall</span> <span class="n">jdbcCall</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setDataSource</span><span class="o">(</span><span class="n">DataSource</span> <span class="n">dataSource</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">dataSource</span> <span class="o">=</span> <span class="n">dataSource</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">jdbcCall</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SimpleJdbcCall</span><span class="o">(</span><span class="n">dataSource</span><span class="o">).</span><span class="na">withProcedureName</span><span class="o">(</span><span class="s">&quot;Procedure_Name&quot;</span><span class="o">);</span>
+        <span class="c1">//This is the way to call the stored procedure</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">create</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">Integer</span> <span class="n">age</span><span class="o">){</span>
+        <span class="n">JdbcTemplate</span> <span class="n">jdbcTemplateObject</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JdbcTemplate</span><span class="o">(</span><span class="n">dataSource</span><span class="o">);</span>
+        <span class="n">String</span> <span class="n">SQL</span> <span class="o">=</span> <span class="s">&quot;insert into Student (name,age) values (?,?)&quot;</span><span class="o">;</span>
+        <span class="c1">//Since we don&#39;t have a JdbcTemplate attribute now, we need to create new one here</span>
+        <span class="n">jdbcTemplateObject</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="n">SQL</span><span class="o">,</span> <span class="n">name</span><span class="o">,</span> <span class="n">age</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">Student</span> <span class="nf">getStudent</span><span class="o">(</span><span class="n">Integer</span> <span class="n">id</span><span class="o">){</span>
+        <span class="n">SqlParameterSource</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MapSqlParameterSource</span><span class="o">().</span><span class="na">addValue</span><span class="o">(</span><span class="s">&quot;in_id&quot;</span><span class="o">,</span> <span class="n">id</span><span class="o">);</span>
+        <span class="c1">//Add value parameter for stored procedure</span>
+        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">out</span> <span class="o">=</span> <span class="n">jdbcCall</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">in</span><span class="o">);</span>
+
+        <span class="n">Student</span> <span class="n">student</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Student</span><span class="o">();</span>
+        <span class="n">student</span><span class="o">.</span><span class="na">setId</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+        <span class="n">student</span><span class="o">.</span><span class="na">setName</span><span class="o">((</span><span class="n">String</span><span class="o">)</span> <span class="n">out</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&quot;out_name&quot;</span><span class="o">));</span> <span class="c1">//Add stored procedure value to setter</span>
+        <span class="n">student</span><span class="o">.</span><span class="na">setAge</span><span class="o">((</span><span class="n">Integer</span><span class="o">)</span> <span class="n">out</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&quot;out_age&quot;</span><span class="o">));</span>
+        <span class="k">return</span> <span class="n">Student</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="c1">//listStudents() is the same as example above</span>
+    <span class="c1">//Test class is the same as example above, and you should get same result</span>
+<span class="o">}</span>
+</pre>

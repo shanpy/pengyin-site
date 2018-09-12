@@ -1,0 +1,57 @@
+<h2 id="javascript-string">JavaScript String</h2>
+<h3 id="substring">Substring</h3>
+<p>There are two ways in JavaScript to get substring:</p>
+<h4 id="substrstartindex-length"><code>substr(StartIndex, Length)</code>:</h4>
+<p>Takes two parameter: <strong>StartIndex</strong> and <strong>Length of Substring (Optional)</strong></p>
+<h4 id="substringstartindex-endindex"><code>substring(StartIndex, EndIndex)</code></h4>
+<p>Takes two parameter: <strong>StartIndex (inclusive)</strong> and <strong>EndIndex (exclusive)</strong>. EndIndex is optional.</p>
+<p>If "start" is greater than "end", this method will swap the two arguments, meaning str.substring(1,4) == str.substring(4,1).</p>
+<p>If either "start" or "stop" is less than 0, it is treated as if it were 0.</p>
+<blockquote>
+<p>Note: Both methods do not change the original string.</p>
+</blockquote>
+<h4 id="special-cases">Special Cases</h4>
+<p>The two methods above have difference usage for following spceial cases:</p>
+<p><strong>Negative Value</strong></p>
+<p><code>substr()</code> and <code>substring()</code> can both take negative value parameters as <code>StartIndex</code>, which means starting to count from end of string.</p>
+<p><code>substr()</code> can take <code>Length</code> parameter as negative number, but it will return a <strong>empty String</strong>.</p>
+<p><code>substring()</code> can take <code>EndIndex</code> as negative value, but <strong>this value will be ignored, and substring will start from position 0, has same length as Start Index</strong>.</p>
+<blockquote>
+<p>If you only have one negative index, whole string will be returned, If you have a negative Start Index, nothing will be returned</p>
+</blockquote>
+<p>So, if you want to <strong>take substring from the end of string</strong>, using <code>substr()</code>. Start from where your substring start, and length is what you need, or <code>str.length - startIndex</code> if you want rest of string.</p>
+<blockquote>
+<p>Remember you substring has same sequence as original string. It's not reversed.</p>
+</blockquote>
+<h2 id="javascript-keycode-and-related-information">JavaScript KeyCode and Related Information</h2>
+<h3 id="two-way-of-event-binding">Two Way of Event Binding</h3>
+<pre class="code literal-block"><span></span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#inputbox_id&#39;</span><span class="p">).</span><span class="nx">bind</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+    <span class="c1">//event.keyCode...</span>
+<span class="p">}</span>
+<span class="c1">//Second way: you may want keydown/keypress event also</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#inputbox_id&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;keyup&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+<span class="cm">/*</span>
+<span class="cm">*When you use copy and paster instead of key input, this way may cause double event trigger, so I prefer the way above</span>
+<span class="cm">*/</span>
+<span class="p">}</span>
+</pre>
+
+
+<h3 id="common-keycode">Common KeyCode</h3>
+<ul>
+<li>
+<p><code>Delete</code>:46</p>
+</li>
+<li>
+<p><code>Backspace</code>: 8</p>
+</li>
+<li>
+<p><code>Enter</code>: 13</p>
+</li>
+<li>
+<p><code>Tab</code>: 9</p>
+</li>
+</ul>
+<p>You can refer this <a href="http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes">cheatsheet</a> for more keycode information.</p>
+<h3 id="special-cases_1">Special Cases</h3>
+<p>From <a href="http://stackoverflow.com/questions/4084715/javascript-e-keycode-doesnt-catch-backspace-del-in-ie">this stackflow post</a>, IE doesn't fire <strong>keypress</strong> event for delete, end, enter, escape, function keys, home, insert, pageUp/Down and tab. So use <strong>keydown</strong> or <strong>keyup</strong> instead.</p>

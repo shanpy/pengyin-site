@@ -1,0 +1,38 @@
+<p><strong>window.location</strong> is a <strong>read-only</strong> property, but you can also sign a string to it. It has some commenly used properties:</p>
+<h2 id="locationhash">location.hash</h2>
+<p>You can add <strong>anchor</strong> to URL, using a <strong>#</strong> character. For example: <code>www.example.com/blog.html#blog_1</code>.</p>
+<p>Use the example above, <code>window.console.log(location.hash) =&gt; #blog_1</code>. Returned value include <strong>#</strong>.</p>
+<p>When you set a hash, do not include <strong>#</strong>.</p>
+<h2 id="locationhref">location.href</h2>
+<p>Return entire URL. When you assign it, you can assign whole URL, relative URL, anchor only or protocal, based on your need. Following examples all work well:
+<code>location.href="#blog_1"</code>
+<code>location.href="mailto:abc@example.com"</code>
+<code>location.href="test.html"</code>
+<code>location.href=ftp//test.com</code></p>
+<h2 id="locationorigin">location.origin</h2>
+<p><em>Not supported by IE</em></p>
+<p>Return protolcol.hostname and port number of a URL. An example is <code>httpw://www.example.com:1112</code></p>
+<p><em>Note</em> If the port number is not specified in URL, some browsers will not display port number.</p>
+<p>This is a <strong>read-only</strong> property, so you can not set it.</p>
+<h2 id="locationhost">location.host</h2>
+<p>You can use this property to get/set <strong>hostname</strong> and <strong>port</strong> of URL. Normally should return "www.xyz.com".</p>
+<p><em>Note</em>: If the port number is not specified in URL, some browsers will not display port number.</p>
+<p>You can use <code>location.host = "hostname:port"</code> to set host.</p>
+<p><strong>location.hostname</strong> <strong>location.port</strong> <strong>location.protocal</strong></p>
+<p>Similar as above, these properties returns hostname/port/protocal of URL. Normally should return "www.xyz.com".</p>
+<p>You can do get/set for all of these properties.</p>
+<p>If a port is not specified in URL or is scheme's default port,such as <code>80</code> or <code>443</code>,some browser return 0 or nothing.</p>
+<h2 id="locationpathname">location.pathname</h2>
+<p>Return <strong>directoy path</strong> of a URL. For example: `/WEB-INF/Views/Test.jsp</p>
+<p>You can do get/set for this property.</p>
+<h2 id="locationsearch">location.search</h2>
+<p>Return the <strong>querying string</strong> part of a URL, which is normally the part <strong>?</strong> and string after it in URL.</p>
+<p>You can do get/set for it. For example, a possible result can be <code>?id=111</code>.</p>
+<h2 id="locationassignurl">location.assign(URL)</h2>
+<p>Load a new document.</p>
+<h2 id="locationreplaceurl">location.replace(URL)</h2>
+<p>Same as <code>location.assign()</code>, but <strong>you cannot use "back" button to go back to previous page</strong>.</p>
+<p>You can combine it with <strong>hash</strong>. For example: <code>location.replace("http://www.example.com/#" + location.pathname)</code></p>
+<h2 id="locationreload">location.reload()</h2>
+<p>Same as the "reload" button in browser, reloading current document.</p>
+<p>Use <code>location.reload(true)</code> to force reloading document.</p>

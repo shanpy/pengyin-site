@@ -1,0 +1,50 @@
+<p>You can view introduction page <a href="http://getbootstrap.com/2.3.2/examples/sticky-footer.html">here</a>.</p>
+<p>Generally A sticky footer is created just like the <code>fixed-nav</code> bar in Bootstrap3. This footer will always stay at the bottom of page, even though there isn't enough content.</p>
+<p>Martin Bean and Ryan Fait also have a Sticky Footer with Fixed Nav Bar page <a href="http://getbootstrap.com/2.3.2/examples/sticky-footer-navbar.html">here</a>.</p>
+<p>Following is part of basic code for Sticky Nav bar with my analysis (You need Bootstrap3 css library):</p>
+<blockquote>
+<p>In HTML, You have two big divs: <code>#wrap</code> and <code>#footer</code>. <code>#footer</code> contains everything you want to put in footer.</p>
+<p><code>#wrap</code> has two small divs: <code>.container</code> and <code>#push</code>. You put all main content in <code>.container</code> and nothing in <code>push</code></p>
+</blockquote>
+<pre class="code literal-block"><span></span>  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="c">&lt;!-- Part 1: Wrap all page content here --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;wrap&quot;</span><span class="p">&gt;</span>
+      <span class="c">&lt;!-- Begin page content --&gt;</span>
+      <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;container&quot;</span><span class="p">&gt;</span>
+        <span class="c">&lt;!-- Content --&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;push&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="c">&lt;!-- Park 2: Footer --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;footer&quot;</span><span class="p">&gt;</span>
+      <span class="c">&lt;!-- Footer --&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+   <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</pre>
+
+
+<blockquote>
+<p><code>#wrap</code> takes full height of page. You set this by using <code>min-height</code>. Set <code>height</code> to <code>auto</code> to make sure small amount of content will not shrink <code>#wrap</code>. <code>#wrap</code> has a bottom margin <code>-60px</code>. This number can be changed, but it must be the same height as <code>#push</code> and <code>#footer</code>. This negative margin can allow <code>#footer</code> always stick to bottom of <code>#wrap</code>.</p>
+<p><code>#push</code> is used as a placeholder for <code>#footer</code>. <code>#footer</code> has same height as <code>#push</code>, so it <strong>covers</strong> <code>#push</code> because of the negative margin in <code>#wrap</code>. Items above <code>#push</code> will stay in distance from <code>#footer</code>, because since they have bottom margin to <code>#push</code>, they now have bottom margin to <code>#footer</code>.</p>
+</blockquote>
+<pre class="code literal-block"><span></span>  <span class="c">/* Sticky footer styles</span>
+<span class="c">  -------------------------------------------------- */</span>
+  <span class="nt">html</span><span class="o">,</span>
+  <span class="nt">body</span> <span class="p">{</span>
+    <span class="k">height</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+    <span class="c">/* The html and body elements cannot have any padding or margin. */</span>
+  <span class="p">}</span>
+  <span class="c">/* Wrapper for page content to push down footer */</span>
+  <span class="p">#</span><span class="nn">wrap</span> <span class="p">{</span>
+    <span class="k">min-height</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+    <span class="k">height</span><span class="p">:</span> <span class="kc">auto</span> <span class="cp">!important</span><span class="p">;</span>
+    <span class="c">/* Negative indent footer by it&#39;s height */</span>
+    <span class="k">margin</span><span class="p">:</span> <span class="mi">0</span> <span class="kc">auto</span> <span class="mi">-60</span><span class="kt">px</span><span class="p">;</span>
+    <span class="c">/**In th</span>
+<span class="c">  }</span>
+<span class="c">  /* Set the fixed height of the footer here */</span>
+  <span class="err">#push,</span>
+  <span class="err">#footer</span> <span class="err">{</span>
+    <span class="k">height</span><span class="p">:</span> <span class="mi">60</span><span class="kt">px</span><span class="p">;</span>
+  <span class="p">}</span>
+</pre>

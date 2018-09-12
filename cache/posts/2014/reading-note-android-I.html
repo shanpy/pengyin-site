@@ -1,0 +1,121 @@
+<h1 id="android-intents-and-intent-filters-from-developer-guides">Android Intents and Intent Filters from Developer Guides</h1>
+<p>http://developer.android.com/guide/components/intents-filters.html</p>
+<p>An Intent is a messaging object you can use to request an action from another app component.</p>
+<p>Intent carries information for determining which object to start</p>
+<p>Information that the recipient component uses in order to properly perform the action</p>
+<p>Start a new instance of an Activity by passing an Intent to <code>startActivity()</code>.</p>
+<p>Receieve result from activity by calling <code>startActivityForResult()</code>.</p>
+<p>Bind a service to another component by passing an Intent to <code>bindService()</code>.</p>
+<p>Deliver a broadcast by passing an Intent to <code>sendBroadcast()</code>, <code>sendOrderedBroadcast()</code> or <code>sendStickyBroadcast()</code>.</p>
+<p>Two types of intents:</p>
+<p>Explicit intents: used to start a component inside app. Must know class name or service name before start</p>
+<p>Always use explicit intent when starting a service and do not declare intent filter for service:</p>
+<pre class="code literal-block"><span></span><span class="c1">// Executed in an Activity, so &#39;this&#39; is the context</span>
+<span class="c1">// The fileUrl is a string Url, such as &quot;http://www.example.com/image.png&quot;</span>
+<span class="n">Intent</span> <span class="n">downloadIntent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">DownloadService</span><span class="o">,</span> <span class="n">class</span><span class="o">);</span>
+<span class="n">downloadIntent</span><span class="o">.</span><span class="na">setData</span><span class="o">(</span><span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">fileUrl</span><span class="o">));</span>
+<span class="n">startService</span><span class="o">(</span><span class="n">downloadIntent</span><span class="o">);</span>
+</pre>
+
+
+<p>An explicit intent is always delivered to its target, regardless of any intent filters the componenet declares.</p>
+<p>Implicit intents: don't specify class name. declare an action and ask other app to perform it.</p>
+<p>To start implicit intents, the intent defined in <code>intent filter</code> in <code>manifest file</code> will be find and match with passed intent. If matching, system start another app/component and deliver the passed intenet:</p>
+<pre class="code literal-block"><span></span><span class="c1">//Create the text message with a string</span>
+<span class="n">Intent</span> <span class="n">sendIntent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">();</span>
+<span class="n">sendIntent</span><span class="o">.</span><span class="na">setAction</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_SEND</span><span class="o">);</span>
+<span class="n">sendIntent</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">EXTRA_TEXT</span><span class="o">,</span> <span class="n">textMessage</span><span class="o">);</span>
+<span class="n">sendIntent</span><span class="o">.</span><span class="na">setType</span><span class="o">(</span><span class="n">HTTP</span><span class="o">.</span><span class="na">PLAIN_TEXT_TYPE</span><span class="o">);</span>
+<span class="c1">// &quot;text/plain&quot; MIME Type</span>
+<span class="c1">//Verify that the intent will resolve to an activity, in case no app in device can start this activity</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">sendIntent</span><span class="o">.</span><span class="na">resolveActivity</span><span class="o">(</span><span class="n">getPackageManager</span><span class="o">()!=</span><span class="kc">null</span><span class="o">)){</span>
+    <span class="n">startActivity</span><span class="o">(</span><span class="n">sendIntent</span><span class="o">);</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>Intent filter is an expression in manifest file to search for components that should receive the intent.</p>
+<p>Intent has following information:</p>
+<ul>
+<li>
+<p>Componenet Name: must have for explict (ex. service) and skipped for implict</p>
+</li>
+<li>
+<p>Example Name: <code>com.example.ExActivity</code></p>
+</li>
+<li>
+<p>Set component name: <code>setComponent()</code>, <code>setClass()</code>, <code>setClassName()</code> or <code>Intent constructor</code></p>
+</li>
+</ul>
+<p>Action: a string that specifies the generic action to perform (such as view or pick)</p>
+<blockquote>
+<p>Example: <code>ACTION_VIEW</code>: use for <code>startActivity()</code>. Activity should show something to user, like picture</p>
+<ul>
+<li>Example: <code>ACTION_SEND</code>: i.e. "share"intent. use for <code>startActivity()</code>. Activity should have data to share with other apps, like email.</li>
+</ul>
+</blockquote>
+<pre class="code literal-block"><span></span><span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">ACTION_TIME</span> <span class="o">=</span> <span class="s">&quot;com.example.action.TIME&quot;</span>
+</pre>
+
+
+<p>Data: A URI object that references data to be acted and/or the MIME type of data.</p>
+<p>content: URI will specify MIME type of data</p>
+<p><code>setData()</code>: set data URI. <code>setType()</code>: set MIME type. <code>setDataAndType()</code>: set both data and type</p>
+<p><code>setDate()</code> and <code>setType()</code> can not be used at the same time: null problem</p>
+<p>Catagory: optional. Describe info about the kind of component that should handle the intent. Andorid will know which app should start based on this</p>
+<blockquote>
+<p>Example: <code>CATEGORY_BROWSABLE</code>: target the activity that start a web browser and show data referenced by a link</p>
+<p>Example: <code>CATAGORY_LAUNCHER</code>: tartget the activity that initial a task and listed in system's application launcher</p>
+</blockquote>
+<p>Extras: <em>Key-Value</em> pair that carry additional information.  using <code>putExtra()</code> or create Bundle</p>
+<blockquote>
+<p>Example: define recipts or subjects in am email-send action</p>
+</blockquote>
+<p>Flags: define metadata for intent. use <code>setFlags()</code>.</p>
+<p>Forcing an app choose:</p>
+<pre class="code literal-block"><span></span><span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_SEND</span><span class="o">);</span>
+<span class="c1">//...</span>
+<span class="c1">//Always use string resource for UI text</span>
+<span class="c1">//This says something like &quot;Share this photo with&quot;</span>
+<span class="n">String</span> <span class="n">title</span> <span class="o">=</span> <span class="n">getResources</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">string</span><span class="o">.</span><span class="na">chooser_title</span><span class="o">);</span>
+<span class="c1">//Create intent to show chooser</span>
+<span class="n">Intent</span> <span class="n">chooser</span> <span class="o">=</span> <span class="n">Intent</span><span class="o">.</span><span class="na">createChooser</span><span class="o">(</span><span class="n">intent</span><span class="o">,</span> <span class="n">title</span><span class="o">);</span>
+<span class="c1">//This is used to call app chooser</span>
+<span class="c1">//Verify the intent will resolve at least one activity</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">intent</span><span class="o">.</span><span class="na">resolveActivity</span><span class="o">(</span><span class="n">getPackageManager</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+    <span class="n">startActivity</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>Receiving an Implicit Intent:</p>
+<p>The system will deliver an implicit intent to app only if the intent pass through one of intent filters.</p>
+<p>Each unique job should have a intent filter</p>
+<p>Inside <code>&lt;intent-filter&gt;</code>:</p>
+<ul>
+<li>
+<p><code>&lt;action&gt;</code>: declares the intent action accepted, in the name attribute. Value must be a literal string.</p>
+</li>
+<li>
+<p><code>&lt;data&gt;</code>: declares the type of data accepted, using attributes from data URL (scheme, host, port, path, etc) and MIME type.</p>
+</li>
+<li>
+<p><code>&lt;category&gt;</code>: declares the intent category accepted, in the name attribute and value must be literal string.</p>
+</li>
+</ul>
+<p>Example:</p>
+<pre class="code literal-block"><span></span><span class="nt">&lt;activity</span> <span class="na">android:name=</span><span class="s">&quot;ShareActivity&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;intent-filter&gt;</span>
+        <span class="nt">&lt;action</span> <span class="na">android:name=</span><span class="s">&quot;android.intent.action.SEND&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;catagory</span> <span class="na">android:name=</span><span class="s">&quot;android.intent.category.DEFAULT&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;data</span> <span class="na">android:mimeType=</span><span class="s">&quot;text/plain&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/intent-filter&gt;</span>
+<span class="nt">&lt;/activity&gt;</span>
+</pre>
+
+
+<p>Pending Intent: a wrapper around an Intent object. Purpose is to get permission to a foreign application to use the contained intent</p>
+<p>Cases to use it:
+- Declare an intent to be executed when the user performs an action with your <em>notification</em> /Notification Manager Execution
+-
+- Declare an intent to be executed when the user performs an action with your <em>App Widget</em> /Home Screen App Execution</p>

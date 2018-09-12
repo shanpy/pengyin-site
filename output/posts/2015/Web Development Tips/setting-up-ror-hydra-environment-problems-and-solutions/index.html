@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " vocab="http://ogp.me/ns" lang="en">
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]--><!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]--><!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]--><!--[if gt IE 8]><!--><!--<![endif]--><head>
+<meta charset="utf-8">
+<meta name="description" content="Recently I tried to install Ruby on Rails/Hydra development environment in different machine, and I got some interesting problems. I want to post solutions in this blog for future usage.">
+<!-- http://t.co/dKP3o1e --><meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Setting up RoR/Hydra Environment - Problems and Solutions | Pengyin's Corner</title>
+<link href="../../../../assets/css/all.css" rel="stylesheet" type="text/css">
+<!-- Webfonts --><link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+<!-- Load Modernizr --><script src="//mmistakes.github.io/hpstr-jekyll-theme/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script><link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../rss.xml">
+<link rel="canonical" href="https://pengyin-shan.com/posts/2015/Web%20Development%20Tips/setting-up-ror-hydra-environment-problems-and-solutions/">
+<!--[if lt IE 9]><script src="../../../../assets/js/html5.js"></script><![endif]--><meta name="description" content="Recently I tried to install Ruby on Rails/Hydra development environment in different machine, and I got some interesting problems. I want to post solutions in this blog for future usage.">
+<meta name="author" content="Pengyin(Wendy) Shan">
+<link rel="prev" href="../../JavaScript/angularjs-basics/" title="AngularJS Basics" type="text/html">
+<link rel="next" href="../../Others/play-with-hydra-data/" title="A Journal of Playing with Hydra Data" type="text/html">
+<meta property="og:site_name" content="Pengyin's Corner">
+<meta property="og:title" content="Setting up RoR/Hydra Environment - Problems and Solutions">
+<meta property="og:url" content="https://pengyin-shan.com/posts/2015/Web%20Development%20Tips/setting-up-ror-hydra-environment-problems-and-solutions/">
+<meta property="og:description" content="Recently I tried to install Ruby on Rails/Hydra development environment in different machine, and I got some interesting problems. I want to post solutions in this blog for future usage.">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-08-12T00:00:00-04:00">
+<meta property="article:tag" content="Hydra">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Ruby on Rails">
+<meta property="article:tag" content="Ubuntu">
+</head>
+<body id="post-index" class="feature">
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    
+
+    <nav id="dl-menu" class="dl-menuwrapper" role="navigation"><button class="dl-trigger">Open Menu</button>
+    <ul class="dl-menu">
+<li><a href="../../../">My Knowledge Base</a></li>
+            <li><a href="https://www.linkedin.com/in/pengyinshan">My LinkedIn</a></li>
+            <li><a href="../../../../categories/">Tags and Categories</a></li>
+            <li><a href="../../../../rss.xml">RSS feed</a></li>
+            <li><a href="../../../../archive.html">Archive</a></li>
+    
+    
+    </ul></nav><div class="entry-header">
+<!-- /.image-credit -->
+    <div class="entry-image">
+      <img src="../../../../bk.JPG" alt="Latest Posts">
+</div>
+<!-- /.entry-image -->
+      
+  <div class="header-title">
+    <div class="header-title-wrap">
+    <h1 id="brand"><a href="https://pengyin-shan.com/" title="Pengyin's Corner" rel="home">
+    Pengyin's Corner</a></h1>
+      <h2>Be Passionate.</h2>
+    </div>
+<!-- /.header-title-wrap -->
+  </div>
+<!-- /.header-title -->
+
+</div>
+<!-- /.entry-header -->
+
+    <div id="main" role="main">
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><div class="entry-meta">
+            <span class="dateline"><a href="../../Web%20Development%20Tips/setting-up-ror-hydra-environment-problems-and-solutions/" rel="bookmark"><time class="published dt-published" datetime="2015-08-12T00:00:00-04:00" itemprop="datePublished" title="2015-08-12">2015-08-12</time></a></span>  ·  
+            <span class="byline author vcard">Pengyin(Wendy) Shan</span>  ·  
+                <span class="commentline">
+        
+    <a href="../../Web%20Development%20Tips/setting-up-ror-hydra-environment-problems-and-solutions/#disqus_thread" data-disqus-identifier="cache/posts/2015/Web Development Tips/setting-up-ror-hydra-environment-problems-and-solutions.html">Comments</a>
+
+</span>  ·  
+            
+        <span class="sourceline"><a href="../../Web%20Development%20Tips/setting-up-ror-hydra-environment-problems-and-solutions/index.md" id="sourcelink">Source</a></span>  ·  
+
+                <meta name="description" itemprop="description" content="Recently I tried to install Ruby on Rails/Hydra development environment in different machine, and I got some interesting problems. I want to post solutions in this blog for future usage.">
+</div>
+        
+
+    
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="../../Web%20Development%20Tips/setting-up-ror-hydra-environment-problems-and-solutions/" class="u-url">Setting up RoR/Hydra Environment - Problems and Solutions</a></h1>
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<h3 id="ubuntu-1510">Ubuntu 15.10</h3>
+<p>If you want to setup your RoR environment on Ubuntu 14/15, <a href="https://gorails.com/setup/ubuntu/15.04">this post</a> is the best choice for you. I used <code>rvm</code> to install Ruby on my two Ubuntu 15.10 machine, and it worked like a charm.</p>
+<h4 id="problem">Problem</h4>
+<p>When I tried to run <code>\curl -L https://get.rvm.io | bash -s stable --ruby</code> in terminal to install both RVM and Ruby, I got following error message:</p>
+<pre class="code literal-block"><span></span><span class="nv">Error</span> <span class="s s-Atom">running</span> <span class="s s-Atom">'requirements_debian_update_system ruby-2.2.1'</span><span class="p">,</span>
+<span class="s s-Atom">showing</span> <span class="s s-Atom">last</span> <span class="mi">15</span> <span class="s s-Atom">lines</span> <span class="s s-Atom">of</span> <span class="o">/</span><span class="s s-Atom">usr</span><span class="o">/</span><span class="s s-Atom">local</span><span class="o">/</span><span class="s s-Atom">rvm</span><span class="o">/</span><span class="s s-Atom">log</span><span class="o">/</span><span class="mi">1439385591</span><span class="k">_</span><span class="s s-Atom">ruby</span><span class="o">-</span><span class="mf">2.2.1</span><span class="o">/</span><span class="s s-Atom">update_system</span><span class="p">.</span><span class="s s-Atom">log</span>
+<span class="s s-Atom">++</span> <span class="o">/</span><span class="s s-Atom">scripts</span><span class="o">/</span><span class="s s-Atom">functions</span><span class="o">/</span><span class="s s-Atom">logging</span> <span class="s s-Atom">:</span> <span class="nf">rvm_pretty_print</span><span class="p">()</span>  <span class="mi">78</span> <span class="o">&gt;</span> <span class="s s-Atom">case</span> <span class="s2">"${TERM:-dumb}"</span> <span class="s s-Atom">in</span>
+<span class="s s-Atom">++</span> <span class="o">/</span><span class="s s-Atom">scripts</span><span class="o">/</span><span class="s s-Atom">functions</span><span class="o">/</span><span class="s s-Atom">logging</span> <span class="s s-Atom">:</span> <span class="nf">rvm_pretty_print</span><span class="p">()</span>  <span class="mi">81</span> <span class="o">&gt;</span> <span class="s s-Atom">case</span> <span class="s2">"$1"</span> <span class="s s-Atom">in</span>
+<span class="s s-Atom">++</span> <span class="o">/</span><span class="s s-Atom">scripts</span><span class="o">/</span><span class="s s-Atom">functions</span><span class="o">/</span><span class="s s-Atom">logging</span> <span class="s s-Atom">:</span> <span class="nf">rvm_pretty_print</span><span class="p">()</span>  <span class="mi">83</span> <span class="o">&gt;</span> <span class="p">[[</span> <span class="o">-</span><span class="s s-Atom">t</span> <span class="mi">2</span> <span class="p">]]</span>
+<span class="s s-Atom">++</span> <span class="o">/</span><span class="s s-Atom">scripts</span><span class="o">/</span><span class="s s-Atom">functions</span><span class="o">/</span><span class="s s-Atom">logging</span> <span class="s s-Atom">:</span> <span class="nf">rvm_pretty_print</span><span class="p">()</span>  <span class="mi">83</span> <span class="o">&gt;</span> <span class="s s-Atom">return</span> <span class="mi">1</span>
+<span class="s s-Atom">++</span> <span class="o">/</span><span class="s s-Atom">scripts</span><span class="o">/</span><span class="s s-Atom">functions</span><span class="o">/</span><span class="s s-Atom">logging</span> <span class="s s-Atom">:</span> <span class="nf">rvm_error</span><span class="p">()</span>  <span class="mi">117</span> <span class="o">&gt;</span> <span class="s s-Atom">printf</span> <span class="c1">%b 'There has been error while updating '\''apt-get'\'', please give it some time and try again later.</span>
+<span class="mi">404</span> <span class="s s-Atom">errors</span> <span class="s s-Atom">should</span> <span class="s s-Atom">be</span> <span class="s s-Atom">fixed</span> <span class="s s-Atom">for</span> <span class="s s-Atom">rvm</span> <span class="s s-Atom">to</span> <span class="s s-Atom">proceed</span><span class="p">.</span> <span class="nv">Check</span> <span class="s s-Atom">your</span> <span class="s s-Atom">sources</span> <span class="s s-Atom">configured</span> <span class="nn">in</span><span class="p">:</span>
+    <span class="o">/</span><span class="s s-Atom">etc</span><span class="o">/</span><span class="s s-Atom">apt</span><span class="o">/</span><span class="s s-Atom">sources</span><span class="p">.</span><span class="s s-Atom">list</span>
+    <span class="o">/</span><span class="s s-Atom">etc</span><span class="o">/</span><span class="s s-Atom">apt</span><span class="o">/</span><span class="s s-Atom">sources</span><span class="p">.</span><span class="s s-Atom">list</span><span class="p">.</span><span class="s s-Atom">d</span><span class="cm">/*.list</span>
+<span class="cm">\n'</span>
+<span class="cm">There has been error while updating 'apt-get', please give it some time and try again later.</span>
+<span class="cm">404 errors should be fixed for rvm to proceed. Check your sources configured in:</span>
+<span class="cm">    /etc/apt/sources.list</span>
+<span class="cm">    /etc/apt/sources.list.d/*.list</span>
+<span class="cm">++ /scripts/functions/requirements/ubuntu : requirements_debian_update_system()  53 &gt; return 100</span>
+<span class="cm">Requirements installation failed with status: 100.</span>
+</pre>
+
+
+<p>The reason of this error is because RVM will bring error if my Ubuntu machine's <code>apt-get update</code> has error in it. I used to install Ninja-IDE through <code>apt-get</code> and I had PPA error when I do <code>apt-get update</code>. You can view <a href="http://stackoverflow.com/questions/23650992/ruby-rvm-apt-get-update-error">this stackoverflow post</a>.</p>
+<h4 id="solution">Solution</h4>
+<p>A user <strong>Avinash Raj</strong> posted a great solution in <a href="http://askubuntu.com/questions/65911/how-can-i-fix-a-404-error-when-using-a-ppa-or-updating-my-package-lists">Ubuntu community</a> for removing PPA with errors.</p>
+<p>The detail of solution is: create a file called <code>ppa-remove</code> (no <code>.sh</code> extension) as following:</p>
+<pre class="code literal-block"><span></span><span class="ch">#!/bin/bash</span>
+sudo rm /tmp/update.txt<span class="p">;</span> tput setaf <span class="m">6</span><span class="p">;</span> <span class="nb">echo</span> <span class="s2">"Initializing.. Please Wait"</span>
+sudo apt-get update &gt;&gt; /tmp/update.txt <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="p">;</span> awk <span class="s1">'( /W:/ &amp;&amp; /launchpad/ &amp;&amp; /404/ ) { print substr($5,26) }'</span> /tmp/update.txt &gt; /tmp/awk.txt<span class="p">;</span> awk -F <span class="s1">'/'</span> <span class="s1">'{ print $1"/"$2 }'</span> /tmp/awk.txt &gt; /tmp/awk1.txt<span class="p">;</span> sort -u /tmp/awk1.txt &gt; /tmp/awk2.txt
+tput sgr0
+<span class="k">if</span> <span class="o">[</span> -s /tmp/awk2.txt <span class="o">]</span>
+<span class="k">then</span>
+  tput setaf <span class="m">1</span>
+  <span class="nb">printf</span> <span class="s2">"PPA's going to be removed\n%s\n"</span> <span class="s2">"</span><span class="k">$(</span>cat /tmp/awk2.txt<span class="k">)</span><span class="s2">"</span>
+  tput sgr0
+  <span class="k">while</span> <span class="nb">read</span> -r line<span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="s2">"sudo add-apt-repository -r ppa:</span><span class="nv">$line</span><span class="s2">"</span><span class="p">;</span> <span class="k">done</span> &lt; /tmp/awk2.txt &gt; out
+  bash out
+<span class="k">else</span>
+  tput setaf <span class="m">1</span>
+  <span class="nb">echo</span> <span class="s2">"No PPA's to be removed"</span>
+  tput sgr0
+<span class="k">fi</span>
+</pre>
+
+
+<p>Run <code>sudo chmod +x ppa-remove</code> after you create this file, then move this file to <code>/usr/bin</code>. Run <code>sudo ppa-remove</code>. Your PPA with errors will be removed and you can then re-run <code>\curl -L https://get.rvm.io | bash -s stable</code> or <code>\curl -L https://get.rvm.io | bash -s stable --ruby</code> to install RVM.</p>
+<p><em>Note: Till Aug 2015, If you run <code>\curl -L https://get.rvm.io | bash -s stable --ruby</code>, you will automatically get Ruby 2.2.1 installed. If you run <code>\curl -L https://get.rvm.io | bash -s stable</code> then install Ruby, you can choose Ruby 2.2.2. These two versions do not have conflict.</em></p>
+<h3 id="mac-os-yoemite">Mac OS Yoemite</h3>
+<p>RoR installation process for Mac OS Yosemite is almost the same as Ubuntu. Make sure you have <code>xcode</code> and <code>Homebrew</code> installed first. This <a href="http://railsapps.github.io/installrubyonrails-mac.html">post</a> has very detailed description that you can follow.</p>
+<h3 id="project-hydra">Project Hydra</h3>
+<p>I had a <a href="http://pengyin-shan.com/blog/dive-into-hydra-and-my-thoughts">post</a> describing my thoughts about Hydra. In this post I will include detail of installation part.</p>
+<p>After you finish RoR setting (make sure you have <code>Bundle</code> installed by <code>RubyGem</code>), you want to generate a basic rails app, then add <code>gem 'hydra', '9.1.0.rc1'</code> to your <code>Gemfile</code>. you can re-run <code>Bundle install</code> to install all necessary ruby gems for Hydra.</p>
+<blockquote>
+<p>If you are creating Hydra head for the first time, run <code>rails generate hydra:install</code> to use Hydra generator. If you done this once and you want to setup this project in a new machine, you should skip this step because your old blacklight files will be overwritten.</p>
+</blockquote>
+<p>You can use same Gemfile to set up Hydra environment in different machines, but <strong>make sure you run <code>rake jetty:config</code> and <code>rake db:migrate</code></strong> to prevent possible problem.</p>
+<p>You can run <code>Rails.env</code> in rails console to check your current environment.</p>
+<h4 id="problem-data-immigration-for-existing-project">Problem: Data Immigration for Existing Project</h4>
+<p>How to transfer previous data (Fedora files, Solr documents and indexes) to your new environment?</p>
+<h4 id="solution_1">Solution</h4>
+<p>Well, I'm working on solution now :) To figure out a way I did lots of experiments (and made a big mess) in my Hydra project. I started a new post about it <a href="http://pengyin-shan.com/blog/play-with-hydra-data">here</a>.</p>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../categories/hydra/" rel="tag">Hydra</a></li>
+            <li><a class="tag p-category" href="../../../../categories/linux/" rel="tag">Linux</a></li>
+            <li><a class="tag p-category" href="../../../../categories/ruby-on-rails/" rel="tag">Ruby on Rails</a></li>
+            <li><a class="tag p-category" href="../../../../categories/ubuntu/" rel="tag">Ubuntu</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../../JavaScript/angularjs-basics/" rel="prev" title="AngularJS Basics">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../../Others/play-with-hydra-data/" rel="next" title="A Journal of Playing with Hydra Data">Next post</a>
+            </li>
+        </ul></nav></aside><section class="comments"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="pengyinsnotes",
+            disqus_url="https://pengyin-shan.com/posts/2015/Web%20Development%20Tips/setting-up-ror-hydra-environment-problems-and-solutions/",
+        disqus_title="Setting up RoR/Hydra Environment - Problems and Solutions",
+        disqus_identifier="cache/posts/2015/Web Development Tips/setting-up-ror-hydra-environment-problems-and-solutions.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="pengyinsnotes";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+    
+    <div class="footer-wrapper">
+        <footer role="contentinfo"><p>Contents © 2018         <a href="mailto:pengyin.shan@outlook.com">Pengyin(Wendy) Shan</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+        </footer>
+</div>
+
+    
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script src="../../../../assets/js/scripts.min.js"></script>
+</body>
+</html>

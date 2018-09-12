@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Pengyin's Corner (Posts about Hydra)</title><link>https://pengyin-shan.com/</link><description></description><atom:link type="application/rss+xml" href="https://pengyin-shan.com/categories/hydra.xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Tue, 11 Sep 2018 20:57:16 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>A Journal of Playing with Hydra Data</title><link>https://pengyin-shan.com/posts/2015/Others/play-with-hydra-data/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;h3 id="data-immigration"&gt;Data Immigration&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;This part is based on the &lt;a href="https://github.com/projecthydra/hydra/wiki/Dive-into-Hydra"&gt;dive-into-hydra&lt;/a&gt; tutorial project.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;What should I do to immigrate Hydra Data (Fedora files, Solr documents and indexes, etc) from one Hydra project to another project?&lt;/p&gt;
+&lt;p&gt;To figure out a way, I have explored following items:&lt;/p&gt;
+&lt;h4 id="step-1-sqlite3"&gt;Step 1: SQLite3&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;8/12/15&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;My first idea is to check database. Tutorial project uses SQLite3 as database. All files are included in &lt;code&gt;/db&lt;/code&gt; folder. Before going to production, you may get &lt;code&gt;developer.sqlite3&lt;/code&gt;, &lt;code&gt;test.sqlite3&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;I used &lt;code&gt;SQLiteStudio&lt;/code&gt; to open these two SQLite3 databases. Each database has four tables, which are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;bookmarks&lt;/code&gt;: save information when a bookmark is created. Sample Fields: &lt;code&gt;user_id&lt;/code&gt;, &lt;code&gt;document_id&lt;/code&gt;, &lt;code&gt;title&lt;/code&gt;, &lt;code&gt;created_at&lt;/code&gt;, etc&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;schema_migrations&lt;/code&gt;: version of query schema&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;searches&lt;/code&gt;: save information when a search operation is performed. Sample Fields: &lt;code&gt;user_id&lt;/code&gt;, &lt;code&gt;query_params&lt;/code&gt;, &lt;code&gt;created_at&lt;/code&gt;, etc&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;users&lt;/code&gt;: user information. Sample Fields: &lt;code&gt;email&lt;/code&gt;, &lt;code&gt;current_sign_in_ip&lt;/code&gt;, &lt;code&gt;encrpted_password&lt;/code&gt;, etc.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It seems that database(SQLite3) here is used to record information in search process, after all previous data has been immigrated.&lt;/p&gt;
+&lt;p&gt;Now my question is: &lt;em&gt;Does Hydra have a solution?&lt;/em&gt;&lt;/p&gt;
+&lt;h4 id="step-2-hydra"&gt;Step 2: Hydra&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;8/12/15&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I did some research about a full immigration solution in Hydra. I didn't find any result, which is nature because Hydra includes so many components: Fedora, Solr, Blacklight, etc. It would be extremely hard to transfer all data from these components once, without any error.&lt;/p&gt;
+&lt;p&gt;After I re-think my requirement, I realize this is what I want: &lt;strong&gt;Get all data from Fedora in old project -&amp;gt; Put it to Fedora in new project, with same structure -&amp;gt; Solr in new project re-indexing -&amp;gt; Blacklight can find new documents&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Now I want to start the process of &lt;em&gt;export and import Fedora data&lt;/em&gt;.&lt;/p&gt;
+&lt;h4 id="step-3-fedora"&gt;Step 3: Fedora&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;8/12/15&lt;/strong&gt;&lt;/p&gt;
+&lt;h5 id="data-export"&gt;Data Export&lt;/h5&gt;
+&lt;p&gt;Fedora4 provides a &lt;a href="https://wiki.duraspace.org/display/FEDORA40/RESTful+HTTP+API"&gt;RESTful HTTP API&lt;/a&gt; for data processing.&lt;/p&gt;
+&lt;p&gt;To export serialized form of a resource, &lt;strong&gt;with all subtress and binary content&lt;/strong&gt;, run following in your terminal (I adjust path based on my project):&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;curl -u fedoraAdmin:fedoraAdmin http://127.0.0.1:8983/fedora/dev/fcr:export?recurse=true&amp;amp;skipBinary=false"
+&lt;/pre&gt;
+
+
+&lt;p&gt;Make sure to use your own fedora username and password.&lt;/p&gt;
+&lt;p&gt;This command will generate a group of &lt;code&gt;xml&lt;/code&gt; code, save it to a &lt;code&gt;xml&lt;/code&gt; file, such as &lt;code&gt;FedoraExport.xml&lt;/code&gt;.&lt;/p&gt;
+&lt;h5 id="data-import"&gt;Data Import&lt;/h5&gt;
+&lt;p&gt;Now go to your new project and get a copy of your exported xml file. Run following command to import:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;curl -u fedoraAdmin:fedoraAdmin -X POST --data-binary "@FedoraExport.xml" "http://127.0.0.1:8983/fedora/rest/dev/fcr:import?format=jcr/xml"
+&lt;/pre&gt;
+
+
+&lt;p&gt;Now restart jetty and navigate to &lt;code&gt;http://127.0.0.1:8983/fedora/rest/dev&lt;/code&gt;. I'll be able to see all data, includes all subtrees, in the Fedora of new project.&lt;/p&gt;
+&lt;p&gt;I also noticed Fedora UI can import and export xml files. However, there is no recursive export feature there.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Problem: When I followed tutorial project, I made all the book nodes under /fedora/rest/dev. When I did export, I had to export dev node to make sure it includes book childnodes. After I imported dev node to new /fedora/rest/dev, I realized I had two dev nodes now. Another solution is to replace new fedora's dev node. However after I imported dev node directly to /fedora/rest, the new dev node will show as 'dev%5B2%5D' instead of 'dev'.&lt;/p&gt;
+&lt;p&gt;Possible Solution: I should create a summary node, which includes all my books data. I export this summary node and import it to /fedora/rest/dev. Now I can have exactly same structure as old fedora.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Now I want to start the process of &lt;em&gt;Solr re-indexing&lt;/em&gt;.&lt;/p&gt;
+&lt;h4 id="step-4-solr"&gt;Step 4: Solr&lt;/h4&gt;
+&lt;p&gt;Working in process :)&lt;/p&gt;&lt;/div&gt;</description><category>Fedora</category><category>Hydra</category><category>Solr</category><guid>https://pengyin-shan.com/posts/2015/Others/play-with-hydra-data/</guid><pubDate>Wed, 12 Aug 2015 04:00:00 GMT</pubDate></item><item><title>Setting up RoR/Hydra Environment - Problems and Solutions</title><link>https://pengyin-shan.com/posts/2015/Web%20Development%20Tips/setting-up-ror-hydra-environment-problems-and-solutions/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;h3 id="ubuntu-1510"&gt;Ubuntu 15.10&lt;/h3&gt;
+&lt;p&gt;If you want to setup your RoR environment on Ubuntu 14/15, &lt;a href="https://gorails.com/setup/ubuntu/15.04"&gt;this post&lt;/a&gt; is the best choice for you. I used &lt;code&gt;rvm&lt;/code&gt; to install Ruby on my two Ubuntu 15.10 machine, and it worked like a charm.&lt;/p&gt;
+&lt;h4 id="problem"&gt;Problem&lt;/h4&gt;
+&lt;p&gt;When I tried to run &lt;code&gt;\curl -L https://get.rvm.io | bash -s stable --ruby&lt;/code&gt; in terminal to install both RVM and Ruby, I got following error message:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;Error&lt;/span&gt; &lt;span class="s s-Atom"&gt;running&lt;/span&gt; &lt;span class="s s-Atom"&gt;'requirements_debian_update_system ruby-2.2.1'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="s s-Atom"&gt;showing&lt;/span&gt; &lt;span class="s s-Atom"&gt;last&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt; &lt;span class="s s-Atom"&gt;lines&lt;/span&gt; &lt;span class="s s-Atom"&gt;of&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;rvm&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;log&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;1439385591&lt;/span&gt;&lt;span class="k"&gt;_&lt;/span&gt;&lt;span class="s s-Atom"&gt;ruby&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;2.2.1&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;update_system&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="s s-Atom"&gt;log&lt;/span&gt;
+&lt;span class="s s-Atom"&gt;++&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;scripts&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;functions&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;logging&lt;/span&gt; &lt;span class="s s-Atom"&gt;:&lt;/span&gt; &lt;span class="nf"&gt;rvm_pretty_print&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="mi"&gt;78&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="s s-Atom"&gt;case&lt;/span&gt; &lt;span class="s2"&gt;"${TERM:-dumb}"&lt;/span&gt; &lt;span class="s s-Atom"&gt;in&lt;/span&gt;
+&lt;span class="s s-Atom"&gt;++&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;scripts&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;functions&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;logging&lt;/span&gt; &lt;span class="s s-Atom"&gt;:&lt;/span&gt; &lt;span class="nf"&gt;rvm_pretty_print&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="mi"&gt;81&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="s s-Atom"&gt;case&lt;/span&gt; &lt;span class="s2"&gt;"$1"&lt;/span&gt; &lt;span class="s s-Atom"&gt;in&lt;/span&gt;
+&lt;span class="s s-Atom"&gt;++&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;scripts&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;functions&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;logging&lt;/span&gt; &lt;span class="s s-Atom"&gt;:&lt;/span&gt; &lt;span class="nf"&gt;rvm_pretty_print&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="mi"&gt;83&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;[[&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="s s-Atom"&gt;t&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="p"&gt;]]&lt;/span&gt;
+&lt;span class="s s-Atom"&gt;++&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;scripts&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;functions&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;logging&lt;/span&gt; &lt;span class="s s-Atom"&gt;:&lt;/span&gt; &lt;span class="nf"&gt;rvm_pretty_print&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="mi"&gt;83&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="s s-Atom"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="s s-Atom"&gt;++&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;scripts&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;functions&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;logging&lt;/span&gt; &lt;span class="s s-Atom"&gt;:&lt;/span&gt; &lt;span class="nf"&gt;rvm_error&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="mi"&gt;117&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="s s-Atom"&gt;printf&lt;/span&gt; &lt;span class="c1"&gt;%b 'There has been error while updating '\''apt-get'\'', please give it some time and try again later.&lt;/span&gt;
+&lt;span class="mi"&gt;404&lt;/span&gt; &lt;span class="s s-Atom"&gt;errors&lt;/span&gt; &lt;span class="s s-Atom"&gt;should&lt;/span&gt; &lt;span class="s s-Atom"&gt;be&lt;/span&gt; &lt;span class="s s-Atom"&gt;fixed&lt;/span&gt; &lt;span class="s s-Atom"&gt;for&lt;/span&gt; &lt;span class="s s-Atom"&gt;rvm&lt;/span&gt; &lt;span class="s s-Atom"&gt;to&lt;/span&gt; &lt;span class="s s-Atom"&gt;proceed&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt; &lt;span class="nv"&gt;Check&lt;/span&gt; &lt;span class="s s-Atom"&gt;your&lt;/span&gt; &lt;span class="s s-Atom"&gt;sources&lt;/span&gt; &lt;span class="s s-Atom"&gt;configured&lt;/span&gt; &lt;span class="nn"&gt;in&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;sources&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="s s-Atom"&gt;list&lt;/span&gt;
+    &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s s-Atom"&gt;sources&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="s s-Atom"&gt;list&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="s s-Atom"&gt;d&lt;/span&gt;&lt;span class="cm"&gt;/*.list&lt;/span&gt;
+&lt;span class="cm"&gt;\n'&lt;/span&gt;
+&lt;span class="cm"&gt;There has been error while updating 'apt-get', please give it some time and try again later.&lt;/span&gt;
+&lt;span class="cm"&gt;404 errors should be fixed for rvm to proceed. Check your sources configured in:&lt;/span&gt;
+&lt;span class="cm"&gt;    /etc/apt/sources.list&lt;/span&gt;
+&lt;span class="cm"&gt;    /etc/apt/sources.list.d/*.list&lt;/span&gt;
+&lt;span class="cm"&gt;++ /scripts/functions/requirements/ubuntu : requirements_debian_update_system()  53 &amp;gt; return 100&lt;/span&gt;
+&lt;span class="cm"&gt;Requirements installation failed with status: 100.&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;The reason of this error is because RVM will bring error if my Ubuntu machine's &lt;code&gt;apt-get update&lt;/code&gt; has error in it. I used to install Ninja-IDE through &lt;code&gt;apt-get&lt;/code&gt; and I had PPA error when I do &lt;code&gt;apt-get update&lt;/code&gt;. You can view &lt;a href="http://stackoverflow.com/questions/23650992/ruby-rvm-apt-get-update-error"&gt;this stackoverflow post&lt;/a&gt;.&lt;/p&gt;
+&lt;h4 id="solution"&gt;Solution&lt;/h4&gt;
+&lt;p&gt;A user &lt;strong&gt;Avinash Raj&lt;/strong&gt; posted a great solution in &lt;a href="http://askubuntu.com/questions/65911/how-can-i-fix-a-404-error-when-using-a-ppa-or-updating-my-package-lists"&gt;Ubuntu community&lt;/a&gt; for removing PPA with errors.&lt;/p&gt;
+&lt;p&gt;The detail of solution is: create a file called &lt;code&gt;ppa-remove&lt;/code&gt; (no &lt;code&gt;.sh&lt;/code&gt; extension) as following:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+sudo rm /tmp/update.txt&lt;span class="p"&gt;;&lt;/span&gt; tput setaf &lt;span class="m"&gt;6&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;"Initializing.. Please Wait"&lt;/span&gt;
+sudo apt-get update &amp;gt;&amp;gt; /tmp/update.txt &lt;span class="m"&gt;2&lt;/span&gt;&amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; awk &lt;span class="s1"&gt;'( /W:/ &amp;amp;&amp;amp; /launchpad/ &amp;amp;&amp;amp; /404/ ) { print substr($5,26) }'&lt;/span&gt; /tmp/update.txt &amp;gt; /tmp/awk.txt&lt;span class="p"&gt;;&lt;/span&gt; awk -F &lt;span class="s1"&gt;'/'&lt;/span&gt; &lt;span class="s1"&gt;'{ print $1"/"$2 }'&lt;/span&gt; /tmp/awk.txt &amp;gt; /tmp/awk1.txt&lt;span class="p"&gt;;&lt;/span&gt; sort -u /tmp/awk1.txt &amp;gt; /tmp/awk2.txt
+tput sgr0
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; -s /tmp/awk2.txt &lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;then&lt;/span&gt;
+  tput setaf &lt;span class="m"&gt;1&lt;/span&gt;
+  &lt;span class="nb"&gt;printf&lt;/span&gt; &lt;span class="s2"&gt;"PPA's going to be removed\n%s\n"&lt;/span&gt; &lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;cat /tmp/awk2.txt&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;
+  tput sgr0
+  &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="nb"&gt;read&lt;/span&gt; -r line&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;"sudo add-apt-repository -r ppa:&lt;/span&gt;&lt;span class="nv"&gt;$line&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;done&lt;/span&gt; &amp;lt; /tmp/awk2.txt &amp;gt; out
+  bash out
+&lt;span class="k"&gt;else&lt;/span&gt;
+  tput setaf &lt;span class="m"&gt;1&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;"No PPA's to be removed"&lt;/span&gt;
+  tput sgr0
+&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Run &lt;code&gt;sudo chmod +x ppa-remove&lt;/code&gt; after you create this file, then move this file to &lt;code&gt;/usr/bin&lt;/code&gt;. Run &lt;code&gt;sudo ppa-remove&lt;/code&gt;. Your PPA with errors will be removed and you can then re-run &lt;code&gt;\curl -L https://get.rvm.io | bash -s stable&lt;/code&gt; or &lt;code&gt;\curl -L https://get.rvm.io | bash -s stable --ruby&lt;/code&gt; to install RVM.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Note: Till Aug 2015, If you run &lt;code&gt;\curl -L https://get.rvm.io | bash -s stable --ruby&lt;/code&gt;, you will automatically get Ruby 2.2.1 installed. If you run &lt;code&gt;\curl -L https://get.rvm.io | bash -s stable&lt;/code&gt; then install Ruby, you can choose Ruby 2.2.2. These two versions do not have conflict.&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="mac-os-yoemite"&gt;Mac OS Yoemite&lt;/h3&gt;
+&lt;p&gt;RoR installation process for Mac OS Yosemite is almost the same as Ubuntu. Make sure you have &lt;code&gt;xcode&lt;/code&gt; and &lt;code&gt;Homebrew&lt;/code&gt; installed first. This &lt;a href="http://railsapps.github.io/installrubyonrails-mac.html"&gt;post&lt;/a&gt; has very detailed description that you can follow.&lt;/p&gt;
+&lt;h3 id="project-hydra"&gt;Project Hydra&lt;/h3&gt;
+&lt;p&gt;I had a &lt;a href="http://pengyin-shan.com/blog/dive-into-hydra-and-my-thoughts"&gt;post&lt;/a&gt; describing my thoughts about Hydra. In this post I will include detail of installation part.&lt;/p&gt;
+&lt;p&gt;After you finish RoR setting (make sure you have &lt;code&gt;Bundle&lt;/code&gt; installed by &lt;code&gt;RubyGem&lt;/code&gt;), you want to generate a basic rails app, then add &lt;code&gt;gem 'hydra', '9.1.0.rc1'&lt;/code&gt; to your &lt;code&gt;Gemfile&lt;/code&gt;. you can re-run &lt;code&gt;Bundle install&lt;/code&gt; to install all necessary ruby gems for Hydra.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;If you are creating Hydra head for the first time, run &lt;code&gt;rails generate hydra:install&lt;/code&gt; to use Hydra generator. If you done this once and you want to setup this project in a new machine, you should skip this step because your old blacklight files will be overwritten.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;You can use same Gemfile to set up Hydra environment in different machines, but &lt;strong&gt;make sure you run &lt;code&gt;rake jetty:config&lt;/code&gt; and &lt;code&gt;rake db:migrate&lt;/code&gt;&lt;/strong&gt; to prevent possible problem.&lt;/p&gt;
+&lt;p&gt;You can run &lt;code&gt;Rails.env&lt;/code&gt; in rails console to check your current environment.&lt;/p&gt;
+&lt;h4 id="problem-data-immigration-for-existing-project"&gt;Problem: Data Immigration for Existing Project&lt;/h4&gt;
+&lt;p&gt;How to transfer previous data (Fedora files, Solr documents and indexes) to your new environment?&lt;/p&gt;
+&lt;h4 id="solution_1"&gt;Solution&lt;/h4&gt;
+&lt;p&gt;Well, I'm working on solution now :) To figure out a way I did lots of experiments (and made a big mess) in my Hydra project. I started a new post about it &lt;a href="http://pengyin-shan.com/blog/play-with-hydra-data"&gt;here&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;</description><category>Hydra</category><category>Linux</category><category>Ruby on Rails</category><category>Ubuntu</category><guid>https://pengyin-shan.com/posts/2015/Web%20Development%20Tips/setting-up-ror-hydra-environment-problems-and-solutions/</guid><pubDate>Wed, 12 Aug 2015 04:00:00 GMT</pubDate></item><item><title>Dive into Hydra and My Thoughts</title><link>https://pengyin-shan.com/posts/2015/Others/dive-into-hydra-and-my-thoughts/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;p&gt;&lt;em&gt;This post is being updated while I'm learning more about Hydra&lt;/em&gt;&lt;/p&gt;
+&lt;h4 id="main-idea"&gt;Main Idea&lt;/h4&gt;
+&lt;p&gt;I used to create a small Spring MVC web app &lt;a href="https://github.com/shanpy/RDFExperiment"&gt;RDF Experiment&lt;/a&gt; to experiment the ideas behind Hydra. Following is a graph about my assumption of Hydra Idea:&lt;/p&gt;
+&lt;p&gt;../images/articles/2015/digital_library/ProjectHydra.png &lt;/p&gt;
+&lt;p&gt;Behind this large frame, there are lots of small classes/methods that will push through stages above.&lt;/p&gt;
+&lt;h5 id="key-concerns"&gt;Key Concerns&lt;/h5&gt;
+&lt;p&gt;Following key concerns should be evaluated carefully during the processes above:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;When parsing RDF file to Model, what are the key properties which should be kept? What are properties that should be ignored? How client and domain expert think about your solution?&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;What's the best way of modeling Fedora and Solr such that user can use different way of searching, and getting best result? Is there any possibility to shorten result list, while not losing necessary close-results? Is there any way to shorten the searching time?&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Is there any visualization job can be done to let user understand more about results?&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="problems-and-thoughts"&gt;Problems and Thoughts&lt;/h4&gt;
+&lt;h5 id="installation"&gt;Installation&lt;/h5&gt;
+&lt;p&gt;Although RubyInstaller is available in Windows, I still encountered lots of unexpected errors when setting up environment in Windows 10. I took much less time in Linux. I used to run CygWin for virtual Linux environment in Windows, but it's not work well for any environment setup process, including Python and RoR.&lt;/p&gt;
+&lt;p&gt;If anyone is like me who are starting a taste of Hydra, I suggest using Unix-Based system first.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Update on 8/12/15&lt;/em&gt;: I created a &lt;a href="http://pengyin-shan.com/blog/setting-up-ror-hydra-environment-problems-and-solutions"&gt;post&lt;/a&gt; talking about installation of RoR and Hydra. If you need to install RoR or Hydra, feel free to use this post.&lt;/p&gt;
+&lt;h5 id="ror"&gt;RoR&lt;/h5&gt;
+&lt;p&gt;Since both Spring and Rails framework are holding MVC structure, it's not hard to transfer idea from Spring to RoR. Subfolders in &lt;code&gt;app&lt;/code&gt; folder self-explained themselves:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;controllers&lt;/code&gt;, &lt;code&gt;models&lt;/code&gt;, &lt;code&gt;views&lt;/code&gt; are folders for MVC structure.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;assets&lt;/code&gt; has static resources.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;helpers&lt;/code&gt; is special for RoR. Since &lt;code&gt;helper&lt;/code&gt; is targeted to for variables talking before controller and view, they are very similar to &lt;code&gt;model attributes&lt;/code&gt; in Spring MVC framework.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The basic structure of Hydra-Demo is similar to the a Node.js app, and &lt;code&gt;Gemfile&lt;/code&gt; is similar to &lt;code&gt;requirements.txt&lt;/code&gt; file in Python.&lt;/p&gt;
+&lt;h5 id="deployment"&gt;Deployment&lt;/h5&gt;
+&lt;p&gt;Unfortunately, although Hydra is can be deployed on development environment easily for a single developer, there's no hosting platform that fully host a production environment of it. Following problem needs to be considered:&lt;/p&gt;
+&lt;p&gt;First, the default database needs to be changed in &lt;code&gt;database.yml&lt;/code&gt;. Obviously not a lot of institutions will use SQLite3 (Default) in production environment.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Solution&lt;/em&gt;: I have tried to replace it by MySQL and PostgreSQL, and these two solution all work. I believe other RDBMS should also work well. Just need to change &lt;code&gt;Gemfile&lt;/code&gt;. Replace &lt;code&gt;gem 'sqlite3'&lt;/code&gt; to &lt;code&gt;gem 'pg'&lt;/code&gt; or &lt;code&gt;gem 'mysql2'&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;database.yml&lt;/code&gt; can be changed as following for development purpose:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;default: &amp;amp;default
+adapter: postgresql
+pool: 5
+development:
+  &amp;lt;&amp;lt;: *default
+  url: postgresql_url_or_environment_virable
+  database: database_name
+  username:
+  pasword:
+test: #...
+production: #...
+&lt;/pre&gt;
+
+
+&lt;p&gt;Second problem is the host of fedora commons. As a single developer, I cannot find a cloud-hosted fedora to make calls, which cause me the problem of hosting hydra demo on cloud.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Solution&lt;/em&gt;: Since fedora commons has pretty good deployment guideline, I will try to deploy one on Amazon AWS, then adjust &lt;code&gt;fedora.yml&lt;/code&gt; in hydra-demo when moving to cloud.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Update 08/10/15&lt;/em&gt;: When I tried to deploy Fedora 4 on my local machine using Jetty 8, I got unexpected error message, such as  &lt;code&gt;Problem processing jar entry org/fcrepo/kernel/modeshape/observer/GetNamespacedProperties.class&lt;/code&gt; &lt;code&gt;java.lang.ArrayIndexOutOfBoundsException: 16680&lt;/code&gt;. It happens to lots of fedora classes, such as &lt;code&gt;org/fcrepo/http/commons/api/rdf/HttpTripleUtil.class&lt;/code&gt;. I need to figure out this problem before deploying fedora to cloud platform. Tomcat 7 gave no error message, but still unable to deploy it.&lt;/p&gt;&lt;/div&gt;</description><category>Digial Library</category><category>Hydra</category><guid>https://pengyin-shan.com/posts/2015/Others/dive-into-hydra-and-my-thoughts/</guid><pubDate>Sun, 09 Aug 2015 04:00:00 GMT</pubDate></item><item><title>Search Engine Basics (Including Lucene)</title><link>https://pengyin-shan.com/posts/2015/Data%20Science/search-engine-basics-lucene/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;h3 id="reference-list"&gt;Reference List&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_overview.htm"&gt;Lucene Tutorial from TutorialPoint.com&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="search-engine-basics"&gt;Search Engine Basics&lt;/h3&gt;
+&lt;h4 id="search-application-operation-list"&gt;Search Application Operation List&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Acquire Raw Content&lt;/strong&gt;: Collect the target contents on which search are to be conducted.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Build the document&lt;/strong&gt;:  Build the document(s) from the raw contents which search application can understands and interpret easily.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Analyze the document&lt;/strong&gt;: The document is to be analyzed as which part of the text is a candidate to be indexed.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Indexing the document&lt;/strong&gt;: Index documents so that this document can be retrived based on certain keys instead of whole contents of the document.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;User Interface for Search&lt;/strong&gt;: To facilitate user to make a search, application must provide a user a mean or u0ser interface where a user can enter text and start the search process.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Build Query&lt;/strong&gt;: Once user made a request to search a text, application should prepare a Query object using that text which can be used to inquire index database to get the relevant details.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Search Query&lt;/strong&gt;: Using query object, index database is then checked to get the relevant details and the content documents.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Render Results&lt;/strong&gt;: Once result is received the application should decide how to show the results to the user using User Interface. How much information is to be shown at first look and so on.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="lucene-basics"&gt;Lucene Basics&lt;/h3&gt;
+&lt;h4 id="setup"&gt;Setup&lt;/h4&gt;
+&lt;p&gt;Lucene performs step 2 to step 7 in &lt;code&gt;Search Application Operation List&lt;/code&gt; section above.&lt;/p&gt;
+&lt;p&gt;You need &lt;code&gt;JDK&lt;/code&gt; for Lucene setup. You can view setup process &lt;a href="http://www.tutorialspoint.com/lucene/lucene_environment.htm"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h4 id="index-process"&gt;Index Process&lt;/h4&gt;
+&lt;p&gt;In Lucene, &lt;code&gt;IndexWriter&lt;/code&gt; is the most important and core component of the indexing process.&lt;/p&gt;
+&lt;p&gt;Process Chart for TutorialsPoint:&lt;/p&gt;
+&lt;p&gt;images/articles/2015/data/indexing_process.jpg &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;We add Document(s) containing Field(s) to IndexWriter which analyzes the Document(s) using the Analyzer and then creates/open/edit indexes as required and store/update them in a Directory. IndexWriter is used to &lt;em&gt;update or create&lt;/em&gt; indexes. It is not used to read indexes.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h5 id="list-of-indexing-classes"&gt;List of Indexing Classes&lt;/h5&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_indexwriter.htm"&gt;IndexWriter&lt;/a&gt;: This class acts as a core component which &lt;strong&gt;creates/updates indexes&lt;/strong&gt; during indexing process.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_directory.htm"&gt;Directory&lt;/a&gt;: This class represents the &lt;strong&gt;storage&lt;/strong&gt; location of the indexes.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_analyzer.htm"&gt;Analyzer&lt;/a&gt;: Analyzer class is responsible to &lt;strong&gt;analyze&lt;/strong&gt; a document and &lt;strong&gt;get the tokens/words from the text&lt;/strong&gt; which is to be indexed. Without analysis done, IndexWriter can not create index.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_document.htm"&gt;Document&lt;/a&gt;: Document represents a &lt;strong&gt;virtual document&lt;/strong&gt; with Fields where Field is object which can contain the physical document's contents, its meta data and so on. Analyzer can understand a Document only.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_field.htm"&gt;Field&lt;/a&gt;: Field is the &lt;strong&gt;lowest unit or the starting point&lt;/strong&gt; of the indexing process. It represents the &lt;code&gt;key-value&lt;/code&gt; pair relationship where a key is used to identify the value to be indexed. Say a field used to represent contents of a document will have key as "contents" and the value may contain the part or all of the text or numeric content of the document. Lucene can index only &lt;strong&gt;text or numeric&lt;/strong&gt; contents only.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h5 id="list-of-search-classes"&gt;List of Search Classes&lt;/h5&gt;
+&lt;p&gt;Searching process is again one of the core functionality provided by Lucene.&lt;/p&gt;
+&lt;p&gt;It's flow is similar to that of indexing process. Basic search of lucene can be made using following classes which can also be termed as foundation classes for all search related operations:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_indexsearcher.htm"&gt;IndexSearcher&lt;/a&gt;: This class act as a core component which &lt;strong&gt;reads/searches indexes&lt;/strong&gt; created after indexing process. It takes directory instance pointing to the location containing the indexes.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_term.htm"&gt;Term&lt;/a&gt;: This class is the &lt;strong&gt;lowest&lt;/strong&gt; unit of searching. It is similar to Field in indexing process.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_query.htm"&gt;Query&lt;/a&gt;: Query is an abstract class and contains various utility methods and is the parent of all types of queries that lucene uses during search process.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_termquery.htm"&gt;TermQuery&lt;/a&gt;: TermQuery is the &lt;strong&gt;most commonly used query object&lt;/strong&gt; and is the foundation of many complex queries that lucene can make use of.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_topdocs.htm"&gt;TopDocs&lt;/a&gt; : TopDocs points to the top N search results which matches the search criteria. It is simple container of pointers to point to documents which are output of search result.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h5 id="create-a-document"&gt;Create a Document&lt;/h5&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Create a method to &lt;strong&gt;get a lucene document&lt;/strong&gt; from a text file.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Create various types of fields which are &lt;code&gt;key-value&lt;/code&gt; pairs containing keys as &lt;strong&gt;names&lt;/strong&gt; and &lt;strong&gt;values&lt;/strong&gt; as contents to be indexed.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Set field to be analyzed or not. In our case, only contents is to be analyzed as it can contain data such as &lt;code&gt;a&lt;/code&gt;, &lt;code&gt;am&lt;/code&gt;, &lt;code&gt;are&lt;/code&gt;, &lt;code&gt;an&lt;/code&gt; etc. which are not required in search operations.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Example Code from TutorialsPoint:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;Document&lt;/span&gt; &lt;span class="nf"&gt;getDocument&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;Document&lt;/span&gt; &lt;span class="n"&gt;document&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Document&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="c1"&gt;//index file contents&lt;/span&gt;
+    &lt;span class="n"&gt;Field&lt;/span&gt; &lt;span class="n"&gt;contentField&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Field&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;LuceneConstants&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;CONTENTS&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;FileReader&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+    &lt;span class="c1"&gt;//index file name&lt;/span&gt;
+    &lt;span class="n"&gt;Field&lt;/span&gt; &lt;span class="n"&gt;fileNameField&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Field&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;LuceneConstants&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;FILE_NAME&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getName&lt;/span&gt;&lt;span class="o"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;Field&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;Store&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;YES&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Field&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;Index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;NOT_ANALYZED&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="c1"&gt;//index file path&lt;/span&gt;
+    &lt;span class="n"&gt;Field&lt;/span&gt; &lt;span class="n"&gt;filePathField&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Field&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;LuceneConstants&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;FILE_PATH&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getCanonicalPath&lt;/span&gt;&lt;span class="o"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;Field&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;Store&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;YES&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="n"&gt;Field&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;Index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;NOT_ANALYZED&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="n"&gt;document&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;add&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;contentField&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="n"&gt;document&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;add&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fileNameField&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="n"&gt;document&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;add&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filePathField&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;document&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h5 id="create-a-indexwriter"&gt;Create a IndexWriter&lt;/h5&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;IndexWriter class acts as a core component which &lt;strong&gt;creates/updates&lt;/strong&gt; indexes during indexing process.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Create object of &lt;code&gt;IndexWriter&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Create a &lt;code&gt;lucene directory&lt;/code&gt; which should point to location where indexes are to be stored.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Initialize the IndexWriter object created with the index directory, a standard analyzer having version information and other required/optional parameters.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Example Code from TutorialsPoint:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;IndexWriter&lt;/span&gt; &lt;span class="n"&gt;writer&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="nf"&gt;Indexer&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;indexDirectoryPath&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+   &lt;span class="c1"&gt;//this directory will contain the indexes&lt;/span&gt;
+   &lt;span class="n"&gt;Directory&lt;/span&gt; &lt;span class="n"&gt;indexDirectory&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;FSDirectory&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;open&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;File&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;indexDirectoryPath&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+   &lt;span class="c1"&gt;//create the indexer&lt;/span&gt;
+   &lt;span class="n"&gt;writer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;IndexWriter&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;indexDirectory&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;StandardAnalyzer&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Version&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;LUCENE_36&lt;/span&gt;&lt;span class="o"&gt;),&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;IndexWriter&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;MaxFieldLength&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;UNLIMITED&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h5 id="start-indexing-process"&gt;Start Indexing Process&lt;/h5&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;indexFile&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+   &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"Indexing "&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getCanonicalPath&lt;/span&gt;&lt;span class="o"&gt;());&lt;/span&gt;
+   &lt;span class="n"&gt;Document&lt;/span&gt; &lt;span class="n"&gt;document&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getDocument&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+   &lt;span class="n"&gt;writer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addDocument&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;document&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="basic-indexing-operations"&gt;Basic Indexing Operations&lt;/h4&gt;
+&lt;h5 id="add-document-operation"&gt;Add Document Operation&lt;/h5&gt;
+&lt;p&gt;Add document is one of the core operation as part of indexing process.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Add a document to an index&lt;/strong&gt;: Refer to &lt;code&gt;Create a Document&lt;/code&gt; section above for process. After last step, add the newly created fields to the document object and return it to the caller method.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Create a IndexWriter&lt;/strong&gt;: Refer to &lt;code&gt;Create a IndexWriter&lt;/code&gt; section above for process.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Add document and start Indexing process&lt;/strong&gt;: Two ways.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Way 1: &lt;strong&gt;addDocument(Document)&lt;/strong&gt; - Adds the document using the default analyzer (specified when index writer is created.)&lt;/p&gt;
+&lt;p&gt;Way 2: &lt;strong&gt;addDocument(Document,Analyzer)&lt;/strong&gt; - Adds the document using the provided analyzer.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Refer "Start Indexing Process" section above for code reference.&lt;/p&gt;
+&lt;h5 id="update-document-operation"&gt;Update Document Operation&lt;/h5&gt;
+&lt;p&gt;Update document is another important operation as part of indexing process.&lt;/p&gt;
+&lt;p&gt;This operation is used when already indexed contents are updated and indexes become invalid. This operation is also known as &lt;code&gt;re-indexing&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;We update Document(s) containing Field(s) to &lt;code&gt;IndexWriter&lt;/code&gt; where &lt;code&gt;IndexWriter&lt;/code&gt; is used to update indexes.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Update a document to an index&lt;/strong&gt;: Create a method to update a lucene document from an updated text file.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;updateDocument&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+   &lt;span class="n"&gt;Document&lt;/span&gt; &lt;span class="n"&gt;document&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Document&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;/blockquote&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;   //update indexes for file contents
+   writer.updateDocument(new Term
+      (LuceneConstants.CONTENTS,
+      new FileReader(file)),document);
+   writer.close();
+}
+&lt;/pre&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Create a IndexWriter&lt;/strong&gt;: Same as above.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Update document and start reindexing process&lt;/strong&gt;: Two Ways.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Way1: &lt;strong&gt;updateDocument(Term, Document)&lt;/strong&gt;: &lt;em&gt;Delete&lt;/em&gt; the document containing the term and &lt;em&gt;add&lt;/em&gt; the document using the default analyzer (specified when index writer is created.)&lt;/p&gt;
+&lt;p&gt;Way2: &lt;strong&gt;updateDocument(Term, Document,Analyzer)&lt;/strong&gt;: &lt;em&gt;Delete&lt;/em&gt; the document containing the term and &lt;em&gt;add&lt;/em&gt; the document using the provided analyzer.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;indexFile&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+   &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"Updating index for "&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getCanonicalPath&lt;/span&gt;&lt;span class="o"&gt;());&lt;/span&gt;
+   &lt;span class="n"&gt;updateDocument&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;/blockquote&gt;
+&lt;h5 id="delete-document-operation"&gt;Delete Document Operation&lt;/h5&gt;
+&lt;p&gt;Delete document is another important operation as part of indexing process.&lt;/p&gt;
+&lt;p&gt;This operation is used when already indexed contents are updated and indexes become invalid or indexes become very large in size then &lt;em&gt;in order to reduce the size and update the index&lt;/em&gt;, delete operations are carried out.&lt;/p&gt;
+&lt;p&gt;We delete Document(s) containing Field(s) to &lt;code&gt;IndexWriter&lt;/code&gt; where &lt;code&gt;IndexWriter&lt;/code&gt; is used to update indexes.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Delete a document from an index&lt;/strong&gt; : Create a method to delete a lucene document of an obsolete text file.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;deleteDocument&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+   &lt;span class="c1"&gt;//delete indexes for a file&lt;/span&gt;
+   &lt;span class="n"&gt;writer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;deleteDocument&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Term&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;LuceneConstants&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;FILE_NAME&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getName&lt;/span&gt;&lt;span class="o"&gt;()));&lt;/span&gt;
+   &lt;span class="n"&gt;writer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;commit&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+   &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"index contains deleted files: "&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;writer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;hasDeletions&lt;/span&gt;&lt;span class="o"&gt;());&lt;/span&gt;
+   &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"index contains documents: "&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;writer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;maxDoc&lt;/span&gt;&lt;span class="o"&gt;());&lt;/span&gt;
+   &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"index contains deleted documents: "&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;writer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;numDoc&lt;/span&gt;&lt;span class="o"&gt;());&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Create a IndexWriter&lt;/strong&gt;: Same as above&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Delete document and start reindexing process&lt;/strong&gt;: Five ways.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Way1: &lt;strong&gt;deleteDocuments(Term)&lt;/strong&gt;: Delete all the documents containing the term.&lt;/p&gt;
+&lt;p&gt;Way2: &lt;strong&gt;deleteDocuments(Term[])&lt;/strong&gt;: Delete all the documents containing any of the terms in the array.&lt;/p&gt;
+&lt;p&gt;Way3: &lt;strong&gt;deleteDocuments(Query)&lt;/strong&gt;: Delete all the documents matching the query.&lt;/p&gt;
+&lt;p&gt;Way4: &lt;strong&gt;deleteDocuments(Query[])&lt;/strong&gt;: Delete all the documents matching the query in the array.&lt;/p&gt;
+&lt;p&gt;Way5: &lt;strong&gt;deleteAll&lt;/strong&gt;: Delete all the documents.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;indexFile&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+   &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"Deleting index for "&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getCanonicalPath&lt;/span&gt;&lt;span class="o"&gt;());&lt;/span&gt;
+   &lt;span class="n"&gt;deleteDocument&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h5 id="field-options"&gt;Field Options&lt;/h5&gt;
+&lt;p&gt;Field is the most important and the foundation unit of indexing process.&lt;/p&gt;
+&lt;p&gt;It is the actual object containing the contents to be indexed. When we add a field, lucene provides numerous controls on the field using Field Options which states how much a field is to be searchable.&lt;/p&gt;
+&lt;p&gt;We add Document(s) containing Field(s) to &lt;code&gt;IndexWriter&lt;/code&gt; where &lt;code&gt;IndexWriter&lt;/code&gt; is used to update or create indexes.&lt;/p&gt;
+&lt;h6 id="list-of-field-options"&gt;List of Field Options&lt;/h6&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Index.ANALYZED&lt;/code&gt;: First analyze then do indexing. Used for &lt;em&gt;normal text indexing&lt;/em&gt;. Analyzer will break the field's value into stream of tokens and each token is searcable sepearately.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Index.NOT_ANALYZED&lt;/code&gt;: Don't analyze but do indexing. Used for &lt;em&gt;complete text indexing&lt;/em&gt; *for example person's names, URL etc.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Index.ANALYZED_NO_NORMS&lt;/code&gt;: Varient of &lt;code&gt;Index.ANALYZED&lt;/code&gt;. Analyzer will &lt;em&gt;break the field's value into stream of tokens&lt;/em&gt; and each token is searcable sepearately but &lt;code&gt;NORMs&lt;/code&gt; are not stored in the indexes. &lt;code&gt;NORMS&lt;/code&gt; are used to boost searching but are sometime memory consuming.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Index.Index.NOT_ANALYZED_NO_NORMS&lt;/code&gt;:  Varient of &lt;code&gt;Index.NOT_ANALYZED&lt;/code&gt;. Indexing is done but NORMS are not stored in the indexes.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Index.NO&lt;/code&gt;: Field value is not searchable.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6 id="use-of-field-options"&gt;Use of Field Options&lt;/h6&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Same steps as &lt;code&gt;Create a Document&lt;/code&gt; section&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Add the newly created fields to the document object and return it to the caller method.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id="search-operations"&gt;Search Operations&lt;/h4&gt;
+&lt;p&gt;Searching process is one of the core functionality provided by Lucene.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;IndexSearcher&lt;/code&gt; is the most important and core component of the searching process.&lt;/p&gt;
+&lt;p&gt;Process Chart for TutorialsPoint:&lt;/p&gt;
+&lt;p&gt;images/articles/2015/data/searching_process.jpg &lt;/p&gt;
+&lt;p&gt;We first create &lt;code&gt;Directory&lt;/code&gt;(s) containing &lt;code&gt;index&lt;/code&gt;es and then pass it to &lt;code&gt;IndexSearcher&lt;/code&gt; which opens the &lt;code&gt;Directory&lt;/code&gt; using &lt;code&gt;IndexReader&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Then we create a &lt;code&gt;Query&lt;/code&gt; with a &lt;code&gt;Term&lt;/code&gt; and make a search using &lt;code&gt;IndexSearcher&lt;/code&gt; by passing the &lt;code&gt;Query&lt;/code&gt; to the searcher.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;IndexSearcher&lt;/code&gt; returns a &lt;code&gt;TopDocs&lt;/code&gt; object which contains the search details along with document &lt;code&gt;ID&lt;/code&gt;(s) of the Document which is the result of the search operation.&lt;/p&gt;
+&lt;h5 id="create-a-queryparser"&gt;Create a QueryParser&lt;/h5&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;QueryParser class parses the user entered input into &lt;strong&gt;lucene understandable format query&lt;/strong&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Create object of &lt;code&gt;QueryParser&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Initialize the QueryParser object created with a standard analyzer having version information and index name on which this query is to run.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;QueryParser&lt;/span&gt; &lt;span class="n"&gt;queryParser&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="nf"&gt;Searcher&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;indexDirectoryPath&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+   &lt;span class="n"&gt;queryParser&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;QueryParser&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Version&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;LUCENE_36&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+      &lt;span class="n"&gt;LuceneConstants&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;CONTENTS&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+         &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;StandardAnalyzer&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Version&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;LUCENE_36&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;/blockquote&gt;
+&lt;h5 id="create-a-indexsearch"&gt;Create a IndexSearch&lt;/h5&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;IndexSearcher&lt;/code&gt; class acts as a core component which searcher indexes created during indexing process.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Create object of &lt;code&gt;IndexSearcher&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Create a &lt;strong&gt;lucene directory&lt;/strong&gt; which should point to location where indexes are to be stored.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Initialize the &lt;code&gt;IndexSearcher&lt;/code&gt; object created with the index directory&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;IndexSearcher&lt;/span&gt; &lt;span class="n"&gt;indexSearcher&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="nf"&gt;Searcher&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;indexDirectoryPath&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+   &lt;span class="n"&gt;Directory&lt;/span&gt; &lt;span class="n"&gt;indexDirectory&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;
+      &lt;span class="n"&gt;FSDirectory&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;open&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;File&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;indexDirectoryPath&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+   &lt;span class="n"&gt;indexSearcher&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;IndexSearcher&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;indexDirectory&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;/blockquote&gt;
+&lt;h5 id="make-search"&gt;Make search&lt;/h5&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;To start search, create a &lt;code&gt;Query&lt;/code&gt; object by parsing search expression through QueryParser.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Make search by calling `IndexSearcher.search()`` method.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;Query&lt;/span&gt; &lt;span class="n"&gt;query&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;TopDocs&lt;/span&gt; &lt;span class="nf"&gt;search&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;searchQuery&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="n"&gt;ParseException&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+   &lt;span class="n"&gt;query&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;queryParser&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;parse&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;searchQuery&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+   &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;indexSearcher&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;search&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;LuceneConstants&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;MAX_SEARCH&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;/blockquote&gt;
+&lt;h5 id="get-the-document"&gt;Get the document&lt;/h5&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;Document&lt;/span&gt; &lt;span class="nf"&gt;getDocument&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ScoreDoc&lt;/span&gt; &lt;span class="n"&gt;scoreDoc&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+   &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;CorruptIndexException&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+   &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;indexSearcher&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;doc&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;scoreDoc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;doc&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h5 id="close-indexsearcher"&gt;Close IndexSearcher&lt;/h5&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;close&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+   &lt;span class="n"&gt;indexSearcher&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;close&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4 id="query-programming"&gt;Query Programming&lt;/h4&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_termquery1.htm"&gt;TermQuery&lt;/a&gt;: TermQuery is the most commonly used query object and is the foundation of many complex queries that lucene can make use of. TermQuery is normally used to retrieve documents based on the key which is case sensitive.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_termrangequery.htm"&gt;TermRangeQuery&lt;/a&gt;: TermRangeQuery is the used when a range of textual terms are to be searched.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_prefixquery.htm"&gt;PrefixQuery&lt;/a&gt;: PrefixQuery is used to match documents whose &lt;em&gt;index starts with a specified string&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_booleanquery.htm"&gt;BooleanQuery&lt;/a&gt;: BooleanQuery is used to search documents which are result of multiple queries using &lt;code&gt;AND&lt;/code&gt;, &lt;code&gt;OR&lt;/code&gt; or &lt;code&gt;NOT&lt;/code&gt; operators.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_phrasequery.htm"&gt;PhraseQuery&lt;/a&gt;: Phrase query is used to search documents which contain a particular sequence of terms.&lt;/p&gt;
+&lt;p&gt;WhildCardQuery: WildcardQuery is used to search documents using wildcards like &lt;code&gt;*&lt;/code&gt; for any character sequence,&lt;code&gt;?&lt;/code&gt; matching a single character.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_fuzzyquery.htm"&gt;FuzzyQuery&lt;/a&gt;: FuzzyQuery is used to search documents using &lt;strong&gt;fuzzy implementation&lt;/strong&gt; that is an approximate search based on edit distance algorithm.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_matchalldocsquery.htm"&gt;MatchAllDocsQuery&lt;/a&gt;: MatchAllDocsQuery as name suggests &lt;em&gt;matches all the documents&lt;/em&gt;.&lt;/p&gt;
+&lt;h4 id="analysis-objects"&gt;Analysis Objects&lt;/h4&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_token.htm"&gt;Token&lt;/a&gt;: Token represents text or word in a document with relevant details like its &lt;strong&gt;metadata&lt;/strong&gt; (position, start offset, end offset, token type and its position increment).&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_tokenstream.htm"&gt;TokenStream&lt;/a&gt;: TokenStream is an output of analysis process and it comprises of series of tokens. It is an abstract class.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_analyzer_class.htm"&gt;Analyzer&lt;/a&gt;: Analyzer class is responsible to analyze a document and get the tokens/words from the text which is to be indexed. Without analysis done, IndexWriter can not create index.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_whitespaceanalyzer.htm"&gt;WhitespaceAnalyzer&lt;/a&gt;: This analyzer spilts the text in a document based on &lt;strong&gt;whitespace&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_simpleanalyzer.htm"&gt;SimpleAnalyzer&lt;/a&gt;: This analyzer spilts the text in a document based on &lt;strong&gt;non-letter characters&lt;/strong&gt; and then lowercase them.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_stopanalyzer.htm"&gt;StopAnalyzer&lt;/a&gt;: This analyzer works similar to SimpleAnalyzer and remove the common words like &lt;code&gt;a&lt;/code&gt;,&lt;code&gt;an&lt;/code&gt;,&lt;code&gt;the&lt;/code&gt; etc.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.tutorialspoint.com/lucene/lucene_standardanalyzer.htm"&gt;StandardAnalyzer&lt;/a&gt;: This is the most sofisticated analyzer and is capable of handling &lt;code&gt;names&lt;/code&gt;, &lt;code&gt;email address&lt;/code&gt; etc. It lowercases each token and removes common words and punctuation if any.&lt;/p&gt;
+&lt;h4 id="sorting"&gt;Sorting&lt;/h4&gt;
+&lt;h5 id="sorting-by-relevance"&gt;Sorting By Relevance&lt;/h5&gt;
+&lt;p&gt;This is &lt;strong&gt;default&lt;/strong&gt; sorting mode used by lucene.&lt;/p&gt;
+&lt;p&gt;Lucene provides results by the most relevant hit at the top.&lt;/p&gt;
+&lt;p&gt;Example Code from TutorialsPoint:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;sortUsingRelevance&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;searchQuery&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+ &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ParseException&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+   &lt;span class="n"&gt;searcher&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Searcher&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;indexDir&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+   &lt;span class="kt"&gt;long&lt;/span&gt; &lt;span class="n"&gt;startTime&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;currentTimeMillis&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+   &lt;span class="c1"&gt;//create a term to search file name&lt;/span&gt;
+   &lt;span class="n"&gt;Term&lt;/span&gt; &lt;span class="n"&gt;term&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Term&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;LuceneConstants&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;FILE_NAME&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;searchQuery&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+   &lt;span class="c1"&gt;//create the term query object&lt;/span&gt;
+   &lt;span class="n"&gt;Query&lt;/span&gt; &lt;span class="n"&gt;query&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;FuzzyQuery&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;term&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+   &lt;span class="n"&gt;searcher&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setDefaultFieldSortScoring&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+   &lt;span class="c1"&gt;//do the search&lt;/span&gt;
+   &lt;span class="n"&gt;TopDocs&lt;/span&gt; &lt;span class="n"&gt;hits&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;searcher&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;search&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="n"&gt;Sort&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;RELEVANCE&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+   &lt;span class="kt"&gt;long&lt;/span&gt; &lt;span class="n"&gt;endTime&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;currentTimeMillis&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+   &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hits&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;totalHits&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+      &lt;span class="s"&gt;" documents found. Time :"&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;endTime&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;startTime&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;"ms"&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+   &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ScoreDoc&lt;/span&gt; &lt;span class="n"&gt;scoreDoc&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;hits&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;scoreDocs&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+      &lt;span class="n"&gt;Document&lt;/span&gt; &lt;span class="n"&gt;doc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;searcher&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getDocument&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;scoreDoc&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+      &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;print&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"Score: "&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;scoreDoc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;score&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;" "&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+      &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"File: "&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;doc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;LuceneConstants&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;FILE_PATH&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+   &lt;span class="o"&gt;}&lt;/span&gt;
+   &lt;span class="n"&gt;searcher&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;close&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h5 id="sorting-by-indexorder"&gt;Sorting By IndexOrder&lt;/h5&gt;
+&lt;p&gt;This is sorting mode used by lucene in which first document indexed is shown first in the search results.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;sortUsingIndex&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;searchQuery&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+ &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ParseException&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+   &lt;span class="n"&gt;searcher&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Searcher&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;indexDir&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+   &lt;span class="kt"&gt;long&lt;/span&gt; &lt;span class="n"&gt;startTime&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;currentTimeMillis&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+   &lt;span class="c1"&gt;//create a term to search file name&lt;/span&gt;
+   &lt;span class="n"&gt;Term&lt;/span&gt; &lt;span class="n"&gt;term&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Term&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;LuceneConstants&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;FILE_NAME&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;searchQuery&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+   &lt;span class="c1"&gt;//create the term query object&lt;/span&gt;
+   &lt;span class="n"&gt;Query&lt;/span&gt; &lt;span class="n"&gt;query&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;FuzzyQuery&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;term&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+   &lt;span class="n"&gt;searcher&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setDefaultFieldSortScoring&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+   &lt;span class="c1"&gt;//do the search&lt;/span&gt;
+   &lt;span class="n"&gt;TopDocs&lt;/span&gt; &lt;span class="n"&gt;hits&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;searcher&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;search&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="n"&gt;Sort&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;INDEXORDER&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+   &lt;span class="kt"&gt;long&lt;/span&gt; &lt;span class="n"&gt;endTime&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;currentTimeMillis&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+   &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hits&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;totalHits&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+      &lt;span class="s"&gt;" documents found. Time :"&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;endTime&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;startTime&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;"ms"&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+   &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ScoreDoc&lt;/span&gt; &lt;span class="n"&gt;scoreDoc&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;hits&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;scoreDocs&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+      &lt;span class="n"&gt;Document&lt;/span&gt; &lt;span class="n"&gt;doc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;searcher&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getDocument&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;scoreDoc&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+      &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;print&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"Score: "&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;scoreDoc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;score&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;" "&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+      &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"File: "&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;doc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;LuceneConstants&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;FILE_PATH&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+   &lt;span class="o"&gt;}&lt;/span&gt;
+   &lt;span class="n"&gt;searcher&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;close&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><category>Data Science</category><category>Hydra</category><category>Search Engine</category><category>SEO</category><guid>https://pengyin-shan.com/posts/2015/Data%20Science/search-engine-basics-lucene/</guid><pubDate>Tue, 21 Jul 2015 04:00:00 GMT</pubDate></item></channel></rss>

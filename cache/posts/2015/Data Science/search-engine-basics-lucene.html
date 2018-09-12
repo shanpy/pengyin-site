@@ -1,0 +1,440 @@
+<h2 id="reference-list">Reference List</h2>
+<ul>
+<li><a href="http://www.tutorialspoint.com/lucene/lucene_overview.htm">Lucene Tutorial from TutorialPoint.com</a></li>
+</ul>
+<h2 id="search-engine-basics">Search Engine Basics</h2>
+<h3 id="search-application-operation-list">Search Application Operation List</h3>
+<ol>
+<li>
+<p><strong>Acquire Raw Content</strong>: Collect the target contents on which search are to be conducted.</p>
+</li>
+<li>
+<p><strong>Build the document</strong>:  Build the document(s) from the raw contents which search application can understands and interpret easily.</p>
+</li>
+<li>
+<p><strong>Analyze the document</strong>: The document is to be analyzed as which part of the text is a candidate to be indexed.</p>
+</li>
+<li>
+<p><strong>Indexing the document</strong>: Index documents so that this document can be retrived based on certain keys instead of whole contents of the document.</p>
+</li>
+<li>
+<p><strong>User Interface for Search</strong>: To facilitate user to make a search, application must provide a user a mean or u0ser interface where a user can enter text and start the search process.</p>
+</li>
+<li>
+<p><strong>Build Query</strong>: Once user made a request to search a text, application should prepare a Query object using that text which can be used to inquire index database to get the relevant details.</p>
+</li>
+<li>
+<p><strong>Search Query</strong>: Using query object, index database is then checked to get the relevant details and the content documents.</p>
+</li>
+<li>
+<p><strong>Render Results</strong>: Once result is received the application should decide how to show the results to the user using User Interface. How much information is to be shown at first look and so on.</p>
+</li>
+</ol>
+<h2 id="lucene-basics">Lucene Basics</h2>
+<h3 id="setup">Setup</h3>
+<p>Lucene performs step 2 to step 7 in <code>Search Application Operation List</code> section above.</p>
+<p>You need <code>JDK</code> for Lucene setup. You can view setup process <a href="http://www.tutorialspoint.com/lucene/lucene_environment.htm">here</a>.</p>
+<h3 id="index-process">Index Process</h3>
+<p>In Lucene, <code>IndexWriter</code> is the most important and core component of the indexing process.</p>
+<p>Process Chart for TutorialsPoint:</p>
+<p>images/articles/2015/data/indexing_process.jpg </p>
+<blockquote>
+<p>We add Document(s) containing Field(s) to IndexWriter which analyzes the Document(s) using the Analyzer and then creates/open/edit indexes as required and store/update them in a Directory. IndexWriter is used to <em>update or create</em> indexes. It is not used to read indexes.</p>
+</blockquote>
+<h4 id="list-of-indexing-classes">List of Indexing Classes</h4>
+<ol>
+<li>
+<p><a href="http://www.tutorialspoint.com/lucene/lucene_indexwriter.htm">IndexWriter</a>: This class acts as a core component which <strong>creates/updates indexes</strong> during indexing process.</p>
+</li>
+<li>
+<p><a href="http://www.tutorialspoint.com/lucene/lucene_directory.htm">Directory</a>: This class represents the <strong>storage</strong> location of the indexes.</p>
+</li>
+<li>
+<p><a href="http://www.tutorialspoint.com/lucene/lucene_analyzer.htm">Analyzer</a>: Analyzer class is responsible to <strong>analyze</strong> a document and <strong>get the tokens/words from the text</strong> which is to be indexed. Without analysis done, IndexWriter can not create index.</p>
+</li>
+<li>
+<p><a href="http://www.tutorialspoint.com/lucene/lucene_document.htm">Document</a>: Document represents a <strong>virtual document</strong> with Fields where Field is object which can contain the physical document's contents, its meta data and so on. Analyzer can understand a Document only.</p>
+</li>
+<li>
+<p><a href="http://www.tutorialspoint.com/lucene/lucene_field.htm">Field</a>: Field is the <strong>lowest unit or the starting point</strong> of the indexing process. It represents the <code>key-value</code> pair relationship where a key is used to identify the value to be indexed. Say a field used to represent contents of a document will have key as "contents" and the value may contain the part or all of the text or numeric content of the document. Lucene can index only <strong>text or numeric</strong> contents only.</p>
+</li>
+</ol>
+<h4 id="list-of-search-classes">List of Search Classes</h4>
+<p>Searching process is again one of the core functionality provided by Lucene.</p>
+<p>It's flow is similar to that of indexing process. Basic search of lucene can be made using following classes which can also be termed as foundation classes for all search related operations:</p>
+<ol>
+<li>
+<p><a href="http://www.tutorialspoint.com/lucene/lucene_indexsearcher.htm">IndexSearcher</a>: This class act as a core component which <strong>reads/searches indexes</strong> created after indexing process. It takes directory instance pointing to the location containing the indexes.</p>
+</li>
+<li>
+<p><a href="http://www.tutorialspoint.com/lucene/lucene_term.htm">Term</a>: This class is the <strong>lowest</strong> unit of searching. It is similar to Field in indexing process.</p>
+</li>
+<li>
+<p><a href="http://www.tutorialspoint.com/lucene/lucene_query.htm">Query</a>: Query is an abstract class and contains various utility methods and is the parent of all types of queries that lucene uses during search process.</p>
+</li>
+<li>
+<p><a href="http://www.tutorialspoint.com/lucene/lucene_termquery.htm">TermQuery</a>: TermQuery is the <strong>most commonly used query object</strong> and is the foundation of many complex queries that lucene can make use of.</p>
+</li>
+<li>
+<p><a href="http://www.tutorialspoint.com/lucene/lucene_topdocs.htm">TopDocs</a> : TopDocs points to the top N search results which matches the search criteria. It is simple container of pointers to point to documents which are output of search result.</p>
+</li>
+</ol>
+<h4 id="create-a-document">Create a Document</h4>
+<ol>
+<li>
+<p>Create a method to <strong>get a lucene document</strong> from a text file.</p>
+</li>
+<li>
+<p>Create various types of fields which are <code>key-value</code> pairs containing keys as <strong>names</strong> and <strong>values</strong> as contents to be indexed.</p>
+</li>
+<li>
+<p>Set field to be analyzed or not. In our case, only contents is to be analyzed as it can contain data such as <code>a</code>, <code>am</code>, <code>are</code>, <code>an</code> etc. which are not required in search operations.</p>
+</li>
+</ol>
+<p>Example Code from TutorialsPoint:</p>
+<pre class="code literal-block"><span></span><span class="kd">private</span> <span class="n">Document</span> <span class="nf">getDocument</span><span class="o">(</span><span class="n">File</span> <span class="n">file</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">{</span>
+    <span class="n">Document</span> <span class="n">document</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Document</span><span class="o">();</span>
+    <span class="c1">//index file contents</span>
+    <span class="n">Field</span> <span class="n">contentField</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Field</span><span class="o">(</span><span class="n">LuceneConstants</span><span class="o">.</span><span class="na">CONTENTS</span><span class="o">,</span> <span class="k">new</span> <span class="n">FileReader</span><span class="o">(</span><span class="n">file</span><span class="o">));</span>
+    <span class="c1">//index file name</span>
+    <span class="n">Field</span> <span class="n">fileNameField</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Field</span><span class="o">(</span><span class="n">LuceneConstants</span><span class="o">.</span><span class="na">FILE_NAME</span><span class="o">,</span> <span class="n">file</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">Field</span><span class="o">.</span><span class="na">Store</span><span class="o">.</span><span class="na">YES</span><span class="o">,</span> <span class="n">Field</span><span class="o">.</span><span class="na">Index</span><span class="o">.</span><span class="na">NOT_ANALYZED</span><span class="o">);</span>
+    <span class="c1">//index file path</span>
+    <span class="n">Field</span> <span class="n">filePathField</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Field</span><span class="o">(</span><span class="n">LuceneConstants</span><span class="o">.</span><span class="na">FILE_PATH</span><span class="o">,</span> <span class="n">file</span><span class="o">.</span><span class="na">getCanonicalPath</span><span class="o">(),</span> <span class="n">Field</span><span class="o">.</span><span class="na">Store</span><span class="o">.</span><span class="na">YES</span><span class="o">,</span><span class="n">Field</span><span class="o">.</span><span class="na">Index</span><span class="o">.</span><span class="na">NOT_ANALYZED</span><span class="o">);</span>
+    <span class="n">document</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">contentField</span><span class="o">);</span>
+    <span class="n">document</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">fileNameField</span><span class="o">);</span>
+    <span class="n">document</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">filePathField</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">document</span><span class="o">;</span>
+<span class="o">}</span>
+</pre>
+
+
+<h4 id="create-a-indexwriter">Create a IndexWriter</h4>
+<ol>
+<li>
+<p>IndexWriter class acts as a core component which <strong>creates/updates</strong> indexes during indexing process.</p>
+</li>
+<li>
+<p>Create object of <code>IndexWriter</code>.</p>
+</li>
+<li>
+<p>Create a <code>lucene directory</code> which should point to location where indexes are to be stored.</p>
+</li>
+<li>
+<p>Initialize the IndexWriter object created with the index directory, a standard analyzer having version information and other required/optional parameters.</p>
+</li>
+</ol>
+<p>Example Code from TutorialsPoint:</p>
+<pre class="code literal-block"><span></span><span class="kd">private</span> <span class="n">IndexWriter</span> <span class="n">writer</span><span class="o">;</span>
+<span class="kd">public</span> <span class="nf">Indexer</span><span class="o">(</span><span class="n">String</span> <span class="n">indexDirectoryPath</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">{</span>
+   <span class="c1">//this directory will contain the indexes</span>
+   <span class="n">Directory</span> <span class="n">indexDirectory</span> <span class="o">=</span> <span class="n">FSDirectory</span><span class="o">.</span><span class="na">open</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">indexDirectoryPath</span><span class="o">));</span>
+   <span class="c1">//create the indexer</span>
+   <span class="n">writer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IndexWriter</span><span class="o">(</span><span class="n">indexDirectory</span><span class="o">,</span> <span class="k">new</span> <span class="n">StandardAnalyzer</span><span class="o">(</span><span class="n">Version</span><span class="o">.</span><span class="na">LUCENE_36</span><span class="o">),</span><span class="kc">true</span><span class="o">,</span> <span class="n">IndexWriter</span><span class="o">.</span><span class="na">MaxFieldLength</span><span class="o">.</span><span class="na">UNLIMITED</span><span class="o">);</span>
+<span class="o">}</span>
+</pre>
+
+
+<h4 id="start-indexing-process">Start Indexing Process</h4>
+<pre class="code literal-block"><span></span><span class="kd">private</span> <span class="kt">void</span> <span class="nf">indexFile</span><span class="o">(</span><span class="n">File</span> <span class="n">file</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">{</span>
+   <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Indexing &quot;</span><span class="o">+</span><span class="n">file</span><span class="o">.</span><span class="na">getCanonicalPath</span><span class="o">());</span>
+   <span class="n">Document</span> <span class="n">document</span> <span class="o">=</span> <span class="n">getDocument</span><span class="o">(</span><span class="n">file</span><span class="o">);</span>
+   <span class="n">writer</span><span class="o">.</span><span class="na">addDocument</span><span class="o">(</span><span class="n">document</span><span class="o">);</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3 id="basic-indexing-operations">Basic Indexing Operations</h3>
+<h4 id="add-document-operation">Add Document Operation</h4>
+<p>Add document is one of the core operation as part of indexing process.</p>
+<ol>
+<li>
+<p><strong>Add a document to an index</strong>: Refer to <code>Create a Document</code> section above for process. After last step, add the newly created fields to the document object and return it to the caller method.</p>
+</li>
+<li>
+<p><strong>Create a IndexWriter</strong>: Refer to <code>Create a IndexWriter</code> section above for process.</p>
+</li>
+<li>
+<p><strong>Add document and start Indexing process</strong>: Two ways.</p>
+</li>
+</ol>
+<blockquote>
+<p>Way 1: <strong>addDocument(Document)</strong> - Adds the document using the default analyzer (specified when index writer is created.)</p>
+<p>Way 2: <strong>addDocument(Document,Analyzer)</strong> - Adds the document using the provided analyzer.</p>
+</blockquote>
+<p>Refer "Start Indexing Process" section above for code reference.</p>
+<h4 id="update-document-operation">Update Document Operation</h4>
+<p>Update document is another important operation as part of indexing process.</p>
+<p>This operation is used when already indexed contents are updated and indexes become invalid. This operation is also known as <code>re-indexing</code>.</p>
+<p>We update Document(s) containing Field(s) to <code>IndexWriter</code> where <code>IndexWriter</code> is used to update indexes.</p>
+<ol>
+<li><strong>Update a document to an index</strong>: Create a method to update a lucene document from an updated text file.</li>
+</ol>
+<blockquote>
+<pre class="code literal-block"><span></span><span class="kd">private</span> <span class="kt">void</span> <span class="nf">updateDocument</span><span class="o">(</span><span class="n">File</span> <span class="n">file</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">{</span>
+   <span class="n">Document</span> <span class="n">document</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Document</span><span class="o">();</span>
+</pre>
+
+
+</blockquote>
+<pre class="code literal-block"><span></span>   //update indexes for file contents
+   writer.updateDocument(new Term
+      (LuceneConstants.CONTENTS,
+      new FileReader(file)),document);
+   writer.close();
+}
+</pre>
+
+
+<ol>
+<li>
+<p><strong>Create a IndexWriter</strong>: Same as above.</p>
+</li>
+<li>
+<p><strong>Update document and start reindexing process</strong>: Two Ways.</p>
+</li>
+</ol>
+<blockquote>
+<p>Way1: <strong>updateDocument(Term, Document)</strong>: <em>Delete</em> the document containing the term and <em>add</em> the document using the default analyzer (specified when index writer is created.)</p>
+<p>Way2: <strong>updateDocument(Term, Document,Analyzer)</strong>: <em>Delete</em> the document containing the term and <em>add</em> the document using the provided analyzer.</p>
+<pre class="code literal-block"><span></span><span class="kd">private</span> <span class="kt">void</span> <span class="nf">indexFile</span><span class="o">(</span><span class="n">File</span> <span class="n">file</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">{</span>
+   <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Updating index for &quot;</span><span class="o">+</span><span class="n">file</span><span class="o">.</span><span class="na">getCanonicalPath</span><span class="o">());</span>
+   <span class="n">updateDocument</span><span class="o">(</span><span class="n">file</span><span class="o">);</span>
+<span class="o">}</span>
+</pre>
+
+
+</blockquote>
+<h4 id="delete-document-operation">Delete Document Operation</h4>
+<p>Delete document is another important operation as part of indexing process.</p>
+<p>This operation is used when already indexed contents are updated and indexes become invalid or indexes become very large in size then <em>in order to reduce the size and update the index</em>, delete operations are carried out.</p>
+<p>We delete Document(s) containing Field(s) to <code>IndexWriter</code> where <code>IndexWriter</code> is used to update indexes.</p>
+<ol>
+<li><strong>Delete a document from an index</strong> : Create a method to delete a lucene document of an obsolete text file.</li>
+</ol>
+<blockquote>
+<pre class="code literal-block"><span></span><span class="kd">private</span> <span class="kt">void</span> <span class="nf">deleteDocument</span><span class="o">(</span><span class="n">File</span> <span class="n">file</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">{</span>
+   <span class="c1">//delete indexes for a file</span>
+   <span class="n">writer</span><span class="o">.</span><span class="na">deleteDocument</span><span class="o">(</span><span class="k">new</span> <span class="n">Term</span><span class="o">(</span><span class="n">LuceneConstants</span><span class="o">.</span><span class="na">FILE_NAME</span><span class="o">,</span><span class="n">file</span><span class="o">.</span><span class="na">getName</span><span class="o">()));</span>
+   <span class="n">writer</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+   <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;index contains deleted files: &quot;</span><span class="o">+</span><span class="n">writer</span><span class="o">.</span><span class="na">hasDeletions</span><span class="o">());</span>
+   <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;index contains documents: &quot;</span><span class="o">+</span><span class="n">writer</span><span class="o">.</span><span class="na">maxDoc</span><span class="o">());</span>
+   <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;index contains deleted documents: &quot;</span><span class="o">+</span><span class="n">writer</span><span class="o">.</span><span class="na">numDoc</span><span class="o">());</span>
+<span class="o">}</span>
+</pre>
+
+
+</blockquote>
+<ol>
+<li>
+<p><strong>Create a IndexWriter</strong>: Same as above</p>
+</li>
+<li>
+<p><strong>Delete document and start reindexing process</strong>: Five ways.</p>
+</li>
+</ol>
+<blockquote>
+<p>Way1: <strong>deleteDocuments(Term)</strong>: Delete all the documents containing the term.</p>
+<p>Way2: <strong>deleteDocuments(Term[])</strong>: Delete all the documents containing any of the terms in the array.</p>
+<p>Way3: <strong>deleteDocuments(Query)</strong>: Delete all the documents matching the query.</p>
+<p>Way4: <strong>deleteDocuments(Query[])</strong>: Delete all the documents matching the query in the array.</p>
+<p>Way5: <strong>deleteAll</strong>: Delete all the documents.</p>
+</blockquote>
+<pre class="code literal-block"><span></span><span class="kd">private</span> <span class="kt">void</span> <span class="nf">indexFile</span><span class="o">(</span><span class="n">File</span> <span class="n">file</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">{</span>
+   <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Deleting index for &quot;</span><span class="o">+</span><span class="n">file</span><span class="o">.</span><span class="na">getCanonicalPath</span><span class="o">());</span>
+   <span class="n">deleteDocument</span><span class="o">(</span><span class="n">file</span><span class="o">);</span>
+<span class="o">}</span>
+</pre>
+
+
+<h4 id="field-options">Field Options</h4>
+<p>Field is the most important and the foundation unit of indexing process.</p>
+<p>It is the actual object containing the contents to be indexed. When we add a field, lucene provides numerous controls on the field using Field Options which states how much a field is to be searchable.</p>
+<p>We add Document(s) containing Field(s) to <code>IndexWriter</code> where <code>IndexWriter</code> is used to update or create indexes.</p>
+<h5 id="list-of-field-options">List of Field Options</h5>
+<ul>
+<li>
+<p><code>Index.ANALYZED</code>: First analyze then do indexing. Used for <em>normal text indexing</em>. Analyzer will break the field's value into stream of tokens and each token is searcable sepearately.</p>
+</li>
+<li>
+<p><code>Index.NOT_ANALYZED</code>: Don't analyze but do indexing. Used for <em>complete text indexing</em> *for example person's names, URL etc.</p>
+</li>
+<li>
+<p><code>Index.ANALYZED_NO_NORMS</code>: Varient of <code>Index.ANALYZED</code>. Analyzer will <em>break the field's value into stream of tokens</em> and each token is searcable sepearately but <code>NORMs</code> are not stored in the indexes. <code>NORMS</code> are used to boost searching but are sometime memory consuming.</p>
+</li>
+<li>
+<p><code>Index.Index.NOT_ANALYZED_NO_NORMS</code>:  Varient of <code>Index.NOT_ANALYZED</code>. Indexing is done but NORMS are not stored in the indexes.</p>
+</li>
+<li>
+<p><code>Index.NO</code>: Field value is not searchable.</p>
+</li>
+</ul>
+<h5 id="use-of-field-options">Use of Field Options</h5>
+<ol>
+<li>
+<p>Same steps as <code>Create a Document</code> section</p>
+</li>
+<li>
+<p>Add the newly created fields to the document object and return it to the caller method.</p>
+</li>
+</ol>
+<h3 id="search-operations">Search Operations</h3>
+<p>Searching process is one of the core functionality provided by Lucene.</p>
+<p><code>IndexSearcher</code> is the most important and core component of the searching process.</p>
+<p>Process Chart for TutorialsPoint:</p>
+<p>images/articles/2015/data/searching_process.jpg </p>
+<p>We first create <code>Directory</code>(s) containing <code>index</code>es and then pass it to <code>IndexSearcher</code> which opens the <code>Directory</code> using <code>IndexReader</code>.</p>
+<p>Then we create a <code>Query</code> with a <code>Term</code> and make a search using <code>IndexSearcher</code> by passing the <code>Query</code> to the searcher.</p>
+<p><code>IndexSearcher</code> returns a <code>TopDocs</code> object which contains the search details along with document <code>ID</code>(s) of the Document which is the result of the search operation.</p>
+<h4 id="create-a-queryparser">Create a QueryParser</h4>
+<ol>
+<li>
+<p>QueryParser class parses the user entered input into <strong>lucene understandable format query</strong>.</p>
+</li>
+<li>
+<p>Create object of <code>QueryParser</code>.</p>
+</li>
+<li>
+<p>Initialize the QueryParser object created with a standard analyzer having version information and index name on which this query is to run.</p>
+</li>
+</ol>
+<blockquote>
+<pre class="code literal-block"><span></span><span class="n">QueryParser</span> <span class="n">queryParser</span><span class="o">;</span>
+<span class="kd">public</span> <span class="nf">Searcher</span><span class="o">(</span><span class="n">String</span> <span class="n">indexDirectoryPath</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">{</span>
+   <span class="n">queryParser</span> <span class="o">=</span> <span class="k">new</span> <span class="n">QueryParser</span><span class="o">(</span><span class="n">Version</span><span class="o">.</span><span class="na">LUCENE_36</span><span class="o">,</span>
+      <span class="n">LuceneConstants</span><span class="o">.</span><span class="na">CONTENTS</span><span class="o">,</span>
+         <span class="k">new</span> <span class="n">StandardAnalyzer</span><span class="o">(</span><span class="n">Version</span><span class="o">.</span><span class="na">LUCENE_36</span><span class="o">));</span>
+<span class="o">}</span>
+</pre>
+
+
+</blockquote>
+<h4 id="create-a-indexsearch">Create a IndexSearch</h4>
+<ol>
+<li>
+<p><code>IndexSearcher</code> class acts as a core component which searcher indexes created during indexing process.</p>
+</li>
+<li>
+<p>Create object of <code>IndexSearcher</code>.</p>
+</li>
+<li>
+<p>Create a <strong>lucene directory</strong> which should point to location where indexes are to be stored.</p>
+</li>
+<li>
+<p>Initialize the <code>IndexSearcher</code> object created with the index directory</p>
+</li>
+</ol>
+<blockquote>
+<pre class="code literal-block"><span></span><span class="n">IndexSearcher</span> <span class="n">indexSearcher</span><span class="o">;</span>
+<span class="kd">public</span> <span class="nf">Searcher</span><span class="o">(</span><span class="n">String</span> <span class="n">indexDirectoryPath</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">{</span>
+   <span class="n">Directory</span> <span class="n">indexDirectory</span> <span class="o">=</span>
+      <span class="n">FSDirectory</span><span class="o">.</span><span class="na">open</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">indexDirectoryPath</span><span class="o">));</span>
+   <span class="n">indexSearcher</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IndexSearcher</span><span class="o">(</span><span class="n">indexDirectory</span><span class="o">);</span>
+<span class="o">}</span>
+</pre>
+
+
+</blockquote>
+<h4 id="make-search">Make search</h4>
+<ul>
+<li>
+<p>To start search, create a <code>Query</code> object by parsing search expression through QueryParser.</p>
+</li>
+<li>
+<p>Make search by calling `IndexSearcher.search()`` method.</p>
+</li>
+</ul>
+<blockquote>
+<pre class="code literal-block"><span></span><span class="n">Query</span> <span class="n">query</span><span class="o">;</span>
+<span class="kd">public</span> <span class="n">TopDocs</span> <span class="nf">search</span><span class="o">(</span> <span class="n">String</span> <span class="n">searchQuery</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">,</span><span class="n">ParseException</span><span class="o">{</span>
+   <span class="n">query</span> <span class="o">=</span> <span class="n">queryParser</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">searchQuery</span><span class="o">);</span>
+   <span class="k">return</span> <span class="n">indexSearcher</span><span class="o">.</span><span class="na">search</span><span class="o">(</span><span class="n">query</span><span class="o">,</span> <span class="n">LuceneConstants</span><span class="o">.</span><span class="na">MAX_SEARCH</span><span class="o">);</span>
+<span class="o">}</span>
+</pre>
+
+
+</blockquote>
+<h4 id="get-the-document">Get the document</h4>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="n">Document</span> <span class="nf">getDocument</span><span class="o">(</span><span class="n">ScoreDoc</span> <span class="n">scoreDoc</span><span class="o">)</span>
+   <span class="kd">throws</span> <span class="n">CorruptIndexException</span><span class="o">,</span> <span class="n">IOException</span><span class="o">{</span>
+   <span class="k">return</span> <span class="n">indexSearcher</span><span class="o">.</span><span class="na">doc</span><span class="o">(</span><span class="n">scoreDoc</span><span class="o">.</span><span class="na">doc</span><span class="o">);</span>
+<span class="o">}</span>
+</pre>
+
+
+<h4 id="close-indexsearcher">Close IndexSearcher</h4>
+<pre class="code literal-block"><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">close</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">{</span>
+   <span class="n">indexSearcher</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3 id="query-programming">Query Programming</h3>
+<p><a href="http://www.tutorialspoint.com/lucene/lucene_termquery1.htm">TermQuery</a>: TermQuery is the most commonly used query object and is the foundation of many complex queries that lucene can make use of. TermQuery is normally used to retrieve documents based on the key which is case sensitive.</p>
+<p><a href="http://www.tutorialspoint.com/lucene/lucene_termrangequery.htm">TermRangeQuery</a>: TermRangeQuery is the used when a range of textual terms are to be searched.</p>
+<p><a href="http://www.tutorialspoint.com/lucene/lucene_prefixquery.htm">PrefixQuery</a>: PrefixQuery is used to match documents whose <em>index starts with a specified string</em>.</p>
+<p><a href="http://www.tutorialspoint.com/lucene/lucene_booleanquery.htm">BooleanQuery</a>: BooleanQuery is used to search documents which are result of multiple queries using <code>AND</code>, <code>OR</code> or <code>NOT</code> operators.</p>
+<p><a href="http://www.tutorialspoint.com/lucene/lucene_phrasequery.htm">PhraseQuery</a>: Phrase query is used to search documents which contain a particular sequence of terms.</p>
+<p>WhildCardQuery: WildcardQuery is used to search documents using wildcards like <code>*</code> for any character sequence,<code>?</code> matching a single character.</p>
+<p><a href="http://www.tutorialspoint.com/lucene/lucene_fuzzyquery.htm">FuzzyQuery</a>: FuzzyQuery is used to search documents using <strong>fuzzy implementation</strong> that is an approximate search based on edit distance algorithm.</p>
+<p><a href="http://www.tutorialspoint.com/lucene/lucene_matchalldocsquery.htm">MatchAllDocsQuery</a>: MatchAllDocsQuery as name suggests <em>matches all the documents</em>.</p>
+<h3 id="analysis-objects">Analysis Objects</h3>
+<p><a href="http://www.tutorialspoint.com/lucene/lucene_token.htm">Token</a>: Token represents text or word in a document with relevant details like its <strong>metadata</strong> (position, start offset, end offset, token type and its position increment).</p>
+<p><a href="http://www.tutorialspoint.com/lucene/lucene_tokenstream.htm">TokenStream</a>: TokenStream is an output of analysis process and it comprises of series of tokens. It is an abstract class.</p>
+<p><a href="http://www.tutorialspoint.com/lucene/lucene_analyzer_class.htm">Analyzer</a>: Analyzer class is responsible to analyze a document and get the tokens/words from the text which is to be indexed. Without analysis done, IndexWriter can not create index.</p>
+<p><a href="http://www.tutorialspoint.com/lucene/lucene_whitespaceanalyzer.htm">WhitespaceAnalyzer</a>: This analyzer spilts the text in a document based on <strong>whitespace</strong>.</p>
+<p><a href="http://www.tutorialspoint.com/lucene/lucene_simpleanalyzer.htm">SimpleAnalyzer</a>: This analyzer spilts the text in a document based on <strong>non-letter characters</strong> and then lowercase them.</p>
+<p><a href="http://www.tutorialspoint.com/lucene/lucene_stopanalyzer.htm">StopAnalyzer</a>: This analyzer works similar to SimpleAnalyzer and remove the common words like <code>a</code>,<code>an</code>,<code>the</code> etc.</p>
+<p><a href="http://www.tutorialspoint.com/lucene/lucene_standardanalyzer.htm">StandardAnalyzer</a>: This is the most sofisticated analyzer and is capable of handling <code>names</code>, <code>email address</code> etc. It lowercases each token and removes common words and punctuation if any.</p>
+<h3 id="sorting">Sorting</h3>
+<h4 id="sorting-by-relevance">Sorting By Relevance</h4>
+<p>This is <strong>default</strong> sorting mode used by lucene.</p>
+<p>Lucene provides results by the most relevant hit at the top.</p>
+<p>Example Code from TutorialsPoint:</p>
+<pre class="code literal-block"><span></span><span class="kd">private</span> <span class="kt">void</span> <span class="nf">sortUsingRelevance</span><span class="o">(</span><span class="n">String</span> <span class="n">searchQuery</span><span class="o">)</span>
+ <span class="kd">throws</span> <span class="n">IOException</span><span class="o">,</span> <span class="n">ParseException</span><span class="o">{</span>
+   <span class="n">searcher</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Searcher</span><span class="o">(</span><span class="n">indexDir</span><span class="o">);</span>
+   <span class="kt">long</span> <span class="n">startTime</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">();</span>
+   <span class="c1">//create a term to search file name</span>
+   <span class="n">Term</span> <span class="n">term</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Term</span><span class="o">(</span><span class="n">LuceneConstants</span><span class="o">.</span><span class="na">FILE_NAME</span><span class="o">,</span> <span class="n">searchQuery</span><span class="o">);</span>
+   <span class="c1">//create the term query object</span>
+   <span class="n">Query</span> <span class="n">query</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FuzzyQuery</span><span class="o">(</span><span class="n">term</span><span class="o">);</span>
+   <span class="n">searcher</span><span class="o">.</span><span class="na">setDefaultFieldSortScoring</span><span class="o">(</span><span class="kc">true</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+   <span class="c1">//do the search</span>
+   <span class="n">TopDocs</span> <span class="n">hits</span> <span class="o">=</span> <span class="n">searcher</span><span class="o">.</span><span class="na">search</span><span class="o">(</span><span class="n">query</span><span class="o">,</span><span class="n">Sort</span><span class="o">.</span><span class="na">RELEVANCE</span><span class="o">);</span>
+   <span class="kt">long</span> <span class="n">endTime</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">();</span>
+   <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">hits</span><span class="o">.</span><span class="na">totalHits</span> <span class="o">+</span>
+      <span class="s">&quot; documents found. Time :&quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">endTime</span> <span class="o">-</span> <span class="n">startTime</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;ms&quot;</span><span class="o">);</span>
+   <span class="k">for</span><span class="o">(</span><span class="n">ScoreDoc</span> <span class="n">scoreDoc</span> <span class="o">:</span> <span class="n">hits</span><span class="o">.</span><span class="na">scoreDocs</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">Document</span> <span class="n">doc</span> <span class="o">=</span> <span class="n">searcher</span><span class="o">.</span><span class="na">getDocument</span><span class="o">(</span><span class="n">scoreDoc</span><span class="o">);</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;Score: &quot;</span><span class="o">+</span> <span class="n">scoreDoc</span><span class="o">.</span><span class="na">score</span> <span class="o">+</span> <span class="s">&quot; &quot;</span><span class="o">);</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;File: &quot;</span><span class="o">+</span> <span class="n">doc</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">LuceneConstants</span><span class="o">.</span><span class="na">FILE_PATH</span><span class="o">));</span>
+   <span class="o">}</span>
+   <span class="n">searcher</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+<span class="o">}</span>
+</pre>
+
+
+<h4 id="sorting-by-indexorder">Sorting By IndexOrder</h4>
+<p>This is sorting mode used by lucene in which first document indexed is shown first in the search results.</p>
+<pre class="code literal-block"><span></span><span class="kd">private</span> <span class="kt">void</span> <span class="nf">sortUsingIndex</span><span class="o">(</span><span class="n">String</span> <span class="n">searchQuery</span><span class="o">)</span>
+ <span class="kd">throws</span> <span class="n">IOException</span><span class="o">,</span> <span class="n">ParseException</span><span class="o">{</span>
+   <span class="n">searcher</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Searcher</span><span class="o">(</span><span class="n">indexDir</span><span class="o">);</span>
+   <span class="kt">long</span> <span class="n">startTime</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">();</span>
+   <span class="c1">//create a term to search file name</span>
+   <span class="n">Term</span> <span class="n">term</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Term</span><span class="o">(</span><span class="n">LuceneConstants</span><span class="o">.</span><span class="na">FILE_NAME</span><span class="o">,</span> <span class="n">searchQuery</span><span class="o">);</span>
+   <span class="c1">//create the term query object</span>
+   <span class="n">Query</span> <span class="n">query</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FuzzyQuery</span><span class="o">(</span><span class="n">term</span><span class="o">);</span>
+   <span class="n">searcher</span><span class="o">.</span><span class="na">setDefaultFieldSortScoring</span><span class="o">(</span><span class="kc">true</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+   <span class="c1">//do the search</span>
+   <span class="n">TopDocs</span> <span class="n">hits</span> <span class="o">=</span> <span class="n">searcher</span><span class="o">.</span><span class="na">search</span><span class="o">(</span><span class="n">query</span><span class="o">,</span><span class="n">Sort</span><span class="o">.</span><span class="na">INDEXORDER</span><span class="o">);</span>
+   <span class="kt">long</span> <span class="n">endTime</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">();</span>
+   <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">hits</span><span class="o">.</span><span class="na">totalHits</span> <span class="o">+</span>
+      <span class="s">&quot; documents found. Time :&quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">endTime</span> <span class="o">-</span> <span class="n">startTime</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;ms&quot;</span><span class="o">);</span>
+   <span class="k">for</span><span class="o">(</span><span class="n">ScoreDoc</span> <span class="n">scoreDoc</span> <span class="o">:</span> <span class="n">hits</span><span class="o">.</span><span class="na">scoreDocs</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">Document</span> <span class="n">doc</span> <span class="o">=</span> <span class="n">searcher</span><span class="o">.</span><span class="na">getDocument</span><span class="o">(</span><span class="n">scoreDoc</span><span class="o">);</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;Score: &quot;</span><span class="o">+</span> <span class="n">scoreDoc</span><span class="o">.</span><span class="na">score</span> <span class="o">+</span> <span class="s">&quot; &quot;</span><span class="o">);</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;File: &quot;</span><span class="o">+</span> <span class="n">doc</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">LuceneConstants</span><span class="o">.</span><span class="na">FILE_PATH</span><span class="o">));</span>
+   <span class="o">}</span>
+   <span class="n">searcher</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+<span class="o">}</span>
+</pre>
