@@ -5,12 +5,12 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1536806717.662356
+_modified_time = 1536806751.444365
 _enable_loop = True
 _template_filename = 'themes/hpstr/templates/base_helper.tmpl'
 _template_uri = 'base_helper.tmpl'
 _source_encoding = 'utf-8'
-_exports = ['html_stylesheets', 'html_translations', 'html_headstart', 'late_load_js', 'html_feedlinks']
+_exports = ['html_translations', 'html_headstart', 'late_load_js', 'html_stylesheets', 'html_feedlinks']
 
 
 def render_body(context,**pageargs):
@@ -29,33 +29,14 @@ def render_body(context,**pageargs):
         context.caller_stack._pop_frame()
 
 
-def render_html_stylesheets(context):
-    __M_caller = context.caller_stack._push_frame()
-    try:
-        has_custom_css = context.get('has_custom_css', UNDEFINED)
-        use_bundles = context.get('use_bundles', UNDEFINED)
-        __M_writer = context.writer()
-        __M_writer('\n')
-        if use_bundles:
-            __M_writer('        <link href="/assets/css/all.css" rel="stylesheet" type="text/css">\n')
-        else:
-            __M_writer('        <link href="/assets/css/rst.css" rel="stylesheet" type="text/css">\n        <link href="/assets/css/code.css" rel="stylesheet" type="text/css">\n        <link href="/assets/css/main.css" rel="stylesheet" type="text/css">\n        <link href="/assets/css/extra.css" rel="stylesheet" type="text/css">\n')
-            if has_custom_css:
-                __M_writer('            <link href="/assets/css/custom.css" rel="stylesheet" type="text/css">\n')
-        __M_writer('\n    <!-- Webfonts -->\n    <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">\n')
-        return ''
-    finally:
-        context.caller_stack._pop_frame()
-
-
 def render_html_translations(context):
     __M_caller = context.caller_stack._push_frame()
     try:
         lang = context.get('lang', UNDEFINED)
-        messages = context.get('messages', UNDEFINED)
-        _link = context.get('_link', UNDEFINED)
-        translations = context.get('translations', UNDEFINED)
         abs_link = context.get('abs_link', UNDEFINED)
+        messages = context.get('messages', UNDEFINED)
+        translations = context.get('translations', UNDEFINED)
+        _link = context.get('_link', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n    <ul class="translations">\n')
         for langname in translations.keys():
@@ -76,29 +57,29 @@ def render_html_translations(context):
 def render_html_headstart(context):
     __M_caller = context.caller_stack._push_frame()
     try:
-        extra_head_data = context.get('extra_head_data', UNDEFINED)
-        blog_title = context.get('blog_title', UNDEFINED)
-        use_cdn = context.get('use_cdn', UNDEFINED)
-        favicons = context.get('favicons', UNDEFINED)
+        lang = context.get('lang', UNDEFINED)
+        is_rtl = context.get('is_rtl', UNDEFINED)
         comment_system = context.get('comment_system', UNDEFINED)
+        abs_link = context.get('abs_link', UNDEFINED)
+        mathjax_config = context.get('mathjax_config', UNDEFINED)
+        prevlink = context.get('prevlink', UNDEFINED)
+        nextlink = context.get('nextlink', UNDEFINED)
         title = context.get('title', UNDEFINED)
-        description = context.get('description', UNDEFINED)
         url_replacer = context.get('url_replacer', UNDEFINED)
+        blog_title = context.get('blog_title', UNDEFINED)
+        twitter_card = context.get('twitter_card', UNDEFINED)
         def html_feedlinks():
             return render_html_feedlinks(context)
-        lang = context.get('lang', UNDEFINED)
-        comment_system_id = context.get('comment_system_id', UNDEFINED)
-        mathjax_config = context.get('mathjax_config', UNDEFINED)
-        abs_link = context.get('abs_link', UNDEFINED)
-        permalink = context.get('permalink', UNDEFINED)
-        is_rtl = context.get('is_rtl', UNDEFINED)
-        use_open_graph = context.get('use_open_graph', UNDEFINED)
+        extra_head_data = context.get('extra_head_data', UNDEFINED)
         def html_stylesheets():
             return render_html_stylesheets(context)
+        description = context.get('description', UNDEFINED)
+        use_open_graph = context.get('use_open_graph', UNDEFINED)
+        use_cdn = context.get('use_cdn', UNDEFINED)
+        permalink = context.get('permalink', UNDEFINED)
         striphtml = context.get('striphtml', UNDEFINED)
-        twitter_card = context.get('twitter_card', UNDEFINED)
-        nextlink = context.get('nextlink', UNDEFINED)
-        prevlink = context.get('prevlink', UNDEFINED)
+        comment_system_id = context.get('comment_system_id', UNDEFINED)
+        favicons = context.get('favicons', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n<!DOCTYPE html>\n<html ')
         __M_writer("prefix='")
@@ -182,15 +163,34 @@ def render_late_load_js(context):
         context.caller_stack._pop_frame()
 
 
+def render_html_stylesheets(context):
+    __M_caller = context.caller_stack._push_frame()
+    try:
+        use_bundles = context.get('use_bundles', UNDEFINED)
+        has_custom_css = context.get('has_custom_css', UNDEFINED)
+        __M_writer = context.writer()
+        __M_writer('\n')
+        if use_bundles:
+            __M_writer('        <link href="/assets/css/all.css" rel="stylesheet" type="text/css">\n')
+        else:
+            __M_writer('        <link href="/assets/css/rst.css" rel="stylesheet" type="text/css">\n        <link href="/assets/css/code.css" rel="stylesheet" type="text/css">\n        <link href="/assets/css/main.css" rel="stylesheet" type="text/css">\n        <link href="/assets/css/extra.css" rel="stylesheet" type="text/css">\n')
+            if has_custom_css:
+                __M_writer('            <link href="/assets/css/custom.css" rel="stylesheet" type="text/css">\n')
+        __M_writer('\n    <!-- Webfonts -->\n    <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">\n')
+        return ''
+    finally:
+        context.caller_stack._pop_frame()
+
+
 def render_html_feedlinks(context):
     __M_caller = context.caller_stack._push_frame()
     try:
-        translations = context.get('translations', UNDEFINED)
         len = context.get('len', UNDEFINED)
-        rss_link = context.get('rss_link', UNDEFINED)
-        generate_atom = context.get('generate_atom', UNDEFINED)
         generate_rss = context.get('generate_rss', UNDEFINED)
+        translations = context.get('translations', UNDEFINED)
+        rss_link = context.get('rss_link', UNDEFINED)
         _link = context.get('_link', UNDEFINED)
+        generate_atom = context.get('generate_atom', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n')
         if rss_link:
@@ -228,6 +228,6 @@ def render_html_feedlinks(context):
 
 """
 __M_BEGIN_METADATA
-{"uri": "base_helper.tmpl", "line_map": {"16": 0, "21": 2, "22": 71, "23": 76, "24": 93, "25": 116, "26": 126, "32": 78, "38": 78, "39": 79, "40": 80, "41": 81, "42": 82, "43": 86, "44": 87, "45": 90, "51": 118, "60": 118, "61": 120, "62": 121, "63": 122, "64": 122, "65": 122, "66": 122, "67": 122, "68": 122, "69": 122, "70": 125, "76": 3, "103": 3, "104": 6, "105": 7, "106": 8, "107": 10, "108": 11, "109": 13, "110": 14, "111": 15, "112": 17, "113": 18, "114": 21, "115": 21, "116": 21, "117": 28, "118": 29, "119": 29, "120": 29, "121": 31, "122": 35, "123": 35, "124": 35, "125": 35, "126": 38, "127": 38, "128": 41, "129": 41, "130": 42, "131": 43, "132": 43, "133": 43, "134": 45, "135": 46, "136": 47, "137": 48, "138": 48, "139": 48, "140": 48, "141": 48, "142": 48, "143": 48, "144": 51, "145": 52, "146": 53, "147": 53, "148": 53, "149": 55, "150": 56, "151": 57, "152": 57, "153": 57, "154": 59, "155": 60, "156": 60, "157": 60, "158": 62, "159": 63, "160": 63, "161": 64, "162": 65, "163": 66, "164": 67, "165": 67, "166": 67, "167": 69, "168": 70, "169": 70, "175": 73, "179": 73, "185": 95, "195": 95, "196": 96, "197": 97, "198": 97, "199": 97, "200": 98, "201": 99, "202": 100, "203": 101, "204": 101, "205": 101, "206": 101, "207": 101, "208": 103, "209": 104, "210": 104, "211": 104, "212": 107, "213": 108, "214": 109, "215": 110, "216": 110, "217": 110, "218": 110, "219": 110, "220": 112, "221": 113, "222": 113, "223": 113, "229": 223}, "filename": "themes/hpstr/templates/base_helper.tmpl", "source_encoding": "utf-8"}
+{"uri": "base_helper.tmpl", "line_map": {"16": 0, "21": 2, "22": 71, "23": 76, "24": 93, "25": 116, "26": 126, "32": 118, "41": 118, "42": 120, "43": 121, "44": 122, "45": 122, "46": 122, "47": 122, "48": 122, "49": 122, "50": 122, "51": 125, "57": 3, "84": 3, "85": 6, "86": 7, "87": 8, "88": 10, "89": 11, "90": 13, "91": 14, "92": 15, "93": 17, "94": 18, "95": 21, "96": 21, "97": 21, "98": 28, "99": 29, "100": 29, "101": 29, "102": 31, "103": 35, "104": 35, "105": 35, "106": 35, "107": 38, "108": 38, "109": 41, "110": 41, "111": 42, "112": 43, "113": 43, "114": 43, "115": 45, "116": 46, "117": 47, "118": 48, "119": 48, "120": 48, "121": 48, "122": 48, "123": 48, "124": 48, "125": 51, "126": 52, "127": 53, "128": 53, "129": 53, "130": 55, "131": 56, "132": 57, "133": 57, "134": 57, "135": 59, "136": 60, "137": 60, "138": 60, "139": 62, "140": 63, "141": 63, "142": 64, "143": 65, "144": 66, "145": 67, "146": 67, "147": 67, "148": 69, "149": 70, "150": 70, "156": 73, "160": 73, "166": 78, "172": 78, "173": 79, "174": 80, "175": 81, "176": 82, "177": 86, "178": 87, "179": 90, "185": 95, "195": 95, "196": 96, "197": 97, "198": 97, "199": 97, "200": 98, "201": 99, "202": 100, "203": 101, "204": 101, "205": 101, "206": 101, "207": 101, "208": 103, "209": 104, "210": 104, "211": 104, "212": 107, "213": 108, "214": 109, "215": 110, "216": 110, "217": 110, "218": 110, "219": 110, "220": 112, "221": 113, "222": 113, "223": 113, "229": 223}, "filename": "themes/hpstr/templates/base_helper.tmpl", "source_encoding": "utf-8"}
 __M_END_METADATA
 """
