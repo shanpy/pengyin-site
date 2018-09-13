@@ -147,11 +147,18 @@ time {
 .category li{
         display: inline;
 }
+.entry-meta{
+    display: flex !important;
+    justify-content: space-between;
+}
 .tags {
     display: inline;
     margin-block-start: 0;
     margin-block-end: 0;
     padding-inline-start: 0;
+}
+.entry-meta .tag{
+        margin: 0;
 }
 .tags::before { 
     content: "Tags: ";
@@ -169,5 +176,11 @@ time {
 }
 .pager li{
       display: inline; 
-      padding-right: .5em; 
+      padding-right: 1em;
+      @media screen and (max-width: 600px) {
+            padding-right: 0.3em;
+        }
+        @media screen and (max-width: 992px) {
+            padding-right: 0.5em;
+        } 
 }
