@@ -30,20 +30,17 @@
 <%def name="html_post_header()">
     <header>
         <div class="entry-meta">
-            <span class="dateline"><a href="${post.permalink()}" rel="bookmark"><time class="published dt-published" datetime="${post.date.isoformat()}" itemprop="datePublished" title="${post.formatted_date(date_format)}">${post.formatted_date(date_format)}</time></a></span>&nbsp;&nbsp;&middot;&nbsp;&nbsp;
-            <span class="byline author vcard">${post.author()}</span>&nbsp;&nbsp;&middot;&nbsp;&nbsp;
-            % if not post.meta('nocomments') and site_has_comments:
-                <span class="commentline">${comments.comment_link(post.permalink(), post._base_path)}</span>&nbsp;&nbsp;&middot;&nbsp;&nbsp;
-            % endif
-            ${html_sourcelink()}
+            <span class="dateline"><a href="${post.permalink()}" rel="bookmark"><time class="published dt-published" datetime="${post.date.isoformat()}" itemprop="datePublished" title="${post.formatted_date(date_format)}">${post.formatted_date(date_format)}</time></a></span>
+            <span class="byline author vcard">${post.author()}</span>
             % if post.meta('link'):
                     <span><a href='${post.meta('link')}'>${messages("Original site")}</a></span>&nbsp;&nbsp;&middot;&nbsp;&nbsp;
             % endif
             %if post.description():
                 <meta name="description" itemprop="description" content="${post.description()}">
             %endif
+            <span>${helper.html_tags(post)}</span>
+            <span style="font-style: italic;">${helper.html_pager(post)}</span>
         </div>
-        <div class="entry-meta">${helper.html_tags(post)}</div>
         ${html_translations(post)}
     ${html_title()}
     </header>
