@@ -50,6 +50,44 @@
         margin-right: 0;
 }
 
+/*self-defined*/
+
 time {
         margin-right: 0.5em;
+}
+.category {
+    display: inline;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+}
+.category::before { 
+    content: "Category: ";
+}
+.category li{
+        display: inline;
+}
+.tags {
+    display: inline;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+}
+.tags::before { 
+    content: "Tags: ";
+}
+.tags li{
+        display: inline;
+        padding-right: .5em; 
+}
+.postpromonav{
+      display: inline;  
+}
+.pager{
+      display: inline;  
+      padding: 0;
+}
+.pager li{
+      display: inline; 
+      padding-right: .5em; 
 }
