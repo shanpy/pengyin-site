@@ -104,3 +104,17 @@ time {
             padding-right: 0.5em;
         } 
 }
+.share{
+        display: flex !important;
+    justify-content: flex-end;
+}
+.share span{
+        vertical-align: center !important;
+        margin-right: 1em;
+      @media screen and (max-width: 600px) {
+            margin-right: 0.3em;
+        }
+        @media screen and (max-width: 992px) {
+            margin-right: 0.5em;
+        }
+}
