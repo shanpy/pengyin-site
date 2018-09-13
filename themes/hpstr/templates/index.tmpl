@@ -20,9 +20,6 @@
         <time datetime="${post.date.isoformat()}" title="${post.formatted_date(date_format)}">${post.formatted_date(date_format)}</time>
       </span>&nbsp;&nbsp;&middot;&nbsp;&nbsp;
       <span class="byline author vcard">${post.author()}</span>
-      % if not post.meta('nocomments') and site_has_comments:
-          &nbsp;&nbsp;&middot;&nbsp;&nbsp;<span class="commentline">${comments.comment_link(post.permalink(), post._base_path)}
-      % endif
       </div>
         <h1 class="p-name entry-title"><a href="${post.permalink()}" class="u-url">${post.title()|h}</a></h1>
     </header>
