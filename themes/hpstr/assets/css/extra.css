@@ -52,6 +52,12 @@
 
 /*self-defined*/
 
+#post-index #main {
+    max-width: 1059px;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
 time {
         margin-right: 0.5em;
 }
