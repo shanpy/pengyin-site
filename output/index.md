@@ -1,5 +1,5 @@
 <!--
-.. title: Hello! My name is Pengyin(Wendy) Shan. Welcome to my personal website.
+.. title: I'm Pengyin (Wendy) Shan. Welcome to my personal website.
 .. slug: index
 .. date: 2018-09-12 16:19:52 UTC-04:00
 .. tags: 
