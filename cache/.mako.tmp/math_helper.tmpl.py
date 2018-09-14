@@ -5,12 +5,12 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1536942553.122073
+_modified_time = 1536944748.890684
 _enable_loop = True
 _template_filename = '/Users/pengyinshan/nikola/lib/python3.5/site-packages/nikola/data/themes/base/templates/math_helper.tmpl'
 _template_uri = 'math_helper.tmpl'
 _source_encoding = 'ascii'
-_exports = ['math_scripts_ifpost', 'math_styles_ifpost', 'math_scripts', 'math_scripts_ifposts', 'math_styles', 'math_styles_ifposts']
+_exports = ['math_scripts', 'math_styles_ifpost', 'math_styles', 'math_scripts_ifposts', 'math_styles_ifposts', 'math_scripts_ifpost']
 
 
 def render_body(context,**pageargs):
@@ -29,43 +29,11 @@ def render_body(context,**pageargs):
         context.caller_stack._pop_frame()
 
 
-def render_math_scripts_ifpost(context,post):
-    __M_caller = context.caller_stack._push_frame()
-    try:
-        def math_scripts():
-            return render_math_scripts(context)
-        __M_writer = context.writer()
-        __M_writer('\n')
-        if post.is_mathjax:
-            __M_writer('        ')
-            __M_writer(str(math_scripts()))
-            __M_writer('\n')
-        return ''
-    finally:
-        context.caller_stack._pop_frame()
-
-
-def render_math_styles_ifpost(context,post):
-    __M_caller = context.caller_stack._push_frame()
-    try:
-        def math_styles():
-            return render_math_styles(context)
-        __M_writer = context.writer()
-        __M_writer('\n')
-        if post.is_mathjax:
-            __M_writer('        ')
-            __M_writer(str(math_styles()))
-            __M_writer('\n')
-        return ''
-    finally:
-        context.caller_stack._pop_frame()
-
-
 def render_math_scripts(context):
     __M_caller = context.caller_stack._push_frame()
     try:
-        mathjax_config = context.get('mathjax_config', UNDEFINED)
         katex_auto_render = context.get('katex_auto_render', UNDEFINED)
+        mathjax_config = context.get('mathjax_config', UNDEFINED)
         use_katex = context.get('use_katex', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n')
@@ -90,17 +58,16 @@ def render_math_scripts(context):
         context.caller_stack._pop_frame()
 
 
-def render_math_scripts_ifposts(context,posts):
+def render_math_styles_ifpost(context,post):
     __M_caller = context.caller_stack._push_frame()
     try:
-        def math_scripts():
-            return render_math_scripts(context)
-        any = context.get('any', UNDEFINED)
+        def math_styles():
+            return render_math_styles(context)
         __M_writer = context.writer()
         __M_writer('\n')
-        if any(post.is_mathjax for post in posts):
+        if post.is_mathjax:
             __M_writer('        ')
-            __M_writer(str(math_scripts()))
+            __M_writer(str(math_styles()))
             __M_writer('\n')
         return ''
     finally:
@@ -120,12 +87,29 @@ def render_math_styles(context):
         context.caller_stack._pop_frame()
 
 
+def render_math_scripts_ifposts(context,posts):
+    __M_caller = context.caller_stack._push_frame()
+    try:
+        any = context.get('any', UNDEFINED)
+        def math_scripts():
+            return render_math_scripts(context)
+        __M_writer = context.writer()
+        __M_writer('\n')
+        if any(post.is_mathjax for post in posts):
+            __M_writer('        ')
+            __M_writer(str(math_scripts()))
+            __M_writer('\n')
+        return ''
+    finally:
+        context.caller_stack._pop_frame()
+
+
 def render_math_styles_ifposts(context,posts):
     __M_caller = context.caller_stack._push_frame()
     try:
+        any = context.get('any', UNDEFINED)
         def math_styles():
             return render_math_styles(context)
-        any = context.get('any', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n')
         if any(post.is_mathjax for post in posts):
@@ -137,8 +121,24 @@ def render_math_styles_ifposts(context,posts):
         context.caller_stack._pop_frame()
 
 
+def render_math_scripts_ifpost(context,post):
+    __M_caller = context.caller_stack._push_frame()
+    try:
+        def math_scripts():
+            return render_math_scripts(context)
+        __M_writer = context.writer()
+        __M_writer('\n')
+        if post.is_mathjax:
+            __M_writer('        ')
+            __M_writer(str(math_scripts()))
+            __M_writer('\n')
+        return ''
+    finally:
+        context.caller_stack._pop_frame()
+
+
 """
 __M_BEGIN_METADATA
-{"source_encoding": "ascii", "filename": "/Users/pengyinshan/nikola/lib/python3.5/site-packages/nikola/data/themes/base/templates/math_helper.tmpl", "uri": "math_helper.tmpl", "line_map": {"130": 56, "131": 57, "132": 58, "133": 58, "134": 58, "140": 134, "16": 0, "21": 30, "22": 36, "23": 42, "24": 48, "25": 54, "26": 60, "32": 38, "38": 38, "39": 39, "40": 40, "41": 40, "42": 40, "48": 50, "54": 50, "55": 51, "56": 52, "57": 52, "58": 52, "64": 2, "71": 2, "72": 3, "73": 4, "74": 6, "75": 7, "76": 10, "77": 10, "78": 14, "79": 15, "80": 19, "81": 21, "82": 22, "83": 23, "84": 23, "85": 23, "86": 24, "87": 25, "93": 44, "100": 44, "101": 45, "102": 46, "103": 46, "104": 46, "110": 32, "115": 32, "116": 33, "117": 34, "123": 56}}
+{"uri": "math_helper.tmpl", "filename": "/Users/pengyinshan/nikola/lib/python3.5/site-packages/nikola/data/themes/base/templates/math_helper.tmpl", "line_map": {"130": 38, "131": 39, "132": 40, "133": 40, "134": 40, "140": 134, "16": 0, "21": 30, "22": 36, "23": 42, "24": 48, "25": 54, "26": 60, "32": 2, "39": 2, "40": 3, "41": 4, "42": 6, "43": 7, "44": 10, "45": 10, "46": 14, "47": 15, "48": 19, "49": 21, "50": 22, "51": 23, "52": 23, "53": 23, "54": 24, "55": 25, "61": 50, "67": 50, "68": 51, "69": 52, "70": 52, "71": 52, "77": 32, "82": 32, "83": 33, "84": 34, "90": 44, "97": 44, "98": 45, "99": 46, "100": 46, "101": 46, "107": 56, "114": 56, "115": 57, "116": 58, "117": 58, "118": 58, "124": 38}, "source_encoding": "ascii"}
 __M_END_METADATA
 """

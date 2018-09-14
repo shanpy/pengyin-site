@@ -1,3 +1,9 @@
+<figure id="myPhoto"><img src="/images/Pengyin.jpg"/></figure>
+
+<div id="tweet">
+    <a class="twitter-timeline" data-width="200" data-height="500" data-theme="light" href="https://twitter.com/PengyinShan/likes?ref_src=twsrc%5Etfw">Tweets Liked by @TwitterDev</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+
 <p>
 My <a href="/posts/">Knowledge Base Page</a> contains blog posts of what I've learned: 
     <ul>
@@ -7,7 +13,7 @@ My <a href="/posts/">Knowledge Base Page</a> contains blog posts of what I've le
     </ul>
 </p>
 
-<figure id="myPhoto"><img src="/images/Pengyin.jpg"/></figure>
+<hr/>
 
 <p>
     You can check <a href="/categories/">Tags and Categories Page</a> for topics:
@@ -20,6 +26,8 @@ My <a href="/posts/">Knowledge Base Page</a> contains blog posts of what I've le
     </ul>
 </p>
 
+<hr/>
+
 <p>
 I enjoy learning anything from anyone. I spend most of my free time in reading and hiking. I'm a first-year MBA student in Schulich School of Business, York University, Toronto, Canada. 
 </p>
@@ -28,21 +36,26 @@ I enjoy learning anything from anyone. I spend most of my free time in reading a
 Check My <a href="https://www.linkedin.com/in/pengyinshan/" target="_blank">LinkedIn</a> and <a href="/Pengyin_Shan.pdf" target="_blank">Resume</a>.
 </p>
 
+<p><br/></p>
 <style type="text/css">
+    #tweet{
+        display: inline-block;
+        float: right;
+        padding-left: 4em;
+
+    }
     #myPhoto{
         display: inline-block;
         float: left;
         padding-right: 4em;
-        @media screen and (max-width: 600px) {
-            max-width: 60%;
-            padding-right: 1em;
+    }
+@media screen and (max-width: 992px) {
+    #tweet{
+            display: none;
         }
-        @media screen and (max-width: 992px) {
+        #myPhoto{
             max-width: 50%;
             padding-right: 1em;
         }
-    }
-    #myPhoto img, #myPhoto figcaption {
-        display: table-row;
-    }
+}
 </style>
