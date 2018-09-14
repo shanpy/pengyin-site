@@ -39,7 +39,7 @@
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/case-journal.xml</loc>
-  <lastmod>2018-09-13T00:34:00Z</lastmod>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/cat_algorithm-data-structure.xml</loc>
@@ -55,7 +55,7 @@
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/cat_consulting.xml</loc>
-  <lastmod>2018-09-13T00:34:00Z</lastmod>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/cat_data-science.xml</loc>
@@ -150,6 +150,10 @@
   <lastmod>2018-09-13T00:34:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>https://www.pengyin-shan.com/categories/drafts.xml</loc>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://www.pengyin-shan.com/categories/dropdown.xml</loc>
   <lastmod>2018-09-13T00:34:00Z</lastmod>
  </sitemap>
@@ -172,6 +176,10 @@
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/finance.xml</loc>
   <lastmod>2018-09-13T00:34:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://www.pengyin-shan.com/categories/framework.xml</loc>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/github.xml</loc>
@@ -363,14 +371,14 @@
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/galleries/rss.xml</loc>
-  <lastmod>2018-09-13T11:50:00Z</lastmod>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/rss.xml</loc>
-  <lastmod>2018-09-13T00:34:00Z</lastmod>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/sitemap.xml</loc>
-  <lastmod>2018-09-13T11:50:00Z</lastmod>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
  </sitemap>
 </sitemapindex>

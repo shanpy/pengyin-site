@@ -7,7 +7,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://www.pengyin-shan.com/</loc>
-  <lastmod>2018-09-13T02:29:00Z</lastmod>
+  <lastmod>2018-09-14T11:55:00Z</lastmod>
  </url>
  <url>
   <loc>https://www.pengyin-shan.com/2014/</loc>
@@ -31,11 +31,11 @@
  </url>
  <url>
   <loc>https://www.pengyin-shan.com/archive.html</loc>
-  <lastmod>2018-09-13T11:50:00Z</lastmod>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
  </url>
  <url>
   <loc>https://www.pengyin-shan.com/categories/</loc>
-  <lastmod>2018-09-12T02:36:00Z</lastmod>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
  </url>
  <url>
   <loc>https://www.pengyin-shan.com/categories/ajax/</loc>
@@ -182,6 +182,10 @@
   <lastmod>2018-09-12T02:36:00Z</lastmod>
  </url>
  <url>
+  <loc>https://www.pengyin-shan.com/categories/drafts/</loc>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://www.pengyin-shan.com/categories/dropdown/</loc>
   <lastmod>2018-09-12T02:36:00Z</lastmod>
  </url>
@@ -204,6 +208,10 @@
  <url>
   <loc>https://www.pengyin-shan.com/categories/finance/</loc>
   <lastmod>2018-09-12T02:36:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.pengyin-shan.com/categories/framework/</loc>
+  <lastmod>2018-09-14T13:37:00Z</lastmod>
  </url>
  <url>
   <loc>https://www.pengyin-shan.com/categories/github/</loc>
@@ -403,7 +411,7 @@
  </url>
  <url>
   <loc>https://www.pengyin-shan.com/posts/</loc>
-  <lastmod>2018-09-12T02:36:00Z</lastmod>
+  <lastmod>2018-09-14T13:37:00Z</lastmod>
  </url>
  <url>
   <loc>https://www.pengyin-shan.com/posts/2014/benefit-of-hosting-content-library-with-CDN/</loc>
@@ -818,6 +826,34 @@
   <lastmod>2018-09-13T02:29:00Z</lastmod>
  </url>
  <url>
+  <loc>https://www.pengyin-shan.com/posts/2018/consulting/consulting-cases-investment/</loc>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.pengyin-shan.com/posts/2018/consulting/consulting-cases-make-profit/</loc>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.pengyin-shan.com/posts/2018/consulting/consulting-cases-market-share/</loc>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.pengyin-shan.com/posts/2018/consulting/consulting-cases-new-martket-m-%26-a/</loc>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.pengyin-shan.com/posts/2018/consulting/consulting-cases-product-differentiation/</loc>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.pengyin-shan.com/posts/2018/consulting/consulting-cases-useful-data-knowledge-base/</loc>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.pengyin-shan.com/posts/2018/consulting/consulting-interview-toolkit-collection-from-case-books/</loc>
+  <lastmod>2018-09-14T13:37:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://www.pengyin-shan.com/posts/2018/consulting/notes-for-case-interview-secrets-3-4/</loc>
   <lastmod>2018-09-13T02:29:00Z</lastmod>
  </url>
@@ -847,42 +883,46 @@
  </url>
  <url>
   <loc>https://www.pengyin-shan.com/posts/index-1.html</loc>
-  <lastmod>2018-09-13T11:50:00Z</lastmod>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
  </url>
  <url>
   <loc>https://www.pengyin-shan.com/posts/index-10.html</loc>
-  <lastmod>2018-09-13T11:50:00Z</lastmod>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://www.pengyin-shan.com/posts/index-11.html</loc>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
  </url>
  <url>
   <loc>https://www.pengyin-shan.com/posts/index-2.html</loc>
-  <lastmod>2018-09-13T11:50:00Z</lastmod>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
  </url>
  <url>
   <loc>https://www.pengyin-shan.com/posts/index-3.html</loc>
-  <lastmod>2018-09-13T11:50:00Z</lastmod>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
  </url>
  <url>
   <loc>https://www.pengyin-shan.com/posts/index-4.html</loc>
-  <lastmod>2018-09-13T11:50:00Z</lastmod>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
  </url>
  <url>
   <loc>https://www.pengyin-shan.com/posts/index-5.html</loc>
-  <lastmod>2018-09-13T11:50:00Z</lastmod>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
  </url>
  <url>
   <loc>https://www.pengyin-shan.com/posts/index-6.html</loc>
-  <lastmod>2018-09-13T11:50:00Z</lastmod>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
  </url>
  <url>
   <loc>https://www.pengyin-shan.com/posts/index-7.html</loc>
-  <lastmod>2018-09-13T11:50:00Z</lastmod>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
  </url>
  <url>
   <loc>https://www.pengyin-shan.com/posts/index-8.html</loc>
-  <lastmod>2018-09-13T11:50:00Z</lastmod>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
  </url>
  <url>
   <loc>https://www.pengyin-shan.com/posts/index-9.html</loc>
-  <lastmod>2018-09-13T11:50:00Z</lastmod>
+  <lastmod>2018-09-14T16:20:00Z</lastmod>
  </url>
 </urlset>
