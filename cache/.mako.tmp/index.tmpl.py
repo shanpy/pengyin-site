@@ -5,12 +5,12 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1536944748.84188
+_modified_time = 1536944887.300824
 _enable_loop = True
 _template_filename = 'themes/hpstr/templates/index.tmpl'
 _template_uri = 'index.tmpl'
 _source_encoding = 'utf-8'
-_exports = ['content_header', 'extra_head', 'content']
+_exports = ['content', 'extra_head', 'content_header']
 
 
 def _mako_get_namespace(context, name):
@@ -33,19 +33,19 @@ def render_body(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
-        def extra_head():
-            return render_extra_head(context._locals(__M_locals))
-        index_file = context.get('index_file', UNDEFINED)
+        helper = _mako_get_namespace(context, 'helper')
         def content():
             return render_content(context._locals(__M_locals))
         def content_header():
             return render_content_header(context._locals(__M_locals))
-        helper = _mako_get_namespace(context, 'helper')
-        permalink = context.get('permalink', UNDEFINED)
         parent = context.get('parent', UNDEFINED)
-        posts = context.get('posts', UNDEFINED)
+        permalink = context.get('permalink', UNDEFINED)
         date_format = context.get('date_format', UNDEFINED)
         comments = _mako_get_namespace(context, 'comments')
+        index_file = context.get('index_file', UNDEFINED)
+        posts = context.get('posts', UNDEFINED)
+        def extra_head():
+            return render_extra_head(context._locals(__M_locals))
         __M_writer = context.writer()
         __M_writer('\n')
         __M_writer('\n')
@@ -65,50 +65,17 @@ def render_body(context,**pageargs):
         context.caller_stack._pop_frame()
 
 
-def render_content_header(context,**pageargs):
-    __M_caller = context.caller_stack._push_frame()
-    try:
-        def content_header():
-            return render_content_header(context)
-        __M_writer = context.writer()
-        return ''
-    finally:
-        context.caller_stack._pop_frame()
-
-
-def render_extra_head(context,**pageargs):
-    __M_caller = context.caller_stack._push_frame()
-    try:
-        posts = context.get('posts', UNDEFINED)
-        def extra_head():
-            return render_extra_head(context)
-        index_file = context.get('index_file', UNDEFINED)
-        permalink = context.get('permalink', UNDEFINED)
-        parent = context.get('parent', UNDEFINED)
-        __M_writer = context.writer()
-        __M_writer('\n    ')
-        __M_writer(str(parent.extra_head()))
-        __M_writer('\n')
-        if posts and (permalink == '/' or permalink == '/' + index_file):
-            __M_writer('        <link rel="prefetch" href="')
-            __M_writer(str(posts[0].permalink()))
-            __M_writer('" type="text/html">\n')
-        return ''
-    finally:
-        context.caller_stack._pop_frame()
-
-
 def render_content(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
+        helper = _mako_get_namespace(context, 'helper')
         def content():
             return render_content(context)
         def content_header():
             return render_content_header(context)
-        helper = _mako_get_namespace(context, 'helper')
-        posts = context.get('posts', UNDEFINED)
         date_format = context.get('date_format', UNDEFINED)
         comments = _mako_get_namespace(context, 'comments')
+        posts = context.get('posts', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n')
         if 'parent' not in context._data or not hasattr(context._data['parent'], 'content_header'):
@@ -143,8 +110,41 @@ def render_content(context,**pageargs):
         context.caller_stack._pop_frame()
 
 
+def render_extra_head(context,**pageargs):
+    __M_caller = context.caller_stack._push_frame()
+    try:
+        permalink = context.get('permalink', UNDEFINED)
+        parent = context.get('parent', UNDEFINED)
+        def extra_head():
+            return render_extra_head(context)
+        posts = context.get('posts', UNDEFINED)
+        index_file = context.get('index_file', UNDEFINED)
+        __M_writer = context.writer()
+        __M_writer('\n    ')
+        __M_writer(str(parent.extra_head()))
+        __M_writer('\n')
+        if posts and (permalink == '/' or permalink == '/' + index_file):
+            __M_writer('        <link rel="prefetch" href="')
+            __M_writer(str(posts[0].permalink()))
+            __M_writer('" type="text/html">\n')
+        return ''
+    finally:
+        context.caller_stack._pop_frame()
+
+
+def render_content_header(context,**pageargs):
+    __M_caller = context.caller_stack._push_frame()
+    try:
+        def content_header():
+            return render_content_header(context)
+        __M_writer = context.writer()
+        return ''
+    finally:
+        context.caller_stack._pop_frame()
+
+
 """
 __M_BEGIN_METADATA
-{"uri": "index.tmpl", "filename": "themes/hpstr/templates/index.tmpl", "line_map": {"128": 22, "129": 24, "130": 24, "131": 24, "68": 14, "133": 27, "134": 27, "135": 31, "136": 31, "137": 32, "138": 32, "132": 24, "140": 33, "79": 6, "146": 140, "90": 7, "122": 20, "23": 2, "89": 6, "26": 3, "91": 7, "92": 8, "93": 9, "94": 9, "95": 9, "32": 0, "139": 33, "101": 13, "113": 13, "50": 2, "51": 3, "52": 4, "126": 20, "118": 14, "119": 15, "120": 16, "57": 11, "121": 20, "123": 20, "124": 20, "125": 20, "62": 34, "127": 22}, "source_encoding": "utf-8"}
+{"source_encoding": "utf-8", "filename": "themes/hpstr/templates/index.tmpl", "line_map": {"128": 9, "96": 24, "68": 13, "129": 9, "23": 2, "135": 14, "80": 13, "146": 135, "90": 20, "85": 14, "86": 15, "87": 16, "88": 20, "89": 20, "26": 3, "91": 20, "92": 20, "93": 20, "94": 22, "95": 22, "32": 0, "97": 24, "98": 24, "99": 24, "100": 27, "101": 27, "102": 31, "103": 31, "104": 32, "105": 32, "106": 33, "107": 33, "113": 6, "50": 2, "51": 3, "52": 4, "126": 8, "57": 11, "123": 6, "124": 7, "125": 7, "62": 34, "127": 9}, "uri": "index.tmpl"}
 __M_END_METADATA
 """
