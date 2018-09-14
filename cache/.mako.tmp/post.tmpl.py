@@ -5,7 +5,7 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1536926062.304964
+_modified_time = 1536926110.16495
 _enable_loop = True
 _template_filename = 'themes/hpstr/templates/post.tmpl'
 _template_uri = 'post.tmpl'
@@ -36,16 +36,16 @@ def render_body(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
-        helper = _mako_get_namespace(context, 'helper')
-        def extra_head():
-            return render_extra_head(context._locals(__M_locals))
-        comments = _mako_get_namespace(context, 'comments')
+        post = context.get('post', UNDEFINED)
         def content():
             return render_content(context._locals(__M_locals))
-        parent = context.get('parent', UNDEFINED)
-        pheader = _mako_get_namespace(context, 'pheader')
-        post = context.get('post', UNDEFINED)
+        def extra_head():
+            return render_extra_head(context._locals(__M_locals))
+        helper = _mako_get_namespace(context, 'helper')
         messages = context.get('messages', UNDEFINED)
+        pheader = _mako_get_namespace(context, 'pheader')
+        parent = context.get('parent', UNDEFINED)
+        comments = _mako_get_namespace(context, 'comments')
         site_has_comments = context.get('site_has_comments', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n')
@@ -70,13 +70,13 @@ def render_body(context,**pageargs):
 def render_content(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
-        pheader = _mako_get_namespace(context, 'pheader')
-        helper = _mako_get_namespace(context, 'helper')
-        post = context.get('post', UNDEFINED)
         messages = context.get('messages', UNDEFINED)
-        comments = _mako_get_namespace(context, 'comments')
+        pheader = _mako_get_namespace(context, 'pheader')
+        post = context.get('post', UNDEFINED)
         def content():
             return render_content(context)
+        comments = _mako_get_namespace(context, 'comments')
+        helper = _mako_get_namespace(context, 'helper')
         site_has_comments = context.get('site_has_comments', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n<article class="post-')
@@ -105,11 +105,11 @@ def render_content(context,**pageargs):
 def render_extra_head(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
-        helper = _mako_get_namespace(context, 'helper')
-        def extra_head():
-            return render_extra_head(context)
         parent = context.get('parent', UNDEFINED)
         post = context.get('post', UNDEFINED)
+        def extra_head():
+            return render_extra_head(context)
+        helper = _mako_get_namespace(context, 'helper')
         __M_writer = context.writer()
         __M_writer('\n    ')
         __M_writer(str(parent.extra_head()))
@@ -153,6 +153,6 @@ def render_extra_head(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"source_encoding": "utf-8", "filename": "themes/hpstr/templates/post.tmpl", "line_map": {"128": 16, "129": 17, "130": 17, "131": 17, "132": 17, "133": 17, "134": 19, "135": 20, "136": 20, "137": 20, "138": 20, "139": 20, "140": 22, "141": 23, "142": 25, "143": 25, "144": 25, "145": 26, "146": 26, "147": 27, "148": 27, "154": 148, "23": 3, "26": 4, "29": 2, "35": 0, "51": 2, "52": 3, "53": 4, "54": 5, "59": 28, "64": 54, "70": 30, "82": 30, "83": 31, "84": 31, "85": 32, "86": 32, "87": 34, "88": 34, "89": 45, "90": 46, "91": 47, "92": 47, "93": 48, "94": 48, "95": 51, "96": 51, "97": 51, "98": 53, "99": 53, "105": 7, "114": 7, "115": 8, "116": 8, "117": 9, "118": 10, "119": 10, "120": 10, "121": 12, "122": 13, "123": 13, "124": 13, "125": 15, "126": 15, "127": 15}, "uri": "post.tmpl"}
+{"line_map": {"128": 16, "129": 17, "130": 17, "131": 17, "132": 17, "133": 17, "134": 19, "135": 20, "136": 20, "137": 20, "138": 20, "139": 20, "140": 22, "141": 23, "142": 25, "143": 25, "144": 25, "145": 26, "146": 26, "147": 27, "148": 27, "154": 148, "23": 3, "26": 4, "29": 2, "35": 0, "51": 2, "52": 3, "53": 4, "54": 5, "59": 28, "64": 54, "70": 30, "82": 30, "83": 31, "84": 31, "85": 32, "86": 32, "87": 34, "88": 34, "89": 45, "90": 46, "91": 47, "92": 47, "93": 48, "94": 48, "95": 51, "96": 51, "97": 51, "98": 53, "99": 53, "105": 7, "114": 7, "115": 8, "116": 8, "117": 9, "118": 10, "119": 10, "120": 10, "121": 12, "122": 13, "123": 13, "124": 13, "125": 15, "126": 15, "127": 15}, "uri": "post.tmpl", "filename": "themes/hpstr/templates/post.tmpl", "source_encoding": "utf-8"}
 __M_END_METADATA
 """
