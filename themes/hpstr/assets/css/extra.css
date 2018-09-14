@@ -51,7 +51,12 @@
 }
 
 /*self-defined*/
-
+blockquote {
+    font-size: large !important;
+}
+code {
+    font-size: large !important;
+}
 #post-index #main {
     max-width: 1059px;
     margin-top: 50px;

@@ -135,8 +135,10 @@ TRANSLATIONS_PATTERN = "{path}.{lang}.{ext}"
 NAVIGATION_LINKS = {
     DEFAULT_LANG: (
         ("/posts/", "My Knowledge Base"),
+        ("/categories/cat_consulting/", "Knowledge Base - Consulting"),
+        ("/categories/cat_business/", "Knowledge Base - Business"),
+        ("/categories/", "Knowledge Base - Tags and Categories"),
         ("https://www.linkedin.com/in/pengyinshan", "My LinkedIn"),
-        ("/categories/", "Tags and Categories"),
         ("/rss.xml", "RSS feed"),
         ("/archive.html", "Archive")
     ),
