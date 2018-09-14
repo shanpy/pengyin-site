@@ -5,7 +5,7 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1536841196.977294
+_modified_time = 1536926061.988296
 _enable_loop = True
 _template_filename = 'themes/hpstr/templates/index.tmpl'
 _template_uri = 'index.tmpl'
@@ -20,11 +20,11 @@ def _mako_get_namespace(context, name):
         _mako_generate_namespaces(context)
         return context.namespaces[(__name__, name)]
 def _mako_generate_namespaces(context):
-    ns = runtime.TemplateNamespace('helper', context._clean_inheritance_tokens(), templateuri='index_helper.tmpl', callables=None,  calling_uri=_template_uri)
-    context.namespaces[(__name__, 'helper')] = ns
-
     ns = runtime.TemplateNamespace('comments', context._clean_inheritance_tokens(), templateuri='comments_helper.tmpl', callables=None,  calling_uri=_template_uri)
     context.namespaces[(__name__, 'comments')] = ns
+
+    ns = runtime.TemplateNamespace('helper', context._clean_inheritance_tokens(), templateuri='index_helper.tmpl', callables=None,  calling_uri=_template_uri)
+    context.namespaces[(__name__, 'helper')] = ns
 
 def _mako_inherit(template, context):
     _mako_generate_namespaces(context)
@@ -33,19 +33,19 @@ def render_body(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
-        posts = context.get('posts', UNDEFINED)
-        def extra_head():
-            return render_extra_head(context._locals(__M_locals))
-        parent = context.get('parent', UNDEFINED)
-        date_format = context.get('date_format', UNDEFINED)
-        def content():
-            return render_content(context._locals(__M_locals))
-        def content_header():
-            return render_content_header(context._locals(__M_locals))
-        comments = _mako_get_namespace(context, 'comments')
         index_file = context.get('index_file', UNDEFINED)
         helper = _mako_get_namespace(context, 'helper')
+        def extra_head():
+            return render_extra_head(context._locals(__M_locals))
+        date_format = context.get('date_format', UNDEFINED)
+        comments = _mako_get_namespace(context, 'comments')
+        def content():
+            return render_content(context._locals(__M_locals))
+        parent = context.get('parent', UNDEFINED)
         permalink = context.get('permalink', UNDEFINED)
+        posts = context.get('posts', UNDEFINED)
+        def content_header():
+            return render_content_header(context._locals(__M_locals))
         __M_writer = context.writer()
         __M_writer('\n')
         __M_writer('\n')
@@ -68,14 +68,14 @@ def render_body(context,**pageargs):
 def render_content(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
-        posts = context.get('posts', UNDEFINED)
+        helper = _mako_get_namespace(context, 'helper')
         date_format = context.get('date_format', UNDEFINED)
+        comments = _mako_get_namespace(context, 'comments')
         def content():
             return render_content(context)
+        posts = context.get('posts', UNDEFINED)
         def content_header():
             return render_content_header(context)
-        comments = _mako_get_namespace(context, 'comments')
-        helper = _mako_get_namespace(context, 'helper')
         __M_writer = context.writer()
         __M_writer('\n')
         if 'parent' not in context._data or not hasattr(context._data['parent'], 'content_header'):
@@ -113,12 +113,12 @@ def render_content(context,**pageargs):
 def render_extra_head(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
-        posts = context.get('posts', UNDEFINED)
+        permalink = context.get('permalink', UNDEFINED)
         def extra_head():
             return render_extra_head(context)
-        index_file = context.get('index_file', UNDEFINED)
-        permalink = context.get('permalink', UNDEFINED)
+        posts = context.get('posts', UNDEFINED)
         parent = context.get('parent', UNDEFINED)
+        index_file = context.get('index_file', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n    ')
         __M_writer(str(parent.extra_head()))
@@ -145,6 +145,6 @@ def render_content_header(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"line_map": {"128": 9, "96": 24, "68": 13, "129": 9, "23": 2, "135": 14, "80": 13, "146": 135, "90": 20, "85": 14, "86": 15, "87": 16, "88": 20, "89": 20, "26": 3, "91": 20, "92": 20, "93": 20, "94": 22, "95": 22, "32": 0, "97": 24, "98": 24, "99": 24, "100": 27, "101": 27, "102": 31, "103": 31, "104": 32, "105": 32, "106": 33, "107": 33, "113": 6, "50": 2, "51": 3, "52": 4, "126": 8, "57": 11, "123": 6, "124": 7, "125": 7, "62": 34, "127": 9}, "filename": "themes/hpstr/templates/index.tmpl", "source_encoding": "utf-8", "uri": "index.tmpl"}
+{"source_encoding": "utf-8", "filename": "themes/hpstr/templates/index.tmpl", "line_map": {"128": 9, "96": 24, "68": 13, "129": 9, "23": 3, "135": 14, "80": 13, "146": 135, "90": 20, "85": 14, "86": 15, "87": 16, "88": 20, "89": 20, "26": 2, "91": 20, "92": 20, "93": 20, "94": 22, "95": 22, "32": 0, "97": 24, "98": 24, "99": 24, "100": 27, "101": 27, "102": 31, "103": 31, "104": 32, "105": 32, "106": 33, "107": 33, "113": 6, "50": 2, "51": 3, "52": 4, "126": 8, "57": 11, "123": 6, "124": 7, "125": 7, "62": 34, "127": 9}, "uri": "index.tmpl"}
 __M_END_METADATA
 """

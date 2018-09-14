@@ -5,7 +5,7 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1536841196.112707
+_modified_time = 1536926061.546735
 _enable_loop = True
 _template_filename = 'themes/hpstr/templates/base.tmpl'
 _template_uri = 'base.tmpl'
@@ -20,11 +20,11 @@ def _mako_get_namespace(context, name):
         _mako_generate_namespaces(context)
         return context.namespaces[(__name__, name)]
 def _mako_generate_namespaces(context):
-    ns = runtime.TemplateNamespace('header', context._clean_inheritance_tokens(), templateuri='base_header.tmpl', callables=None,  calling_uri=_template_uri)
-    context.namespaces[(__name__, 'header')] = ns
-
     ns = runtime.TemplateNamespace('base', context._clean_inheritance_tokens(), templateuri='base_helper.tmpl', callables=None,  calling_uri=_template_uri)
     context.namespaces[(__name__, 'base')] = ns
+
+    ns = runtime.TemplateNamespace('header', context._clean_inheritance_tokens(), templateuri='base_header.tmpl', callables=None,  calling_uri=_template_uri)
+    context.namespaces[(__name__, 'header')] = ns
 
     ns = runtime.TemplateNamespace('footer', context._clean_inheritance_tokens(), templateuri='base_footer.tmpl', callables=None,  calling_uri=_template_uri)
     context.namespaces[(__name__, 'footer')] = ns
@@ -34,21 +34,21 @@ def render_body(context,**pageargs):
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
         _import_ns = {}
-        _mako_get_namespace(context, 'header')._populate(_import_ns, ['*'])
         _mako_get_namespace(context, 'base')._populate(_import_ns, ['*'])
+        _mako_get_namespace(context, 'header')._populate(_import_ns, ['*'])
         _mako_get_namespace(context, 'footer')._populate(_import_ns, ['*'])
-        body_end = _import_ns.get('body_end', context.get('body_end', UNDEFINED))
-        messages = _import_ns.get('messages', context.get('messages', UNDEFINED))
         def extra_head():
             return render_extra_head(context._locals(__M_locals))
-        header = _mako_get_namespace(context, 'header')
-        lang = _import_ns.get('lang', context.get('lang', UNDEFINED))
+        set_locale = _import_ns.get('set_locale', context.get('set_locale', UNDEFINED))
+        body_end = _import_ns.get('body_end', context.get('body_end', UNDEFINED))
+        base = _mako_get_namespace(context, 'base')
         def content():
             return render_content(context._locals(__M_locals))
-        set_locale = _import_ns.get('set_locale', context.get('set_locale', UNDEFINED))
-        base = _mako_get_namespace(context, 'base')
-        footer = _mako_get_namespace(context, 'footer')
         template_hooks = _import_ns.get('template_hooks', context.get('template_hooks', UNDEFINED))
+        header = _mako_get_namespace(context, 'header')
+        messages = _import_ns.get('messages', context.get('messages', UNDEFINED))
+        footer = _mako_get_namespace(context, 'footer')
+        lang = _import_ns.get('lang', context.get('lang', UNDEFINED))
         __M_writer = context.writer()
         __M_writer('\n')
         __M_writer('\n')
@@ -90,8 +90,8 @@ def render_content(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         _import_ns = {}
-        _mako_get_namespace(context, 'header')._populate(_import_ns, ['*'])
         _mako_get_namespace(context, 'base')._populate(_import_ns, ['*'])
+        _mako_get_namespace(context, 'header')._populate(_import_ns, ['*'])
         _mako_get_namespace(context, 'footer')._populate(_import_ns, ['*'])
         def content():
             return render_content(context)
@@ -105,8 +105,8 @@ def render_extra_head(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         _import_ns = {}
-        _mako_get_namespace(context, 'header')._populate(_import_ns, ['*'])
         _mako_get_namespace(context, 'base')._populate(_import_ns, ['*'])
+        _mako_get_namespace(context, 'header')._populate(_import_ns, ['*'])
         _mako_get_namespace(context, 'footer')._populate(_import_ns, ['*'])
         def extra_head():
             return render_extra_head(context)
@@ -119,6 +119,6 @@ def render_extra_head(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"line_map": {"64": 9, "65": 10, "66": 10, "67": 13, "68": 13, "69": 14, "70": 14, "75": 16, "76": 18, "77": 18, "78": 19, "79": 19, "80": 20, "81": 20, "82": 21, "83": 21, "23": 3, "89": 16, "26": 2, "29": 4, "32": 0, "104": 7, "114": 7, "53": 2, "54": 3, "55": 4, "56": 5, "57": 5, "58": 6, "59": 6, "120": 114}, "filename": "themes/hpstr/templates/base.tmpl", "source_encoding": "utf-8", "uri": "base.tmpl"}
+{"source_encoding": "utf-8", "filename": "themes/hpstr/templates/base.tmpl", "line_map": {"64": 9, "65": 10, "66": 10, "67": 13, "68": 13, "69": 14, "70": 14, "75": 16, "76": 18, "77": 18, "78": 19, "79": 19, "80": 20, "81": 20, "82": 21, "83": 21, "23": 2, "89": 16, "26": 3, "29": 4, "32": 0, "104": 7, "114": 7, "53": 2, "54": 3, "55": 4, "56": 5, "57": 5, "58": 6, "59": 6, "120": 114}, "uri": "base.tmpl"}
 __M_END_METADATA
 """
