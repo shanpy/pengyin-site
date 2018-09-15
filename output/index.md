@@ -13,7 +13,7 @@
 
 
 <div id="tweet">
-    <a class="twitter-timeline" data-width="200" data-height="500" data-theme="light" href="https://twitter.com/PengyinShan/likes?ref_src=twsrc%5Etfw">Tweets Liked by @TwitterDev</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <a data-width="200" data-height="500" class="twitter-timeline" href="https://twitter.com/PengyinShan?ref_src=twsrc%5Etfw">Tweets by PengyinShan</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </div>
 <p>
 My <a href="/posts/">Knowledge Base Page</a> contains blog posts of what I've learned: 
