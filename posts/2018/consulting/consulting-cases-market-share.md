@@ -23,12 +23,11 @@
 1. Must fit within positioning decision and market segmentation (e.g. high end, low end; consumer, industry)
 2. Differentiated good vs. commodity
 3. Features and capabilities
-4. Reliability, quality, brand name, reputation
-5. Packaging, size
-6. Service, warranties
-7. Future strategy for the product
-
-- 价格 (`Price`): 根据不同的市场定位，制定不同的价格策略，产品的定价依据是企业的品牌战略，注重品牌的含金量。
+4. Reliability, quality
+5. Image of product: brand name, reputation
+6. Packaging, size
+7. Service, warranties
+8. Future strategy for the product
 
 ###Placement
 
@@ -65,6 +64,8 @@ demonstrations.
 5. Direct sales.
 
 ###Price
+
+根据不同的市场定位，制定不同的价格策略，产品的定价依据是企业的品牌战略，注重品牌的含金量。
 
 1. Considers both retail price and discounts.
 2. What strategy? `MC=MR`? Skim (high price, make profits now)? Penetrate (low price, gain market share)?
