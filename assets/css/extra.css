@@ -51,6 +51,11 @@
 }
 
 /*self-defined*/
+body, p, h1, h2, h3, h4, h5, h6  {
+    font-family: "Chronicle SSm",Georgia,Times,"Times New Roman",serif !important;
+    /*font-family: 'Open Sans',Verdana,Helvetica,sans-serif;*/
+}
+
 blockquote {
     font-size: large !important;
 }
@@ -108,12 +113,6 @@ time {
 .pager li{
       display: inline; 
       padding-right: 1em;
-      @media screen and (max-width: 600px) {
-            padding-right: 0.3em;
-        }
-        @media screen and (max-width: 992px) {
-            padding-right: 0.5em;
-        } 
 }
 .share{
         display: flex !important;
@@ -122,10 +121,19 @@ time {
 .share span{
         vertical-align: center !important;
         margin-right: 1em;
-      @media screen and (max-width: 600px) {
-            margin-right: 0.3em;
-        }
-        @media screen and (max-width: 992px) {
-            margin-right: 0.5em;
-        }
+}
+
+/*Small Screen*/
+
+ @media screen and (max-width: 992px) {
+        .share span{
+         margin-right: 0.5em;
+    }
+} 
+
+
+@media screen and (max-width: 600px) {
+    .share span{
+         margin-right: 0.3em;
+    }         
 }
