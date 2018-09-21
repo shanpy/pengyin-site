@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Wendy's Corner</title><link>https://www.pengyin-shan.com/</link><description>Be Passionate.</description><atom:link rel="self" href="https://www.pengyin-shan.com/rss.xml" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Sat, 15 Sep 2018 01:31:05 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>(Updating) Consulting Cases - Investment</title><link>https://www.pengyin-shan.com/posts/2018/consulting/consulting-cases-investment/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;div class="toc"&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Wendy's Corner</title><link>https://www.pengyin-shan.com/</link><description>Be Passionate.</description><atom:link type="application/rss+xml" rel="self" href="https://www.pengyin-shan.com/rss.xml"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Fri, 21 Sep 2018 11:22:56 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>(Updating) How to Present a Case</title><link>https://www.pengyin-shan.com/posts/2018/business/how-to-present-a-case/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;div class="toc"&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/business/how-to-present-a-case/#case-tryout-workshop-handout"&gt;Case Tryout Workshop Handout&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;h2 id="case-tryout-workshop-handout"&gt;Case Tryout Workshop Handout&lt;/h2&gt;
+&lt;p&gt;&lt;img alt="workshop" src="https://www.pengyin-shan.com/images/2018/consulting/how_to_show_case.jpeg"&gt;&lt;/p&gt;&lt;/div&gt;</description><category>Case Journal</category><category>Presentation</category><guid>https://www.pengyin-shan.com/posts/2018/business/how-to-present-a-case/</guid><pubDate>Sun, 16 Sep 2018 04:00:00 GMT</pubDate></item><item><title>(Updating) Consulting Cases - Investment</title><link>https://www.pengyin-shan.com/posts/2018/consulting/consulting-cases-investment/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;div class="toc"&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-cases-investment/#related-terms-and-frameworks"&gt;Related Terms and Frameworks&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-cases-investment/#npv-net-present-value"&gt;NPV (Net Present Value)&lt;/a&gt;&lt;/li&gt;
@@ -862,23 +868,4 @@ their name?&lt;/li&gt;
 &lt;h3 id="wrap-up-story"&gt;WRAP UP STORY&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Q&amp;amp;A everyone in a line&lt;/li&gt;
-&lt;/ul&gt;&lt;/div&gt;</description><category>Info Session</category><guid>https://www.pengyin-shan.com/posts/2018/consulting/notes-for-consulting-bootcamp/</guid><pubDate>Sun, 09 Sep 2018 04:00:00 GMT</pubDate></item><item><title>Chapter 2 of Case in Point: Graph Analysis for Consulting and Case Interviews, written by Marc P. Cosentino Mukund Jain</title><link>https://www.pengyin-shan.com/posts/2018/consulting/chapter-2-of-case-in-point-graph-analysis/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;div class="toc"&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/chapter-2-of-case-in-point-graph-analysis/#steps"&gt;Steps&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/chapter-2-of-case-in-point-graph-analysis/#line-bar-pie"&gt;LINE, BAR, PIE&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/chapter-2-of-case-in-point-graph-analysis/#area-scatter-bubble-redar"&gt;AREA, SCATTER, BUBBLE, REDAR&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/chapter-2-of-case-in-point-graph-analysis/#box-waterfall-histogram-marimekko"&gt;BOX, WATERFALL, HISTOGRAM, MARIMEKKO&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;h3 id="steps"&gt;Steps&lt;/h3&gt;
-&lt;ol&gt;
-&lt;li&gt;SCAN&lt;/li&gt;
-&lt;li&gt;EXTRACT&lt;/li&gt;
-&lt;li&gt;APPLY&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id="line-bar-pie"&gt;LINE, BAR, PIE&lt;/h3&gt;
-&lt;p&gt;&lt;img alt="Case-in-Point-Graph-1" src="https://www.pengyin-shan.com/images/2018/consulting/Case-in-Point-Graphpage1.jpg"&gt;&lt;/p&gt;
-&lt;h3 id="area-scatter-bubble-redar"&gt;AREA, SCATTER, BUBBLE, REDAR&lt;/h3&gt;
-&lt;p&gt;&lt;img alt="Case-in-Point-Graph-2" src="https://www.pengyin-shan.com/images/2018/consulting/Case-in-Point-Graphpage2.jpg"&gt;&lt;/p&gt;
-&lt;h3 id="box-waterfall-histogram-marimekko"&gt;BOX, WATERFALL, HISTOGRAM, MARIMEKKO&lt;/h3&gt;
-&lt;p&gt;&lt;img alt="Case-in-Point-Graph-3" src="https://www.pengyin-shan.com/images/2018/consulting/Case-in-Point-Graphpage3.jpg"&gt;&lt;/p&gt;&lt;/div&gt;</description><category>Reading Notes</category><guid>https://www.pengyin-shan.com/posts/2018/consulting/chapter-2-of-case-in-point-graph-analysis/</guid><pubDate>Wed, 29 Aug 2018 04:00:00 GMT</pubDate></item></channel></rss>
+&lt;/ul&gt;&lt;/div&gt;</description><category>Info Session</category><guid>https://www.pengyin-shan.com/posts/2018/consulting/notes-for-consulting-bootcamp/</guid><pubDate>Sun, 09 Sep 2018 04:00:00 GMT</pubDate></item></channel></rss>
