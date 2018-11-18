@@ -1,7 +1,7 @@
 .. title: Notes for Consulting Bootcamp & First Team Presentation
 .. date: 2018-09-09
 .. category: Consulting
-.. tags: Info Session
+.. tags: Info Session, Case Tip, Case Framework
 .. slug: notes-for-consulting-bootcamp
 .. authors: Pengyin Shan
 .. description: Notes for Consulting Bootcamp and Feedback of MGMT5150 Presentation
