@@ -9,7 +9,7 @@
 .. type: text
 -->
 
-<figure id="myPhoto"><img src="/images/Pengyin.jpg"/></figure>
+<figure id="myPhoto"><img src="/images/Pengyin.png"/></figure>
 
 
 <div id="tweet">
