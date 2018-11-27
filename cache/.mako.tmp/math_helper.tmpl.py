@@ -5,12 +5,12 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1543344743.605336
+_modified_time = 1543344812.135868
 _enable_loop = True
 _template_filename = '/Users/pengyinshan/nikola/lib/python3.5/site-packages/nikola/data/themes/base/templates/math_helper.tmpl'
 _template_uri = 'math_helper.tmpl'
 _source_encoding = 'ascii'
-_exports = ['math_scripts_ifposts', 'math_scripts_ifpost', 'math_styles_ifpost', 'math_styles_ifposts', 'math_scripts', 'math_styles']
+_exports = ['math_scripts_ifposts', 'math_styles_ifpost', 'math_scripts', 'math_styles_ifposts', 'math_styles', 'math_scripts_ifpost']
 
 
 def render_body(context,**pageargs):
@@ -32,28 +32,12 @@ def render_body(context,**pageargs):
 def render_math_scripts_ifposts(context,posts):
     __M_caller = context.caller_stack._push_frame()
     try:
+        any = context.get('any', UNDEFINED)
         def math_scripts():
             return render_math_scripts(context)
-        any = context.get('any', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n')
         if any(post.is_mathjax for post in posts):
-            __M_writer('        ')
-            __M_writer(str(math_scripts()))
-            __M_writer('\n')
-        return ''
-    finally:
-        context.caller_stack._pop_frame()
-
-
-def render_math_scripts_ifpost(context,post):
-    __M_caller = context.caller_stack._push_frame()
-    try:
-        def math_scripts():
-            return render_math_scripts(context)
-        __M_writer = context.writer()
-        __M_writer('\n')
-        if post.is_mathjax:
             __M_writer('        ')
             __M_writer(str(math_scripts()))
             __M_writer('\n')
@@ -78,29 +62,12 @@ def render_math_styles_ifpost(context,post):
         context.caller_stack._pop_frame()
 
 
-def render_math_styles_ifposts(context,posts):
-    __M_caller = context.caller_stack._push_frame()
-    try:
-        any = context.get('any', UNDEFINED)
-        def math_styles():
-            return render_math_styles(context)
-        __M_writer = context.writer()
-        __M_writer('\n')
-        if any(post.is_mathjax for post in posts):
-            __M_writer('        ')
-            __M_writer(str(math_styles()))
-            __M_writer('\n')
-        return ''
-    finally:
-        context.caller_stack._pop_frame()
-
-
 def render_math_scripts(context):
     __M_caller = context.caller_stack._push_frame()
     try:
-        katex_auto_render = context.get('katex_auto_render', UNDEFINED)
         use_katex = context.get('use_katex', UNDEFINED)
         mathjax_config = context.get('mathjax_config', UNDEFINED)
+        katex_auto_render = context.get('katex_auto_render', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n')
         if use_katex:
@@ -124,6 +91,23 @@ def render_math_scripts(context):
         context.caller_stack._pop_frame()
 
 
+def render_math_styles_ifposts(context,posts):
+    __M_caller = context.caller_stack._push_frame()
+    try:
+        def math_styles():
+            return render_math_styles(context)
+        any = context.get('any', UNDEFINED)
+        __M_writer = context.writer()
+        __M_writer('\n')
+        if any(post.is_mathjax for post in posts):
+            __M_writer('        ')
+            __M_writer(str(math_styles()))
+            __M_writer('\n')
+        return ''
+    finally:
+        context.caller_stack._pop_frame()
+
+
 def render_math_styles(context):
     __M_caller = context.caller_stack._push_frame()
     try:
@@ -137,8 +121,24 @@ def render_math_styles(context):
         context.caller_stack._pop_frame()
 
 
+def render_math_scripts_ifpost(context,post):
+    __M_caller = context.caller_stack._push_frame()
+    try:
+        def math_scripts():
+            return render_math_scripts(context)
+        __M_writer = context.writer()
+        __M_writer('\n')
+        if post.is_mathjax:
+            __M_writer('        ')
+            __M_writer(str(math_scripts()))
+            __M_writer('\n')
+        return ''
+    finally:
+        context.caller_stack._pop_frame()
+
+
 """
 __M_BEGIN_METADATA
-{"uri": "math_helper.tmpl", "line_map": {"132": 32, "133": 33, "134": 34, "140": 134, "16": 0, "21": 30, "22": 36, "23": 42, "24": 48, "25": 54, "26": 60, "32": 44, "39": 44, "40": 45, "41": 46, "42": 46, "43": 46, "49": 38, "55": 38, "56": 39, "57": 40, "58": 40, "59": 40, "65": 50, "71": 50, "72": 51, "73": 52, "74": 52, "75": 52, "81": 56, "88": 56, "89": 57, "90": 58, "91": 58, "92": 58, "98": 2, "105": 2, "106": 3, "107": 4, "108": 6, "109": 7, "110": 10, "111": 10, "112": 14, "113": 15, "114": 19, "115": 21, "116": 22, "117": 23, "118": 23, "119": 23, "120": 24, "121": 25, "127": 32}, "source_encoding": "ascii", "filename": "/Users/pengyinshan/nikola/lib/python3.5/site-packages/nikola/data/themes/base/templates/math_helper.tmpl"}
+{"filename": "/Users/pengyinshan/nikola/lib/python3.5/site-packages/nikola/data/themes/base/templates/math_helper.tmpl", "line_map": {"130": 38, "131": 39, "132": 40, "133": 40, "134": 40, "140": 134, "16": 0, "21": 30, "22": 36, "23": 42, "24": 48, "25": 54, "26": 60, "32": 44, "39": 44, "40": 45, "41": 46, "42": 46, "43": 46, "49": 50, "55": 50, "56": 51, "57": 52, "58": 52, "59": 52, "65": 2, "72": 2, "73": 3, "74": 4, "75": 6, "76": 7, "77": 10, "78": 10, "79": 14, "80": 15, "81": 19, "82": 21, "83": 22, "84": 23, "85": 23, "86": 23, "87": 24, "88": 25, "94": 56, "101": 56, "102": 57, "103": 58, "104": 58, "105": 58, "111": 32, "116": 32, "117": 33, "118": 34, "124": 38}, "source_encoding": "ascii", "uri": "math_helper.tmpl"}
 __M_END_METADATA
 """
