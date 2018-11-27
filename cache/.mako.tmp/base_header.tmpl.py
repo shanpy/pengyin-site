@@ -5,12 +5,12 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1543291271.104358
+_modified_time = 1543344743.183066
 _enable_loop = True
 _template_filename = 'themes/hpstr/templates/base_header.tmpl'
 _template_uri = 'base_header.tmpl'
 _source_encoding = 'utf-8'
-_exports = ['html_header', 'html_translation_header', 'html_site_title', 'html_navigation_links']
+_exports = ['html_header', 'html_translation_header', 'html_navigation_links', 'html_site_title']
 
 
 def _mako_get_namespace(context, name):
@@ -45,10 +45,10 @@ def render_html_header(context):
     try:
         _import_ns = {}
         _mako_get_namespace(context, 'base')._populate(_import_ns, ['*'])
-        def html_site_title():
-            return render_html_site_title(context)
         def html_navigation_links():
             return render_html_navigation_links(context)
+        def html_site_title():
+            return render_html_site_title(context)
         __M_writer = context.writer()
         __M_writer('\n')
         __M_writer(str(html_navigation_links()))
@@ -66,8 +66,8 @@ def render_html_translation_header(context):
         _import_ns = {}
         _mako_get_namespace(context, 'base')._populate(_import_ns, ['*'])
         base = _mako_get_namespace(context, 'base')
-        len = _import_ns.get('len', context.get('len', UNDEFINED))
         translations = _import_ns.get('translations', context.get('translations', UNDEFINED))
+        len = _import_ns.get('len', context.get('len', UNDEFINED))
         messages = _import_ns.get('messages', context.get('messages', UNDEFINED))
         __M_writer = context.writer()
         __M_writer('\n')
@@ -82,41 +82,16 @@ def render_html_translation_header(context):
         context.caller_stack._pop_frame()
 
 
-def render_html_site_title(context):
-    __M_caller = context.caller_stack._push_frame()
-    try:
-        _import_ns = {}
-        _mako_get_namespace(context, 'base')._populate(_import_ns, ['*'])
-        blog_description = _import_ns.get('blog_description', context.get('blog_description', UNDEFINED))
-        blog_title = _import_ns.get('blog_title', context.get('blog_title', UNDEFINED))
-        lang = _import_ns.get('lang', context.get('lang', UNDEFINED))
-        _link = _import_ns.get('_link', context.get('_link', UNDEFINED))
-        abs_link = _import_ns.get('abs_link', context.get('abs_link', UNDEFINED))
-        __M_writer = context.writer()
-        __M_writer('\n  <div class="header-title">\n    <div class="header-title-wrap">\n    <h1 id="brand"><a href="')
-        __M_writer(str(abs_link(_link("root", None, lang))))
-        __M_writer('" title="')
-        __M_writer(str(blog_title))
-        __M_writer('" rel="home">\n    ')
-        __M_writer(str(blog_title))
-        __M_writer('</a></h1>\n      <h2>')
-        __M_writer(str(blog_description))
-        __M_writer('</h2>\n    </div><!-- /.header-title-wrap -->\n  </div><!-- /.header-title -->\n')
-        return ''
-    finally:
-        context.caller_stack._pop_frame()
-
-
 def render_html_navigation_links(context):
     __M_caller = context.caller_stack._push_frame()
     try:
         _import_ns = {}
         _mako_get_namespace(context, 'base')._populate(_import_ns, ['*'])
-        tuple = _import_ns.get('tuple', context.get('tuple', UNDEFINED))
         isinstance = _import_ns.get('isinstance', context.get('isinstance', UNDEFINED))
         lang = _import_ns.get('lang', context.get('lang', UNDEFINED))
-        navigation_links = _import_ns.get('navigation_links', context.get('navigation_links', UNDEFINED))
         template_hooks = _import_ns.get('template_hooks', context.get('template_hooks', UNDEFINED))
+        navigation_links = _import_ns.get('navigation_links', context.get('navigation_links', UNDEFINED))
+        tuple = _import_ns.get('tuple', context.get('tuple', UNDEFINED))
         __M_writer = context.writer()
         __M_writer('\n    <nav id="dl-menu" class="dl-menuwrapper" role="navigation">\n    <button class="dl-trigger">Open Menu</button>\n    <ul class="dl-menu">\n')
         for url, text in navigation_links[lang]:
@@ -147,8 +122,33 @@ def render_html_navigation_links(context):
         context.caller_stack._pop_frame()
 
 
+def render_html_site_title(context):
+    __M_caller = context.caller_stack._push_frame()
+    try:
+        _import_ns = {}
+        _mako_get_namespace(context, 'base')._populate(_import_ns, ['*'])
+        abs_link = _import_ns.get('abs_link', context.get('abs_link', UNDEFINED))
+        blog_description = _import_ns.get('blog_description', context.get('blog_description', UNDEFINED))
+        lang = _import_ns.get('lang', context.get('lang', UNDEFINED))
+        blog_title = _import_ns.get('blog_title', context.get('blog_title', UNDEFINED))
+        _link = _import_ns.get('_link', context.get('_link', UNDEFINED))
+        __M_writer = context.writer()
+        __M_writer('\n  <div class="header-title">\n    <div class="header-title-wrap">\n    <h1 id="brand"><a href="')
+        __M_writer(str(abs_link(_link("root", None, lang))))
+        __M_writer('" title="')
+        __M_writer(str(blog_title))
+        __M_writer('" rel="home">\n    ')
+        __M_writer(str(blog_title))
+        __M_writer('</a></h1>\n      <h2>')
+        __M_writer(str(blog_description))
+        __M_writer('</h2>\n    </div><!-- /.header-title-wrap -->\n  </div><!-- /.header-title -->\n')
+        return ''
+    finally:
+        context.caller_stack._pop_frame()
+
+
 """
 __M_BEGIN_METADATA
-{"source_encoding": "utf-8", "line_map": {"128": 35, "129": 35, "130": 35, "131": 35, "132": 35, "133": 37, "134": 38, "135": 39, "136": 39, "137": 39, "138": 39, "139": 39, "140": 42, "141": 42, "142": 42, "143": 43, "144": 43, "150": 144, "23": 2, "26": 0, "33": 2, "34": 13, "35": 23, "36": 46, "37": 55, "43": 4, "53": 4, "54": 5, "55": 5, "56": 11, "57": 11, "63": 48, "73": 48, "74": 49, "75": 50, "76": 51, "77": 51, "78": 52, "79": 52, "85": 15, "96": 15, "97": 18, "98": 18, "99": 18, "100": 18, "101": 19, "102": 19, "103": 20, "104": 20, "110": 25, "121": 25, "122": 29, "123": 30, "124": 31, "125": 32, "126": 32, "127": 34}, "filename": "themes/hpstr/templates/base_header.tmpl", "uri": "base_header.tmpl"}
+{"uri": "base_header.tmpl", "line_map": {"136": 15, "137": 18, "138": 18, "139": 18, "140": 18, "141": 19, "142": 19, "143": 20, "144": 20, "150": 144, "23": 2, "26": 0, "33": 2, "34": 13, "35": 23, "36": 46, "37": 55, "43": 4, "53": 4, "54": 5, "55": 5, "56": 11, "57": 11, "63": 48, "73": 48, "74": 49, "75": 50, "76": 51, "77": 51, "78": 52, "79": 52, "85": 25, "96": 25, "97": 29, "98": 30, "99": 31, "100": 32, "101": 32, "102": 34, "103": 35, "104": 35, "105": 35, "106": 35, "107": 35, "108": 37, "109": 38, "110": 39, "111": 39, "112": 39, "113": 39, "114": 39, "115": 42, "116": 42, "117": 42, "118": 43, "119": 43, "125": 15}, "source_encoding": "utf-8", "filename": "themes/hpstr/templates/base_header.tmpl"}
 __M_END_METADATA
 """

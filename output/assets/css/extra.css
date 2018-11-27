@@ -52,8 +52,7 @@
 
 /*self-defined*/
 body, p, h1, h2, h3, h4, h5, h6  {
-    font-family: "Chronicle SSm",Georgia,Times,"Times New Roman",serif !important;
-    /*font-family: 'Open Sans',Verdana,Helvetica,sans-serif;*/
+    font-family: 'Open Sans',Verdana,Helvetica,sans-serif;
 }
 
 blockquote {
