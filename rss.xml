@@ -1,5 +1,229 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Wendy's Corner</title><link>https://www.pengyin-shan.com/</link><description>Be Passionate.</description><atom:link rel="self" href="https://www.pengyin-shan.com/rss.xml" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Sun, 18 Nov 2018 04:30:39 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Handwritten Notes for Case Interview Workshop</title><link>https://www.pengyin-shan.com/posts/2018/consulting/handwritten-notes-for-case-interview-workshop/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;hr&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Wendy's Corner</title><link>https://www.pengyin-shan.com/</link><description>Be Passionate.</description><atom:link rel="self" type="application/rss+xml" href="https://www.pengyin-shan.com/rss.xml"></atom:link><language>en</language><copyright>Contents © 2018 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Tue, 27 Nov 2018 03:58:12 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>(Updating) Consulting Tookit - Make Profit</title><link>https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;div class="toc"&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#walkin-workshop"&gt;Walkin Workshop&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#decision-tree-build-some-tips-about-approaching-issue"&gt;Decision Tree Build - Some tips about approaching issue&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#market-size-structure"&gt;Market Size Structure&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#fixed-vs-variable"&gt;Fixed v.s. Variable&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#short-long-run"&gt;Short &amp;amp; Long Run&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#fixed-cost"&gt;Fixed Cost&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#committed-fixed-cost"&gt;Committed Fixed Cost&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#discretionary-fixed-cost"&gt;Discretionary Fixed Cost&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#variable-cost"&gt;Variable Cost&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#sunk-costs"&gt;Sunk Costs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#marginal-cost"&gt;Marginal Cost&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#opportunity-cost"&gt;Opportunity Cost&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#break-even-point"&gt;Break-Even Point&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#usage"&gt;Usage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#calculation"&gt;Calculation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#throughput-rating"&gt;Throughput Rating&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#calculation_1"&gt;Calculation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#analysis"&gt;Analysis&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#revenue-part"&gt;Revenue Part&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#how-much-can-we-raise-price"&gt;How much can we raise price?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#how-can-we-increase-quantity"&gt;How can we increase quantity?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#cost-part"&gt;Cost Part&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#common-costs-include"&gt;Common costs include&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#common-cost-reduction-technique"&gt;Common cost reduction technique&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#example-mit-managementconsultingclub-2001-2002-case-book-and-interview-guide"&gt;Example: MIT ManagementConsultingClub 2001-2002 Case Book and Interview Guide&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#potential-methodology"&gt;Potential Methodology&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#interview-example"&gt;Interview example&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#potential-methodology_1"&gt;Potential Methodology&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#key-problem-profitability-of-business-and-size-of-market"&gt;Key problem: Profitability of Business and Size of Market&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;h2 id="walkin-workshop"&gt;Walkin Workshop&lt;/h2&gt;
+&lt;h3 id="decision-tree-build-some-tips-about-approaching-issue"&gt;Decision Tree Build - Some tips about approaching issue&lt;/h3&gt;
+&lt;p&gt;&lt;img alt="market-share-1" src="https://www.pengyin-shan.com/images/2018/consulting/CaseInterviewWalkin1.jpg"&gt;&lt;/p&gt;
+&lt;h3 id="market-size-structure"&gt;Market Size Structure&lt;/h3&gt;
+&lt;p&gt;&lt;img alt="market-share-2" src="https://www.pengyin-shan.com/images/2018/consulting/CaseInterviewWalkin2.jpg"&gt;&lt;/p&gt;
+&lt;p&gt;Check post about &lt;a href="https://pengyin-shan.com/posts/2018/consulting/consulting-toolkit-market-share"&gt;market share&lt;/a&gt; for related information.&lt;/p&gt;
+&lt;h2 id="fixed-vs-variable"&gt;Fixed v.s. Variable&lt;/h2&gt;
+&lt;p&gt;Understanding issues such as: which of these costs are the &lt;strong&gt;main drivers&lt;/strong&gt; and which have &lt;strong&gt;changed over time&lt;/strong&gt;, will help you to better understand the firm’s profitability.&lt;/p&gt;
+&lt;h3 id="short-long-run"&gt;Short &amp;amp; Long Run&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Short run (a couple of months)&lt;/code&gt;: most costs are considered &lt;strong&gt;fixed&lt;/strong&gt; since the firm is typically obligated to pay for purchased materials and cannot easily layoff workers&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Long Run (a couple of years)&lt;/code&gt;: many costs become variable – a firm can decide to purchase less raw material, reduce or increase its workforce and possibly sell some of its capital&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;when firms are making short run decisions, it is only relevant to consider Variable costs, since Fixed costs cannot be easily adjusted. &lt;/p&gt;
+&lt;p&gt;In the long run, almost all costs may be considered variable and should be considered in the firm’s decision-making process.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="fixed-cost"&gt;Fixed Cost&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;a fixed cost must be paid even if there is no output. &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;These costs are incurred by the firm on a &lt;strong&gt;recurring basis&lt;/strong&gt; but
+are generally &lt;strong&gt;recoverable if the firm is shut down&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Examples of fixed costs are: Rent, Plant Maintenance, Overhead, Insurance, and possibly a small number of fixed employees (CEO).&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="committed-fixed-cost"&gt;Committed Fixed Cost&lt;/h4&gt;
+&lt;p&gt;约束性固定成本是指管理当局的决策不能随意改变其支出数额的固定成本，用于形成和维护经营能力、对生产经营能力有约束力的固定成本，因而也称为经营能力固定成本。例如，厂房及机器设备按直线法计提的折旧费、房屋及设备租金、不动产税、财产保险费、照明费、行政管理人员的薪金等，均属于约束性固定成本。&lt;/p&gt;
+&lt;h4 id="discretionary-fixed-cost"&gt;Discretionary Fixed Cost&lt;/h4&gt;
+&lt;p&gt;酌量性固定成本也称为选择性固定成本或者可调整固定成本，是指管理当局的决策可以改变其支出数额的固定成本。例如，广告费、职工教育培训费、技术开发费等。这些成本的支出是可以随企业经营方针的变化而变化的，基本特征是其绝对额的大小直接取决于企业管理当局根据企业的经营状况而做出的判断。&lt;/p&gt;
+&lt;h3 id="variable-cost"&gt;Variable Cost&lt;/h3&gt;
+&lt;p&gt;Ask for variable cost: &lt;code&gt;How has this mix of expenses changed over the past five years?&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Variable costs may change based on the increase or decrease of a firm’s output&lt;/li&gt;
+&lt;li&gt;Examples of Variable costs are: Wages, salaries.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="sunk-costs"&gt;Sunk Costs&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Expenditures that have been made and &lt;strong&gt;cannot be recovered&lt;/strong&gt;. &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Since sunk costs cannot be recovered, they &lt;strong&gt;should not be considered&lt;/strong&gt; when making future economic decisions for the firm. &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Examples: &lt;code&gt;Advertising&lt;/code&gt;, &lt;code&gt;licensing fees&lt;/code&gt;, &lt;code&gt;equipment that was purchased for one use&lt;/code&gt; and cannot be converted for another use.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="marginal-cost"&gt;Marginal Cost&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Incremental cost of producing an additional unit of output. &lt;/li&gt;
+&lt;li&gt;Marginal costs is &lt;code&gt;equal to the increase in variable costs&lt;/code&gt; or &lt;code&gt;the increase in total cost that results from an extra unit of output&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="opportunity-cost"&gt;Opportunity Cost&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Opportunity cost is the cost associated with opportunities that are foregone by &lt;strong&gt;not putting the firm’s resources to their highest-value use&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="break-even-point"&gt;Break-Even Point&lt;/h2&gt;
+&lt;h3 id="usage"&gt;Usage&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Assessing the necessary revenue / cost &lt;strong&gt;balance&lt;/strong&gt; &lt;/li&gt;
+&lt;li&gt;Determine the &lt;strong&gt;minimum revenue&lt;/strong&gt; a company must achieve in order to cover (or pay for) its total costs. At break even, a firm is not making a profit but simply covering its costs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="calculation"&gt;Calculation&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Total Revenue = Total Costs&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;(Price * Quantity Sold) = (Fixed Costs + Variable Costs)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="throughput-rating"&gt;Throughput Rating&lt;/h2&gt;
+&lt;h3 id="calculation_1"&gt;Calculation&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;I=R*T&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;I&lt;/code&gt; is the number of units contained within the system, &lt;strong&gt;inventory&lt;/strong&gt;;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;T&lt;/code&gt; is the time it takes for &lt;strong&gt;all the inventory to go through the process&lt;/strong&gt;, &lt;strong&gt;flow time&lt;/strong&gt;;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;R&lt;/code&gt; is the rate at which the process is delivering throughput, &lt;strong&gt;flow rate&lt;/strong&gt; or &lt;strong&gt;throughput&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="analysis"&gt;Analysis&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;If any segement does not make profit or market share down, WHY? IS IT THE PROBLEM? CAN WE FIX IT?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="revenue-part"&gt;Revenue Part&lt;/h3&gt;
+&lt;h4 id="how-much-can-we-raise-price"&gt;How much can we raise price?&lt;/h4&gt;
+&lt;p&gt;• Does the firm have market power?
+• What is the demand elasticity?
+• Is the product differentiated? Are
+there additional goods and services
+that we can charge a premium for?
+• Are there substitutes?
+• How is our product mix priced?&lt;/p&gt;
+&lt;h4 id="how-can-we-increase-quantity"&gt;How can we increase quantity?&lt;/h4&gt;
+&lt;p&gt;• Sell products to new customers
+• Increase market share
+• Increase market growth
+• 4Ps (Price, Product, Promotion,
+Placement)
+• Sell new products to current
+customers&lt;/p&gt;
+&lt;h3 id="cost-part"&gt;Cost Part&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Don't forget cost after revenue!&lt;/p&gt;
+&lt;p&gt;Ask for BREAK-DOWN of Cost!&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id="common-costs-include"&gt;Common costs include&lt;/h4&gt;
+&lt;p&gt;• Materials
+• Labor (wages &amp;amp; benefits)
+• SG&amp;amp;A
+• Overhead (rent, PP&amp;amp;L)
+• Depreciation
+• Capital costs
+• R&amp;amp;D&lt;/p&gt;
+&lt;h4 id="common-cost-reduction-technique"&gt;Common cost reduction technique&lt;/h4&gt;
+&lt;p&gt;• Improve utilization of equipment
+• Outsource manufacturing
+• Consolidate purchasing
+• Relocate to lower cost areas
+• Partner with distribution companies
+(e.g., Federal Express)
+• Strategic use of IT&lt;/p&gt;
+&lt;h2 id="example-mit-managementconsultingclub-2001-2002-case-book-and-interview-guide"&gt;Example: MIT ManagementConsultingClub 2001-2002 Case Book and Interview Guide&lt;/h2&gt;
+&lt;h3 id="potential-methodology"&gt;Potential Methodology&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Pause for a moment and consider the central problem. Which of these facts are totally irrelevant?&lt;/li&gt;
+&lt;li&gt;Eliminate them for now. Which facts are definitely related to the problem? Ask questions about facts that appear relevant. Probe for additional facts that the interviewer may have.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="interview-example"&gt;Interview example&lt;/h3&gt;
+&lt;p&gt;Client is a leading food company that wants to develop a fresh prepared meal business. Trendamong consumers is toward fresher food with no artificial preservatives or coloring. Consumersare currently purchasing $5.0 billion of frozen meals – trend is toward more upscale products.&lt;/p&gt;
+&lt;p&gt;A fresh meal plate combing a protein, vegetable and starch is delicately arranged in a sealed plastic dome package. Nitrogen gas flushing is used to extend shelf life. Product is currently in limited consumer test at $5.50 to $8.50 per meal. Shelf life of product is 14 days – product will spoil in 21 days potentially causing food poisoning.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Client wants to know if they can make money in this business&lt;/li&gt;
+&lt;li&gt;Client wants to know if the market is big – how will they keep competition out&lt;/li&gt;
+&lt;li&gt;Client wants a consultant to assist in building business case&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="potential-methodology_1"&gt;Potential Methodology&lt;/h3&gt;
+&lt;h4 id="key-problem-profitability-of-business-and-size-of-market"&gt;Key problem: Profitability of Business and Size of Market&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Problem understanding&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Ask about &lt;code&gt;consumer test&lt;/code&gt;. What prices are consumers responding to? Are there any items spoiling on the shelf?&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;What is the &lt;code&gt;competitive structure&lt;/code&gt; of this market currently?&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;What are the components of the company’s &lt;code&gt;cost structure&lt;/code&gt;?&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Structure Analysis&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;What is the break-even point for the firm?&lt;/li&gt;
+&lt;li&gt;Determine Gross Margin per Unit&lt;/li&gt;
+&lt;li&gt;Determine Fixed Costs&lt;/li&gt;
+&lt;li&gt;Divide to find break-even&lt;/li&gt;
+&lt;li&gt;Estimate the size of the market (a case within a case)&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Determine the market share they will need to break-even&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Develop Recommendations&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Discuss the &lt;code&gt;competitive structure&lt;/code&gt; of the market. &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;Can the firm realistically achieve the break-even market share?&lt;/li&gt;
+&lt;/ol&gt;&lt;/div&gt;</description><category>Make Profit</category><category>Tool Kit</category><guid>https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/</guid><pubDate>Mon, 26 Nov 2018 05:00:00 GMT</pubDate></item><item><title>Handwritten Notes for Case Interview Workshop</title><link>https://www.pengyin-shan.com/posts/2018/consulting/handwritten-notes-for-case-interview-workshop/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;hr&gt;
 &lt;p&gt;&lt;img alt="" src="https://www.pengyin-shan.com/images/2018/consulting/ConsultingInterviewWorkshop.jpg"&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;&lt;img alt="" src="https://www.pengyin-shan.com/images/2018/consulting/ConsultingInterviewWorkshop1.jpg"&gt;&lt;/p&gt;
@@ -470,221 +694,7 @@ the past 3 months, the top five producing partners have left to join this firm, 
 &lt;h3 id="canada"&gt;Canada&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;In 2017, there were about &lt;code&gt;14 million&lt;/code&gt; households in Canada.&lt;/li&gt;
-&lt;/ul&gt;&lt;/div&gt;</description><category>Case Journal</category><guid>https://www.pengyin-shan.com/posts/2018/consulting/consulting-cases-useful-data-knowledge-base/</guid><pubDate>Fri, 14 Sep 2018 04:00:00 GMT</pubDate></item><item><title>(Updating) Consulting Tookit - Make Profit</title><link>https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;div class="toc"&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#fixed-vs-variable"&gt;Fixed v.s. Variable&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#short-long-run"&gt;Short &amp;amp; Long Run&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#fixed-cost"&gt;Fixed Cost&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#committed-fixed-cost"&gt;Committed Fixed Cost&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#discretionary-fixed-cost"&gt;Discretionary Fixed Cost&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#variable-cost"&gt;Variable Cost&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#sunk-costs"&gt;Sunk Costs&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#marginal-cost"&gt;Marginal Cost&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#opportunity-cost"&gt;Opportunity Cost&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#break-even-point"&gt;Break-Even Point&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#usage"&gt;Usage&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#calculation"&gt;Calculation&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#throughput-rating"&gt;Throughput Rating&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#calculation_1"&gt;Calculation&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#analysis"&gt;Analysis&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#revenue-part"&gt;Revenue Part&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#how-much-can-we-raise-price"&gt;How much can we raise price?&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#how-can-we-increase-quantity"&gt;How can we increase quantity?&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#cost-part"&gt;Cost Part&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#common-costs-include"&gt;Common costs include&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#common-cost-reduction-technique"&gt;Common cost reduction technique&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#example-mit-managementconsultingclub-2001-2002-case-book-and-interview-guide"&gt;Example: MIT ManagementConsultingClub 2001-2002 Case Book and Interview Guide&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#potential-methodology"&gt;Potential Methodology&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#interview-example"&gt;Interview example&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#potential-methodology_1"&gt;Potential Methodology&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/#key-problem-profitability-of-business-and-size-of-market"&gt;Key problem: Profitability of Business and Size of Market&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;p&gt;Check post about &lt;a href="https://pengyin-shan.com/posts/2018/consulting/consulting-toolkit-market-share"&gt;market share&lt;/a&gt; for related information.&lt;/p&gt;
-&lt;h2 id="fixed-vs-variable"&gt;Fixed v.s. Variable&lt;/h2&gt;
-&lt;p&gt;Understanding issues such as: which of these costs are the &lt;strong&gt;main drivers&lt;/strong&gt; and which have &lt;strong&gt;changed over time&lt;/strong&gt;, will help you to better understand the firm’s profitability.&lt;/p&gt;
-&lt;h3 id="short-long-run"&gt;Short &amp;amp; Long Run&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;Short run (a couple of months)&lt;/code&gt;: most costs are considered &lt;strong&gt;fixed&lt;/strong&gt; since the firm is typically obligated to pay for purchased materials and cannot easily layoff workers&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;Long Run (a couple of years)&lt;/code&gt;: many costs become variable – a firm can decide to purchase less raw material, reduce or increase its workforce and possibly sell some of its capital&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;when firms are making short run decisions, it is only relevant to consider Variable costs, since Fixed costs cannot be easily adjusted. &lt;/p&gt;
-&lt;p&gt;In the long run, almost all costs may be considered variable and should be considered in the firm’s decision-making process.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id="fixed-cost"&gt;Fixed Cost&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;a fixed cost must be paid even if there is no output. &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;These costs are incurred by the firm on a &lt;strong&gt;recurring basis&lt;/strong&gt; but
-are generally &lt;strong&gt;recoverable if the firm is shut down&lt;/strong&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Examples of fixed costs are: Rent, Plant Maintenance, Overhead, Insurance, and possibly a small number of fixed employees (CEO).&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id="committed-fixed-cost"&gt;Committed Fixed Cost&lt;/h4&gt;
-&lt;p&gt;约束性固定成本是指管理当局的决策不能随意改变其支出数额的固定成本，用于形成和维护经营能力、对生产经营能力有约束力的固定成本，因而也称为经营能力固定成本。例如，厂房及机器设备按直线法计提的折旧费、房屋及设备租金、不动产税、财产保险费、照明费、行政管理人员的薪金等，均属于约束性固定成本。&lt;/p&gt;
-&lt;h4 id="discretionary-fixed-cost"&gt;Discretionary Fixed Cost&lt;/h4&gt;
-&lt;p&gt;酌量性固定成本也称为选择性固定成本或者可调整固定成本，是指管理当局的决策可以改变其支出数额的固定成本。例如，广告费、职工教育培训费、技术开发费等。这些成本的支出是可以随企业经营方针的变化而变化的，基本特征是其绝对额的大小直接取决于企业管理当局根据企业的经营状况而做出的判断。&lt;/p&gt;
-&lt;h3 id="variable-cost"&gt;Variable Cost&lt;/h3&gt;
-&lt;p&gt;Ask for variable cost: &lt;code&gt;How has this mix of expenses changed over the past five years?&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Variable costs may change based on the increase or decrease of a firm’s output&lt;/li&gt;
-&lt;li&gt;Examples of Variable costs are: Wages, salaries.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="sunk-costs"&gt;Sunk Costs&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Expenditures that have been made and &lt;strong&gt;cannot be recovered&lt;/strong&gt;. &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Since sunk costs cannot be recovered, they &lt;strong&gt;should not be considered&lt;/strong&gt; when making future economic decisions for the firm. &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Examples: &lt;code&gt;Advertising&lt;/code&gt;, &lt;code&gt;licensing fees&lt;/code&gt;, &lt;code&gt;equipment that was purchased for one use&lt;/code&gt; and cannot be converted for another use.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="marginal-cost"&gt;Marginal Cost&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Incremental cost of producing an additional unit of output. &lt;/li&gt;
-&lt;li&gt;Marginal costs is &lt;code&gt;equal to the increase in variable costs&lt;/code&gt; or &lt;code&gt;the increase in total cost that results from an extra unit of output&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="opportunity-cost"&gt;Opportunity Cost&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Opportunity cost is the cost associated with opportunities that are foregone by &lt;strong&gt;not putting the firm’s resources to their highest-value use&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="break-even-point"&gt;Break-Even Point&lt;/h2&gt;
-&lt;h3 id="usage"&gt;Usage&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Assessing the necessary revenue / cost &lt;strong&gt;balance&lt;/strong&gt; &lt;/li&gt;
-&lt;li&gt;Determine the &lt;strong&gt;minimum revenue&lt;/strong&gt; a company must achieve in order to cover (or pay for) its total costs. At break even, a firm is not making a profit but simply covering its costs.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="calculation"&gt;Calculation&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;Total Revenue = Total Costs&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;(Price * Quantity Sold) = (Fixed Costs + Variable Costs)&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="throughput-rating"&gt;Throughput Rating&lt;/h2&gt;
-&lt;h3 id="calculation_1"&gt;Calculation&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;I=R*T&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;I&lt;/code&gt; is the number of units contained within the system, &lt;strong&gt;inventory&lt;/strong&gt;;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;T&lt;/code&gt; is the time it takes for &lt;strong&gt;all the inventory to go through the process&lt;/strong&gt;, &lt;strong&gt;flow time&lt;/strong&gt;;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;R&lt;/code&gt; is the rate at which the process is delivering throughput, &lt;strong&gt;flow rate&lt;/strong&gt; or &lt;strong&gt;throughput&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="analysis"&gt;Analysis&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;p&gt;If any segement does not make profit or market share down, WHY? IS IT THE PROBLEM? CAN WE FIX IT?&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id="revenue-part"&gt;Revenue Part&lt;/h3&gt;
-&lt;h4 id="how-much-can-we-raise-price"&gt;How much can we raise price?&lt;/h4&gt;
-&lt;p&gt;• Does the firm have market power?
-• What is the demand elasticity?
-• Is the product differentiated? Are
-there additional goods and services
-that we can charge a premium for?
-• Are there substitutes?
-• How is our product mix priced?&lt;/p&gt;
-&lt;h4 id="how-can-we-increase-quantity"&gt;How can we increase quantity?&lt;/h4&gt;
-&lt;p&gt;• Sell products to new customers
-• Increase market share
-• Increase market growth
-• 4Ps (Price, Product, Promotion,
-Placement)
-• Sell new products to current
-customers&lt;/p&gt;
-&lt;h3 id="cost-part"&gt;Cost Part&lt;/h3&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Don't forget cost after revenue!&lt;/p&gt;
-&lt;p&gt;Ask for BREAK-DOWN of Cost!&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h4 id="common-costs-include"&gt;Common costs include&lt;/h4&gt;
-&lt;p&gt;• Materials
-• Labor (wages &amp;amp; benefits)
-• SG&amp;amp;A
-• Overhead (rent, PP&amp;amp;L)
-• Depreciation
-• Capital costs
-• R&amp;amp;D&lt;/p&gt;
-&lt;h4 id="common-cost-reduction-technique"&gt;Common cost reduction technique&lt;/h4&gt;
-&lt;p&gt;• Improve utilization of equipment
-• Outsource manufacturing
-• Consolidate purchasing
-• Relocate to lower cost areas
-• Partner with distribution companies
-(e.g., Federal Express)
-• Strategic use of IT&lt;/p&gt;
-&lt;h2 id="example-mit-managementconsultingclub-2001-2002-case-book-and-interview-guide"&gt;Example: MIT ManagementConsultingClub 2001-2002 Case Book and Interview Guide&lt;/h2&gt;
-&lt;h3 id="potential-methodology"&gt;Potential Methodology&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Pause for a moment and consider the central problem. Which of these facts are totally irrelevant?&lt;/li&gt;
-&lt;li&gt;Eliminate them for now. Which facts are definitely related to the problem? Ask questions about facts that appear relevant. Probe for additional facts that the interviewer may have.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="interview-example"&gt;Interview example&lt;/h3&gt;
-&lt;p&gt;Client is a leading food company that wants to develop a fresh prepared meal business. Trendamong consumers is toward fresher food with no artificial preservatives or coloring. Consumersare currently purchasing $5.0 billion of frozen meals – trend is toward more upscale products.&lt;/p&gt;
-&lt;p&gt;A fresh meal plate combing a protein, vegetable and starch is delicately arranged in a sealed plastic dome package. Nitrogen gas flushing is used to extend shelf life. Product is currently in limited consumer test at $5.50 to $8.50 per meal. Shelf life of product is 14 days – product will spoil in 21 days potentially causing food poisoning.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Client wants to know if they can make money in this business&lt;/li&gt;
-&lt;li&gt;Client wants to know if the market is big – how will they keep competition out&lt;/li&gt;
-&lt;li&gt;Client wants a consultant to assist in building business case&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="potential-methodology_1"&gt;Potential Methodology&lt;/h3&gt;
-&lt;h4 id="key-problem-profitability-of-business-and-size-of-market"&gt;Key problem: Profitability of Business and Size of Market&lt;/h4&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;Problem understanding&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Ask about &lt;code&gt;consumer test&lt;/code&gt;. What prices are consumers responding to? Are there any items spoiling on the shelf?&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;What is the &lt;code&gt;competitive structure&lt;/code&gt; of this market currently?&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;What are the components of the company’s &lt;code&gt;cost structure&lt;/code&gt;?&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Structure Analysis&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;What is the break-even point for the firm?&lt;/li&gt;
-&lt;li&gt;Determine Gross Margin per Unit&lt;/li&gt;
-&lt;li&gt;Determine Fixed Costs&lt;/li&gt;
-&lt;li&gt;Divide to find break-even&lt;/li&gt;
-&lt;li&gt;Estimate the size of the market (a case within a case)&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Determine the market share they will need to break-even&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Develop Recommendations&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Discuss the &lt;code&gt;competitive structure&lt;/code&gt; of the market. &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;Can the firm realistically achieve the break-even market share?&lt;/li&gt;
-&lt;/ol&gt;&lt;/div&gt;</description><category>Make Profit</category><category>Tool Kit</category><guid>https://www.pengyin-shan.com/posts/2018/consulting/consulting-toolkit-make-profit/</guid><pubDate>Fri, 14 Sep 2018 04:00:00 GMT</pubDate></item><item><title>Case of Make Profit - Berkley 2006 5.13. Bicycle Manufacturer</title><link>https://www.pengyin-shan.com/posts/2018/consulting/case-of-make-profit-berkley-bicyle-manufacturer/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;div class="toc"&gt;
+&lt;/ul&gt;&lt;/div&gt;</description><category>Case Journal</category><guid>https://www.pengyin-shan.com/posts/2018/consulting/consulting-cases-useful-data-knowledge-base/</guid><pubDate>Fri, 14 Sep 2018 04:00:00 GMT</pubDate></item><item><title>Case of Make Profit - Berkley 2006 5.13. Bicycle Manufacturer</title><link>https://www.pengyin-shan.com/posts/2018/consulting/case-of-make-profit-berkley-bicyle-manufacturer/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;div class="toc"&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/case-of-make-profit-berkley-bicyle-manufacturer/#problem"&gt;Problem&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/consulting/case-of-make-profit-berkley-bicyle-manufacturer/#question"&gt;Question&lt;/a&gt;&lt;/li&gt;
