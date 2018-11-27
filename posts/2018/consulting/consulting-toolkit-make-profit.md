@@ -1,5 +1,5 @@
 .. title: (Updating) Consulting Tookit - Make Profit
-.. date: 2018-09-14
+.. date: 2018-11-26
 .. category: Consulting
 .. tags: Tool Kit, Make Profit
 .. slug: consulting-toolkit-make-profit
@@ -7,6 +7,16 @@
 .. description: This post contains all terms/frameoworks with problem of `will our company make profit?`, `what should we do next?`
 
 [TOC]
+
+#Walkin Workshop 
+
+##Decision Tree Build - Some tips about approaching issue
+
+![market-share-1](/images/2018/consulting/CaseInterviewWalkin1.jpg)
+
+##Market Size Structure
+
+![market-share-2](/images/2018/consulting/CaseInterviewWalkin2.jpg)
 
 Check post about <a href="https://pengyin-shan.com/posts/2018/consulting/consulting-toolkit-market-share">market share</a> for related information.
 
