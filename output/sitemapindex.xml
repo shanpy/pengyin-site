@@ -51,7 +51,7 @@
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/cat_ai.xml</loc>
-  <lastmod>2018-11-27T18:52:00Z</lastmod>
+  <lastmod>2018-11-30T22:37:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/cat_algorithm-data-structure.xml</loc>
@@ -63,7 +63,7 @@
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/cat_business.xml</loc>
-  <lastmod>2018-11-27T18:52:00Z</lastmod>
+  <lastmod>2018-11-30T22:37:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/cat_consulting.xml</loc>
@@ -174,6 +174,10 @@
   <lastmod>2018-11-27T18:52:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>https://www.pengyin-shan.com/categories/economics.xml</loc>
+  <lastmod>2018-11-30T22:37:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://www.pengyin-shan.com/categories/english.xml</loc>
   <lastmod>2018-11-27T18:52:00Z</lastmod>
  </sitemap>
@@ -255,7 +259,7 @@
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/machine-learning.xml</loc>
-  <lastmod>2018-11-27T18:52:00Z</lastmod>
+  <lastmod>2018-11-30T22:37:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/make-profit.xml</loc>
@@ -264,6 +268,10 @@
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/make-proft.xml</loc>
   <lastmod>2018-11-27T18:52:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://www.pengyin-shan.com/categories/marketing.xml</loc>
+  <lastmod>2018-11-30T22:37:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/math.xml</loc>
@@ -379,7 +387,7 @@
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/use-case.xml</loc>
-  <lastmod>2018-11-27T18:52:00Z</lastmod>
+  <lastmod>2018-11-30T22:37:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/velocity.xml</loc>
@@ -407,10 +415,10 @@
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/rss.xml</loc>
-  <lastmod>2018-11-27T18:52:00Z</lastmod>
+  <lastmod>2018-11-30T22:37:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/sitemap.xml</loc>
-  <lastmod>2018-11-27T18:52:00Z</lastmod>
+  <lastmod>2018-11-30T22:37:00Z</lastmod>
  </sitemap>
 </sitemapindex>
