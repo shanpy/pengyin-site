@@ -134,18 +134,18 @@ TRANSLATIONS_PATTERN = "{path}.{lang}.{ext}"
 
 NAVIGATION_LINKS = {
     DEFAULT_LANG: (
-        ("/posts/", "My Knowledge Base"),
-        ("/categories/cat_consulting/", "Knowledge Base - Consulting"),
-        ("/categories/cat_business/", "Knowledge Base - Business"),
-        ("/categories/", "Knowledge Base - Tags and Categories"),
-        ("https://www.linkedin.com/in/pengyinshan", "My LinkedIn"),
-        ("/rss.xml", "RSS feed"),
-        ("/archive.html", "Archive")
+        ('/index.html', 'Home', 'fa fa-home'),
+        ('/posts/index.html', 'Posts', 'fa fa-folder-open'),
+        ('/aboutme/index.html', 'About me', 'fa fa-user'),
+        ('/categories/index.html', 'Tags', 'fa fa-tags'),
+        ('/rss.xml', 'RSS', 'fa fa-rss'),
+        ('https://www.linkedin.com/in/pengyinshan/', 'My LinkedIn', 'fa fa-linkedin'),
+        ('https://github.com/shanpy', 'My Github', 'fa fa-github'),
     ),
 }
 
 # Name of the theme to use.
-THEME = 'hpstr'
+THEME = 'zen-ipython'
 
 # Primary color of your theme. This will be used to customize your theme and
 # auto-generate related colors in POSTS_SECTION_COLORS. Must be a HEX value.

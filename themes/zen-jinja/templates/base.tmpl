@@ -1,0 +1,47 @@
+{#  -*- coding: utf-8 -*- #}
+{% import 'arusahni_helper.tmpl' as arusahni with context %}
+{% import 'base_footer.tmpl' as footer with context %}
+{% import 'annotation_helper.tmpl' as annotations with context %}
+{{ set_locale(lang) }}
+{{ arusahni.html_headstart() }}
+{% block extra_head %}
+{#  Leave this block alone. #}
+{% endblock %}
+{{ template_hooks['extra_head']() }}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+    <section class="social">
+        <ul>
+        {% if logo_url %}
+            <li>
+                <a href="{{ abs_link(_link("root", None, lang)) }}">
+                    <img src="{{ logo_url }}" alt="{{ blog_title|e }}" id="logo">
+                </a>
+            </li>
+        {% endif %}
+        {{ arusahni.html_navigation_links() }}
+        </ul>
+    </section>
+    <section class="page-content">
+        <div class="content" rel="main">
+            {% block content %}{% endblock %}
+             {{ footer.html_footer() }}
+        </div>
+    </section>
+    {{ body_end }}
+    {{ template_hooks['body_end']() }}
+    {{ arusahni.late_load_js() }}
+    {% block extra_js %}
+        <script type="text/javascript">
+            $(function(){
+                $('.timeago').timeago();
+            });
+        </script>
+    {% endblock %}
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.3/jquery.timeago.js"></script>
+</body>
+</html>
