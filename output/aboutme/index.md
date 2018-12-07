@@ -19,14 +19,14 @@
 					<p>
 						I'm a first-year MBA student in Schulich School of Business, York University, Toronto, Canada. My main focus is Artificial Intelligence and Machine Learning.
 					</p>
-					<br/>
-					<br/>
+					<hr/>
 					<p>
 						I enjoy learning anything from anyone. I spend most of my free time in reading and hiking. 
 					</p>
+					<hr/>
+					<p>Click my name at bottom of the page to contact me or check my LinkedIn page.</p>
 					<br/>
 					<br/>
-					<p>Click my name at bottom of the page to contact me or check my LinkedIn page</p>
 				</div>
 			</div>
 		</div>

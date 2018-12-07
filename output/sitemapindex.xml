@@ -30,12 +30,16 @@
   <lastmod>2018-12-01T02:22:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>https://www.pengyin-shan.com/categories/book-highlights.xml</loc>
+  <lastmod>2018-12-07T17:49:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://www.pengyin-shan.com/categories/bootstrap3.xml</loc>
   <lastmod>2018-12-01T02:22:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/business.xml</loc>
-  <lastmod>2018-12-01T02:22:00Z</lastmod>
+  <lastmod>2018-12-07T17:33:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/case-framework.xml</loc>
@@ -59,11 +63,11 @@
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/cat_book-highlight.xml</loc>
-  <lastmod>2018-12-01T02:22:00Z</lastmod>
+  <lastmod>2018-12-07T17:37:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/cat_business.xml</loc>
-  <lastmod>2018-12-01T02:22:00Z</lastmod>
+  <lastmod>2018-12-07T17:49:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/cat_consulting.xml</loc>
@@ -75,7 +79,7 @@
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/cat_finance.xml</loc>
-  <lastmod>2018-12-01T02:22:00Z</lastmod>
+  <lastmod>2018-12-07T17:49:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/cat_front-end.xml</loc>
@@ -111,7 +115,7 @@
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/chinese.xml</loc>
-  <lastmod>2018-12-01T02:22:00Z</lastmod>
+  <lastmod>2018-12-07T17:37:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/class-notes.xml</loc>
@@ -191,7 +195,7 @@
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/finance.xml</loc>
-  <lastmod>2018-12-01T02:22:00Z</lastmod>
+  <lastmod>2018-12-07T17:37:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/github.xml</loc>
@@ -291,7 +295,7 @@
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/note-taking.xml</loc>
-  <lastmod>2018-12-01T02:22:00Z</lastmod>
+  <lastmod>2018-12-07T17:37:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/oop.xml</loc>
@@ -311,7 +315,7 @@
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/reading-notes.xml</loc>
-  <lastmod>2018-12-01T02:22:00Z</lastmod>
+  <lastmod>2018-12-07T17:49:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/recursion.xml</loc>
@@ -335,7 +339,7 @@
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/self-improvement.xml</loc>
-  <lastmod>2018-12-01T02:22:00Z</lastmod>
+  <lastmod>2018-12-07T17:37:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/seo.xml</loc>
@@ -407,18 +411,18 @@
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/writing.xml</loc>
-  <lastmod>2018-12-01T02:22:00Z</lastmod>
+  <lastmod>2018-12-07T17:37:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/galleries/rss.xml</loc>
-  <lastmod>2018-12-01T03:09:00Z</lastmod>
+  <lastmod>2018-12-07T17:32:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/rss.xml</loc>
-  <lastmod>2018-12-01T02:22:00Z</lastmod>
+  <lastmod>2018-12-07T17:49:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/sitemap.xml</loc>
-  <lastmod>2018-12-01T03:09:00Z</lastmod>
+  <lastmod>2018-12-07T17:49:00Z</lastmod>
  </sitemap>
 </sitemapindex>

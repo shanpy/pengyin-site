@@ -1,7 +1,7 @@
 .. title: (Chinese) Highlights for Fully Engaged! Using the Practicing Mind in Daily Life written by Thomas M. Sterner
 .. date: 2018-07-11
-.. category: Book Highlight
-.. tags: Chinese, Reading Notes, Self-Improvement
+.. category: Business
+.. tags: Chinese, Reading Notes, Book Highlights
 .. slug: highlights-for-fully-engaged
 .. authors: Pengyin Shan
 .. description: Highlights for this book about using financial thinking to handle 'what should I target' to in career improvement
@@ -13,7 +13,6 @@
 ### Chapter 1 第一步：意识觉察训练
 
 全神贯注意味着你必须清醒地活在当下，全心沉浸到自己在做的事情中。也意味着对自己当下的体验完全满意。这样你会感觉很舒服，不再焦虑，不再总想过去或未来的事。虽然听起来简单，但大多数人做不到这点。我们的大脑总是过度活跃，总是拒绝沉浸于当下，总是处于半失控状态——所以我们需要学习，需要训练自己，让**自己清醒地觉察到大脑又冒出了新想法，同时学会观察自己的大脑何时会变得更加平静**。
-
 
 人们经常问我：“怎么才能变得更有耐心？”要想解决这个问题，首先你需要学会`自我觉察`，当你变得不耐烦时，你要觉察到自己正变得不耐烦。听起来很简单，但大多数时候，当变得不耐烦时，我们就会被这种情绪控制，根本意识不到自己正变得焦躁。而如果你懂得自我觉察，能“看到”自己的情绪变化，你就可以选择不做情绪的木偶，能摆脱情绪的影响，真正地掌控自我。
 

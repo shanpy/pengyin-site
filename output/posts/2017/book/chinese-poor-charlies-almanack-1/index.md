@@ -1,7 +1,7 @@
 .. title: (In Chinese) 穷查理宝典-阅读摘抄1 （企业与投资）
 .. date: 2017-05-21
-.. category: Book Highlight
-.. tags: Chinese, Reading Notes, Finance, Business
+.. category: Finance
+.. tags: Chinese, Reading Notes, Book Highlights
 .. slug: chinese-poor-charlies-almanack-1
 .. authors: Pengyin Shan
 .. description: (This post is in Chinese) [彼得考夫曼]《穷查理宝典》书本经典语句摘抄 （企业与投资部分）/ Book Highlight: Poor Charlie's Almanack: The Wit and Wisdom of Charles T. Munger written by Peter D.Kaufman (Enterprise and Investment Part)

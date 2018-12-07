@@ -1,7 +1,7 @@
 .. title: (Chinese) Highlights for “Scarcity: Why Having Too Little Means So Much” by Sendhil Mullainathan & Elddar Shafir
 .. date: 2018-07-06
-.. category: Book Highlight
-.. tags: Chinese, Reading Notes, Self-Improvement
+.. category: Business
+.. tags: Chinese, Reading Notes, Book Highlights
 .. slug: highlights-for-scarcity
 .. authors: Pengyin Shan
 .. description: My highlights for this great book to answer my question about deadline and time management

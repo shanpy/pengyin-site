@@ -1,7 +1,7 @@
 .. title: (Chinese) Highlights for 私はいくら?(精准努力) written by Mahito Noguchi(野口真人)
 .. date: 2018-07-10
-.. category: Book Highlight
-.. tags: Chinese, Reading Notes, Self-Improvement
+.. category: Business
+.. tags: Chinese, Reading Notes, Book Highlights
 .. slug: highlights-for-jingzhunmuli
 .. authors: Pengyin Shan
 .. description: Highlights for this book about using financial thinking to handle 'what should I target' to in career improvement

@@ -1,7 +1,7 @@
 .. title: (In Chinese) 风格的要素-阅读摘抄 (The Elements of Style - Reading Note)
 .. date: 2017-06-25
-.. category: Book Highlight
-.. tags: Chinese, Reading Notes, English, Writing
+.. category: Business
+.. tags: Chinese, Reading Notes
 .. slug: chinese-the-element-of-style-reading-note
 .. authors: Pengyin Shan
 .. description: (This post is in Chinese) [William Strunk] <The Elements of Style>/《风格的要素》 读书笔记
