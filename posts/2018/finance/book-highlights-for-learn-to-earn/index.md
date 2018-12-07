@@ -1,8 +1,8 @@
 
 .. title: (Chinese) Book Highlights for Learn To Earn：A Beginner's Guide to the Basics of Investing and Business
 .. date: 2018-07-25
-.. category: Book Highlight
-.. tags: Reading Notes, Finance
+.. category: Finance
+.. tags: Reading Notes, Book Highlights
 .. slug: book-highlights-for-learn-to-earn
 .. authors: Pengyin Shan
 .. description: Reading this book for fun, but it is also very useful for personal finance

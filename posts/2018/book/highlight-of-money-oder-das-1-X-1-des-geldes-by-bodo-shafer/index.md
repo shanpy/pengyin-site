@@ -1,7 +1,7 @@
 .. title: (In Chinese) 小狗钱钱阅读摘抄| Highlight of 'Money Oder Das 1 X 1 Des Geldes' by Bodo Shafer
 .. date: 2018-01-18
-.. category: Book Highlight
-.. tags: Finance, Chinese, Reading Notes
+.. category: Finance
+.. tags: Book Highlights, Chinese, Reading Notes
 .. slug: highlight-of-money-oder-das-1-X-1-des-geldes-by-bodo-shafer
 .. authors: Pengyin Shan
 .. description: this is the first book I read after moving to Canada. Starting a new stage of life, I'd like to use this book as guidance to follow in personal investment.

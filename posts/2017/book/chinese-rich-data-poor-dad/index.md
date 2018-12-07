@@ -1,7 +1,7 @@
 .. title: (In Chinese) 富爸爸穷爸爸-阅读摘抄
 .. date: 2017-02-20
-.. category: Book Highlight
-.. tags: Chinese, Reading Notes, Finance, Business
+.. category: Finance
+.. tags: Chinese, Reading Notes,  Book Highlights
 .. slug: chinese-rich-data-poor-dad
 .. authors: Pengyin Shan
 .. description: (This post is in Chinese) [罗伯特清崎]《富爸爸，穷爸爸》书本经典语句摘抄/Rich Dad, Poor Dad Book Highlights by Robert T. Kiyosaki

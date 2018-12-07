@@ -1,7 +1,7 @@
 .. title: (In Chinese) 自控力阅读摘抄 (Kindle 导出)
 .. date: 2017-01-20
-.. category: Book Highlight
-.. tags: Chinese, Reading Notes, Willpower
+.. category: Business
+.. tags: Chinese, Reading Notes, Book Highlights
 .. slug: chinese-zi-kong-li-highlight
 .. authors: Pengyin Shan
 .. description: (This post is in Chinese) 凯利•麦格尼格尔《自控力》书本经典语句摘抄 | The Willpower Instinct: How Self-Control Works, Why It Matters, and What You Can Do to Get More of It, written by Kelly McGonigal, Highlights in Chinese

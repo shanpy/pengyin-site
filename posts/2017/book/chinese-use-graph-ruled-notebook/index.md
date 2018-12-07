@@ -1,7 +1,7 @@
 .. title: (In Chinese) 聪明人用方格笔记本-阅读摘抄
 .. date: 2017-02-08
-.. category: Book Highlight
-.. tags: Chinese, Reading Notes, Note Taking
+.. category: Business
+.. tags: Chinese, Reading Notes, Book Highlights
 .. slug: chinese-use-graph-ruled-notebook
 .. authors: Pengyin Shan
 .. description: (This post is in Chinese) [高桥正史]《聪明人用方格笔记本-最有效的大脑思维整理术》书本经典语句摘抄

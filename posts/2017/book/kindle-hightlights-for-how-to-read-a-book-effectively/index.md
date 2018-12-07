@@ -1,7 +1,7 @@
 .. title: (Chinese) Kindle Highlights for 読書は1冊のノートにまとめなさい (How to read a book effectively) by 奥野宣之
 .. date: 2017-10-08
-.. category: Book Highlight
-.. tags: Chinese, Reading Notes, Note Taking
+.. category: Business
+.. tags: Chinese, Reading Notes, Book Highlights
 .. slug: kindle-hightlights-for-how-to-read-a-book-effectively
 .. authors: Pengyin Shan
 .. description: This is a highlight list (Kindle Exported) for book 'How to read a book effectively', written by 奥野宣之. I read Chinese version.
