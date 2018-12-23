@@ -4,7 +4,7 @@
 .. tags: Machine Learning, Use Case, Reading Notes
 .. slug: reading-notes-the-ai-frontier-insights-from-hundreds-of-use-cases
 .. authors: Pengyin Shan
-.. description: My reading notes & hightlights for the AI Insights Use Case report, created by McKinsey Global Institute, April 2018
+.. description: My reading notes & highlights for the AI Insights Use Case report, created by McKinsey Global Institute, April 2018
 
 [TOC]
 
@@ -169,9 +169,9 @@ Most current AI models are trained through `supervised learning`, which requires
 `One-shot learning` allows a trained AI model to learn about a subject based on a small number of real world demonstrations or examples—and sometimes just one.
 
 ###Fitting Issue
-Even with large datasets, they will have to guard against `overfitting` in which a model too tightly matches the “noisy” or random features of the training set, resulting in a corresponding lack of accuracy in future performance.
+Even with large datasets, they will have to guard against `over-fitting` in which a model too tightly matches the “noisy” or random features of the training set, resulting in a corresponding lack of accuracy in future performance.
 
-`underfitting,` in which the model fails to capture all of the relevant features. Linking data across customer segments and channels and, where possible, to production data, rather than allowing different sets of data to languish in silos, is especially important to create value.
+`under-fitting,` in which the model fails to capture all of the relevant features. Linking data across customer segments and channels and, where possible, to production data, rather than allowing different sets of data to languish in silos, is especially important to create value.
 
 Realizing AI’s full potential requires a diverse range of data types including images, video, and audio Neural AI techniques excel at analyzing image, video, and audio data types because of their **complex, multi-dimensional** nature, known by practitioners as `high dimensionality`.
 

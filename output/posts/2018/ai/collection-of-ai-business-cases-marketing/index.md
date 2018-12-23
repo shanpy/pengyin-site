@@ -4,7 +4,7 @@
 .. tags: Machine Learning, Use Case, Marketing
 .. slug: collection-of-ai-business-cases-marketing
 .. authors: Pengyin Shan
-.. description: This post will be continously updated with data, terminology and case details related to AI application in marekting
+.. description: This post will be continuously updated with data, terminology and case details related to AI application in marketing
 
 [TOC]
 
@@ -40,7 +40,7 @@
 
 1. Discover Options: give a 'shopping list' to customer
 2. Quote: customers get quote for their desire, but not include everything or confused in 'shopping list'
-3. Onboard: customer wait for quote approval, or need help from sales man first
+3. On-board: customer wait for quote approval, or need help from sales man first
 4. Purchase
 5. Receive Order: unclear order delay or no update of order status
 6. Manager: returning has to be done manually or inefficiently
