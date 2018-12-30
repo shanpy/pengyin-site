@@ -329,7 +329,7 @@ section {
   }
 }
 .page-content > .content {
-  max-width: 1000px;
+  max-width: 95%;
 }
 @media (min-width: 774px) and (max-width: 1047px) {
   .page-content > .content {
