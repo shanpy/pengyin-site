@@ -16,11 +16,11 @@
 <hr/>
 #Chapter 4-6: Study of Neural Network
 
-![ai3](/images/2018/ai/Chapter4-5-1.jpg)
+![ai3](/images/2018/ai/Chapter4Note1.jpg)
 
-![ai4](/images/2018/ai/Chapter4-5-3.jpg)
+![ai4](/images/2018/ai/Chapter5Note1.jpg)
 
-![ai5](/images/2018/ai/Chapter4-5-2.jpg)
+![ai5](/images/2018/ai/Chapter5Note2.jpg)
 
 ![ai6](/images/2018/ai/Chapter6Note1.jpg)
 
