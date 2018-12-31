@@ -199,6 +199,8 @@ img {
   blockquote {
     border: 1px solid #999;
     page-break-inside: avoid;
+    font-size: x-large;
+    color: darkred;
   }
   thead {
     display: table-header-group;
@@ -796,6 +798,8 @@ blockquote {
   padding: 0 0 0 15px;
   margin: 0 0 24px;
   border-left: 5px solid #eeeeee;
+  font-size: x-large;
+  color: darkred;
 }
 blockquote p {
   margin-bottom: 0;
