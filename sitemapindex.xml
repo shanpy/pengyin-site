@@ -30,12 +30,8 @@
   <lastmod>2018-12-01T02:22:00Z</lastmod>
  </sitemap>
  <sitemap>
-  <loc>https://www.pengyin-shan.com/categories/book-highlights-of-simplify.xml</loc>
-  <lastmod>2018-12-31T18:44:00Z</lastmod>
- </sitemap>
- <sitemap>
   <loc>https://www.pengyin-shan.com/categories/book-highlights.xml</loc>
-  <lastmod>2018-12-07T17:49:00Z</lastmod>
+  <lastmod>2018-12-31T18:48:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/bootstrap3.xml</loc>
@@ -63,7 +59,7 @@
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/cat_business.xml</loc>
-  <lastmod>2018-12-31T18:44:00Z</lastmod>
+  <lastmod>2018-12-31T18:48:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/cat_consulting.xml</loc>
@@ -102,6 +98,10 @@
   <lastmod>2018-12-01T02:22:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>https://www.pengyin-shan.com/categories/cat_project-management.xml</loc>
+  <lastmod>2019-01-12T03:35:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://www.pengyin-shan.com/categories/cat_web-development-tips.xml</loc>
   <lastmod>2018-12-01T02:22:00Z</lastmod>
  </sitemap>
@@ -111,7 +111,7 @@
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/chinese.xml</loc>
-  <lastmod>2018-12-07T17:37:00Z</lastmod>
+  <lastmod>2019-01-12T03:35:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/class-notes.xml</loc>
@@ -168,6 +168,10 @@
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/digital-library.xml</loc>
   <lastmod>2018-12-01T02:22:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://www.pengyin-shan.com/categories/drafts.xml</loc>
+  <lastmod>2019-01-12T03:35:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/dropdown.xml</loc>
@@ -311,7 +315,7 @@
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/reading-notes.xml</loc>
-  <lastmod>2018-12-31T15:50:00Z</lastmod>
+  <lastmod>2019-01-12T03:35:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/categories/recursion.xml</loc>
@@ -403,14 +407,14 @@
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/galleries/rss.xml</loc>
-  <lastmod>2018-12-07T17:32:00Z</lastmod>
+  <lastmod>2019-01-12T03:35:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/rss.xml</loc>
-  <lastmod>2018-12-31T18:44:00Z</lastmod>
+  <lastmod>2019-01-12T03:35:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://www.pengyin-shan.com/sitemap.xml</loc>
-  <lastmod>2018-12-31T18:44:00Z</lastmod>
+  <lastmod>2019-01-12T03:35:00Z</lastmod>
  </sitemap>
 </sitemapindex>
