@@ -303,3 +303,45 @@ This terminology is applied to both linear and logistic regression. There are tw
 ###Muti-class Classification
 
 ![](/images/2019/AI/nn_6.png)
+
+#Week5
+
+##Cost Function & Back Propagation
+
+###Cost Function
+
+![](/images/2019/AI/cf_1.png)
+
+###Backpropagation Algorithm
+
+![](/images/2019/AI/bp_1.png)
+![](/images/2019/AI/bp_2.png)
+![](/images/2019/AI/bp_3.png)
+
+###Backpropagation Intuition
+
+![](/images/2019/AI/bp_4.png)
+![](/images/2019/AI/bp_5.png)
+
+###Unrolling Parameter
+
+![](/images/2019/AI/bp_6.png)
+
+###Gradient Checking
+
+![](/images/2019/AI/bp_7.png)
+
+###Random Initialization
+
+![](/images/2019/AI/bp_8.png)
+
+###Train the NN
+
+- pick a network architecture
+- choose the layout of your neural network, including how many hidden units in each layer and how many layers in total you want to have: `Number of input units = dimension of features x^(i)`
+ 
+- Number of output units = number of classes
+- Number of hidden units per layer = usually more the better (must balance with cost of computation as it increases with more hidden units) *Defaults: 1 hidden layer. If you have more than 1 hidden layer, then it is recommended that you have the same number of units in every hidden layer.*
+
+####Training a Neural Network
+![](/images/2019/AI/bp_9.png)
