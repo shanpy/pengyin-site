@@ -61,6 +61,22 @@
 </li>
 </ul>
 </li>
+<li><a href="#week5">Week5</a><ul>
+<li><a href="#cost-function-back-propagation">Cost Function &amp; Back Propagation</a><ul>
+<li><a href="#cost-function_2">Cost Function</a></li>
+<li><a href="#backpropagation-algorithm">Backpropagation Algorithm</a></li>
+<li><a href="#backpropagation-intuition">Backpropagation Intuition</a></li>
+<li><a href="#unrolling-parameter">Unrolling Parameter</a></li>
+<li><a href="#gradient-checking">Gradient Checking</a></li>
+<li><a href="#random-initialization">Random Initialization</a></li>
+<li><a href="#train-the-nn">Train the NN</a><ul>
+<li><a href="#training-a-neural-network">Training a Neural Network</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 <h1 id="week-1">Week 1</h1>
@@ -230,3 +246,33 @@ Solutions to the above problems include deleting a feature that is linearly depe
 <img alt="" src="/images/2019/AI/nn_5.png"></p>
 <h3 id="muti-class-classification">Muti-class Classification</h3>
 <p><img alt="" src="/images/2019/AI/nn_6.png"></p>
+<h1 id="week5">Week5</h1>
+<h2 id="cost-function-back-propagation">Cost Function &amp; Back Propagation</h2>
+<h3 id="cost-function_2">Cost Function</h3>
+<p><img alt="" src="/images/2019/AI/cf_1.png"></p>
+<h3 id="backpropagation-algorithm">Backpropagation Algorithm</h3>
+<p><img alt="" src="/images/2019/AI/bp_1.png">
+<img alt="" src="/images/2019/AI/bp_2.png">
+<img alt="" src="/images/2019/AI/bp_3.png"></p>
+<h3 id="backpropagation-intuition">Backpropagation Intuition</h3>
+<p><img alt="" src="/images/2019/AI/bp_4.png">
+<img alt="" src="/images/2019/AI/bp_5.png"></p>
+<h3 id="unrolling-parameter">Unrolling Parameter</h3>
+<p><img alt="" src="/images/2019/AI/bp_6.png"></p>
+<h3 id="gradient-checking">Gradient Checking</h3>
+<p><img alt="" src="/images/2019/AI/bp_7.png"></p>
+<h3 id="random-initialization">Random Initialization</h3>
+<p><img alt="" src="/images/2019/AI/bp_8.png"></p>
+<h3 id="train-the-nn">Train the NN</h3>
+<ul>
+<li>pick a network architecture</li>
+<li>
+<p>choose the layout of your neural network, including how many hidden units in each layer and how many layers in total you want to have: <code>Number of input units = dimension of features x^(i)</code></p>
+</li>
+<li>
+<p>Number of output units = number of classes</p>
+</li>
+<li>Number of hidden units per layer = usually more the better (must balance with cost of computation as it increases with more hidden units) <em>Defaults: 1 hidden layer. If you have more than 1 hidden layer, then it is recommended that you have the same number of units in every hidden layer.</em></li>
+</ul>
+<h4 id="training-a-neural-network">Training a Neural Network</h4>
+<p><img alt="" src="/images/2019/AI/bp_9.png"></p>
