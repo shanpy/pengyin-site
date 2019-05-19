@@ -337,11 +337,10 @@ This terminology is applied to both linear and logistic regression. There are tw
 
 ###Train the NN
 
-- pick a network architecture
-- choose the layout of your neural network, including how many hidden units in each layer and how many layers in total you want to have: `Number of input units = dimension of features x^(i)`
+1. pick a network architecture
+2. choose the layout of your neural network, including how many hidden units in each layer and how many layers in total you want to have: `Number of input units = dimension of features x^(i)`
  
 - Number of output units = number of classes
 - Number of hidden units per layer = usually more the better (must balance with cost of computation as it increases with more hidden units) *Defaults: 1 hidden layer. If you have more than 1 hidden layer, then it is recommended that you have the same number of units in every hidden layer.*
 
-####Training a Neural Network
 ![](/images/2019/AI/bp_9.png)
