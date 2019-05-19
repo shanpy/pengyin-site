@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Wendy's Corner (Posts about AI)</title><link>https://www.pengyin-shan.com/</link><description></description><atom:link href="https://www.pengyin-shan.com/categories/cat_ai.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2019 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Thu, 16 May 2019 15:20:43 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Coursera Machine Learning Notes</title><link>https://www.pengyin-shan.com/posts/2019/AI/coursera-machine-learning-notes/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;div class="toc"&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Wendy's Corner (Posts about AI)</title><link>https://www.pengyin-shan.com/</link><description></description><atom:link href="https://www.pengyin-shan.com/categories/cat_ai.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2019 &lt;a href="mailto:pengyin.shan@outlook.com"&gt;Pengyin(Wendy) Shan&lt;/a&gt; </copyright><lastBuildDate>Sun, 19 May 2019 12:26:29 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Coursera Machine Learning Notes</title><link>https://www.pengyin-shan.com/posts/2019/AI/coursera-machine-learning-notes/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;div class="toc"&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2019/AI/coursera-machine-learning-notes/#week-1"&gt;Week 1&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2019/AI/coursera-machine-learning-notes/#supervised-learning"&gt;Supervised Learning&lt;/a&gt;&lt;ul&gt;
@@ -70,10 +70,7 @@
 &lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2019/AI/coursera-machine-learning-notes/#unrolling-parameter"&gt;Unrolling Parameter&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2019/AI/coursera-machine-learning-notes/#gradient-checking"&gt;Gradient Checking&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2019/AI/coursera-machine-learning-notes/#random-initialization"&gt;Random Initialization&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2019/AI/coursera-machine-learning-notes/#train-the-nn"&gt;Train the NN&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2019/AI/coursera-machine-learning-notes/#training-a-neural-network"&gt;Training a Neural Network&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2019/AI/coursera-machine-learning-notes/#train-the-nn"&gt;Train the NN&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -265,7 +262,7 @@ Solutions to the above problems include deleting a feature that is linearly depe
 &lt;h4 id="random-initialization"&gt;Random Initialization&lt;/h4&gt;
 &lt;p&gt;&lt;img alt="" src="https://www.pengyin-shan.com/images/2019/AI/bp_8.png"&gt;&lt;/p&gt;
 &lt;h4 id="train-the-nn"&gt;Train the NN&lt;/h4&gt;
-&lt;ul&gt;
+&lt;ol&gt;
 &lt;li&gt;pick a network architecture&lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;choose the layout of your neural network, including how many hidden units in each layer and how many layers in total you want to have: &lt;code&gt;Number of input units = dimension of features x^(i)&lt;/code&gt;&lt;/p&gt;
@@ -274,8 +271,7 @@ Solutions to the above problems include deleting a feature that is linearly depe
 &lt;p&gt;Number of output units = number of classes&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;Number of hidden units per layer = usually more the better (must balance with cost of computation as it increases with more hidden units) &lt;em&gt;Defaults: 1 hidden layer. If you have more than 1 hidden layer, then it is recommended that you have the same number of units in every hidden layer.&lt;/em&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h5 id="training-a-neural-network"&gt;Training a Neural Network&lt;/h5&gt;
+&lt;/ol&gt;
 &lt;p&gt;&lt;img alt="" src="https://www.pengyin-shan.com/images/2019/AI/bp_9.png"&gt;&lt;/p&gt;&lt;/div&gt;</description><category>Machine Learning</category><guid>https://www.pengyin-shan.com/posts/2019/AI/coursera-machine-learning-notes/</guid><pubDate>Mon, 29 Apr 2019 04:00:00 GMT</pubDate></item><item><title>Study Note of Deep Learning From Scratch, written by 斎藤康毅(Japan)</title><link>https://www.pengyin-shan.com/posts/2018/ai/study-note-of-deep-learning-from-scratch/</link><dc:creator>Pengyin(Wendy) Shan</dc:creator><description>&lt;div&gt;&lt;div class="toc"&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.pengyin-shan.com/posts/2018/ai/study-note-of-deep-learning-from-scratch/#chapter-2-3-perceptron-neural-network-basics"&gt;Chapter 2-3: Perceptron + Neural Network Basics&lt;/a&gt;&lt;/li&gt;
