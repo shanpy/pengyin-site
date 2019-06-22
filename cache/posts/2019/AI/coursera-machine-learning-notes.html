@@ -74,6 +74,22 @@
 </li>
 </ul>
 </li>
+<li><a href="#week6">Week6</a><ul>
+<li><a href="#evaluating-algorithm">Evaluating Algorithm</a><ul>
+<li><a href="#evaluating-a-hypothesis">Evaluating a Hypothesis</a></li>
+<li><a href="#model-selection-and-trainvalidationtest-sets">Model Selection and Train/Validation/Test Sets</a></li>
+<li><a href="#diagnosing-bias-vs-variance">Diagnosing Bias vs. Variance</a></li>
+<li><a href="#regularization-and-biasvariance">Regularization and Bias/Variance</a></li>
+<li><a href="#learning-curves">Learning Curves</a></li>
+<li><a href="#deciding-what-to-do-next-revisited">Deciding What to Do Next Revisited</a><ul>
+<li><a href="#diagnosing-neural-networks">Diagnosing Neural Networks</a></li>
+<li><a href="#model-complexity-effects">Model Complexity Effects</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 <h1 id="week-1">Week 1</h1>
@@ -272,3 +288,64 @@ Solutions to the above problems include deleting a feature that is linearly depe
 <li>Number of hidden units per layer = usually more the better (must balance with cost of computation as it increases with more hidden units) <em>Defaults: 1 hidden layer. If you have more than 1 hidden layer, then it is recommended that you have the same number of units in every hidden layer.</em></li>
 </ol>
 <p><img alt="" src="/images/2019/AI/bp_9.png"></p>
+<h1 id="week6">Week6</h1>
+<h2 id="evaluating-algorithm">Evaluating Algorithm</h2>
+<h3 id="evaluating-a-hypothesis">Evaluating a Hypothesis</h3>
+<p>Once we have done some trouble shooting for errors in our predictions by:</p>
+<ul>
+<li>Getting more training examples</li>
+<li>Trying smaller sets of features</li>
+<li>Trying additional features</li>
+<li>Trying polynomial features</li>
+<li>Increasing or decreasing λ</li>
+</ul>
+<p>We can move on to evaluate our new hypothesis.</p>
+<p>A hypothesis may have a low error for the training examples but still be inaccurate (because of <code>overfitting</code>). Thus, to evaluate a hypothesis, given a dataset of training examples, we can split up the data into two sets: a training set and a test set. Typically, the training set consists of <code>70 %</code> of your data and the test set is the remaining <code>30 %</code>.</p>
+<p><img alt="" src="/images/2019/AI/ev_1.png"></p>
+<h3 id="model-selection-and-trainvalidationtest-sets">Model Selection and Train/Validation/Test Sets</h3>
+<p>Just because a learning algorithm fits a training set well, that does not mean it is a good hypothesis. It could over fit and as a result your predictions on the test set would be poor. The error of your hypothesis as measured on the data set with which you trained the parameters will be lower than the error on any other data set.</p>
+<p>Given many models with different polynomial degrees, we can use a systematic approach to identify the 'best' function. In order to choose the model of your hypothesis, you can test each degree of polynomial and look at the error result.</p>
+<p>One way to break down our dataset into the three sets is:</p>
+<ul>
+<li>Training set: 60%</li>
+<li>Cross validation set: 20%</li>
+<li>
+<p>Test set: 20%
+We can now calculate three separate error values for the three different sets using the following method:</p>
+</li>
+<li>
+<p>Optimize the parameters in <code>Θ</code> using the training set for each polynomial degree.</p>
+</li>
+<li>Find the polynomial degree <code>d</code> with the least error using the cross validation set.</li>
+<li>Estimate the generalization error using the test set with <code>Jtest(Θ(d))</code>, (d = theta from polynomial with lower error);</li>
+</ul>
+<p>This way, the degree of the polynomial d has not been trained using the test set.</p>
+<h3 id="diagnosing-bias-vs-variance">Diagnosing Bias vs. Variance</h3>
+<p><img alt="" src="/images/2019/AI/ev_2.png"></p>
+<h3 id="regularization-and-biasvariance">Regularization and Bias/Variance</h3>
+<p><img alt="" src="/images/2019/AI/ev_3.png"></p>
+<h3 id="learning-curves">Learning Curves</h3>
+<p><img alt="" src="/images/2019/AI/ev_4.png">
+<img alt="" src="/images/2019/AI/ev_5.png"></p>
+<h3 id="deciding-what-to-do-next-revisited">Deciding What to Do Next Revisited</h3>
+<p>Our decision process can be broken down as follows:</p>
+<ol>
+<li>Getting more training examples: Fixes high variance</li>
+<li>Trying smaller sets of features: Fixes high variance</li>
+<li>Adding features: Fixes high bias</li>
+<li>Adding polynomial features: Fixes high bias</li>
+<li>Decreasing λ: Fixes high bias</li>
+<li>Increasing λ: Fixes high variance.</li>
+</ol>
+<h4 id="diagnosing-neural-networks">Diagnosing Neural Networks</h4>
+<ul>
+<li>A neural network with fewer parameters is prone to <code>underfitting</code>. It is also computationally cheaper.</li>
+<li>A large neural network with more parameters is prone to <code>overfitting</code>. It is also computationally expensive. In this case you can use regularization (increase λ) to address the overfitting.</li>
+</ul>
+<p>Using <strong>a single hidden layer</strong> is a good <strong>starting default</strong>. You can train your neural network on a number of hidden layers using your cross validation set. You can then select the one that performs best.</p>
+<h4 id="model-complexity-effects">Model Complexity Effects</h4>
+<ul>
+<li>Lower-order polynomials (low model complexity) have high bias and low variance. In this case, the model fits poorly consistently.</li>
+<li>Higher-order polynomials (high model complexity) fit the training data extremely well and the test data extremely poorly. These have low bias on the training data, but very high variance.</li>
+</ul>
+<p>In reality, we would want to choose a model somewhere in between, that can generalize well but also fits the data reasonably well.</p>

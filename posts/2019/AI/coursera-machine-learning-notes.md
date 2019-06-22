@@ -344,3 +344,79 @@ This terminology is applied to both linear and logistic regression. There are tw
 - Number of hidden units per layer = usually more the better (must balance with cost of computation as it increases with more hidden units) *Defaults: 1 hidden layer. If you have more than 1 hidden layer, then it is recommended that you have the same number of units in every hidden layer.*
 
 ![](/images/2019/AI/bp_9.png)
+
+#Week6
+
+##Evaluating Algorithm
+
+###Evaluating a Hypothesis
+
+Once we have done some trouble shooting for errors in our predictions by:
+
+- Getting more training examples
+- Trying smaller sets of features
+- Trying additional features
+- Trying polynomial features
+- Increasing or decreasing λ
+
+We can move on to evaluate our new hypothesis.
+
+A hypothesis may have a low error for the training examples but still be inaccurate (because of `overfitting`). Thus, to evaluate a hypothesis, given a dataset of training examples, we can split up the data into two sets: a training set and a test set. Typically, the training set consists of `70 %` of your data and the test set is the remaining `30 %`.
+
+![](/images/2019/AI/ev_1.png)
+
+###Model Selection and Train/Validation/Test Sets
+
+Just because a learning algorithm fits a training set well, that does not mean it is a good hypothesis. It could over fit and as a result your predictions on the test set would be poor. The error of your hypothesis as measured on the data set with which you trained the parameters will be lower than the error on any other data set.
+
+Given many models with different polynomial degrees, we can use a systematic approach to identify the 'best' function. In order to choose the model of your hypothesis, you can test each degree of polynomial and look at the error result.
+
+One way to break down our dataset into the three sets is:
+
+- Training set: 60%
+- Cross validation set: 20%
+- Test set: 20%
+We can now calculate three separate error values for the three different sets using the following method:
+
+- Optimize the parameters in `Θ` using the training set for each polynomial degree.
+- Find the polynomial degree `d` with the least error using the cross validation set.
+- Estimate the generalization error using the test set with `Jtest(Θ(d))`, (d = theta from polynomial with lower error);
+
+This way, the degree of the polynomial d has not been trained using the test set.
+
+###Diagnosing Bias vs. Variance
+
+![](/images/2019/AI/ev_2.png)
+
+###Regularization and Bias/Variance
+
+![](/images/2019/AI/ev_3.png)
+
+###Learning Curves
+
+![](/images/2019/AI/ev_4.png)
+![](/images/2019/AI/ev_5.png)
+
+###Deciding What to Do Next Revisited
+
+Our decision process can be broken down as follows:
+
+1. Getting more training examples: Fixes high variance
+2. Trying smaller sets of features: Fixes high variance
+3. Adding features: Fixes high bias
+4. Adding polynomial features: Fixes high bias
+5. Decreasing λ: Fixes high bias
+6. Increasing λ: Fixes high variance.
+
+####Diagnosing Neural Networks
+- A neural network with fewer parameters is prone to `underfitting`. It is also computationally cheaper.
+- A large neural network with more parameters is prone to `overfitting`. It is also computationally expensive. In this case you can use regularization (increase λ) to address the overfitting.
+
+Using **a single hidden layer** is a good **starting default**. You can train your neural network on a number of hidden layers using your cross validation set. You can then select the one that performs best.
+
+####Model Complexity Effects
+
+- Lower-order polynomials (low model complexity) have high bias and low variance. In this case, the model fits poorly consistently.
+- Higher-order polynomials (high model complexity) fit the training data extremely well and the test data extremely poorly. These have low bias on the training data, but very high variance.
+
+In reality, we would want to choose a model somewhere in between, that can generalize well but also fits the data reasonably well.
